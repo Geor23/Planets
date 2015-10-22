@@ -6,12 +6,40 @@ public var speed: float;
 public var countText: UnityEngine.UI.Text;
 public var winText: UnityEngine.UI.Text;
 
+var jumpDelay:boolean;
+var doubleJump: int = 0;
+
 function Start(){
 
 	rb = GetComponent(Rigidbody);
 	count = 0;
 	countText.text = "Count: " + count.ToString();	
 	winText.text = "";
+}
+
+function Update() {
+    if (Input.GetKeyDown(KeyCode.Space) && jumpDelay == false) {
+        Jump();
+    }
+}
+
+function Jump() {
+    if (doubleJump <=1) {
+        rb.velocity.y = 20;
+        jumpTimer();
+    }
+}
+
+function jumpTimer() {
+    if (Input.GetKeyDown(KeyCode.Space)) {
+        doubleJump++;
+    }
+    if(doubleJump > 1) {
+        doubleJump = 0;
+        jumpDelay = true;
+        yield WaitForSeconds(3);
+        jumpDelay = false;
+    }
 }
 
 function FixedUpdate(){
