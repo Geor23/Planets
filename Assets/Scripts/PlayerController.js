@@ -7,7 +7,6 @@ public var countText: UnityEngine.UI.Text;
 public var winText: UnityEngine.UI.Text;
 
 function Start(){
-
 	rb = GetComponent(Rigidbody);
 	count = 0;
 	countText.text = "Count: " + count.ToString();	
@@ -15,12 +14,14 @@ function Start(){
 }
 
 function FixedUpdate(){
-
 	var moveHorizontal: float = Input.GetAxis("Horizontal");
 	var moveVertical: float = Input.GetAxis("Vertical");
 	var movement: Vector3 = new Vector3(moveHorizontal, 0.0, moveVertical); 	
-
+	if(GetComponent.<NetworkView>().isMine){
 	rb.AddForce(movement * speed);
+	}else{
+		enabled = false;
+	}
 	
 }
 
