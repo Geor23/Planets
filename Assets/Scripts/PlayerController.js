@@ -1,37 +1,17 @@
-#pragma strict
-
-private var count: int;
-private var rb: Rigidbody;
-public var speed: float;
-public var countText: UnityEngine.UI.Text;
-public var winText: UnityEngine.UI.Text;
+﻿#pragma strict
+public var moveSpeed: float;
+public var rb: Rigidbody;
+private var moveDir: Vector3;
 
 function Start(){
+	rb = GetComponent.<Rigidbody>();
+}
 
-	rb = GetComponent(Rigidbody);
-	count = 0;
-	countText.text = "Count: " + count.ToString();	
-	winText.text = "";
+function Update(){
+	moveDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
 }
 
 function FixedUpdate(){
+	rb.MovePosition(rb.position + transform.TransformDirection(moveDir) * moveSpeed * Time.deltaTime);
 
-	var moveHorizontal: float = Input.GetAxis("Horizontal");
-	var moveVertical: float = Input.GetAxis("Vertical");
-	var movement: Vector3 = new Vector3(moveHorizontal, 0.0, moveVertical); 	
-
-	rb.AddForce(movement * speed);
-	
-}
-
-function OnTriggerEnter(other: Collider){
-	
-	if(other.gameObject.CompareTag("Pick Up")){
-		other.gameObject.SetActive(false);
-		count = count + 1;
-		countText.text = "Count: " + count.ToString();	
-		if(count >= 12){
-			winText.text = "Well Done Fam, cop my mixtape";
-		}
-	}
 }

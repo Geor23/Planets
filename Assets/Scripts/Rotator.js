@@ -1,5 +1,7 @@
 ﻿#pragma strict
 
+public var speed: float;
+
 function Update () {
-	transform.Rotate(new Vector3(15,30,45) * Time.deltaTime);
+	transform.Rotate(Vector3.up, speed * Time.deltaTime);
 }
