@@ -1,7 +1,10 @@
 ﻿#pragma strict
 
 public var fadeSpeed : float = 1.5f;            // Speed that the screen fades to and from black.
+
+
 private var sceneStarting : boolean = true;     // Whether or not the scene is still fading in.
+
 
 function Awake ()
 {
@@ -61,6 +64,6 @@ public function EndScene ()
     
     // If the screen is almost black...
     if(GetComponent.<GUITexture>().color.a >= 0.95f)
-    // ... reload the level.
-    Application.LoadLevel(0);
+        // ... reload the level.
+        Application.LoadLevel(0);
 }

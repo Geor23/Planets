@@ -8,15 +8,25 @@ public var speed: float;
 public var countText: UnityEngine.UI.Text;
 public var winText: UnityEngine.UI.Text;
 public var healthText: UnityEngine.UI.Text;
-
+public var deathClip : AudioClip;                                  // The audio clip to play when the player dies.
 private var jumpDelay: boolean;
 private var doubleJump: int = 0;
+
+
+private var sceneFadeOut : SceneFadeOut;            // Reference to the SceneFadeInOut script.
+private var timer : float;                                  // A timer for counting to the reset of the level once the player is dead.
+public var resetAfterDeathTime : float = 5f;                // How much time from the player dying to the level reseting.
+
+
+function Awake() {
+    sceneFadeOut = gameObject.GetComponent("Fader");
+}
 
 function Start(){
 
 	rb = GetComponent(Rigidbody);
 	count = 0;
-	health = 100;
+	health = 10;
 	playerStatus = true; 
 	countText.text = "Count: " + count.ToString();	
 	winText.text = "";	
@@ -32,12 +42,21 @@ function Update() {
         if(health <= 0){
             playerStatus = false;
             healthText.text = "ur dead fam, u r moist";
+            // Play the dying sound effect at the player's location.
+            AudioSource.PlayClipAtPoint(deathClip, transform.position);
             gameObject.SetActive(false);
-        }    
-    }
-}
+            // Increment the timer.
+            timer += Time.deltaTime;    
+    
+            //If the timer is greater than or equal to the time before the level resets...
+                if(timer >= resetAfterDeathTime)
+                // ... reset the level.
+                sceneFadeOut.EndScene();
+           }    
+       }
+   }
 
-function Jump() {
+   function Jump() {
     if (doubleJump <=1) {
         rb.velocity.y = 20;
         jumpTimer();
@@ -73,16 +92,14 @@ function OnTriggerEnter(other: Collider){
 			winText.text = "Well Done Fam, cop my mixtape";
 		}
 	}
-
-	
 }
 
-    function OnCollisionEnter(col: Collision){
-        if(col.gameObject.CompareTag("projectile")){
-            if(health > 0){
-                health = health - 10;
-                healthText.text = "HP: " + health.ToString();
-            }
-            col.gameObject.Destroy(col.gameObject);
+function OnCollisionEnter(col: Collision){
+    if(col.gameObject.CompareTag("projectile")){
+        if(health > 0){
+            health = health - 10;
+            healthText.text = "HP: " + health.ToString();
         }
+        col.gameObject.Destroy(col.gameObject);
     }
+}
