@@ -7,12 +7,13 @@ function Start () {
 }
 
 function Update () {
-    //var down  = Input.GetKeyDown(KeyCode.Space);
+    var mouseClick = Input.GetMouseButton(0);
     
-    if (Input.GetMouseButton(0)) {
+    if (mouseClick) {
         var projectile:GameObject = Instantiate(prefab) as GameObject;
-        projectile.transform.position = transform.position+Camera.main.transform.forward *2;
+        projectile.transform.position = transform.position;         // This onlh shoots at the direction of the camera: +Camera.main.transform.forward *2;
         var rb:Rigidbody = projectile.GetComponent.<Rigidbody>();
         rb.velocity=Camera.main.transform.forward*40;
-        }
+        Destroy(projectile,10);    
+    }
 }
