@@ -20,24 +20,32 @@ namespace UnityStandardAssets.CrossPlatformInput
 		public string verticalAxisName = "Vertical"; // The name given to the vertical axis for the cross platform input
 
 		Vector3 m_StartPos;
+		Vector3 m_CurrentPos;
 		bool m_UseX; // Toggle for using the x axis
 		bool m_UseY; // Toggle for using the Y axis
 		CrossPlatformInputManager.VirtualAxis m_HorizontalVirtualAxis; // Reference to the joystick in the cross platform input
 		CrossPlatformInputManager.VirtualAxis m_VerticalVirtualAxis; // Reference to the joystick in the cross platform input
 
-		void OnEnable()
+		void Start()
 		{
+			m_StartPos.x = Screen.width * (GetComponent<RectTransform>().anchorMin.x + GetComponent<RectTransform>().anchorMax.x)/2;
+			m_StartPos.y = Screen.height * (GetComponent<RectTransform>().anchorMin.y + GetComponent<RectTransform>().anchorMax.y)/2;
+			m_CurrentPos = m_StartPos;
+			//Debug.Log(GetComponent<RectTransform>().anchoredPosition);
 			CreateVirtualAxes();
 		}
 
-        void Start()
-        {
-            m_StartPos = transform.position;
-        }
+		Vector3 getStartPos(){
+			return new Vector3(Screen.width * (GetComponent<RectTransform>().anchorMin.x + GetComponent<RectTransform>().anchorMax.x)/2,
+				Screen.height * (GetComponent<RectTransform>().anchorMin.y + GetComponent<RectTransform>().anchorMax.y)/2,
+				(float)0);
+		}
+
+		//float actualScreenPos
 
 		void UpdateVirtualAxes(Vector3 value)
 		{
-			var delta = m_StartPos - value;
+			var delta = getStartPos() - value;
 			delta.y = -delta.y;
 			delta /= MovementRange;
 			if (m_UseX)
@@ -49,6 +57,7 @@ namespace UnityStandardAssets.CrossPlatformInput
 			{
 				m_VerticalVirtualAxis.Update(delta.y);
 			}
+			//Debug.Log(GetComponent<RectTransform>().anchoredPosition);
 		}
 
 		void CreateVirtualAxes()
@@ -74,29 +83,27 @@ namespace UnityStandardAssets.CrossPlatformInput
 		public void OnDrag(PointerEventData data)
 		{
 			Vector3 newPos = Vector3.zero;
-
 			if (m_UseX)
 			{
-				int delta = (int)(data.position.x - m_StartPos.x);
-				delta = Mathf.Clamp(delta, - MovementRange, MovementRange);
-				newPos.x = delta;
+				//delta = Mathf.Clamp(delta, - MovementRange, MovementRange);
+				newPos.x = (data.position.x - getStartPos().x);
 			}
 
 			if (m_UseY)
 			{
-				int delta = (int)(data.position.y - m_StartPos.y);
-				delta = Mathf.Clamp(delta, -MovementRange, MovementRange);
-				newPos.y = delta;
+				//delta = Mathf.Clamp(delta, -MovementRange, MovementRange);
+				newPos.y = (data.position.y - getStartPos().y);
 			}
-			transform.position = new Vector3(m_StartPos.x + newPos.x, m_StartPos.y + newPos.y, m_StartPos.z + newPos.z);
-			UpdateVirtualAxes(transform.position);
+			GetComponent<RectTransform>().anchoredPosition = Vector3.ClampMagnitude (new Vector3(newPos.x, newPos.y, newPos.z), MovementRange);
+			//GetComponent<RectTransform>().anchoredPosition = new Vector3(data.position.x, data.position.y, newPos.z);
+			UpdateVirtualAxes(Vector3.ClampMagnitude (new Vector3(newPos.x, newPos.y, newPos.z), MovementRange) + getStartPos());
 		}
 
 
 		public void OnPointerUp(PointerEventData data)
 		{
-			transform.position = m_StartPos;
-			UpdateVirtualAxes(m_StartPos);
+			GetComponent<RectTransform>().anchoredPosition = Vector3.zero;
+			UpdateVirtualAxes(getStartPos());
 		}
 
 

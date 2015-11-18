@@ -9,7 +9,7 @@
 	function Start(){
 	if (nIdentity.isLocalPlayer){
 			GameObject.Find ("Camera").SetActive (false);
-			GetComponent("PlayerController").enabled = true;
+			//GetComponent("PlayerController").enabled = true;
 			cam1.enabled = true;
 			audioListener.enabled = true;
 		}
