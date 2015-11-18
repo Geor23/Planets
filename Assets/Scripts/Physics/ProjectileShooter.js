@@ -5,9 +5,9 @@ var rb:Rigidbody = GetComponent.<Rigidbody>();
 
 function Start(){
   player = GameObject.Find("Player(Clone)");
-  rb.position=player.transform.position;
+  rb.position=player.transform.position + player.transform.forward;
 }
 
 function Update () {
-  rb.velocity=GameObject.Find("CameraPlayer").GetComponent.<Camera>().main.transform.forward*40; 
+  rb.velocity=player.transform.forward*40; 
 }
