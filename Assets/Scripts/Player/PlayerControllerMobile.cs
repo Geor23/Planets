@@ -12,15 +12,14 @@ namespace UnityStandardAssets.CrossPlatformInput {
 		Rigidbody rb;
 		void Update () {
 			rb = GetComponent<Rigidbody>();
+			Vector3 forward = transform.forward;
+			Vector3 right = transform.right;
 			float aimH = CrossPlatformInputManager.GetAxis ("AimH");
 			float aimV = CrossPlatformInputManager.GetAxis ("AimV");
-			Vector3 turretDirection = new Vector3 (aimH, 0, aimV).normalized;
-			//Debug.Log(turretDirection)
+			Vector3 turretDirection = ((forward * aimV) + (right * aimH)).normalized;
 			rotateObject(turret, turretDirection);
 
 
-			Vector3 forward = transform.forward;
-			Vector3 right = transform.right;
 			float forwardSpeed = speed * CrossPlatformInputManager.GetAxis("MoveV");
 			float strafeSpeed = speed * CrossPlatformInputManager.GetAxis("MoveH");
 			Vector3 moveDir = forwardSpeed * forward + strafeSpeed * right;
