@@ -10,7 +10,6 @@ GameObject:
   - 4: {fileID: 485890}
   - 33: {fileID: 3320604}
   - 23: {fileID: 2303548}
-  - 114: {fileID: 11497708}
   m_Layer: 0
   m_Name: Turret
   m_TagString: Untagged
@@ -406,38 +405,6 @@ MonoBehaviour:
   planet: {fileID: 495726, guid: 233eebb8d2e2ed642868c62b694d0350, type: 2}
   model: {fileID: 402734}
   turret: {fileID: 485890}
---- !u!114 &11497708
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 119492}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SceneId:
-    m_Value: 0
-  m_AssetId:
-    i0: 226
-    i1: 190
-    i2: 200
-    i3: 119
-    i4: 156
-    i5: 239
-    i6: 100
-    i7: 124
-    i8: 186
-    i9: 202
-    i10: 227
-    i11: 5
-    i12: 194
-    i13: 83
-    i14: 254
-    i15: 192
-  m_ServerOnly: 0
-  m_LocalPlayerAuthority: 0
 --- !u!124 &12495324
 Behaviour:
   m_ObjectHideFlags: 1
