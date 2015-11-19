@@ -15,7 +15,10 @@ namespace UnityStandardAssets.CrossPlatformInput {
 			float aimH = CrossPlatformInputManager.GetAxis ("AimH");
 			float aimV = CrossPlatformInputManager.GetAxis ("AimV");
 			Vector3 turretDirection = new Vector3 (aimH, 0, aimV).normalized;
+			//Debug.Log(turretDirection)
 			rotateObject(turret, turretDirection);
+
+
 			Vector3 forward = transform.forward;
 			Vector3 right = transform.right;
 			float forwardSpeed = speed * CrossPlatformInputManager.GetAxis("MoveV");
