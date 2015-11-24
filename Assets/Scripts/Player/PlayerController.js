@@ -1,4 +1,4 @@
-#pragma strict
+/*#pragma strict
 
 private var count: int;
 private var rb: Rigidbody;
@@ -20,8 +20,8 @@ function Start(){
     jumpDelay = false;
 //	winText.text = "";	
 //	healthText.text = "HP: " + health.ToString();
-}
 
+}
 function Update() {
     moveDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
     rb.MovePosition(rb.position + transform.TransformDirection(moveDir) * moveSpeed * Time.deltaTime);
@@ -78,4 +78,4 @@ function jumpTimer() {
 //        }
 //        col.gameObject.Destroy(col.gameObject);
 //    }
-//}
+//}*/
