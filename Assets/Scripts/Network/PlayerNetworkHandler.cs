@@ -10,6 +10,7 @@ public class PlayerNetworkHandler : NetworkBehaviour {
     void Start(){
       if(!isServer){
         projectile = Instantiate(Resources.Load("projectile")) as GameObject;
+        projectile.GetComponent<Transform>().position = new Vector3(100,100,100);
         ClientScene.RegisterPrefab(projectile);
       }
     }
