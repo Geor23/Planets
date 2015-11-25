@@ -1,0 +1,17 @@
+using System;
+using UnityEngine;
+using UnityEngine.EventSystems;
+
+public class ProjectileShooter : MonoBehaviour {
+  private GameObject player;
+  private Rigidbody rb = GetComponent.<Rigidbody>();
+
+  void Start(){
+    player = GameObject.Find("Player(Clone)");
+    rb.position=player.transform.position + player.transform.forward;
+  }
+
+  void Update(){
+    rb.velocity=player.transform.forward*40; 
+  }
+}
