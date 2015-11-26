@@ -7,14 +7,16 @@ public class PlayerUsernameScript : MonoBehaviour {
 	public Text textBox;
 	public NetworkIdentity nIdentity;
 	public Text textOnScreen;
+	public Text listPlayers;
 	public Button button;
+
 	public void CopyText() {
-		//if (nIdentity.isLocalPlayer) {
+		    ClientScene.AddPlayer (0);
+		    //listPlayers.text = ClientScene.localPlayers[0].ToString();
 	    	button.gameObject.SetActive (false);
 		    field.gameObject.SetActive (false);
 			textBox.text = field.text;
 		    textOnScreen.text = field.text;
 		    textOnScreen.gameObject.SetActive (true);
-	//	}
 	}
 }
