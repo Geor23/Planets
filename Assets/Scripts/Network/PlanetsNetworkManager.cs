@@ -33,20 +33,21 @@ public class PlanetsNetworkManager : NetworkManager {
   // called when a new player is added for a client
   public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId)
   {
+      /* This is where you can register players with teams, and spawn the player at custom points in the team space */
       GameObject player = Instantiate((GameObject) playerPrefab, GetStartPosition().position, Quaternion.identity) as GameObject;
       NetworkServer.AddPlayerForConnection(conn, player, playerControllerId);
   }
 
-  // called when a player is removed for a client
-  // public override void OnServerRemovePlayer(NetworkConnection conn, short playerControllerId)
-  // {
-  //     PlayerController player;
-  //     if (conn.GetPlayer(playerControllerId, out player))
-  //     {
-  //         if (player.NetworkIdentity != null && player.NetworkIdentity.gameObject != null)
-  //             NetworkServer.Destroy(player.NetworkIdentity.gameObject);
-  //     }
-  // }
+  //called when a player is removed for a client
+  public override void OnServerRemovePlayer(NetworkConnection conn, PlayerController playerController)
+  {
+    GameObject player = playerController.gameObject;
+    if (player != null)
+    {
+      if (playerController.unetView != null)
+        NetworkServer.Destroy(player);
+    }
+  }
 
   // called when a network error occurs
   // public override void OnServerError(NetworkConnection conn, int errorCode);
@@ -56,8 +57,6 @@ public class PlanetsNetworkManager : NetworkManager {
   // called when connected to a server
   public override void OnClientConnect(NetworkConnection conn)
   {
-    //ClientScene.Ready(conn);
-    //ClientScene.AddPlayer(0);
     Debug.Log("Client connected!");
   }
 
