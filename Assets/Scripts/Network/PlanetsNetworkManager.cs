@@ -58,12 +58,17 @@ public class PlanetsNetworkManager : NetworkManager {
   {
     //ClientScene.Ready(conn);
     //ClientScene.AddPlayer(0);
+    Debug.Log("Client connected!");
   }
 
   // called when disconnected from a server
   public override void OnClientDisconnect(NetworkConnection conn)
   {
     StopClient();
+  }
+
+  public override void OnClientSceneChanged(NetworkConnection conn){
+    ClientScene.Ready(conn);
   }
 
   // called when a network error occurs
