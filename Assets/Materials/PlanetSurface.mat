@@ -7,10 +7,10 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: PlanetSurface
-  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 4800000, guid: ffb0f70abfcfa44a5a3044b61d2b7c07, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 2000
   stringTagMap: {}
   m_SavedProperties:
     serializedVersion: 2
@@ -78,6 +78,13 @@ Material:
           m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _Ramp
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
     m_Floats:
       data:
         first:
@@ -93,16 +100,24 @@ Material:
         second: .5
       data:
         first:
+          name: _Shininess
+        second: 0
+      data:
+        first:
+          name: _Glossiness
+        second: .100000001
+      data:
+        first:
+          name: _Metallic
+        second: 0
+      data:
+        first:
           name: _Parallax
         second: .0199999996
       data:
         first:
           name: _ZWrite
         second: 1
-      data:
-        first:
-          name: _Glossiness
-        second: .100000001
       data:
         first:
           name: _BumpScale
@@ -125,8 +140,16 @@ Material:
         second: 0
       data:
         first:
-          name: _Metallic
-        second: 0
+          name: _DiffuseThreshold
+        second: .230000004
+      data:
+        first:
+          name: _LitOutlineThickness
+        second: .100000001
+      data:
+        first:
+          name: _UnlitOutlineThickness
+        second: .100000001
     m_Colors:
       data:
         first:
@@ -135,4 +158,16 @@ Material:
       data:
         first:
           name: _Color
-        second: {r: .213235319, g: .164987057, b: .0611483566, a: 1}
+        second: {r: .297496736, g: .522058845, b: .21112676, a: 1}
+      data:
+        first:
+          name: _SpecColor
+        second: {r: .298039228, g: .521568656, b: .211764723, a: 1}
+      data:
+        first:
+          name: _UnlitColor
+        second: {r: .141552314, g: .242647052, b: .101697654, a: 1}
+      data:
+        first:
+          name: _OutlineColor
+        second: {r: 0, g: 0, b: 0, a: 1}
