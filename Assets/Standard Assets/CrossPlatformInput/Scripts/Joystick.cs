@@ -28,24 +28,26 @@ namespace UnityStandardAssets.CrossPlatformInput
 
 		void Start()
 		{
-			m_StartPos.x = Screen.width * (GetComponent<RectTransform>().anchorMin.x + GetComponent<RectTransform>().anchorMax.x)/2;
-			m_StartPos.y = Screen.height * (GetComponent<RectTransform>().anchorMin.y + GetComponent<RectTransform>().anchorMax.y)/2;
+			//m_StartPos.x = Screen.width * (GetComponent<RectTransform>().anchorMin.x + GetComponent<RectTransform>().anchorMax.x)/2;
+			//m_StartPos.y = Screen.height * (GetComponent<RectTransform>().anchorMin.y + GetComponent<RectTransform>().anchorMax.y)/2;
+			m_StartPos = GetComponent<RectTransform>().anchoredPosition;
 			m_CurrentPos = m_StartPos;
 			//Debug.Log(GetComponent<RectTransform>().anchoredPosition);
 			CreateVirtualAxes();
 		}
 
 		Vector3 getStartPos(){
-			return new Vector3(Screen.width * (GetComponent<RectTransform>().anchorMin.x + GetComponent<RectTransform>().anchorMax.x)/2,
-				Screen.height * (GetComponent<RectTransform>().anchorMin.y + GetComponent<RectTransform>().anchorMax.y)/2,
-				(float)0);
+			//return new Vector3(Screen.width * (GetComponent<RectTransform>().anchorMin.x + GetComponent<RectTransform>().anchorMax.x)/2,
+			//	Screen.height * (GetComponent<RectTransform>().anchorMin.y + GetComponent<RectTransform>().anchorMax.y)/2,
+			//	(float)0);
+			return new Vector3 (GetComponent<RectTransform>().anchoredPosition.x, GetComponent<RectTransform>().anchoredPosition.y, (float)0);
 		}
 
 		//float actualScreenPos
 
 		void UpdateVirtualAxes(Vector3 value)
 		{
-			var delta = getStartPos() - value;
+			var delta = m_StartPos - value;
 			delta.y = -delta.y;
 			delta /= MovementRange;
 			if (m_UseX)
@@ -82,28 +84,30 @@ namespace UnityStandardAssets.CrossPlatformInput
 
 		public void OnDrag(PointerEventData data)
 		{
-			Vector3 newPos = Vector3.zero;
+			//Vector3 newPos = Vector3.zero;
+			Vector3 anchorPoint = (GetComponent<RectTransform>().anchorMax + GetComponent<RectTransform>().anchorMin) / 2;
+			anchorPoint.x = anchorPoint.x * Screen.width;
+			anchorPoint.y = anchorPoint.y * Screen.height;
+			Vector3 newPos = anchorPoint;
 			if (m_UseX)
 			{
-				//delta = Mathf.Clamp(delta, - MovementRange, MovementRange);
-				newPos.x = (data.position.x - getStartPos().x);
+				newPos.x = (data.position.x - m_StartPos.x - anchorPoint.x);
 			}
 
 			if (m_UseY)
 			{
-				//delta = Mathf.Clamp(delta, -MovementRange, MovementRange);
-				newPos.y = (data.position.y - getStartPos().y);
+				newPos.y = (data.position.y - m_StartPos.y - anchorPoint.y);
 			}
-			GetComponent<RectTransform>().anchoredPosition = Vector3.ClampMagnitude (new Vector3(newPos.x, newPos.y, newPos.z), MovementRange);
+			GetComponent<RectTransform>().anchoredPosition = Vector3.ClampMagnitude (new Vector3(newPos.x, newPos.y, newPos.z), MovementRange) + m_StartPos;
 			//GetComponent<RectTransform>().anchoredPosition = new Vector3(data.position.x, data.position.y, newPos.z);
-			UpdateVirtualAxes(Vector3.ClampMagnitude (new Vector3(newPos.x, newPos.y, newPos.z), MovementRange) + getStartPos());
+			UpdateVirtualAxes(Vector3.ClampMagnitude (new Vector3(newPos.x, newPos.y, newPos.z), MovementRange) + m_StartPos);
 		}
 
 
 		public void OnPointerUp(PointerEventData data)
 		{
-			GetComponent<RectTransform>().anchoredPosition = Vector3.zero;
-			UpdateVirtualAxes(getStartPos());
+			GetComponent<RectTransform>().anchoredPosition = m_StartPos;
+			UpdateVirtualAxes(m_StartPos);
 		}
 
 
