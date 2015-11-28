@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 namespace UnityStandardAssets.CrossPlatformInput {
 	public class PlayerControllerMobile : MonoBehaviour {
@@ -15,10 +16,19 @@ namespace UnityStandardAssets.CrossPlatformInput {
 		public Transform model;
 		public Transform turret;
 
+		public Text scoreText;
+		public Text winText;
+		public int score;
+
 		Rigidbody rb;
+
 		void Start(){
 			nIdentity = GetComponent<NetworkIdentity>();
+			score = 0;
+			scoreText = GameObject.Find("ScoreText").GetComponent<Text>();
+			winText = GameObject.Find("WinText").GetComponent<Text>();
 		}
+
 		void Update () {
 			if(nIdentity.isLocalPlayer){
 
@@ -65,12 +75,26 @@ namespace UnityStandardAssets.CrossPlatformInput {
 	      }
 			}
 		}
-
+		
 		void OnCollisionEnter(Collision col){
 			if(col.gameObject.CompareTag("projectile")){
 				Destroy(col.gameObject);
 				gameObject.SetActive(false);
-		  }
+			}
+			
+			if(col.gameObject.CompareTag("ResourcePickUp")){
+				Destroy(col.gameObject);
+				score = score + 10;
+				SetScoreText();
+			}
+		}
+			
+		void SetScoreText(){
+			scoreText.text = "Score: " + score.ToString();
+			if(score>=100){
+				winText.text = "GOOD JOB FAM";
+			}
+
 		}
 	}
 }

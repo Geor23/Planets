@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class FauxGravityBody : MonoBehaviour{
-  public FauxGravityAttractor attractor;
+  private FauxGravityAttractor attractor;
   private Rigidbody rb;
 
   void Start(){

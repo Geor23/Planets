@@ -1,4 +1,4 @@
-﻿Shader "PlanetShader" {
+﻿Shader "ResourceShader" {
    Properties {
       _Color ("Diffuse Color", Color) = (1,1,1,1) 
       _UnlitColor ("Unlit Diffuse Color", Color) = (0.5,0.5,0.5,1) 
