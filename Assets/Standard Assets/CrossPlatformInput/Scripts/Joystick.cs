@@ -15,7 +15,7 @@ namespace UnityStandardAssets.CrossPlatformInput
 			OnlyVertical // Only vertical
 		}
 
-		public int MovementRange = 100;
+		int MovementRange = 100;
 		public AxisOption axesToUse = AxisOption.Both; // The options for the axes that the still will use
 		public string horizontalAxisName = "Horizontal"; // The name given to the horizontal axis for the cross platform input
 		public string verticalAxisName = "Vertical"; // The name given to the vertical axis for the cross platform input
@@ -34,6 +34,7 @@ namespace UnityStandardAssets.CrossPlatformInput
 			m_StartPos = GetComponent<RectTransform>().anchoredPosition;
 			m_CurrentPos = m_StartPos;
 			GetComponent<Image>().transform.rotation = Quaternion.AngleAxis((float)90.0, Vector3.forward);
+			MovementRange = (int)GetComponent<RectTransform>().rect.width/3;
 			//Debug.Log(GetComponent<RectTransform>().anchoredPosition);
 			CreateVirtualAxes();
 		}
