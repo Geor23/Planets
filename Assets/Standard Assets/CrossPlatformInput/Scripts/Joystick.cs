@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace UnityStandardAssets.CrossPlatformInput
 {
@@ -32,6 +33,7 @@ namespace UnityStandardAssets.CrossPlatformInput
 			//m_StartPos.y = Screen.height * (GetComponent<RectTransform>().anchorMin.y + GetComponent<RectTransform>().anchorMax.y)/2;
 			m_StartPos = GetComponent<RectTransform>().anchoredPosition;
 			m_CurrentPos = m_StartPos;
+			GetComponent<Image>().transform.rotation = Quaternion.AngleAxis((float)90.0, Vector3.forward);
 			//Debug.Log(GetComponent<RectTransform>().anchoredPosition);
 			CreateVirtualAxes();
 		}
@@ -99,6 +101,8 @@ namespace UnityStandardAssets.CrossPlatformInput
 				newPos.y = (data.position.y - m_StartPos.y - anchorPoint.y);
 			}
 			GetComponent<RectTransform>().anchoredPosition = Vector3.ClampMagnitude (new Vector3(newPos.x, newPos.y, newPos.z), MovementRange) + m_StartPos;
+			float angle = Mathf.Atan2(newPos.y, newPos.x) * Mathf.Rad2Deg;
+			GetComponent<Image>().transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 			//GetComponent<RectTransform>().anchoredPosition = new Vector3(data.position.x, data.position.y, newPos.z);
 			UpdateVirtualAxes(Vector3.ClampMagnitude (new Vector3(newPos.x, newPos.y, newPos.z), MovementRange) + m_StartPos);
 		}
@@ -107,6 +111,7 @@ namespace UnityStandardAssets.CrossPlatformInput
 		public void OnPointerUp(PointerEventData data)
 		{
 			GetComponent<RectTransform>().anchoredPosition = m_StartPos;
+			GetComponent<Image>().transform.rotation = Quaternion.AngleAxis((float)90.0, Vector3.forward);
 			UpdateVirtualAxes(m_StartPos);
 		}
 
