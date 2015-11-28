@@ -6,8 +6,8 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: PlanetSurface
-  m_Shader: {fileID: 4800000, guid: ffb0f70abfcfa44a5a3044b61d2b7c07, type: 3}
+  m_Name: TurretMaterial
+  m_Shader: {fileID: 4800000, guid: 6301a053361b0442e95f0ee9917ca9c3, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
   m_CustomRenderQueue: 2000
@@ -78,13 +78,6 @@ Material:
           m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _Ramp
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
     m_Floats:
       data:
         first:
@@ -101,7 +94,7 @@ Material:
       data:
         first:
           name: _Shininess
-        second: 1
+        second: 10
       data:
         first:
           name: _Parallax
@@ -113,7 +106,7 @@ Material:
       data:
         first:
           name: _Glossiness
-        second: .100000001
+        second: .5
       data:
         first:
           name: _BumpScale
@@ -141,15 +134,15 @@ Material:
       data:
         first:
           name: _DiffuseThreshold
-        second: .0199999996
+        second: .100000001
       data:
         first:
           name: _LitOutlineThickness
-        second: .200000003
+        second: .100000001
       data:
         first:
           name: _UnlitOutlineThickness
-        second: .200000003
+        second: .400000006
     m_Colors:
       data:
         first:
@@ -158,15 +151,15 @@ Material:
       data:
         first:
           name: _Color
-        second: {r: .602999985, g: .256307006, b: 0, a: 1}
+        second: {r: 1, g: 1, b: 1, a: 1}
       data:
         first:
           name: _SpecColor
-        second: {r: .639705896, g: .270005703, b: 0, a: 1}
+        second: {r: 1, g: 1, b: 1, a: 1}
       data:
         first:
           name: _UnlitColor
-        second: {r: .463235319, g: .195521384, b: 0, a: 1}
+        second: {r: .5, g: .5, b: .5, a: 1}
       data:
         first:
           name: _OutlineColor

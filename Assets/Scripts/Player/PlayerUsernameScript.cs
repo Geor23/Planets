@@ -15,7 +15,7 @@ public class PlayerUsernameScript : MonoBehaviour {
 		    //listPlayers.text = ClientScene.localPlayers[0].ToString();
 	    	button.gameObject.SetActive (false);
 		    field.gameObject.SetActive (false);
-			textBox.text = field.text;
+				textBox.text = field.text;
 		    textOnScreen.text = field.text;
 		    textOnScreen.gameObject.SetActive (true);
 	}
