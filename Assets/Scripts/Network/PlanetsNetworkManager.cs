@@ -38,9 +38,9 @@ public class PlanetsNetworkManager : NetworkManager {
 	public override void OnServerReady(NetworkConnection conn)
 	{
 		NetworkServer.SetClientReady(conn);
-		ClientScene.RegisterPrefab(player2);
-		
 		ClientScene.RegisterPrefab(player1);
+		ClientScene.RegisterPrefab(player2);
+
 		
 	}
 	
