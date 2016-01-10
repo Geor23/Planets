@@ -11,7 +11,7 @@ public class PlayerUsernameScript : MonoBehaviour {
 	public Button button;
 
 	public void CopyText() {
-		    ClientScene.AddPlayer (0);
+		    //ClientScene.AddPlayer (0);
 		    //listPlayers.text = ClientScene.localPlayers[0].ToString();
 	    	button.gameObject.SetActive (false);
 		    field.gameObject.SetActive (false);
