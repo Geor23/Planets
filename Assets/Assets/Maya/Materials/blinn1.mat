@@ -6,11 +6,11 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: PlayerMaterialGreen
-  m_Shader: {fileID: 4800000, guid: 3200cf9ab6ee64ee6a8885fa70f2d383, type: 3}
+  m_Name: blinn1
+  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
-  m_CustomRenderQueue: 2000
+  m_CustomRenderQueue: -1
   stringTagMap: {}
   m_SavedProperties:
     serializedVersion: 2
@@ -32,13 +32,6 @@ Material:
       data:
         first:
           name: _DetailNormalMap
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _Tex
         second:
           m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
@@ -85,13 +78,6 @@ Material:
           m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _DetailTex
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
     m_Floats:
       data:
         first:
@@ -105,26 +91,6 @@ Material:
         first:
           name: _Cutoff
         second: .5
-      data:
-        first:
-          name: _Shininess
-        second: 9
-      data:
-        first:
-          name: _WindQuality
-        second: 0
-      data:
-        first:
-          name: _DiffuseThreshold
-        second: .100000001
-      data:
-        first:
-          name: _LitOutlineThickness
-        second: .300000012
-      data:
-        first:
-          name: _UnlitOutlineThickness
-        second: .300000012
       data:
         first:
           name: _Parallax
@@ -161,18 +127,6 @@ Material:
         first:
           name: _Metallic
         second: 0
-      data:
-        first:
-          name: _Exposure
-        second: 1
-      data:
-        first:
-          name: _Rotation
-        second: 0
-      data:
-        first:
-          name: _Cull
-        second: 2
     m_Colors:
       data:
         first:
@@ -181,24 +135,4 @@ Material:
       data:
         first:
           name: _Color
-        second: {r: .108996548, g: .475758404, b: .823529422, a: 1}
-      data:
-        first:
-          name: _SpecColor
-        second: {r: 1, g: 1, b: 1, a: 1}
-      data:
-        first:
-          name: _UnlitColor
-        second: {r: 0, g: .227941155, b: .10412129, a: 1}
-      data:
-        first:
-          name: _OutlineColor
-        second: {r: 0, g: 0, b: 0, a: 0}
-      data:
-        first:
-          name: _Tint
-        second: {r: .5, g: .5, b: .5, a: .5}
-      data:
-        first:
-          name: _HueVariation
-        second: {r: 1, g: .5, b: 0, a: .100000001}
+        second: {r: .641031504, g: .641031504, b: .641031504, a: 1}
