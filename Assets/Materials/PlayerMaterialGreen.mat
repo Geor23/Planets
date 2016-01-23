@@ -97,18 +97,6 @@ Material:
         second: 10
       data:
         first:
-          name: _DiffuseThreshold
-        second: .100000001
-      data:
-        first:
-          name: _LitOutlineThickness
-        second: .100000001
-      data:
-        first:
-          name: _UnlitOutlineThickness
-        second: .400000006
-      data:
-        first:
           name: _Parallax
         second: .0199999996
       data:
@@ -143,6 +131,18 @@ Material:
         first:
           name: _Metallic
         second: 0
+      data:
+        first:
+          name: _DiffuseThreshold
+        second: .100000001
+      data:
+        first:
+          name: _LitOutlineThickness
+        second: .100000001
+      data:
+        first:
+          name: _UnlitOutlineThickness
+        second: .400000006
     m_Colors:
       data:
         first:
@@ -151,7 +151,7 @@ Material:
       data:
         first:
           name: _Color
-        second: {r: 1, g: .682758629, b: 0, a: 1}
+        second: {r: 0, g: .634000003, b: .0896551609, a: 1}
       data:
         first:
           name: _SpecColor
@@ -159,7 +159,7 @@ Material:
       data:
         first:
           name: _UnlitColor
-        second: {r: .992647052, g: .803782403, b: .0145977642, a: 1}
+        second: {r: .202999994, g: .803782403, b: .0145977642, a: 1}
       data:
         first:
           name: _OutlineColor
