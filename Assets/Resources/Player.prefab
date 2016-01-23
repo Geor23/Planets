@@ -272,8 +272,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3d008748c0ca2643901c50fc8e402b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerTransform: {fileID: 0}
-  camTransform: {fileID: 0}
+  playerTransform: {fileID: 22445154}
+  camTransform: {fileID: 441958}
   lerpRate: 15
 --- !u!114 &11438494
 MonoBehaviour:
@@ -306,7 +306,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: fsdf
+  m_Text: gfd
 --- !u!114 &11444118
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -568,11 +568,11 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: playerTransform
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 22445154}
     - target: {fileID: 0}
       propertyPath: camTransform
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 441958}
     - target: {fileID: 0}
       propertyPath: m_LocalPosition.y
       value: 10

@@ -306,8 +306,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3d008748c0ca2643901c50fc8e402b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerTransform: {fileID: 0}
-  camTransform: {fileID: 0}
+  playerTransform: {fileID: 22406784}
+  camTransform: {fileID: 438832}
   lerpRate: 15
 --- !u!114 &11467222
 MonoBehaviour:
@@ -522,6 +522,14 @@ Prefab:
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: playerTransform
+      value: 
+      objectReference: {fileID: 22406784}
+    - target: {fileID: 0}
+      propertyPath: camTransform
+      value: 
+      objectReference: {fileID: 438832}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 135240}
