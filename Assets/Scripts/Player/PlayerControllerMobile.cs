@@ -83,8 +83,9 @@ namespace UnityStandardAssets.CrossPlatformInput {
 			}
 			
 			if(col.gameObject.CompareTag("ResourcePickUp")){
+				ResourceProperties resProp = col.gameObject.GetComponent<ResourceProperties>();
+				score = score + resProp.getScore();
 				Destroy(col.gameObject);
-				score = score + 10;
 				SetScoreText();
 			}
 		}
