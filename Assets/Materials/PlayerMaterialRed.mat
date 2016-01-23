@@ -94,7 +94,7 @@ Material:
       data:
         first:
           name: _Shininess
-        second: 9
+        second: 10
       data:
         first:
           name: _Parallax
@@ -138,11 +138,11 @@ Material:
       data:
         first:
           name: _LitOutlineThickness
-        second: .300000012
+        second: .100000001
       data:
         first:
           name: _UnlitOutlineThickness
-        second: .300000012
+        second: .400000006
     m_Colors:
       data:
         first:
@@ -151,16 +151,16 @@ Material:
       data:
         first:
           name: _Color
-        second: {r: .676470578, g: .0795847699, b: .0795847699, a: 1}
+        second: {r: .676470578, g: .0795847699, b: .0795847699, a: 0}
       data:
         first:
           name: _SpecColor
-        second: {r: 1, g: 1, b: 1, a: 1}
+        second: {r: .388235331, g: .0392156877, b: .0392156877, a: 1}
       data:
         first:
           name: _UnlitColor
-        second: {r: .389705896, g: .0401167758, b: .0401167758, a: 1}
+        second: {r: .389705896, g: .0401167758, b: .0401167758, a: 0}
       data:
         first:
           name: _OutlineColor
-        second: {r: 0, g: 0, b: 0, a: 1}
+        second: {r: 0, g: 0, b: 0, a: 0}
