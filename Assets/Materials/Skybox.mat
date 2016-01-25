@@ -89,42 +89,42 @@ Material:
         first:
           name: _FrontTex
         second:
-          m_Texture: {fileID: 2800000, guid: da90d4f7c5be24c878c8dfa554920c84, type: 3}
+          m_Texture: {fileID: 2800000, guid: e753730a1b8be4ccabce5ea59ba3317d, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
         first:
           name: _BackTex
         second:
-          m_Texture: {fileID: 2800000, guid: fa27b715f9b0344db973e93fe4c0a125, type: 3}
+          m_Texture: {fileID: 2800000, guid: 4fdbc75594ef7443eae7cad218b7f6b4, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
         first:
           name: _LeftTex
         second:
-          m_Texture: {fileID: 2800000, guid: 535022ef0957a4954b5c1556367ddce2, type: 3}
+          m_Texture: {fileID: 2800000, guid: 09acb13e5f8bc423fadf8930b49810e4, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
         first:
           name: _RightTex
         second:
-          m_Texture: {fileID: 2800000, guid: 821370448428540368f610a898037ba5, type: 3}
+          m_Texture: {fileID: 2800000, guid: 6a58f620724cc4a499bf1a64bd8b692c, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
         first:
           name: _UpTex
         second:
-          m_Texture: {fileID: 2800000, guid: 760339f8699af455580d2e327cd629ad, type: 3}
+          m_Texture: {fileID: 2800000, guid: 55ef995042f5f4f6f86febf334950ae5, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
         first:
           name: _DownTex
         second:
-          m_Texture: {fileID: 2800000, guid: 4f2a6256b22c746fd955c2661cc94233, type: 3}
+          m_Texture: {fileID: 2800000, guid: d45f44cea9a2d475680ff83b60b423d0, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
     m_Floats:
@@ -139,11 +139,11 @@ Material:
       data:
         first:
           name: _Cutoff
-        second: .5
+        second: 0.5
       data:
         first:
           name: _Parallax
-        second: .0199999996
+        second: 0.02
       data:
         first:
           name: _ZWrite
@@ -151,7 +151,7 @@ Material:
       data:
         first:
           name: _Glossiness
-        second: .5
+        second: 0.5
       data:
         first:
           name: _BumpScale
