@@ -92,10 +92,6 @@ namespace UnityStandardAssets.CrossPlatformInput {
 			
 		void SetScoreText(){
 			scoreText.text = "Score: " + score.ToString();
-			if(score>=100){
-				winText.text = "GOOD JOB FAM";
-			}
-
 		}
 	}
 }
