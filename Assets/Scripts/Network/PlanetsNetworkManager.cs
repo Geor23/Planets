@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Networking;
@@ -8,26 +9,86 @@ using UnityEngine.Networking;
     http://docs.unity3d.com/ScriptReference/Networking.NetworkManager.html
 */
 
+class PlayerData {
+  public int team;
+  public string name;
+}
+
 public class PlanetsNetworkManager : NetworkManager {
 	
 	[SerializeField] GameObject player1;
 	[SerializeField] GameObject player2;
-	
-	//	[SerializeField] Mesh pl1;
-	//	[SerializeField] Mesh pl2;
-	GameObject chosenCharacter; // character1, character2, etc.
+
+	GameObject chosenCharacter; 
 	
 	/*
     Override the virtual default functions to build on existing behaviour 
-    */
-	
-	/*
-    Server functions */
-	// called when a client connects 
-	//public override void OnServerConnect(NetworkConnection conn);
-	public bool hasPickedTeam = false; 
+    
+	public override void OnServerConnect(NetworkConnection conn){
+
+  }
+  */
+
+  private Dictionary<int, PlayerData> dict;
+  public bool hasPickedTeam = false; 
 	public bool hasConnected = false;
+  public bool inRound = false;
+  int timerRound = 180;
+
+
+
+ // void Update(){
+ //  if(inRound){
+ //     timerRound -= Time.deltaTime;
+ //     if ( timerRound < 0){
+ //         SceneChange();
+ //     }
+ //   }
+ // }
+
+public void SceneChange(){
+//Change scene
+}
+
+
+  public void Start(){
+    dict = new Dictionary<int, PlayerData>();
+  }
 	
+  public override void OnStartServer(){
+    base.OnStartServer();
+    NetworkServer.RegisterHandler(Msgs.clientJoinMsg, OnServerRecieveName);
+    NetworkServer.RegisterHandler(Msgs.clientTeamMsg, OnServerRecieveTeamChoice);
+    NetworkServer.RegisterHandler(Msgs.startGame, OnServerStartGame);
+  }
+
+  private int IDFromConn(NetworkConnection nc){
+    return NetworkServer.connections.IndexOf(nc);
+  }
+
+  public void OnServerRecieveName(NetworkMessage msg){
+    JoinMessage joinMsg = msg.ReadMessage<JoinMessage>();
+    string name = joinMsg.name;
+    int id = IDFromConn(msg.conn);
+    dict.Add(id, new PlayerData());
+    dict[id].name = name;
+
+    Debug.Log("Player " + name + " joined the game");
+  }
+
+  public void OnServerRecieveTeamChoice(NetworkMessage msg){
+    TeamChoice teamChoice = msg.ReadMessage<TeamChoice>();
+    int choice = teamChoice.teamChoice;
+    int id = IDFromConn(msg.conn);
+    dict[id].team = choice;
+
+    Debug.Log(dict[id].name + " chose team " + choice.ToString());
+  }
+
+  public void OnServerStartGame(NetworkMessage msg){
+    ServerChangeScene("RunningScene");
+  }
+
 	// called when a client disconnects
 	public override void OnServerDisconnect(NetworkConnection conn)
 	{
@@ -66,7 +127,8 @@ public class PlanetsNetworkManager : NetworkManager {
 				NetworkServer.Destroy(player);
 		}
 	}
-	
+
+
 	// called when a network error occurs
 	// public override void OnServerError(NetworkConnection conn, int errorCode);
 	
@@ -76,7 +138,6 @@ public class PlanetsNetworkManager : NetworkManager {
 	public override void OnClientConnect(NetworkConnection conn)
 	{
 		hasConnected = true;
-		//NetworkServer.AddPlayerForConnection (conn, player, playerControllerId);
 		Debug.Log("Client connected!");
 	}
 	
