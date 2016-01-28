@@ -295,6 +295,7 @@ MonoBehaviour:
   player2: {fileID: 135240, guid: 5d90277e2d19d41e092696113922c674, type: 2}
   hasPickedTeam: 0
   hasConnected: 0
+  inRound: 0
 --- !u!4 &231695163
 Transform:
   m_ObjectHideFlags: 0
@@ -306,7 +307,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
 --- !u!1 &277610052
 GameObject:
   m_ObjectHideFlags: 0
@@ -319,7 +320,7 @@ GameObject:
   - 114: {fileID: 277610055}
   - 114: {fileID: 277610054}
   m_Layer: 5
-  m_Name: InputField (2)
+  m_Name: NameInput
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -513,7 +514,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!1 &359865516
 GameObject:
   m_ObjectHideFlags: 0
@@ -757,7 +758,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
 --- !u!1 &1076685481
 GameObject:
   m_ObjectHideFlags: 0
@@ -927,7 +928,7 @@ RectTransform:
   - {fileID: 1677752098}
   - {fileID: 277610053}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -1243,6 +1244,46 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1539015951}
+--- !u!1 &1632251265
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1632251267}
+  - 114: {fileID: 1632251266}
+  m_Layer: 0
+  m_Name: PlayerConfig
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1632251266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1632251265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 309b4348beda94ba39eb180f1a0c5e6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isObserver: 1
+--- !u!4 &1632251267
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1632251265}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -.266401291, y: .126728058, z: .317749023}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
 --- !u!1 &1677752097
 GameObject:
   m_ObjectHideFlags: 0
@@ -1255,7 +1296,7 @@ GameObject:
   - 114: {fileID: 1677752100}
   - 114: {fileID: 1677752099}
   m_Layer: 5
-  m_Name: InputField (1)
+  m_Name: netAddrInput
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
