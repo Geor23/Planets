@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.Networking;
 
 
-class ClientVisibility : NetworkBehaviour {
+class ClientVisibility : MonoBehaviour{
 
   public bool observerVisible;
   public bool playerVisible;

@@ -18,6 +18,7 @@ public class PlanetsNetworkManager : NetworkManager {
 	
 	[SerializeField] GameObject player1;
 	[SerializeField] GameObject player2;
+  [SerializeField] GameObject observer;
 
 	GameObject chosenCharacter; 
 	
@@ -111,7 +112,7 @@ public void SceneChange(){
 		/* This is where you can register players with teams, and spawn the player at custom points in the team space */
 		//hasConnected = true;
     int id = IDFromConn(conn);
-		GameObject player = Instantiate (dict[id].team==0?player1:player2, GetStartPosition ().position, Quaternion.identity) as GameObject;
+		GameObject player = Instantiate (dict[id].team==0?player1:(dict[id].team==1?player2:observer), GetStartPosition ().position, Quaternion.identity) as GameObject;
 		//		GameObject player = Instantiate (playerPrefab, GetStartPosition ().position, Quaternion.identity) as GameObject;
 		NetworkServer.AddPlayerForConnection (conn, player, playerControllerId);
 		

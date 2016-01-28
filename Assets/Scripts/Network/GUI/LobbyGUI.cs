@@ -31,6 +31,8 @@ public class LobbyGUI : MonoBehaviour {
   }
 
   public void StartGame(){
+    if(PlayerConfig.singleton.isObserver)
+      ChooseObserver();
     nm.client.Send(Msgs.startGame, new TeamChoice());
   }
 }
