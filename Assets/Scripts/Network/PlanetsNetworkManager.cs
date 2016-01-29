@@ -63,12 +63,19 @@ public void SceneChange(){
     NetworkServer.RegisterHandler(Msgs.clientJoinMsg, OnServerRecieveName);
     NetworkServer.RegisterHandler(Msgs.clientTeamMsg, OnServerRecieveTeamChoice);
     NetworkServer.RegisterHandler(Msgs.startGame, OnServerStartGame);
+    NetworkServer.RegisterHandler(Msgs.requestTeamMsg, OnServerRecieveTeamRequest);
   }
 
 
   private int IDFromConn(NetworkConnection nc){
     return NetworkServer.connections.IndexOf(nc);
   }
+
+  public void OnServerRecieveTeamRequest(NetworkMessage msg){
+    sendTeam(0);
+        Debug.Log("I'm a potato");
+    sendTeam(1);
+    }
 
   public void OnServerRecieveName(NetworkMessage msg){
     Debug.Log("join!");
@@ -78,8 +85,6 @@ public void SceneChange(){
     dict.Add(id, new PlayerData());
     dict[id].name = name;
 	dict[id].team = -1;
-	sendTeam (0);
-	sendTeam (1);
 
     Debug.Log("Player " + name + " joined the game");
   }
@@ -118,6 +123,7 @@ public void SceneChange(){
 		TeamList tl = new TeamList();
 
 		foreach(string player in teamManager.getListTeam(team) ) {
+            Debug.Log(player.ToString());
 			display = display.ToString () + player.ToString() + "\n";
 		}
 		

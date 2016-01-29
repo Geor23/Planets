@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Networking;
+using UnityEngine.Networking.NetworkSystem;
 
 public class LobbyGUI : MonoBehaviour {
 
@@ -11,9 +12,11 @@ public class LobbyGUI : MonoBehaviour {
 	public Text teamB;
 
   public void Start(){
+    
     nm = NetworkManager.singleton;
 	nm.client.RegisterHandler (Msgs.serverTeamMsg, OnClientReceiveTeamList);
-  }
+    nm.client.Send(Msgs.requestTeamMsg, new EmptyMessage());
+    }
 
   public void ChooseTeamPirates(){
     TeamChoice tc = new TeamChoice();
@@ -36,7 +39,7 @@ public class LobbyGUI : MonoBehaviour {
   public void StartGame(){
     if(PlayerConfig.singleton.isObserver)
       ChooseObserver();
-    nm.client.Send(Msgs.startGame, new TeamChoice());
+    nm.client.Send(Msgs.startGame, new EmptyMessage());
   }
 	public void OnClientReceiveTeamList(NetworkMessage msg){
 		TeamList tl = msg.ReadMessage<TeamList>(); 
