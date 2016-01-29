@@ -17,6 +17,7 @@ class Msgs : MsgType {
   public const short startGame = 52;
   public const short serverTeamMsg = 53;
   public const short requestTeamMsg = 54;
+	public const short clientTeamScore = 55;
 }
 
 public class JoinMessage : MessageBase {
