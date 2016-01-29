@@ -162,7 +162,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1373486697}
+      - m_Target: {fileID: 1632251268}
         m_MethodName: StartHost
         m_Mode: 1
         m_Arguments:
@@ -903,7 +903,6 @@ GameObject:
   - 223: {fileID: 1373486696}
   - 114: {fileID: 1373486695}
   - 114: {fileID: 1373486694}
-  - 114: {fileID: 1373486697}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -989,20 +988,6 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
---- !u!114 &1373486697
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1373486692}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fcfc521b5b1a48d3aaaee6e2842ad80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nm: {fileID: 231695162}
-  networkAddr: {fileID: 1967993606}
-  name: {fileID: 1076685483}
 --- !u!1 &1403726700
 GameObject:
   m_ObjectHideFlags: 0
@@ -1254,6 +1239,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1632251267}
   - 114: {fileID: 1632251266}
+  - 114: {fileID: 1632251268}
   m_Layer: 0
   m_Name: PlayerConfig
   m_TagString: Untagged
@@ -1285,6 +1271,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!114 &1632251268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1632251265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fcfc521b5b1a48d3aaaee6e2842ad80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nm: {fileID: 0}
+  networkAddr: {fileID: 0}
+  name: {fileID: 1076685483}
 --- !u!1 &1677752097
 GameObject:
   m_ObjectHideFlags: 0
@@ -1548,7 +1548,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1373486697}
+      - m_Target: {fileID: 1632251268}
         m_MethodName: StartClient
         m_Mode: 1
         m_Arguments:

@@ -12,13 +12,18 @@ public class StartSceneGUI : MonoBehaviour {
 
   void Start(){
     nm = NetworkManager.singleton;
+    DontDestroyOnLoad(transform.gameObject);
   }
 
   public void StartClient(){
     nm.networkAddress = networkAddr.text;
-    nm.StartClient();
+    nm.StartClient().RegisterHandler(MsgType.Connect, SendJoinMessageCallback);
+  }
+
+  public void SendJoinMessageCallback(NetworkMessage m){
     SendJoinMessage();
   }
+
 
   public void SendJoinMessage(){
     JoinMessage jm = new JoinMessage();
