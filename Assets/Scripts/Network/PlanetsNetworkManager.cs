@@ -68,6 +68,7 @@ public void SceneChange(){
   }
 
   public void OnServerRecieveName(NetworkMessage msg){
+    Debug.Log("join!");
     JoinMessage joinMsg = msg.ReadMessage<JoinMessage>();
     string name = joinMsg.name;
     int id = IDFromConn(msg.conn);
@@ -78,6 +79,7 @@ public void SceneChange(){
   }
 
   public void OnServerRecieveTeamChoice(NetworkMessage msg){
+    Debug.Log("Team!");
     TeamChoice teamChoice = msg.ReadMessage<TeamChoice>();
     int choice = teamChoice.teamChoice;
     int id = IDFromConn(msg.conn);

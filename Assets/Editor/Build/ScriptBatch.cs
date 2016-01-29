@@ -21,7 +21,7 @@ class ScriptBatch {
         string path = EditorUtility.SaveFolderPanel("Chooce location to build in", "", "");
         // Build player.
         BuildPipeline.BuildPlayer(playerLevels, path + "/playerClient.exe", BuildTarget.StandaloneLinux, BuildOptions.Development);
-        BuildPipeline.BuildPlayer(serverLevels, path + "/serverClient.exe", BuildTarget.StandaloneLinux, BuildOptions.Development);
+        //BuildPipeline.BuildPlayer(serverLevels, path + "/serverClient.exe", BuildTarget.StandaloneLinux, BuildOptions.Development);
         BuildPipeline.BuildPlayer(serverLocalClientLevels, path + "/serverLocalClient.exe", BuildTarget.StandaloneLinux, BuildOptions.Development);
 
         // Copy a file from the project folder to the build folder, alongside the built game.

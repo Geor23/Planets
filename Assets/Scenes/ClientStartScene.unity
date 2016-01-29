@@ -178,6 +178,7 @@ MonoBehaviour:
   matchSize: 4
   player1: {fileID: 158602, guid: e2bec8779cef647cbacae305c253fec0, type: 2}
   player2: {fileID: 135240, guid: 5d90277e2d19d41e092696113922c674, type: 2}
+  observer: {fileID: 0}
   hasPickedTeam: 0
   hasConnected: 0
   inRound: 0
@@ -287,6 +288,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 421607900}
   - 114: {fileID: 421607899}
+  - 114: {fileID: 421607901}
   m_Layer: 0
   m_Name: PlayerConfig
   m_TagString: Untagged
@@ -318,6 +320,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
+--- !u!114 &421607901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 421607898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fcfc521b5b1a48d3aaaee6e2842ad80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nm: {fileID: 0}
+  networkAddr: {fileID: 1967993606}
+  name: {fileID: 2004010606}
 --- !u!1 &464518193
 GameObject:
   m_ObjectHideFlags: 0
@@ -591,7 +607,6 @@ GameObject:
   - 223: {fileID: 1373486696}
   - 114: {fileID: 1373486695}
   - 114: {fileID: 1373486694}
-  - 114: {fileID: 1373486697}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -674,20 +689,6 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
---- !u!114 &1373486697
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1373486692}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fcfc521b5b1a48d3aaaee6e2842ad80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nm: {fileID: 231695162}
-  networkAddr: {fileID: 1967993606}
-  name: {fileID: 2004010606}
 --- !u!1 &1420553320
 GameObject:
   m_ObjectHideFlags: 0
@@ -939,7 +940,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1373486697}
+      - m_Target: {fileID: 421607901}
         m_MethodName: StartClient
         m_Mode: 1
         m_Arguments:
