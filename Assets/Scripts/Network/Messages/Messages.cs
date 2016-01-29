@@ -15,6 +15,7 @@ class Msgs : MsgType {
   public const short clientJoinMsg = 50;
   public const short clientTeamMsg = 51;
   public const short startGame = 52;
+	public const short serverTeamMsg = 53;
 }
 
 public class JoinMessage : MessageBase {
@@ -24,4 +25,9 @@ public class JoinMessage : MessageBase {
 
 public class TeamChoice : MessageBase {
   public int teamChoice = 0;
+}
+
+public class TeamList : MessageBase {
+	public int team ;
+	public string teamList;
 }
