@@ -87,8 +87,16 @@ namespace UnityStandardAssets.CrossPlatformInput {
 				score = score + resProp.getScore();
 				Destroy(col.gameObject);
 				SetScoreText();
+				//send score to manager
 			}
 		}
+
+//		public void AddScore(){
+//			TeamChoice tc = new TeamChoice();
+//			tc.teamChoice =(int) TeamID.TEAM_SUPERCORP;
+//			nm.client.Send(Msgs.clientTeamMsg, tc);
+//		}
+
 			
 		void SetScoreText(){
 			scoreText.text = "Score: " + score.ToString();

@@ -31,3 +31,8 @@ public class TeamList : MessageBase {
 	public int team ;
 	public string teamList;
 }
+
+public class AddScore : MessageBase {
+	public int score;
+	public int team;
+}

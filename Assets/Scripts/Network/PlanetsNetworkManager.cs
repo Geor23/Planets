@@ -77,9 +77,9 @@ public void SceneChange(){
     int id = IDFromConn(msg.conn);
     dict.Add(id, new PlayerData());
     dict[id].name = name;
-	//dict[id].team = -1;
-//	sendTeam (0);
-//	sendTeam (1);
+	dict[id].team = -1;
+	sendTeam (0);
+	sendTeam (1);
 
     Debug.Log("Player " + name + " joined the game");
   }

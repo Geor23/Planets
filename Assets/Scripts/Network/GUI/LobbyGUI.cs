@@ -12,7 +12,7 @@ public class LobbyGUI : MonoBehaviour {
 
   public void Start(){
     nm = NetworkManager.singleton;
-	nm.client.connection.RegisterHandler (Msgs.serverTeamMsg, OnClientReceiveTeamList);
+	nm.client.RegisterHandler (Msgs.serverTeamMsg, OnClientReceiveTeamList);
   }
 
   public void ChooseTeamPirates(){
