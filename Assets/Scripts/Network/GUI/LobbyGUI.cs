@@ -7,9 +7,12 @@ using UnityEngine.Networking;
 public class LobbyGUI : MonoBehaviour {
 
   NetworkManager nm;
+	public Text teamA;
+	public Text teamB;
 
   public void Start(){
     nm = NetworkManager.singleton;
+	nm.client.RegisterHandler (Msgs.serverTeamMsg, OnClientReceiveTeamList);
   }
 
   public void ChooseTeamPirates(){
@@ -35,4 +38,15 @@ public class LobbyGUI : MonoBehaviour {
       ChooseObserver();
     nm.client.Send(Msgs.startGame, new TeamChoice());
   }
+	public void OnClientReceiveTeamList(NetworkMessage msg){
+		TeamList tl = msg.ReadMessage<TeamList>(); 
+		if (tl.team == 0) {
+			teamA.text = tl.teamList;
+		} else if (tl.team == 1) {
+			teamB.text = tl.teamList;
+		} else {
+			//error
+		}
+	}
+
 }

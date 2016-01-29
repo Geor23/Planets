@@ -37,7 +37,7 @@ public class StartSceneGUI : MonoBehaviour {
   }
 
   void StartDedicatedHost(){
-    //Something
-  }
+		//Something
+	}
 
 }
