@@ -24,7 +24,6 @@ public class StartSceneGUI : MonoBehaviour {
     SendJoinMessage();
   }
 
-
   public void SendJoinMessage(){
     JoinMessage jm = new JoinMessage();
     jm.name = name.text;

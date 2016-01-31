@@ -9,9 +9,11 @@ public class PlayerNetworkHandler : NetworkBehaviour {
 
     void Start(){
       if(!isServer){
+/*
         projectile = Instantiate(Resources.Load("projectile")) as GameObject;
         projectile.GetComponent<Transform>().position = new Vector3(100,100,100);
         ClientScene.RegisterPrefab(projectile);
+*/
       }
     }
 
@@ -20,7 +22,7 @@ public class PlayerNetworkHandler : NetworkBehaviour {
       GameObject projectile = Instantiate(Resources.Load("projectile")) as GameObject;
       projectile.GetComponent<Transform>().position = position;
       projectile.GetComponent<ProjectileMovement>().setDirection(direction);
-      Destroy(projectile, 4);
+      Destroy(projectile, 16);
       NetworkServer.Spawn(projectile);
       projectile.GetComponent<ServerSyncPos>().RpcSyncClient(position, direction);
     }
