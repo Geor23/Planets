@@ -18,6 +18,9 @@ namespace UnityStandardAssets.CrossPlatformInput {
 
 		public Text scoreText;
 		public Text winText;
+		public Text deathText;
+		public Text deathTimerText;
+		public Camera mainCamera;
 		public int score;
 
 		Rigidbody rb;
@@ -27,6 +30,10 @@ namespace UnityStandardAssets.CrossPlatformInput {
 			score = 0;
 			scoreText = GameObject.Find("ScoreText").GetComponent<Text>();
 			winText = GameObject.Find("WinText").GetComponent<Text>();
+			deathText = GameObject.Find("DeathText").GetComponent<Text>();
+			deathTimerText = GameObject.Find("DeathTimerText").GetComponent<Text>();
+			Debug.Log(deathTimerText);
+			mainCamera = GameObject.Find("MainCamera").GetComponent<Camera>();
 		}
 
 		void Update () {
@@ -79,6 +86,9 @@ namespace UnityStandardAssets.CrossPlatformInput {
 		void OnCollisionEnter(Collision col){
 			if(col.gameObject.CompareTag("projectile")){
 				Destroy(col.gameObject);
+				deathText.enabled = true;
+				deathTimerText.enabled = true;
+				mainCamera.enabled = true;
 				gameObject.SetActive(false);
 			}
 			
