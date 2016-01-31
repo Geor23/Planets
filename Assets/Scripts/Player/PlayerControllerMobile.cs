@@ -7,11 +7,14 @@ using UnityEngine.UI;
 namespace UnityStandardAssets.CrossPlatformInput {
 	public class PlayerControllerMobile : MonoBehaviour {
 		private NetworkIdentity nIdentity;
+		private NetworkManager nm;
+
 		private const float fireRate = 0.3F;
 		private float nextFire = 0.0F;
 
 		public float speed = 3.0F;
 		public float rotSpeed = 12.0F;
+
 		public Transform planet;
 		public Transform model;
 		public Transform turret;
@@ -20,19 +23,21 @@ namespace UnityStandardAssets.CrossPlatformInput {
 		public Text winText;
 		public Text deathText;
 		public Text deathTimerText;
+
 		public Camera mainCamera;
+
 		public int score;
 
 		Rigidbody rb;
 
 		void Start(){
 			nIdentity = GetComponent<NetworkIdentity>();
+			nm = NetworkManager.singleton;
 			score = 0;
 			scoreText = GameObject.Find("ScoreText").GetComponent<Text>();
 			winText = GameObject.Find("WinText").GetComponent<Text>();
 			deathText = GameObject.Find("DeathText").GetComponent<Text>();
 			deathTimerText = GameObject.Find("DeathTimerText").GetComponent<Text>();
-			Debug.Log(deathTimerText);
 			mainCamera = GameObject.Find("MainCamera").GetComponent<Camera>();
 		}
 
@@ -89,7 +94,8 @@ namespace UnityStandardAssets.CrossPlatformInput {
 				deathText.enabled = true;
 				deathTimerText.enabled = true;
 				mainCamera.enabled = true;
-				gameObject.SetActive(false);
+				NetworkServer.DestroyPlayersForConnection(nm.client.connection);
+				Debug.Log("connection: " + nm.client.connection);
 			}
 			
 			if(col.gameObject.CompareTag("ResourcePickUp")){
