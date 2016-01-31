@@ -64,6 +64,7 @@ public void SceneChange(){
     NetworkServer.RegisterHandler(Msgs.clientTeamMsg, OnServerRecieveTeamChoice);
     NetworkServer.RegisterHandler(Msgs.startGame, OnServerStartGame);
     NetworkServer.RegisterHandler(Msgs.requestTeamMsg, OnServerRecieveTeamRequest);
+    NetworkServer.RegisterHandler(Msgs.clientTeamScore, OnServerReceiveScore);
   }
 
 
@@ -73,9 +74,16 @@ public void SceneChange(){
 
   public void OnServerRecieveTeamRequest(NetworkMessage msg){
     sendTeam(0);
-        Debug.Log("I'm a potato");
     sendTeam(1);
     }
+
+  public void OnServerReceiveScore(NetworkMessage msg) {
+  	AddScore sc = msg.ReadMessage<AddScore>();
+  	int team = sc.team ;
+  	int score = sc.score;
+  	teamManager.addScore(score, team);
+
+  }
 
   public void OnServerRecieveName(NetworkMessage msg){
     Debug.Log("join!");
@@ -111,8 +119,6 @@ public void SceneChange(){
 			teamManager.addPlayerToTeam(dict[id].name, dict[id].team);
 			
 			sendTeam (dict[id].team);
-
-
 	}
 
     Debug.Log(dict[id].name + " chose team " + choice.ToString());
@@ -196,6 +202,10 @@ public void SceneChange(){
 	public override void OnClientSceneChanged(NetworkConnection conn){
 		//ClientScene.Ready(conn);
 	}
+
+	public void AddScore(int team, int score) {
+		teamManager.addScore(score, team);
+	}
 	
 	// called when a network error occurs
 	//public override void OnClientError(NetworkConnection conn, int errorCode);
@@ -212,15 +222,20 @@ public class TeamManager {
 	public int scoreTeamA = 0;
 	public int scoreTeamB = 0;
 	
-	public void addScoreToTeamA(int score){
-		scoreTeamA += score;
-	}
-	
-	public void addScoreToTeamB(int score){
-		scoreTeamB += score;
+	public void addScore(int score, int team){
+
+		if ( team == 0 ) {
+			scoreTeamA += score;
+		} else if ( team == 1 ) {
+			scoreTeamB += score;
+		} else {
+			//error
+		}
+
 	}
 	
 	public void deletePlayer (String playerName, int team) {
+
 		if (team == 0) {
 			playersTeamA.Remove(playerName);
 		} else if (team == 1) {
@@ -228,9 +243,11 @@ public class TeamManager {
 		} else {
 			//error
 		}
+
 	}
 	
 	public void addPlayerToTeam( string playerName, int team) {
+
 		if (team == 0) {
 			playersTeamA.Add(playerName);
 		} else if (team == 1) {
@@ -238,9 +255,11 @@ public class TeamManager {
 		} else {
 			//error
 		}
+
 	}
 
 	public List<string> getListTeam (int team) {
+
 		if (team == 0) {
 			return playersTeamA;
 		} else if (team == 1) {
@@ -248,6 +267,7 @@ public class TeamManager {
 		} else {
 			return null;
 		}
+
 	}
 
 	public int getScoreTeamA() {

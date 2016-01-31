@@ -24,6 +24,14 @@ public class ResourceProperties : MonoBehaviour {
 					Destroy(col.gameObject);
 				}
 		}
+		else if (col.gameObject.CompareTag("Player")||col.gameObject.CompareTag("Player2")) {
+			//RunningSceneGUI.AddScore(1, score );
+			// NetworkManager.singleton.AddScore(1,10);
+			// AddScore sc = new AddScore();
+			// sc.team = (int) col.gameObject.GetComponent<TeamMember>().getTeamID();
+			// sc.score = (int) score;
+			// nm.client.Send(Msgs.clientTeamScore, sc);
+		}
 	}
 	void Rescale () {
 		float scale;
