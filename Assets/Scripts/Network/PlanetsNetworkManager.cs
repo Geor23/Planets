@@ -11,91 +11,91 @@ using UnityEngine.UI;
 */
 
 class PlayerData {
-  public int team;
-  public string name;
+
+  	public int team;
+  	public string name;
+
 }
 
 public class PlanetsNetworkManager : NetworkManager {
 	
 	[SerializeField] GameObject player1;
 	[SerializeField] GameObject player2;
-  [SerializeField] GameObject observer;
+  	[SerializeField] GameObject observer;
 
 	GameObject chosenCharacter; 
-	
 	TeamManager teamManager = new TeamManager();
+
 	/*
     Override the virtual default functions to build on existing behaviour 
     
-	public override void OnServerConnect(NetworkConnection conn){
+	public override void OnServerConnect(NetworkConnection conn) {
 
-  }
-  */
+  	}
+  	*/
 
-  private Dictionary<int, PlayerData> dict;
-  public bool hasPickedTeam = false; 
+  	private Dictionary<int, PlayerData> dict;
+  	public bool hasPickedTeam = false; 
 	public bool hasConnected = false;
-  public bool inRound = false;
-  int timerRound = 180;
+  	public bool inRound = false;
+  	int timerRound = 180;
 
 
-
- // void Update(){
- //  if(inRound){
- //     timerRound -= Time.deltaTime;
- //     if ( timerRound < 0){
- //         SceneChange();
- //     }
- //   }
- // }
-
-public void SceneChange(){
-//Change scene
-}
+	public void SceneChange() {
+		//Change scene
+	}
 
 
-  public void Start(){
-    dict = new Dictionary<int, PlayerData>();
-  }
+  	public void Start() {
+    	dict = new Dictionary<int, PlayerData>();
+  	}
 	
-  public override void OnStartServer(){
-    base.OnStartServer();
-    NetworkServer.RegisterHandler(Msgs.clientJoinMsg, OnServerRecieveName);
-    NetworkServer.RegisterHandler(Msgs.clientTeamMsg, OnServerRecieveTeamChoice);
-    NetworkServer.RegisterHandler(Msgs.startGame, OnServerStartGame);
-    NetworkServer.RegisterHandler(Msgs.requestTeamMsg, OnServerRecieveTeamRequest);
-    NetworkServer.RegisterHandler(Msgs.clientTeamScore, OnServerReceiveScore);
-  }
+	// register needed handlers when server starts
+  	public override void OnStartServer() {
+
+	    base.OnStartServer();
+	    NetworkServer.RegisterHandler(Msgs.clientJoinMsg, OnServerRecieveName);
+	    NetworkServer.RegisterHandler(Msgs.clientTeamMsg, OnServerRecieveTeamChoice);
+	    NetworkServer.RegisterHandler(Msgs.startGame, OnServerStartGame);
+	    NetworkServer.RegisterHandler(Msgs.requestTeamMsg, OnServerRecieveTeamRequest);
+	    NetworkServer.RegisterHandler(Msgs.clientTeamScore, OnServerReceiveScore);
+
+  	}
 
 
-  private int IDFromConn(NetworkConnection nc){
-    return NetworkServer.connections.IndexOf(nc);
-  }
+  	private int IDFromConn(NetworkConnection nc) {
 
-  public void OnServerRecieveTeamRequest(NetworkMessage msg){
-    sendTeam(0);
-    sendTeam(1);
+    	return NetworkServer.connections.IndexOf(nc);
+  	}
+
+ 	// when the client requests teams lists, send
+	public void OnServerRecieveTeamRequest(NetworkMessage msg) {
+
+    	sendTeam(0);
+    	sendTeam(1);
+
     }
 
-  public void OnServerReceiveScore(NetworkMessage msg) {
-  	AddScore sc = msg.ReadMessage<AddScore>();
-  	int team = sc.team ;
-  	int score = sc.score;
-  	teamManager.addScore(score, team);
+  	public void OnServerReceiveScore(NetworkMessage msg) {
 
-  }
+	  	AddScore sc = msg.ReadMessage<AddScore>();
+	  	int team = sc.team ;
+	  	int score = sc.score;
+	  	teamManager.addScore(score, team);
 
-  public void OnServerRecieveName(NetworkMessage msg){
-    Debug.Log("join!");
-    JoinMessage joinMsg = msg.ReadMessage<JoinMessage>();
-    string name = joinMsg.name;
-    int id = IDFromConn(msg.conn);
-    dict.Add(id, new PlayerData());
-    dict[id].name = name;
-	dict[id].team = -1;
+	}
 
-    Debug.Log("Player " + name + " joined the game");
-  }
+	public void OnServerRecieveName(NetworkMessage msg){
+	    
+	    JoinMessage joinMsg = msg.ReadMessage<JoinMessage>();
+	    string name = joinMsg.name;
+	    int id = IDFromConn(msg.conn);
+	    dict.Add(id, new PlayerData());
+	    dict[id].name = name;
+		dict[id].team = -1;
+
+	    Debug.Log("Player " + name + " joined the game");
+	}
 
 
   	public void OnServerRecieveTeamChoice(NetworkMessage msg) {
@@ -106,7 +106,7 @@ public void SceneChange(){
 
 	    // if the player is choosing the team for the first time
 		if (dict[id].team == -1) {
-			
+
 			// update the team and send updated list to all clients
 			dict[id].team = choice;	
 			teamManager.addPlayerToTeam(dict[id].name, dict[id].team);
@@ -222,6 +222,7 @@ public void SceneChange(){
 
 [System.Serializable]
 public class TeamManager {
+	
 	public List<string> playersTeamA = new List<string>() ;
 	public List<string> playersTeamB = new List<string>() ;
 	public int scoreTeamA = 0;
