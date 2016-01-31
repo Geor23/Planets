@@ -98,33 +98,38 @@ public void SceneChange(){
   }
 
 
-  public void OnServerRecieveTeamChoice(NetworkMessage msg){
-    Debug.Log("Team!");
-    TeamChoice teamChoice = msg.ReadMessage<TeamChoice>();
-    int choice = teamChoice.teamChoice;
-    int id = IDFromConn(msg.conn);
+  	public void OnServerRecieveTeamChoice(NetworkMessage msg) {
 
-	if (dict [id].team == -1) {
+	    TeamChoice teamChoice = msg.ReadMessage<TeamChoice>();
+	    int choice = teamChoice.teamChoice;
+	    int id = IDFromConn(msg.conn);
 
-			dict[id].team = choice;
+	    // if the player is choosing the team for the first time
+		if (dict[id].team == -1) {
 			
+			// update the team and send updated list to all clients
+			dict[id].team = choice;	
 			teamManager.addPlayerToTeam(dict[id].name, dict[id].team);
-			
 			sendTeam (dict[id].team);
 
-	} else if (dict [id].team != choice) {
+		} else if (dict[id].team != choice) {	// if the player has switched teams
+
+			// delete player from old list and send updated list to all clients
 			teamManager.deletePlayer(dict[id].name, dict[id].team);
 			sendTeam (dict[id].team);
+
+			// add player to new team and send updated list to clients
 			dict[id].team = choice;
 			teamManager.addPlayerToTeam(dict[id].name, dict[id].team);
-			
 			sendTeam (dict[id].team);
-	}
 
-    Debug.Log(dict[id].name + " chose team " + choice.ToString());
-  }
+		}
 
-	public void sendTeam(int team){
+	    Debug.Log(dict[id].name + " chose team " + choice.ToString());
+	  }
+
+  	// send the team list of players to all clients
+	public void sendTeam(int team) {
 		string display = "";
 		TeamList tl = new TeamList();
 
@@ -138,9 +143,9 @@ public void SceneChange(){
 		NetworkServer.SendToAll(Msgs.serverTeamMsg, tl);
 	}
 
-  public void OnServerStartGame(NetworkMessage msg){
-    ServerChangeScene("RunningScene");
-  }
+	public void OnServerStartGame(NetworkMessage msg) {
+    	ServerChangeScene("RunningScene");
+	}
 
 	// called when a client disconnects
 	public override void OnServerDisconnect(NetworkConnection conn)
@@ -154,7 +159,6 @@ public void SceneChange(){
 		NetworkServer.SetClientReady(conn);
 		ClientScene.RegisterPrefab(player1);
 		ClientScene.RegisterPrefab(player2);
-
 		
 	}
 	
@@ -163,7 +167,7 @@ public void SceneChange(){
 	{
 		/* This is where you can register players with teams, and spawn the player at custom points in the team space */
 		//hasConnected = true;
-    int id = IDFromConn(conn);
+    	int id = IDFromConn(conn);
 		GameObject player = Instantiate (dict[id].team==0?player1:(dict[id].team==1?player2:observer), GetStartPosition ().position, Quaternion.identity) as GameObject;
 		NetworkServer.AddPlayerForConnection (conn, player, playerControllerId);
 		
@@ -199,10 +203,11 @@ public void SceneChange(){
 		StopClient();
 	}
 	
-	public override void OnClientSceneChanged(NetworkConnection conn){
+	public override void OnClientSceneChanged(NetworkConnection conn) {
 		//ClientScene.Ready(conn);
 	}
 
+	// add resources score to the right team
 	public void AddScore(int team, int score) {
 		teamManager.addScore(score, team);
 	}

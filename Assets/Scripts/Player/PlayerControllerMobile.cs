@@ -65,11 +65,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
 				if(CrossPlatformInputManager.GetAxis ("AimH") + CrossPlatformInputManager.GetAxis ("AimV") != 0){
 					if(Time.time < nextFire)
 						return;
-		      /*GameObject projectile = Instantiate(Resources.Load("projectile")) as GameObject;
-		      projectile.GetComponent<Transform>().position = rb.position + direction + upDir;
-		      projectile.AddComponent<ProjectileMovement>().setDirection(direction);
-		      projectile.AddComponent<FauxGravityBody>();
-		      Destroy(projectile, 4);*/
+
 	        GetComponent<PlayerNetworkHandler>().CmdSpawnProjectile(rb.position + direction + upDir, direction);
 	      	nextFire = Time.time + fireRate;
 	      }
@@ -88,7 +84,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
 				Destroy(col.gameObject);
 				SetScoreText();
 				// RunningSceneGUI.AddScore(GameObject.GetComponent<TeamMember>().getTeamID(), resProp.getScore() );
-				NetworkManager.AddScore(1,10);
+				NetworkManager.singleton.client.AddScore(1,10);
 
 			}
 		}
