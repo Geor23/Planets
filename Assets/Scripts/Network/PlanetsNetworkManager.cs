@@ -228,66 +228,77 @@ public class TeamManager {
 
 	public List<Team> teams = new List<Team>() ;
 
-	
-	public void addScore(int score, int team){
+	Team teamPirates = new Team("pirates");
+	Team teamSuperCorp = new Team("super-corp");
+	teams.Add(teamPirates);	
+	teams.Add(teamSuperCorp);	
 
-		if ( team == 0 ) {
-			scoreTeamA += score;
-		} else if ( team == 1 ) {
-			scoreTeamB += score;
+	public void addScore(int score, int team) {
+
+		if ( team == 0 || team == 1 ) {
+			teams[team].addScore(score);
 		} else {
-			//error
+			Debug.LogError("ERROR: You are trying to access a non-existant team ! ");
 		}
 
 	}
 	
 	public void deletePlayer (String playerName, int team) {
 
-		if (team == 0) {
-			playersTeamA.Remove(playerName);
-		} else if (team == 1) {
-			playersTeamB.Remove(playerName);
+		if (team == 0 || team == 1 ) {
+
+			teams[team].removePlayer(playerName);
+
 		} else {
-			//error
+
+			Debug.LogError("ERROR: You are trying to access a non-existant team ! ");
+
 		}
 
 	}
 	
 	public void addPlayerToTeam( string playerName, int team) {
 
-		if (team == 0) {
-			playersTeamA.Add(playerName);
-		} else if (team == 1) {
-			playersTeamB.Add(playerName);
+		if (team == 0 || team == 1) {
+
+			teams[team].addPlayer(playerName) ;
+
 		} else {
-			//error
+
+			Debug.LogError("ERROR: You are trying to access a non-existant team ! ");
+
 		}
 
 	}
 
 	public List<string> getListTeam (int team) {
 
-		if (team == 0) {
-			return playersTeamA;
-		} else if (team == 1) {
-			return playersTeamB;
+		if (team == 0 || team == 1) {
+
+			return teams[team].getPlayers() ;
+
 		} else {
-			return null;
+
+			Debug.LogError("ERROR: You are trying to access a non-existant team ! ");
+
 		}
 
 	}
 
-	public int getScoreTeamA() {
+	public int getScore(int team) {
 
-		return scoreTeamA;
+		if (team == 0 || team == 1) {
+
+			return teams[team].getScore() ;
+
+		} else {
+
+			Debug.LogError("ERROR: You are trying to access a non-existant team ! ");
+
+		}
 
 	}
 	
-	public int getScoreTeamB() {
-
-		return scoreTeamB;
-
-	}
 }
 
 [System.Serializable]
@@ -297,8 +308,29 @@ public class Team {
 	public int score = 0 ;
 	public string teamName;
 
-	public void setName(string name) {
+	public void Team(string name) {
 		teamName = name ;
 	}
+
+	public void addScore( int scoreToAdd ) {
+		score += scoreToAdd ;
+	}
+
+	public int getScore() {
+		return score ;
+	}
+
+	public List<string> getPlayers () {
+		return players ;
+	}
+
+	public void addPlayer (string playerName) {
+		players.Add(playerName) ;
+	}
+
+	public void removePlayer (string playerName) {
+		players.Remove(playerName) ;
+	}
+
 }
 
