@@ -15,10 +15,10 @@ public class PlayerNetworkHandler : NetworkBehaviour {
       }
     }
 
-    public void AddScore(int team, int score) {
+    //public void AddScore(int team, int score) {
       //fdsfs
-      NetworkManager.singleton.AddScore(team,score);
-    }
+     // NetworkManager.singleton.AddScore(team,score);
+  //  }
 
     [Command]
     public void CmdSpawnProjectile(Vector3 position, Vector3 direction){
