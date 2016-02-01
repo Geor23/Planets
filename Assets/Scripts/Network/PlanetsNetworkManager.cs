@@ -224,14 +224,49 @@ public class PlanetsNetworkManager : NetworkManager {
 
 
 [System.Serializable]
+public class Team {
+
+	public List<string> players = new List<string>() ;
+	public int score = 0 ;
+
+	public void addScore( int scoreToAdd ) {
+		score += scoreToAdd ;
+	}
+
+	public int getScore() {
+		return score ;
+	}
+
+	public List<string> getPlayers () {
+		return players ;
+	}
+
+	public void addPlayer (string playerName) {
+		players.Add(playerName) ;
+	}
+
+	public void removePlayer (string playerName) {
+		players.Remove(playerName) ;
+	}
+
+}
+
+
+
+[System.Serializable]
 public class TeamManager {
 
-	public List<Team> teams = new List<Team>() ;
+	public List<Team> teams;
 
-	Team teamPirates = new Team("pirates");
-	Team teamSuperCorp = new Team("super-corp");
-	teams.Add(teamPirates);	
-	teams.Add(teamSuperCorp);	
+
+	public TeamManager() {
+		teams = new List<Team>() ;
+		Team teamPirates = new Team() ;
+		Team teamSuperCorp = new Team() ;
+		teams.Add(teamPirates) ;	
+		teams.Add(teamSuperCorp) ;	
+
+	}
 
 	public void addScore(int score, int team) {
 
@@ -280,6 +315,7 @@ public class TeamManager {
 		} else {
 
 			Debug.LogError("ERROR: You are trying to access a non-existant team ! ");
+			return null;
 
 		}
 
@@ -294,43 +330,10 @@ public class TeamManager {
 		} else {
 
 			Debug.LogError("ERROR: You are trying to access a non-existant team ! ");
+			return 0;
 
 		}
 
 	}
 	
 }
-
-[System.Serializable]
-public class Team {
-
-	public List<string> players = new List<string>() ;
-	public int score = 0 ;
-	public string teamName;
-
-	public void Team(string name) {
-		teamName = name ;
-	}
-
-	public void addScore( int scoreToAdd ) {
-		score += scoreToAdd ;
-	}
-
-	public int getScore() {
-		return score ;
-	}
-
-	public List<string> getPlayers () {
-		return players ;
-	}
-
-	public void addPlayer (string playerName) {
-		players.Add(playerName) ;
-	}
-
-	public void removePlayer (string playerName) {
-		players.Remove(playerName) ;
-	}
-
-}
-

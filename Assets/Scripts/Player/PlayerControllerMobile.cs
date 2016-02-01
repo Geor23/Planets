@@ -85,7 +85,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
 				SetScoreText();
 				GetComponent<PlayerNetworkHandler>().AddScore(0, 10);
 
-	        
+	        	NetworkManager.Instance.AddScore(1,10);
 				//RunningSceneGUI.AddScore(GameObject.GetComponent<TeamMember>().getTeamID(), resProp.getScore() );
 				//NetworkManager.singleton.client.AddScore(1,10);
 
