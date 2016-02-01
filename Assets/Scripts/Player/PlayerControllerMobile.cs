@@ -94,8 +94,8 @@ namespace UnityStandardAssets.CrossPlatformInput {
 				deathText.enabled = true;
 				deathTimerText.enabled = true;
 				mainCamera.enabled = true;
-				NetworkServer.DestroyPlayersForConnection(nm.client.connection);
-				Debug.Log("connection: " + nm.client.connection);
+				ClientScene.RemovePlayer(0);
+				Debug.Log("REMOVED");
 			}
 			
 			if(col.gameObject.CompareTag("ResourcePickUp")){

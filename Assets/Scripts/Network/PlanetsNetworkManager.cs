@@ -71,53 +71,47 @@ public void SceneChange(){
   }
 
   public void OnServerRecieveName(NetworkMessage msg){
-    Debug.Log("join!");
-    JoinMessage joinMsg = msg.ReadMessage<JoinMessage>();
-    string name = joinMsg.name;
-    int id = IDFromConn(msg.conn);
-    dict.Add(id, new PlayerData());
-    dict[id].name = name;
-	dict[id].team = -1;
-	sendTeam (0);
-	sendTeam (1);
+	  Debug.Log("join!");
+	  JoinMessage joinMsg = msg.ReadMessage<JoinMessage>();
+	  string name = joinMsg.name;
+	  int id = IDFromConn(msg.conn);
+	  dict.Add(id, new PlayerData());
+	  dict[id].name = name;
+		dict[id].team = -1;
+		sendTeam (0);
+		sendTeam (1);
 
-    Debug.Log("Player " + name + " joined the game");
+	  Debug.Log("Player " + name + " joined the game");
   }
 
 
   public void OnServerRecieveTeamChoice(NetworkMessage msg){
-    Debug.Log("Team!");
-    TeamChoice teamChoice = msg.ReadMessage<TeamChoice>();
-    int choice = teamChoice.teamChoice;
-    int id = IDFromConn(msg.conn);
+  	Debug.Log("Team!");
+  	TeamChoice teamChoice = msg.ReadMessage<TeamChoice>();
+  	int choice = teamChoice.teamChoice;
+  	int id = IDFromConn(msg.conn);
 
-	if (dict [id].team == -1) {
-
+		if (dict[id].team == -1) {
 			dict[id].team = choice;
-			
-			teamManager.addPlayerToTeam(dict[id].name, dict[id].team);
-			
+			teamManager.addPlayerToTeam(dict[id].name, dict[id].team);			
 			sendTeam (dict[id].team);
-
-	} else if (dict [id].team != choice) {
+		} else if (dict[id].team != choice) {
 			teamManager.deletePlayer(dict[id].name, dict[id].team);
 			sendTeam (dict[id].team);
 			dict[id].team = choice;
 			teamManager.addPlayerToTeam(dict[id].name, dict[id].team);
 			
 			sendTeam (dict[id].team);
-
-
-	}
-
-    Debug.Log(dict[id].name + " chose team " + choice.ToString());
+		}
+	  Debug.Log(dict[id].name + " chose team " + choice.ToString());
   }
+
 
 	public void sendTeam(int team){
 		string display = "";
 		TeamList tl = new TeamList();
 
-		foreach(string player in teamManager.getListTeam(team) ) {
+		foreach(string player in teamManager.getListTeam(team)){
 			display = display.ToString () + player.ToString() + "\n";
 		}
 		
@@ -126,29 +120,28 @@ public void SceneChange(){
 		NetworkServer.SendToAll(Msgs.serverTeamMsg, tl);
 	}
 
+
   public void OnServerStartGame(NetworkMessage msg){
     ServerChangeScene("RunningScene");
   }
 
+
 	// called when a client disconnects
-	public override void OnServerDisconnect(NetworkConnection conn)
-	{
+	public override void OnServerDisconnect(NetworkConnection conn){
 		NetworkServer.DestroyPlayersForConnection(conn);
 	}
 	
+
 	// called when a client is ready
-	public override void OnServerReady(NetworkConnection conn)
-	{
+	public override void OnServerReady(NetworkConnection conn){
 		NetworkServer.SetClientReady(conn);
 		ClientScene.RegisterPrefab(player1);
-		ClientScene.RegisterPrefab(player2);
-
-		
+		ClientScene.RegisterPrefab(player2);	
 	}
 	
+
 	// called when a new player is added for a client
-	public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId)
-	{
+	public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId){
 		/* This is where you can register players with teams, and spawn the player at custom points in the team space */
 		//hasConnected = true;
     int id = IDFromConn(conn);
@@ -157,12 +150,11 @@ public void SceneChange(){
 		
 	}
 	
+
 	//called when a player is removed for a client
-	public override void OnServerRemovePlayer(NetworkConnection conn, PlayerController playerController)
-	{
+	public override void OnServerRemovePlayer(NetworkConnection conn, PlayerController playerController){
 		GameObject player = playerController.gameObject;
-		if (player != null)
-		{
+		if (player != null){
 			if (playerController.unetView != null)
 				NetworkServer.Destroy(player);
 		}
@@ -175,15 +167,13 @@ public void SceneChange(){
 	/*
     Client functions */
 	// called when connected to a server
-	public override void OnClientConnect(NetworkConnection conn)
-	{
+	public override void OnClientConnect(NetworkConnection conn){
 		hasConnected = true;
 		Debug.Log("Client connected!");
 	}
 	
 	// called when disconnected from a server
-	public override void OnClientDisconnect(NetworkConnection conn)
-	{
+	public override void OnClientDisconnect(NetworkConnection conn){
 		StopClient();
 	}
 	
@@ -201,41 +191,46 @@ public void SceneChange(){
 
 [System.Serializable]
 public class TeamManager {
-	public List<string> playersTeamA = new List<string>() ;
-	public List<string> playersTeamB = new List<string>() ;
+	public List<string> playersTeamA = new List<string>();
+	public List<string> playersTeamB = new List<string>();
 	public int scoreTeamA = 0;
 	public int scoreTeamB = 0;
 	
+
 	public void addScoreToTeamA(int score){
 		scoreTeamA += score;
 	}
 	
+
 	public void addScoreToTeamB(int score){
 		scoreTeamB += score;
 	}
 	
-	public void deletePlayer (String playerName, int team) {
-		if (team == 0) {
+
+	public void deletePlayer(String playerName, int team){
+		if(team == 0){
 			playersTeamA.Remove(playerName);
-		} else if (team == 1) {
+		}else if(team == 1){
 			playersTeamB.Remove(playerName);
-		} else {
+		}else{
 			//error
 		}
 	}
 	
-	public void addPlayerToTeam( string playerName, int team) {
-		if (team == 0) {
+
+	public void addPlayerToTeam(string playerName, int team){
+		if(team == 0){
 			playersTeamA.Add(playerName);
-		} else if (team == 1) {
+		}else if(team == 1){
 			playersTeamB.Add(playerName);
-		} else {
+		}else{
 			//error
 		}
 	}
 
-	public List<string> getListTeam (int team) {
-		if (team == 0) {
+
+	public List<string> getListTeam(int team){
+		if(team == 0){
 			return playersTeamA;
 		} else if (team == 1) {
 			return playersTeamB;
@@ -244,9 +239,11 @@ public class TeamManager {
 		}
 	}
 
+
 	public int getScoreTeamA() {
 		return scoreTeamA;
 	}
+
 	
 	public int getScoreTeamB() {
 		return scoreTeamB;
