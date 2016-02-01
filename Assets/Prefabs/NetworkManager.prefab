@@ -56,16 +56,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_NetworkPort: 7777
+  m_ServerBindToIP: 0
+  m_ServerBindAddress: 
   m_NetworkAddress: localhost
   m_DontDestroyOnLoad: 1
   m_RunInBackground: 1
+  m_ScriptCRCCheck: 1
   m_SendPeerInfo: 0
   m_MaxDelay: .00999999978
   m_LogLevel: 2
   m_PlayerPrefab: {fileID: 190902, guid: 678d2b91c1a0c314088b28f46e1fb79a, type: 2}
   m_AutoCreatePlayer: 1
   m_PlayerSpawnMethod: 0
-  m_OfflineScene: StartScene
+  m_OfflineScene: ClientStartScene
   m_OnlineScene: Scene1
   m_SpawnPrefabs: []
   m_CustomConfig: 1

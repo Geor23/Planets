@@ -83,15 +83,11 @@ namespace UnityStandardAssets.CrossPlatformInput {
 				score = score + resProp.getScore();
 				Destroy(col.gameObject);
 				SetScoreText();
-				//GetComponent<PlayerNetworkHandler>().AddScore(0, 10);
-				AddScore sc = new AddScore();
-		sc.team = (int) 1;
-		sc.score = (int)10;
-		NetworkManager.singleton.client.Send(Msgs.clientTeamScore, sc);
-	        	//NetworkManager.singleton.AddScore(1,10);
-				//RunningSceneGUI.AddScore(GameObject.GetComponent<TeamMember>().getTeamID(), resProp.getScore() );
-				//NetworkManager.singleton.client.AddScore(1,10);
 
+				AddScore sc = new AddScore();
+				sc.team = (int) 1;
+				sc.score = (int)10;
+				NetworkManager.singleton.client.Send(Msgs.clientTeamScore, sc);
 			}
 		}
 
