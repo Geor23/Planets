@@ -14,6 +14,7 @@ public class PlayerNetworkHandler : NetworkBehaviour {
         ClientScene.RegisterPrefab(projectile);
       }
     }
+
     [Command]
     public void CmdSpawnProjectile(Vector3 position, Vector3 direction){
       GameObject projectile = Instantiate(Resources.Load("projectile")) as GameObject;
