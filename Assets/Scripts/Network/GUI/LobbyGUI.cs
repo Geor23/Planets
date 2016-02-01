@@ -38,6 +38,7 @@ public class LobbyGUI : MonoBehaviour {
       ChooseObserver();
     nm.client.Send(Msgs.startGame, new TeamChoice());
   }
+
 	public void OnClientReceiveTeamList(NetworkMessage msg){
 		TeamList tl = msg.ReadMessage<TeamList>(); 
 		if (tl.team == 0) {
