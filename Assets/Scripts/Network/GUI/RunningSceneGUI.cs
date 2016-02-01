@@ -15,7 +15,7 @@ public class RunningSceneGUI : MonoBehaviour {
 
 		nm = NetworkManager.singleton;
 		nm.client.RegisterHandler (Msgs.serverTeamScore, OnClientReceiveScores);
-
+		nm.client.Send(Msgs.requestTeamScores, new EmptyMessage());
 	}
 	
 	public void OnClientReceiveScores(NetworkMessage msg) {

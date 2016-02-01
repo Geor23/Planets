@@ -59,6 +59,8 @@ public class PlanetsNetworkManager : NetworkManager {
 	    NetworkServer.RegisterHandler(Msgs.startGame, OnServerStartGame);
 	    NetworkServer.RegisterHandler(Msgs.requestTeamMsg, OnServerRecieveTeamRequest);
 	    NetworkServer.RegisterHandler(Msgs.clientTeamScore, OnServerReceiveScore);
+	    NetworkServer.RegisterHandler(Msgs.requestTeamScores, OnServerRecieveTeamScoresRequest);
+
   	}
 
 
@@ -72,6 +74,14 @@ public class PlanetsNetworkManager : NetworkManager {
 
     	sendTeam(0);
     	sendTeam(1);
+
+    }
+
+    // when the client requests teams lists, send
+	public void OnServerRecieveTeamScoresRequest(NetworkMessage msg) {
+
+    	sendScore(0);
+    	sendScore(1);
 
     }
 

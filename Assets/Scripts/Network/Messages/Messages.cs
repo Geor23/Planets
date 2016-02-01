@@ -20,6 +20,7 @@ class Msgs : MsgType {
   public const short requestTeamMsg = 54; // client sends server a request for the team list
 	public const short clientTeamScore = 55;
   public const short serverTeamScore = 56;
+  public const short requestTeamScores = 57;
 
 }
 
