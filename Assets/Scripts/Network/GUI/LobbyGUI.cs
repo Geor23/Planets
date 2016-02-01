@@ -66,7 +66,7 @@ public class LobbyGUI : MonoBehaviour {
 
 		} else {
 
-			//error
+			Debug.LogError("ERROR[OnClientReceiveTeamList] : Received wrong team ");
 
 		}
 

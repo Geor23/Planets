@@ -85,8 +85,8 @@ namespace UnityStandardAssets.CrossPlatformInput {
 				SetScoreText();
 
 				AddScore sc = new AddScore();
-				sc.team = (int) 1;
-				sc.score = (int)10;
+				sc.team = (int) gameObject.GetComponent<TeamMember>().getTeamID();
+				sc.score = (int) resProp.getScore();
 				NetworkManager.singleton.client.Send(Msgs.clientTeamScore, sc);
 			}
 		}

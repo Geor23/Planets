@@ -14,16 +14,28 @@ public class RunningSceneGUI : MonoBehaviour {
 	public void Start() {
 
 		nm = NetworkManager.singleton;
+		nm.client.RegisterHandler (Msgs.serverTeamScore, OnClientReceiveScores);
 
 	}
 	
-	public void AddScore(int team, int score) {
+	public void OnClientReceiveScores(NetworkMessage msg) {
 
-		AddScore sc = new AddScore();
-		sc.team = (int) team;
-		sc.score = (int)score;
-		nm.client.Send(Msgs.clientTeamScore, sc);
+		TeamScore tl = msg.ReadMessage<TeamScore>(); 
+		if (tl.team == 0) { // if we received team pirates
 
+      		//update accordingly
+			teamAScore.text = "Team Pirates: " + tl.score.ToString();
+
+		} else if (tl.team == 1) {  // if we received team super-corp 
+
+      		// update accordingly
+			teamBScore.text = "Team Super-Corp: " + tl.score.ToString();
+
+		} else {
+
+			Debug.LogError("ERROR[OnClientReceiveScores] : Received wrong team");
+
+		}
 	}
 	
 }

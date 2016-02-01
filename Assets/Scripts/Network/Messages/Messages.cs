@@ -12,12 +12,15 @@ enum TeamID : int {
 
 
 class Msgs : MsgType {
+
   public const short clientJoinMsg = 50;
   public const short clientTeamMsg = 51;
-  public const short startGame = 52;
-  public const short serverTeamMsg = 53;
-  public const short requestTeamMsg = 54;
+  public const short startGame = 52;      // 
+  public const short serverTeamMsg = 53;  // server sends client the team list
+  public const short requestTeamMsg = 54; // client sends server a request for the team list
 	public const short clientTeamScore = 55;
+  public const short serverTeamScore = 56;
+
 }
 
 public class JoinMessage : MessageBase {
@@ -37,4 +40,9 @@ public class TeamList : MessageBase {
 public class AddScore : MessageBase {
 	public int score;
 	public int team;
+}
+
+public class TeamScore : MessageBase {
+  public int team;
+  public int score;
 }

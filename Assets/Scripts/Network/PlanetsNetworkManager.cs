@@ -59,7 +59,6 @@ public class PlanetsNetworkManager : NetworkManager {
 	    NetworkServer.RegisterHandler(Msgs.startGame, OnServerStartGame);
 	    NetworkServer.RegisterHandler(Msgs.requestTeamMsg, OnServerRecieveTeamRequest);
 	    NetworkServer.RegisterHandler(Msgs.clientTeamScore, OnServerReceiveScore);
-
   	}
 
 
@@ -78,10 +77,23 @@ public class PlanetsNetworkManager : NetworkManager {
 
   	public void OnServerReceiveScore(NetworkMessage msg) {
 
+  		// read the message
 	  	AddScore sc = msg.ReadMessage<AddScore>();
-	  	int team = sc.team ;
-	  	int score = sc.score;
-	  	teamManager.addScore(score, team);
+
+	  	// add the score to the correct team
+	  	teamManager.addScore(sc.score, sc.team);
+
+	  	// send to everyone the updated team score
+	  	sendScore(sc.team);
+	}
+
+	// send the team list of players to all clients
+	public void sendScore(int team) {
+
+		TeamScore tl = new TeamScore();
+		tl.team = (int) team;
+		tl.score = (int) teamManager.getScore(team);
+		NetworkServer.SendToAll(Msgs.serverTeamScore, tl);
 
 	}
 
@@ -210,10 +222,6 @@ public class PlanetsNetworkManager : NetworkManager {
 		//ClientScene.Ready(conn);
 	}
 
-	// add resources score to the right team
-	public void AddScore(int team, int score) {
-		teamManager.addScore(score, team);
-	}
 	
 	// called when a network error occurs
 	//public override void OnClientError(NetworkConnection conn, int errorCode);
