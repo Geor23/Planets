@@ -144,13 +144,16 @@ public class PlanetsNetworkManager : NetworkManager {
 	}
 
 	public void OnServerStartGame(NetworkMessage msg) {
+
     	ServerChangeScene("RunningScene");
+
 	}
 
 	// called when a client disconnects
-	public override void OnServerDisconnect(NetworkConnection conn)
-	{
+	public override void OnServerDisconnect(NetworkConnection conn) {
+
 		NetworkServer.DestroyPlayersForConnection(conn);
+
 	}
 	
 	// called when a client is ready
@@ -222,11 +225,9 @@ public class PlanetsNetworkManager : NetworkManager {
 
 [System.Serializable]
 public class TeamManager {
-	
-	public List<string> playersTeamA = new List<string>() ;
-	public List<string> playersTeamB = new List<string>() ;
-	public int scoreTeamA = 0;
-	public int scoreTeamB = 0;
+
+	public List<Team> teams = new List<Team>() ;
+
 	
 	public void addScore(int score, int team){
 
@@ -277,10 +278,27 @@ public class TeamManager {
 	}
 
 	public int getScoreTeamA() {
+
 		return scoreTeamA;
+
 	}
 	
 	public int getScoreTeamB() {
+
 		return scoreTeamB;
+
 	}
 }
+
+[System.Serializable]
+public class Team {
+
+	public List<string> players = new List<string>() ;
+	public int score = 0 ;
+	public string teamName;
+
+	public void setName(string name) {
+		teamName = name ;
+	}
+}
+

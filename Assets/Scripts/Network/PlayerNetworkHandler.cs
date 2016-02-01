@@ -14,6 +14,12 @@ public class PlayerNetworkHandler : NetworkBehaviour {
         ClientScene.RegisterPrefab(projectile);
       }
     }
+
+    public void AddScore(int team, int score) {
+      //fdsfs
+      NetworkManager.singleton.AddScore(team,score);
+    }
+
     [Command]
     public void CmdSpawnProjectile(Vector3 position, Vector3 direction){
       GameObject projectile = Instantiate(Resources.Load("projectile")) as GameObject;

@@ -11,15 +11,19 @@ public class RunningSceneGUI : MonoBehaviour {
 	public Text teamAScore;
 	public Text teamBScore;
 	
-	public void Start(){
+	public void Start() {
+
 		nm = NetworkManager.singleton;
+
 	}
 	
-	public void AddScore(int team, int score){
+	public void AddScore(int team, int score) {
+
 		AddScore sc = new AddScore();
 		sc.team = (int) team;
 		sc.score = (int)score;
 		nm.client.Send(Msgs.clientTeamScore, sc);
+
 	}
 	
 }

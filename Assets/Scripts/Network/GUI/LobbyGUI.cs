@@ -11,45 +11,65 @@ public class LobbyGUI : MonoBehaviour {
 	public Text teamA;
 	public Text teamB;
 
-  public void Start(){
+  public void Start() {
     
     nm = NetworkManager.singleton;
-	nm.client.RegisterHandler (Msgs.serverTeamMsg, OnClientReceiveTeamList);
+	  nm.client.RegisterHandler (Msgs.serverTeamMsg, OnClientReceiveTeamList);
     nm.client.Send(Msgs.requestTeamMsg, new EmptyMessage());
-    }
 
-  public void ChooseTeamPirates(){
+  }
+
+  public void ChooseTeamPirates() {
+
     TeamChoice tc = new TeamChoice();
     tc.teamChoice = (int) TeamID.TEAM_PIRATES;
     nm.client.Send(Msgs.clientTeamMsg, tc);
+
   }
 
-  public void ChooseTeamSuperCorp(){
+  public void ChooseTeamSuperCorp() {
+
     TeamChoice tc = new TeamChoice();
     tc.teamChoice =(int) TeamID.TEAM_SUPERCORP;
     nm.client.Send(Msgs.clientTeamMsg, tc);
+
   }
 
-  public void ChooseObserver(){
+  public void ChooseObserver() {
+
     TeamChoice tc = new TeamChoice();
     tc.teamChoice = (int) TeamID.TEAM_OBSERVER;
     nm.client.Send(Msgs.clientTeamMsg, tc);
+
   }
 
-  public void StartGame(){
+  public void StartGame() {
+
     if(PlayerConfig.singleton.isObserver)
       ChooseObserver();
     nm.client.Send(Msgs.startGame, new EmptyMessage());
+
   }
-	public void OnClientReceiveTeamList(NetworkMessage msg){
+
+	public void OnClientReceiveTeamList(NetworkMessage msg) {
+
 		TeamList tl = msg.ReadMessage<TeamList>(); 
-		if (tl.team == 0) {
+		if (tl.team == 0) { // if we received team pirates
+
+      //update accordingly
 			teamA.text = tl.teamList;
-		} else if (tl.team == 1) {
+
+		} else if (tl.team == 1) {  // if we received team super-corp 
+
+      // update accordingly
 			teamB.text = tl.teamList;
+
 		} else {
+
 			//error
+
 		}
+
 	}
 
 }
