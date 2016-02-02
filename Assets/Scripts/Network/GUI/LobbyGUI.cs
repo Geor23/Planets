@@ -51,8 +51,8 @@ public class LobbyGUI : MonoBehaviour {
 
   }
 
-	public void OnClientReceiveTeamList(NetworkMessage msg) {
 
+	public void OnClientReceiveTeamList(NetworkMessage msg){
 		TeamList tl = msg.ReadMessage<TeamList>(); 
 		if (tl.team == 0) { // if we received team pirates
 
