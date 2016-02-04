@@ -94,7 +94,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
 				ClientScene.RemovePlayer(0);
 			}
 			
-			if(col.gameObject.CompareTag("ResourcePickUp")){
+			else if(col.gameObject.CompareTag("ResourcePickUp")){
 				ResourceProperties resProp = col.gameObject.GetComponent<ResourceProperties>();
 				score = score + resProp.getScore();
 				Destroy(col.gameObject);
