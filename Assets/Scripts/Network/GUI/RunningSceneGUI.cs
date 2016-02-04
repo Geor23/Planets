@@ -10,8 +10,8 @@ public class RunningSceneGUI : MonoBehaviour {
 	NetworkManager nm;
 	public Text teamAScore;
 	public Text teamBScore;
-	public Text piratesWin;
-	public Text superCorpWin;
+	public Image piratesWin;
+	public Image superCorpWin;
 	int teamA;
 	int teamB;
 	
@@ -29,22 +29,26 @@ public class RunningSceneGUI : MonoBehaviour {
 
 			teamA = tl.score;
 			if (teamA > teamB ) {
-				teamAScore.text = " <quad material="+mat+" size=20 x=0.1 y=0.1 width=0.5 height=0.5 /> ";
+				piratesWin.gameObject.active = true;
+				superCorpWin.gameObject.active = false;
 			} else {
-				teamAScore.text = "";
+				piratesWin.gameObject.active = false;
+				superCorpWin.gameObject.active = true;
 			}
       		//update accordingly
-			teamAScore.text += "Team Pirates: " + tl.score.ToString();
+			teamAScore.text = tl.score.ToString();
 
 		} else if (tl.team == 1) {  // if we received team super-corp 
 			teamB = tl.score;
 			if (teamA < teamB ) {
-				teamBScore.text = " <quad material="+mat+" size=20 x=0.1 y=0.1 width=0.5 height=0.5 /> ";
+				piratesWin.gameObject.active = false;
+				superCorpWin.gameObject.active = true;
 			} else {
-				teamBScore.text = "";
+				piratesWin.gameObject.active = true;
+				superCorpWin.gameObject.active = false;
 			}
       		// update accordingly
-			teamBScore.text += "Team Super-Corp: " + tl.score.ToString();
+			teamBScore.text = tl.score.ToString();
 
 		} else {
 
