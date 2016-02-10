@@ -98,6 +98,8 @@ namespace UnityStandardAssets.CrossPlatformInput {
 				//spawn a resource in the position the player died
 				GameObject objClone = (GameObject)Instantiate(ResourcePickUp, gameObject.transform.position, gameObject.transform.rotation);
 				NetworkServer.Spawn(objClone);
+				objClone.GetComponent<DeathResourceProperties>().setScore(score);
+				Debug.Log("Setting the spawned resource's score to "+score);
 				//objClone.GetComponent<ResourceProperties>().setScore(score);
 			}
 			
