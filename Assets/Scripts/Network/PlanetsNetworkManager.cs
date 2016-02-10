@@ -89,14 +89,14 @@ public class PlanetsNetworkManager : NetworkManager {
 
   		// read the message
 	  	AddScore sc = msg.ReadMessage<AddScore>();
-
+	  	//Debug.Log("got scoooooreeee");
 	  	int id = IDFromConn(msg.conn);
-
+	  	//Debug.Log("team: " + dict[id].team);
 	  	// add the score to the correct team
 	  	teamManager.addScore(sc.score, dict[id].team);
 
 	  	// send to everyone the updated team score
-	  	//sendScore(sc.team);
+	  	sendScore(dict[id].team);
 	}
 
 	// send the team list of players to all clients
