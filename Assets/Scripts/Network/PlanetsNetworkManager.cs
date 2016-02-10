@@ -89,12 +89,14 @@ public class PlanetsNetworkManager : NetworkManager {
 
   		// read the message
 	  	AddScore sc = msg.ReadMessage<AddScore>();
-
+	  	//Debug.Log("got scoooooreeee");
+	  	int id = IDFromConn(msg.conn);
+	  	//Debug.Log("team: " + dict[id].team);
 	  	// add the score to the correct team
-	  	teamManager.addScore(sc.score, sc.team);
+	  	teamManager.addScore(sc.score, dict[id].team);
 
 	  	// send to everyone the updated team score
-	  	sendScore(sc.team);
+	  	sendScore(dict[id].team);
 	}
 
 	// send the team list of players to all clients
@@ -107,7 +109,7 @@ public class PlanetsNetworkManager : NetworkManager {
 
 	}
 
-	public void OnServerRecieveName(NetworkMessage msg){
+	public void OnServerRecieveName(NetworkMessage msg) {
 	    
 	    JoinMessage joinMsg = msg.ReadMessage<JoinMessage>();
 	    string name = joinMsg.name;
@@ -181,7 +183,7 @@ public class PlanetsNetworkManager : NetworkManager {
 	
 
 	// called when a client is ready
-	public override void OnServerReady(NetworkConnection conn){
+	public override void OnServerReady(NetworkConnection conn) {
 		NetworkServer.SetClientReady(conn);
 		ClientScene.RegisterPrefab(player1);
 		ClientScene.RegisterPrefab(player2);
@@ -189,7 +191,7 @@ public class PlanetsNetworkManager : NetworkManager {
 	
 
 	// called when a new player is added for a client
-	public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId){
+	public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId) {
 		/* This is where you can register players with teams, and spawn the player at custom points in the team space */
 		//hasConnected = true;
     	int id = IDFromConn(conn);
@@ -200,7 +202,7 @@ public class PlanetsNetworkManager : NetworkManager {
 	
 
 	//called when a player is removed for a client
-	public override void OnServerRemovePlayer(NetworkConnection conn, PlayerController playerController){
+	public override void OnServerRemovePlayer(NetworkConnection conn, PlayerController playerController) {
 		GameObject player = playerController.gameObject;
 		if (player != null){
 			if (playerController.unetView != null)
@@ -215,13 +217,13 @@ public class PlanetsNetworkManager : NetworkManager {
 	/*
     Client functions */
 	// called when connected to a server
-	public override void OnClientConnect(NetworkConnection conn){
+	public override void OnClientConnect(NetworkConnection conn) {
 		hasConnected = true;
 		Debug.Log("Client connected!");
 	}
 	
 	// called when disconnected from a server
-	public override void OnClientDisconnect(NetworkConnection conn){
+	public override void OnClientDisconnect(NetworkConnection conn) {
 		StopClient();
 	}
 	
@@ -283,7 +285,6 @@ public class TeamManager {
 	}
 
 	public void addScore(int score, int team) {
-
 		if ( team == 0 || team == 1 ) {
 			teams[team].addScore(score);
 		} else {
