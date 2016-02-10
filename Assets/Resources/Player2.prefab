@@ -158,6 +158,7 @@ Camera:
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
+  m_TargetEye: 3
   m_HDR: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
@@ -326,6 +327,10 @@ MonoBehaviour:
   turret: {fileID: 479182}
   scoreText: {fileID: 0}
   winText: {fileID: 0}
+  deathText: {fileID: 0}
+  deathTimerText: {fileID: 0}
+  ResourcePickUp: {fileID: 116834, guid: 247d629bb9a114da68aa35aee9e91501, type: 2}
+  mainCamera: {fileID: 0}
   score: 0
 --- !u!114 &11468992
 MonoBehaviour:
@@ -340,6 +345,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 14
@@ -543,6 +554,10 @@ Prefab:
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: ResourcePickUp
+      value: 
+      objectReference: {fileID: 116834, guid: 247d629bb9a114da68aa35aee9e91501, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 135240}

@@ -25,7 +25,6 @@ namespace UnityStandardAssets.CrossPlatformInput {
 		public Text deathTimerText;
 		public GameObject ResourcePickUp;
 
-
 		public Camera mainCamera;
 
 		public int score;
@@ -94,7 +93,11 @@ namespace UnityStandardAssets.CrossPlatformInput {
 				deathTimerText.enabled = true;
 				mainCamera.enabled = true;
 				ClientScene.RemovePlayer(0);
-				GetComponent<ResourceSpawn>().SpawnResourceAtPosition(gameObject.transform);
+			//GetComponent<ResourceSpawn>().SpawnResourceAtPosition(gameObject.transform);
+				GameObject objClone = (GameObject)Instantiate(ResourcePickUp, gameObject.transform.position, gameObject.transform.rotation);
+				//objClone.GetComponent<Rigidbody>().velocity = new Vector3(0,0,0);
+				//Here we should get the direction to the planet, so we can reduce the explosive launches some get when they roll high in vertical velocity
+				NetworkServer.Spawn(objClone);
 			}
 			
 			else if(col.gameObject.CompareTag("ResourcePickUp")){
