@@ -24,8 +24,9 @@ public class PlanetsNetworkManager : NetworkManager {
   	[SerializeField] GameObject observer;
 
 	GameObject chosenCharacter;
-    public string round1Scene; //Round 1 name
-    public string round2Scene;
+    public string round1Scene = "Round1"; //Round 1 name
+    public string round2Scene = "Round2";
+    public string lobbySceneName = "LobbyScene";
     TeamManager teamManager = new TeamManager();
 
 	/*
@@ -40,16 +41,27 @@ public class PlanetsNetworkManager : NetworkManager {
   	public bool hasPickedTeam = false; 
 	public bool hasConnected = false;
   	public bool inRound = false;
-  	int timerRound = 180;
+    public const float roundLength = 10;
+    float timerRound = 0;
 
+    public static PlanetsNetworkManager getSingleton(){
+        return (PlanetsNetworkManager)singleton;
+    }
 
-	public void SceneChange() {
-		//Change scene
-	}
+    public void SceneChange() {
+        Debug.Log(networkSceneName);
+        if(NetworkManager.networkSceneName == round1Scene){
+            ServerChangeScene(round2Scene);
+        }else{
+            ServerChangeScene(lobbySceneName);
+            inRound = false; //Indicates no longer in a round
+        }
+        timerRound = roundLength; //Resets timer
+    }
 
-
-  	public void Start() {
+    public void Start() {
     	dict = new Dictionary<int, PlayerData>();
+        timerRound = roundLength;
   	}
 	
 	// register needed handlers when server starts
@@ -62,6 +74,7 @@ public class PlanetsNetworkManager : NetworkManager {
 	    NetworkServer.RegisterHandler(Msgs.requestTeamMsg, OnServerRecieveTeamRequest);
 	    NetworkServer.RegisterHandler(Msgs.clientTeamScore, OnServerReceiveScore);
 	    NetworkServer.RegisterHandler(Msgs.requestTeamScores, OnServerRecieveTeamScoresRequest);
+
 
   	}
 
@@ -168,10 +181,9 @@ public class PlanetsNetworkManager : NetworkManager {
 
 
 	public void OnServerStartGame(NetworkMessage msg) {
-
     	ServerChangeScene(round1Scene);
-
-	}
+        inRound = true;
+    }
 
 
 	// called when a client disconnects

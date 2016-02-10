@@ -12,9 +12,10 @@ public class SimpleTimer : NetworkBehaviour {
     if(isServer){
       timerRound -= Time.deltaTime;
       if ( timerRound < 0){
-         NetworkManager.singleton.ServerChangeScene("LobbyScene");
+         PlanetsNetworkManager pnm = PlanetsNetworkManager.getSingleton();
+                pnm.SceneChange();
+                timerRound = 5;
       }
     }
   }
-
 }
