@@ -96,9 +96,11 @@ namespace UnityStandardAssets.CrossPlatformInput {
 				
 				//spawn a resource in the position the player died
 				GameObject objClone = (GameObject)Instantiate(ResourcePickUp, gameObject.transform.position, gameObject.transform.rotation);
-				NetworkServer.Spawn(objClone);
+				
 				objClone.GetComponent<DeathResourceProperties>().setScore(score);
 				Debug.Log("Setting the spawned resource's score to "+score);
+				NetworkServer.Spawn(objClone);
+
 				
 				ClientScene.RemovePlayer(0);
 				//objClone.GetComponent<ResourceProperties>().setScore(score);
@@ -115,7 +117,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
 				sc.score = (int) resProp.getScore();
 				NetworkManager.singleton.client.Send(Msgs.clientTeamScore, sc);
 			}
-			
+
 			else if(col.gameObject.CompareTag("ResourcePickUpDeath")){
 				DeathResourceProperties resProp = col.gameObject.GetComponent<DeathResourceProperties>();
 				score = score + resProp.getScore();
