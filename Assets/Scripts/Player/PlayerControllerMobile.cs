@@ -107,8 +107,12 @@ namespace UnityStandardAssets.CrossPlatformInput {
 			}
 		}
 
+		// function only called after the player dies to get the score that the team manager has to substract
+		// hence the score has to be reset to 0 after that
 		public int getScore(){
-			return score;
+			int scoreToRemove = score;
+			score = 0;
+			return scoreToRemove;
 		}
 
 			
