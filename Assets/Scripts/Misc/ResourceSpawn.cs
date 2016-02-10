@@ -28,12 +28,4 @@ public class ResourceSpawn : NetworkBehaviour {
 		NetworkServer.Spawn(objClone);
 	}
 
-	// function called on death of player when he loses resource
-	public void SpawnResourceAtPosition(Transform trans){
-		objClone = (GameObject)Instantiate(ResourcePickUp, trans.position, trans.rotation);
-		objClone.GetComponent<Rigidbody>().velocity = new Vector3(Random.Range(0,randomVelocityMax),Random.Range(0,randomVelocityMax),Random.Range(0,randomVelocityMax));
-		//Here we should get the direction to the planet, so we can reduce the explosive launches some get when they roll high in vertical velocity
-		NetworkServer.Spawn(objClone);
-	}
-
 }

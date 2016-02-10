@@ -93,18 +93,31 @@ namespace UnityStandardAssets.CrossPlatformInput {
 				deathText.enabled = true;
 				deathTimerText.enabled = true;
 				mainCamera.enabled = true;
-				ClientScene.RemovePlayer(0);
 				
 				//spawn a resource in the position the player died
 				GameObject objClone = (GameObject)Instantiate(ResourcePickUp, gameObject.transform.position, gameObject.transform.rotation);
 				NetworkServer.Spawn(objClone);
 				objClone.GetComponent<DeathResourceProperties>().setScore(score);
 				Debug.Log("Setting the spawned resource's score to "+score);
+				
+				ClientScene.RemovePlayer(0);
 				//objClone.GetComponent<ResourceProperties>().setScore(score);
 			}
 			
 			else if(col.gameObject.CompareTag("ResourcePickUp")){
 				ResourceProperties resProp = col.gameObject.GetComponent<ResourceProperties>();
+				score = score + resProp.getScore();
+				Destroy(col.gameObject);
+				SetScoreText();
+
+				AddScore sc = new AddScore();
+				sc.team = (int) gameObject.GetComponent<TeamMember>().getTeamID();
+				sc.score = (int) resProp.getScore();
+				NetworkManager.singleton.client.Send(Msgs.clientTeamScore, sc);
+			}
+			
+			else if(col.gameObject.CompareTag("ResourcePickUpDeath")){
+				DeathResourceProperties resProp = col.gameObject.GetComponent<DeathResourceProperties>();
 				score = score + resProp.getScore();
 				Destroy(col.gameObject);
 				SetScoreText();
