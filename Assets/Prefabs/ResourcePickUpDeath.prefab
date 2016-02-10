@@ -16,8 +16,8 @@ GameObject:
   - 114: {fileID: 11413754}
   - 114: {fileID: 11448070}
   m_Layer: 0
-  m_Name: ResourcePickUp 1
-  m_TagString: ResourcePickUp
+  m_Name: ResourcePickUpDeath
+  m_TagString: New Tag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -160,7 +160,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_TagString
-      value: ResourcePickUp
+      value: New Tag
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Enabled
