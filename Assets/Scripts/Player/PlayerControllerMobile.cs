@@ -107,6 +107,10 @@ namespace UnityStandardAssets.CrossPlatformInput {
 			}
 		}
 
+		public int getScore(){
+			return score;
+		}
+
 			
 		void SetScoreText(){
 			scoreText.text = "Score: " + score.ToString();

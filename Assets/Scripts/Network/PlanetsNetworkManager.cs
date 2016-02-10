@@ -207,6 +207,10 @@ public class PlanetsNetworkManager : NetworkManager {
 	public override void OnServerRemovePlayer(NetworkConnection conn, PlayerController playerController) {
 		GameObject player = playerController.gameObject;
 		if (player != null){
+			int id = IDFromConn(conn);
+			int sc = player.GetComponent<UnityStandardAssets.CrossPlatformInput.PlayerControllerMobile>().getScore();
+			teamManager.removeScore(sc, dict[id].team);
+			Debug.Log("Player died. Removing "+sc+ " points from team "+ dict[id].team);
 			if (playerController.unetView != null)
 				NetworkServer.Destroy(player);
 		}
@@ -252,6 +256,10 @@ public class Team {
 		score += scoreToAdd ;
 	}
 
+	public void removeScore( int scoreToRemove ) {
+		score -= scoreToRemove ;
+	}
+
 	public int getScore() {
 		return score ;
 	}
@@ -289,6 +297,15 @@ public class TeamManager {
 	public void addScore(int score, int team) {
 		if ( team == 0 || team == 1 ) {
 			teams[team].addScore(score);
+		} else {
+			Debug.LogError("ERROR: You are trying to access a non-existant team ! ");
+		}
+
+	}
+
+	public void removeScore(int score, int team) {
+		if ( team == 0 || team == 1 ) {
+			teams[team].removeScore(score);
 		} else {
 			Debug.LogError("ERROR: You are trying to access a non-existant team ! ");
 		}
