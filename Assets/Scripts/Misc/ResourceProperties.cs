@@ -11,9 +11,15 @@ public class ResourceProperties : MonoBehaviour {
 		score = Random.Range (minScore, maxScore);
 		Rescale();
 	}
+
 	public int getScore () {
 		return score;
 	}
+
+	public int setScore(int score){
+
+	}
+
 	void OnCollisionEnter(Collision col) {
 		if(col.gameObject.CompareTag("ResourcePickUp")){
 				if (GetInstanceID() > col.gameObject.GetInstanceID()){

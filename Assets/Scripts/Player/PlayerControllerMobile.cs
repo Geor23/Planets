@@ -28,6 +28,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
 		public Camera mainCamera;
 
 		public int score;
+		//private int scoreToRemove;
 
 		Rigidbody rb;
 
@@ -93,11 +94,11 @@ namespace UnityStandardAssets.CrossPlatformInput {
 				deathTimerText.enabled = true;
 				mainCamera.enabled = true;
 				ClientScene.RemovePlayer(0);
-			//GetComponent<ResourceSpawn>().SpawnResourceAtPosition(gameObject.transform);
+				
+				//spawn a resource in the position the player died
 				GameObject objClone = (GameObject)Instantiate(ResourcePickUp, gameObject.transform.position, gameObject.transform.rotation);
-				//objClone.GetComponent<Rigidbody>().velocity = new Vector3(0,0,0);
-				//Here we should get the direction to the planet, so we can reduce the explosive launches some get when they roll high in vertical velocity
 				NetworkServer.Spawn(objClone);
+				//objClone.GetComponent<ResourceProperties>().setScore(score);
 			}
 			
 			else if(col.gameObject.CompareTag("ResourcePickUp")){
