@@ -23,8 +23,10 @@ public class PlanetsNetworkManager : NetworkManager {
 	[SerializeField] GameObject player2;
   	[SerializeField] GameObject observer;
 
-	GameObject chosenCharacter; 
-	TeamManager teamManager = new TeamManager();
+	GameObject chosenCharacter;
+    public string round1Scene; //Round 1 name
+    public string round2Scene;
+    TeamManager teamManager = new TeamManager();
 
 	/*
     Override the virtual default functions to build on existing behaviour 
@@ -167,7 +169,7 @@ public class PlanetsNetworkManager : NetworkManager {
 
 	public void OnServerStartGame(NetworkMessage msg) {
 
-    	ServerChangeScene("RunningScene");
+    	ServerChangeScene(round1Scene);
 
 	}
 
