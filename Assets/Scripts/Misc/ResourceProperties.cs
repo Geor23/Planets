@@ -16,8 +16,8 @@ public class ResourceProperties : MonoBehaviour {
 		return score;
 	}
 
-	public int setScore(int score){
-
+	public void setScore(int scoreToSet){
+		score = scoreToSet;
 	}
 
 	void OnCollisionEnter(Collision col) {
