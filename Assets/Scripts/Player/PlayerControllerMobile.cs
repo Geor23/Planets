@@ -94,7 +94,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
 				deathTimerText.enabled = true;
 				mainCamera.enabled = true;
 				ClientScene.RemovePlayer(0);
-				GetComponent<ResourceSpawm>().SpawnResourceAtPosition(gameObject.transform);
+				GetComponent<ResourceSpawn>().SpawnResourceAtPosition(gameObject.transform);
 			}
 			
 			else if(col.gameObject.CompareTag("ResourcePickUp")){
