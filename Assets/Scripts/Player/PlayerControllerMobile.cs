@@ -23,6 +23,8 @@ namespace UnityStandardAssets.CrossPlatformInput {
 		public Text winText;
 		public Text deathText;
 		public Text deathTimerText;
+		public GameObject ResourcePickUp;
+
 
 		public Camera mainCamera;
 
@@ -92,6 +94,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
 				deathTimerText.enabled = true;
 				mainCamera.enabled = true;
 				ClientScene.RemovePlayer(0);
+				GetComponent<ResourceSpawm>().SpawnResourceAtPosition(gameObject.transform);
 			}
 			
 			else if(col.gameObject.CompareTag("ResourcePickUp")){
