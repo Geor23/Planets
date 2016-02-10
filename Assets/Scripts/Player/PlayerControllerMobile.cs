@@ -12,6 +12,8 @@ namespace UnityStandardAssets.CrossPlatformInput {
 		private const float fireRate = 0.3F;
 		private float nextFire = 0.0F;
 
+		private bool hasCollide = false;
+
 		public float speed = 3.0F;
 		public float rotSpeed = 12.0F;
 
@@ -86,12 +88,14 @@ namespace UnityStandardAssets.CrossPlatformInput {
 		
 		void OnCollisionEnter(Collision col){
 			if(col.gameObject.CompareTag("projectile")){
-				Debug.Log("In OnCollisionEnter projectile");
-				Destroy(col.gameObject);
-				deathText.enabled = true;
-				deathTimerText.enabled = true;
-				mainCamera.enabled = true;
-				ClientScene.RemovePlayer(0);
+				if(hasCollide == false){
+					hasCollide = true;
+					Destroy(col.gameObject);
+					deathText.enabled = true;
+					deathTimerText.enabled = true;
+					mainCamera.enabled = true;
+					ClientScene.RemovePlayer(0);
+				}
 			}
 			
 			else if(col.gameObject.CompareTag("ResourcePickUp")){
