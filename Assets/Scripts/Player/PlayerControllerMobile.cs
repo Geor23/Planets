@@ -101,12 +101,12 @@ namespace UnityStandardAssets.CrossPlatformInput {
 				Debug.Log("Setting the spawned resource's score to "+score);
 				NetworkServer.Spawn(objClone);
 
-				
+
 				ClientScene.RemovePlayer(0);
 				//objClone.GetComponent<ResourceProperties>().setScore(score);
 			}
 			
-			else if(col.gameObject.CompareTag("ResourcePickUp")){
+			if(col.gameObject.CompareTag("ResourcePickUp")){
 				ResourceProperties resProp = col.gameObject.GetComponent<ResourceProperties>();
 				score = score + resProp.getScore();
 				Destroy(col.gameObject);
@@ -118,7 +118,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
 				NetworkManager.singleton.client.Send(Msgs.clientTeamScore, sc);
 			}
 
-			else if(col.gameObject.CompareTag("ResourcePickUpDeath")){
+			if(col.gameObject.CompareTag("ResourcePickUpDeath")){
 				DeathResourceProperties resProp = col.gameObject.GetComponent<DeathResourceProperties>();
 				score = score + resProp.getScore();
 				Destroy(col.gameObject);
