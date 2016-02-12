@@ -25,10 +25,12 @@ namespace UnityStandardAssets.CrossPlatformInput {
 		public Text winText;
 		public Text deathText;
 		public Text deathTimerText;
+		public GameObject ResourcePickUp;
 
 		public Camera mainCamera;
 
 		public int score;
+		//private int scoreToRemove;
 
 		Rigidbody rb;
 
@@ -88,17 +90,26 @@ namespace UnityStandardAssets.CrossPlatformInput {
 		
 		void OnCollisionEnter(Collision col){
 			if(col.gameObject.CompareTag("projectile")){
+				
 				if(hasCollide == false){
 					hasCollide = true;
 					Destroy(col.gameObject);
 					deathText.enabled = true;
 					deathTimerText.enabled = true;
 					mainCamera.enabled = true;
+
+					//spawn a resource in the position the player died
+					GameObject objClone = (GameObject)Instantiate(ResourcePickUp, gameObject.transform.position, gameObject.transform.rotation);
+					
+					objClone.GetComponent<DeathResourceProperties>().setScore(score);
+					Debug.Log("Setting the spawned resource's score to "+score);
+					NetworkServer.Spawn(objClone);
+
 					ClientScene.RemovePlayer(0);
 				}
 			}
 			
-			else if(col.gameObject.CompareTag("ResourcePickUp")){
+			if(col.gameObject.CompareTag("ResourcePickUp")){
 				ResourceProperties resProp = col.gameObject.GetComponent<ResourceProperties>();
 				score = score + resProp.getScore();
 				Destroy(col.gameObject);
@@ -109,6 +120,26 @@ namespace UnityStandardAssets.CrossPlatformInput {
 				sc.score = (int) resProp.getScore();
 				NetworkManager.singleton.client.Send(Msgs.clientTeamScore, sc);
 			}
+
+			if(col.gameObject.CompareTag("ResourcePickUpDeath")){
+				DeathResourceProperties resProp = col.gameObject.GetComponent<DeathResourceProperties>();
+				score = score + resProp.getScore();
+				Destroy(col.gameObject);
+				SetScoreText();
+
+				AddScore sc = new AddScore();
+				sc.team = (int) gameObject.GetComponent<TeamMember>().getTeamID();
+				sc.score = (int) resProp.getScore();
+				NetworkManager.singleton.client.Send(Msgs.clientTeamScore, sc);
+			}
+		}
+
+		// function only called after the player dies to get the score that the team manager has to substract
+		// hence the score has to be reset to 0 after that
+		public int getScore(){
+			int scoreToRemove = score;
+			score = 0;
+			return scoreToRemove;
 		}
 
 			

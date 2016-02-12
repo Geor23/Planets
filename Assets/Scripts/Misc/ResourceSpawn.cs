@@ -27,4 +27,5 @@ public class ResourceSpawn : NetworkBehaviour {
 		//Here we should get the direction to the planet, so we can reduce the explosive launches some get when they roll high in vertical velocity
 		NetworkServer.Spawn(objClone);
 	}
+
 }
