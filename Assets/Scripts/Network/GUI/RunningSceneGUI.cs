@@ -15,8 +15,7 @@ public class RunningSceneGUI : MonoBehaviour {
 	int teamA;
 	int teamB;
 	
-	public void Start() {
-
+	public void Start() { 
 		nm = NetworkManager.singleton;
 		nm.client.RegisterHandler (Msgs.serverTeamScore, OnClientReceiveScores);
 		nm.client.Send(Msgs.requestTeamScores, new EmptyMessage());
@@ -29,11 +28,11 @@ public class RunningSceneGUI : MonoBehaviour {
 
 			teamA = tl.score;
 			if (teamA > teamB ) {
-				piratesWin.gameObject.active = true;
-				superCorpWin.gameObject.active = false;
+                piratesWin.gameObject.SetActive(true);
+				superCorpWin.gameObject.SetActive(false);
 			} else {
-				piratesWin.gameObject.active = false;
-				superCorpWin.gameObject.active = true;
+				piratesWin.gameObject.SetActive(false);
+				superCorpWin.gameObject.SetActive(true);
 			}
       		//update accordingly
 			teamAScore.text = tl.score.ToString();
@@ -41,11 +40,11 @@ public class RunningSceneGUI : MonoBehaviour {
 		} else if (tl.team == 1) {  // if we received team super-corp 
 			teamB = tl.score;
 			if (teamA < teamB ) {
-				piratesWin.gameObject.active = false;
-				superCorpWin.gameObject.active = true;
+				piratesWin.gameObject.SetActive(false);
+				superCorpWin.gameObject.SetActive(true);
 			} else {
-				piratesWin.gameObject.active = true;
-				superCorpWin.gameObject.active = false;
+				piratesWin.gameObject.SetActive(true);
+				superCorpWin.gameObject.SetActive(false);
 			}
       		// update accordingly
 			teamBScore.text = tl.score.ToString();

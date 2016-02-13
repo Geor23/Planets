@@ -22,8 +22,10 @@ public class PlayerSyncPosition extends NetworkBehaviour {
 	}
 //Updates location of only other players
 	function LerpPosition(){
-		if (!nIdentity.isLocalPlayer) {
-			myTransform.position = Vector3.Lerp (myTransform.position, syncPos, Time.deltaTime * lerpRate);
+	    if (!nIdentity.isLocalPlayer) {
+	        if (!float.IsNaN(myTransform.position.x) && !float.IsNaN(myTransform.position.y) && !float.IsNaN(myTransform.position.z)){
+	            myTransform.position = Vector3.Lerp (myTransform.position, syncPos, Time.deltaTime * lerpRate);
+	        }
 		}
 	}
 	//Command sent to server from client. Called by client, run on server
