@@ -92,7 +92,7 @@ public class PlanetsNetworkManager : NetworkManager {
 	  	AddScore sc = msg.ReadMessage<AddScore>();
 	  	//Debug.Log("got scoooooreeee");
 	  	int id = IDFromConn(msg.conn);
-	  	//Debug.Log("team: " + dict[id].team);
+	  	Debug.Log("team: " + dict[id].team);
 	  	// add the score to the correct team
 	  	teamManager.addScore(sc.score, dict[id].team);
 
