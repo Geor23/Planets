@@ -177,7 +177,8 @@ public class PlanetsNetworkManager : NetworkManager {
 
 	// called when a client disconnects
 	public override void OnServerDisconnect(NetworkConnection conn) {
-
+		int id = IDFromConn(conn);
+		dict.Remove(id);
 		NetworkServer.DestroyPlayersForConnection(conn);
 
 	}
@@ -229,11 +230,11 @@ public class PlanetsNetworkManager : NetworkManager {
 	}
 	
 	// called when disconnected from a server
-	public override void OnClientDisconnect(NetworkConnection conn) {
+	public override void OnClientDisconnect(NetworkConnection conn){
 		StopClient();
 	}
 	
-	public override void OnClientSceneChanged(NetworkConnection conn) {
+	public override void OnClientSceneChanged(NetworkConnection conn){
 		//ClientScene.Ready(conn);
 	}
 
