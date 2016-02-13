@@ -15,7 +15,7 @@ public class DeathResourceSpawn : NetworkBehaviour {
 		}
 	}
 	
-	void SpawnResourcePickUps(transform trans, int score){
+	void SpawnResourcePickUps(Transform trans, int score){
 		//set next number of the array randomly
 		//int spawnIndex = Random.Range(0, SpawnPoints.Length);
 		//objClone = (GameObject)Instantiate(ResourcePickUp, SpawnPoints[spawnIndex].position, SpawnPoints[spawnIndex].rotation);
