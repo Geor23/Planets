@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.Networking;
 
 public class PlayerNetworkHandler : NetworkBehaviour {
-    private Transform transform;
+    private Transform transformT;
     private GameObject projectile;
 
     void Start(){

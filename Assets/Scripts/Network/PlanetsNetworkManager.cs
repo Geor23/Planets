@@ -40,7 +40,6 @@ public class PlanetsNetworkManager : NetworkManager {
   	public bool hasPickedTeam = false; 
 	public bool hasConnected = false;
   	public bool inRound = false;
-  	int timerRound = 180;
 
 
 	public void SceneChange() {

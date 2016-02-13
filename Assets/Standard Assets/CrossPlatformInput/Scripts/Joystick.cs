@@ -27,8 +27,7 @@ namespace UnityStandardAssets.CrossPlatformInput
 		CrossPlatformInputManager.VirtualAxis m_HorizontalVirtualAxis; // Reference to the joystick in the cross platform input
 		CrossPlatformInputManager.VirtualAxis m_VerticalVirtualAxis; // Reference to the joystick in the cross platform input
 
-		void Start()
-		{
+		void Start(){
 			//m_StartPos.x = Screen.width * (GetComponent<RectTransform>().anchorMin.x + GetComponent<RectTransform>().anchorMax.x)/2;
 			//m_StartPos.y = Screen.height * (GetComponent<RectTransform>().anchorMin.y + GetComponent<RectTransform>().anchorMax.y)/2;
 			m_StartPos = GetComponent<RectTransform>().anchoredPosition;

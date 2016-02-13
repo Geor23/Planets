@@ -5,7 +5,7 @@ using UnityEngine.Networking;
 
 public class ServerSyncPos : NetworkBehaviour {
 
-  private Transform transform;
+  private Transform transformT;
   private Rigidbody rb;
 
   [ClientRpc]

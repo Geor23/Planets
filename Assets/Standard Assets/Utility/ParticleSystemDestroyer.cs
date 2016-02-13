@@ -39,9 +39,10 @@ namespace UnityStandardAssets.Utility
             Debug.Log("stopping " + name);
 
             // turn off emission
-            foreach (var system in systems)
-            {
+            foreach (var system in systems){
+#pragma warning disable CS0618 // Type or member is obsolete
                 system.enableEmission = false;
+#pragma warning restore CS0618 // Type or member is obsolete
             }
             BroadcastMessage("Extinguish", SendMessageOptions.DontRequireReceiver);
 
