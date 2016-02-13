@@ -299,7 +299,7 @@ public class TeamManager {
 		if ( team == 0 || team == 1 ) {
 			teams[team].addScore(score);
 		} else {
-			Debug.LogError("ERROR: You are trying to access a non-existant team ! ");
+			Debug.LogError("ERROR[addScore]: You are trying to access a non-existant team ! ");
 		}
 
 	}
@@ -308,7 +308,7 @@ public class TeamManager {
 		if ( team == 0 || team == 1 ) {
 			teams[team].removeScore(score);
 		} else {
-			Debug.LogError("ERROR: You are trying to access a non-existant team ! ");
+			Debug.LogError("ERROR[removeScore]: You are trying to access a non-existant team ! ");
 		}
 
 	}
@@ -321,7 +321,7 @@ public class TeamManager {
 
 		} else {
 
-			Debug.LogError("ERROR: You are trying to access a non-existant team ! ");
+			Debug.LogError("ERROR[deletePlayer]: You are trying to access a non-existant team ! ");
 		}
 
 	}
@@ -334,7 +334,7 @@ public class TeamManager {
 
 		} else {
 
-			Debug.LogError("ERROR: You are trying to access a non-existant team ! ");
+			Debug.LogError("ERROR[addPlayerToTeam]: You are trying to access a non-existant team ! ");
 
 		}
 
@@ -349,7 +349,7 @@ public class TeamManager {
 
 		} else {
 
-			Debug.LogError("ERROR: You are trying to access a non-existant team ! ");
+			Debug.LogError("ERROR[getListTeam]: You are trying to access a non-existant team ! ");
 			return null;
 
 		}
@@ -365,7 +365,7 @@ public class TeamManager {
 
 		} else {
 
-			Debug.LogError("ERROR: You are trying to access a non-existant team ! ");
+			Debug.LogError("ERROR[getScore]: You are trying to access a non-existant team ! ");
 			return 0;
 
 		}
