@@ -66,8 +66,8 @@ public class PlanetsNetworkManager : NetworkManager {
 
 
   	private int IDFromConn(NetworkConnection nc) {
-
-    	return NetworkServer.connections.IndexOf(nc);
+ 			return nc.connectionId;
+    	//return NetworkServer.connections.IndexOf(nc);
   	}
 
  	// when the client requests teams lists, send
@@ -196,7 +196,7 @@ public class PlanetsNetworkManager : NetworkManager {
 	public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId) {
 		/* This is where you can register players with teams, and spawn the player at custom points in the team space */
 		//hasConnected = true;
-    	int id = IDFromConn(conn);
+    int id = IDFromConn(conn);
 		GameObject player = Instantiate (dict[id].team==0?player1:(dict[id].team==1?player2:observer), GetStartPosition ().position, Quaternion.identity) as GameObject;
 		NetworkServer.AddPlayerForConnection (conn, player, playerControllerId);
 		
