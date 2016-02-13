@@ -8,6 +8,7 @@
 	function Start(){
 		Debug.Log("[nIdentity.isLocalPlayer]: " + nIdentity.isLocalPlayer);
 		if (nIdentity.isLocalPlayer){
+		    Debug.Log("IS LOCAL PLAYER< CAMERA IS SET");
 			cam1.gameObject.SetActive(true);
 		}
 		Debug.Log("[cam1.enabled]: "+cam1.enabled);
