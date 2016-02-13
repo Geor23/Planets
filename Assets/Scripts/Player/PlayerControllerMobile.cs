@@ -30,7 +30,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
 		public Camera mainCamera;
 
 		public int score;
-		//private int scoreToRemove;
+		public int scoreToRemove;
 
 		Rigidbody rb;
 
@@ -102,8 +102,10 @@ namespace UnityStandardAssets.CrossPlatformInput {
 					GameObject objClone = (GameObject)Instantiate(ResourcePickUp, gameObject.transform.position, gameObject.transform.rotation);
 					
 					objClone.GetComponent<DeathResourceProperties>().setScore(score);
-					Debug.Log("Setting the spawned resource's score to "+score);
+					Debug.Log("Setting the spawned resource's score to " + score);
 					NetworkServer.Spawn(objClone);
+					scoreToRemove = score;
+					score = 0;
 
 					ClientScene.RemovePlayer(0);
 				}
@@ -137,8 +139,6 @@ namespace UnityStandardAssets.CrossPlatformInput {
 		// function only called after the player dies to get the score that the team manager has to substract
 		// hence the score has to be reset to 0 after that
 		public int getScore(){
-			int scoreToRemove = score;
-			score = 0;
 			return scoreToRemove;
 		}
 

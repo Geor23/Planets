@@ -45,8 +45,10 @@ public class LobbyGUI : MonoBehaviour {
 
   public void StartGame() {
 
-    if(PlayerConfig.singleton.isObserver)
+    if(PlayerConfig.singleton.isObserver) {
       ChooseObserver();
+      Debug.Log("Player is observer on start game!");
+    }
     nm.client.Send(Msgs.startGame, new EmptyMessage());
 
   }
