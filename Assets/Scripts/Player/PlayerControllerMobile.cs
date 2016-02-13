@@ -98,15 +98,10 @@ namespace UnityStandardAssets.CrossPlatformInput {
 					deathTimerText.enabled = true;
 					mainCamera.enabled = true;
 
-					//spawn a resource in the position the player died
-					GameObject objClone = (GameObject)Instantiate(ResourcePickUp, gameObject.transform.position, gameObject.transform.rotation);
-					
-					objClone.GetComponent<DeathResourceProperties>().setScore(score);
-					Debug.Log("Setting the spawned resource's score to " + score);
-					NetworkServer.Spawn(objClone);
+					GetComponent<PlayerNetworkHandler>().CmdSpawnResource(gameObject.transform.position, gameObject.transform.rotation , score);
 					scoreToRemove = score;
 					score = 0;
-
+					SetScoreText();
 					ClientScene.RemovePlayer(0);
 				}
 			}
@@ -135,6 +130,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
 				NetworkManager.singleton.client.Send(Msgs.clientTeamScore, sc);
 			}
 		}
+
 
 		// function only called after the player dies to get the score that the team manager has to substract
 		// hence the score has to be reset to 0 after that

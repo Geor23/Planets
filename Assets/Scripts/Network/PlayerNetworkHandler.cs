@@ -6,6 +6,7 @@ using UnityEngine.Networking;
 public class PlayerNetworkHandler : NetworkBehaviour {
     private Transform transformT;
     private GameObject projectile;
+    public GameObject ResourcePickUp;
 
     void Start(){
       if(!isServer){
@@ -25,5 +26,15 @@ public class PlayerNetworkHandler : NetworkBehaviour {
       Destroy(projectile, 16);
       NetworkServer.Spawn(projectile);
       projectile.GetComponent<ServerSyncPos>().RpcSyncClient(position, direction);
+    }
+
+    [Command]
+    public void CmdSpawnResource(Vector3 position, Quaternion rotation, int score){
+          //spawn a resource in the position the player died
+      GameObject objClone = (GameObject)Instantiate(ResourcePickUp, position, rotation);
+      
+      objClone.GetComponent<DeathResourceProperties>().setScore(score);
+      Debug.Log("Setting the spawned resource's score to " + score);
+      NetworkServer.Spawn(objClone);
     }
 }
