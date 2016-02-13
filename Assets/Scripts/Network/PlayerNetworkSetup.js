@@ -6,7 +6,7 @@
 	
 	// Use this for initialization
 	function Start(){
-		Debug.Log("[nIdentity.isLocalPlayer]: " + `` + nIdentity.isLocalPlayer);
+		Debug.Log("[nIdentity.isLocalPlayer]: " + nIdentity.isLocalPlayer);
 		if (nIdentity.isLocalPlayer){
 			cam1.gameObject.SetActive(true);
 		}
