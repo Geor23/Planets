@@ -21,7 +21,9 @@ public class PlayerSyncRotation extends NetworkBehaviour {
 	    }
 
 	    function LerpRotations (){
-	        playerTransform.rotation = Quaternion.Lerp (playerTransform.rotation, syncPlayerRotation, Time.deltaTime * lerpRate);
+	        if (!float.IsNaN(playerTransform.rotation.x) && !float.IsNaN(playerTransform.rotation.y) && !float.IsNaN(playerTransform.rotation.z)){
+	            playerTransform.rotation = Quaternion.Lerp (playerTransform.rotation, syncPlayerRotation, Time.deltaTime * lerpRate);
+	        }
 	    }
 
 	@Command
