@@ -29,9 +29,9 @@ public class PlayerNetworkHandler : NetworkBehaviour {
     }
 
     [Command]
-    public void CmdSpawnResource(Vector3 position, Quaternion rotation, int score){
+    public void CmdSpawnResource(Vector3 position, int score){
           //spawn a resource in the position the player died
-      GameObject objClone = (GameObject)Instantiate(ResourcePickUp, position, rotation);
+      GameObject objClone = (GameObject)Instantiate(ResourcePickUp, position, Quaternion.identity);
       
       objClone.GetComponent<DeathResourceProperties>().setScore(score);
       Debug.Log("Setting the spawned resource's score to " + score);

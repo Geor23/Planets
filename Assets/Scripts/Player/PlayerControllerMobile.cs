@@ -98,7 +98,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
 					deathTimerText.enabled = true;
 					mainCamera.enabled = true;
 
-					GetComponent<PlayerNetworkHandler>().CmdSpawnResource(gameObject.transform.position, gameObject.transform.rotation , score);
+					GetComponent<PlayerNetworkHandler>().CmdSpawnResource(gameObject.transform.position, score);
 					scoreToRemove = score;
 					score = 0;
 					SetScoreText();
