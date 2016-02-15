@@ -12,7 +12,7 @@ public class PlayerSyncRotation extends NetworkBehaviour {
 	
 	// Update is called once per frame
 	function Update(){
-	    if(!isLocalPlayer) LerpRotations ();
+	    if((!isLocalPlayer)||(isServer)) LerpRotations ();
 	}
 
 
@@ -21,7 +21,7 @@ public class PlayerSyncRotation extends NetworkBehaviour {
 	    }
 
 	    function LerpRotations (){
-	        if (!float.IsNaN(playerTransform.rotation.x) && !float.IsNaN(playerTransform.rotation.y) && !float.IsNaN(playerTransform.rotation.z)){
+	        if (!float.IsNaN(playerTransform.rotation.x) && !float.IsNaN(playerTransform.rotation.y) && !float.IsNaN(playerTransform.rotation.z) && !float.IsNaN(syncPlayerRotation.x)&& !float.IsNaN(syncPlayerRotation.y)&& !float.IsNaN(syncPlayerRotation.z)){
 	            playerTransform.rotation = Quaternion.Lerp (playerTransform.rotation, syncPlayerRotation, Time.deltaTime * lerpRate);
 	        }
 	    }
