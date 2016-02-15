@@ -27,7 +27,7 @@ public class PlanetsNetworkManager : NetworkManager {
     public string round1Scene; //Round 1 name
     public string round2Scene;
     TeamManager teamManager = new TeamManager();
-
+    private float timerRound = 20; //This is the time communicated to clients
 	/*
     Override the virtual default functions to build on existing behaviour 
     
@@ -51,6 +51,15 @@ public class PlanetsNetworkManager : NetworkManager {
     	dict = new Dictionary<int, PlayerData>();
   	}
 	
+    public void Update(){
+        if (NetworkManager.networkSceneName== "Round1"){
+            timerRound -= Time.deltaTime;
+        }
+        else
+        {
+            timerRound = 20;
+        }
+    }
 	// register needed handlers when server starts
   	public override void OnStartServer() {
 
@@ -61,11 +70,18 @@ public class PlanetsNetworkManager : NetworkManager {
 	    NetworkServer.RegisterHandler(Msgs.requestTeamMsg, OnServerRecieveTeamRequest);
 	    NetworkServer.RegisterHandler(Msgs.clientTeamScore, OnServerReceiveScore);
 	    NetworkServer.RegisterHandler(Msgs.requestTeamScores, OnServerRecieveTeamScoresRequest);
+        NetworkServer.RegisterHandler(Msgs.requestCurrentTime, OnServerRecieveTimeRequest);
 
-  	}
+    }
 
+    //This function sends the current in-game time to the client requesting time.
+    private void OnServerRecieveTimeRequest(NetworkMessage netMsg){
+        TimeMessage timeMessage = new TimeMessage();
+        timeMessage.time = timerRound;
+        NetworkServer.SendToClient(IDFromConn(netMsg.conn), Msgs.sendCurrentTime, timeMessage);
+    }
 
-  	private int IDFromConn(NetworkConnection nc) {
+    private int IDFromConn(NetworkConnection nc) {
  			return nc.connectionId;
     	//return NetworkServer.connections.IndexOf(nc);
   	}

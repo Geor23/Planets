@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 
 public class SimpleTimer : NetworkBehaviour {
   
-  public float timerRound = 5;
+  public float timerRound = 20;
 
   void Update(){
     if(isServer){
