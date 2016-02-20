@@ -24,6 +24,7 @@ public class LobbyGUI : MonoBehaviour {
     TeamChoice tc = new TeamChoice();
     tc.teamChoice = (int) TeamID.TEAM_PIRATES;
     nm.client.Send(Msgs.clientTeamMsg, tc);
+    PlayerConfig.singleton.SetObserver(false);
 
   }
 
@@ -32,8 +33,8 @@ public class LobbyGUI : MonoBehaviour {
     TeamChoice tc = new TeamChoice();
     tc.teamChoice =(int) TeamID.TEAM_SUPERCORP;
     nm.client.Send(Msgs.clientTeamMsg, tc);
-
-  }
+    PlayerConfig.singleton.SetObserver(false);
+    }
 
   public void ChooseObserver() {
 
@@ -45,7 +46,7 @@ public class LobbyGUI : MonoBehaviour {
 
   public void StartGame() {
 
-    if(PlayerConfig.singleton.isObserver) {
+    if(PlayerConfig.singleton.GetObserver()) {
       ChooseObserver();
       Debug.Log("Player is observer on start game!");
     }

@@ -6,11 +6,19 @@ using UnityEngine.Networking;
 
 class PlayerConfig : MonoBehaviour {
 
-  public bool isObserver = true; //Initialised as true
+  private bool isObserver = true; //Initialised as true
   public static PlayerConfig singleton;
 
-  public void Start(){
+  private void Start(){
     DontDestroyOnLoad(transform.gameObject);
     singleton = this;
   }
+  
+  public void SetObserver(bool observe) {
+        isObserver = observe;
+    }
+
+  public bool GetObserver(){
+        return isObserver;
+    }
 }
