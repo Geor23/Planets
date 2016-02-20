@@ -30,7 +30,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
 		public Camera mainCamera;
 
 		public int score;
-		//private int scoreToRemove;
+		public int scoreToRemove;
 
 		Rigidbody rb;
 
@@ -98,13 +98,10 @@ namespace UnityStandardAssets.CrossPlatformInput {
 					deathTimerText.enabled = true;
 					mainCamera.enabled = true;
 
-					//spawn a resource in the position the player died
-					GameObject objClone = (GameObject)Instantiate(ResourcePickUp, gameObject.transform.position, gameObject.transform.rotation);
-					
-					objClone.GetComponent<DeathResourceProperties>().setScore(score);
-					Debug.Log("Setting the spawned resource's score to "+score);
-					NetworkServer.Spawn(objClone);
-
+					GetComponent<PlayerNetworkHandler>().CmdSpawnResource(gameObject.transform.position, score);
+					scoreToRemove = score;
+					score = 0;
+					SetScoreText();
 					ClientScene.RemovePlayer(0);
 				}
 			}
@@ -122,8 +119,10 @@ namespace UnityStandardAssets.CrossPlatformInput {
 			}
 
 			if(col.gameObject.CompareTag("ResourcePickUpDeath")){
+
 				DeathResourceProperties resProp = col.gameObject.GetComponent<DeathResourceProperties>();
 				score = score + resProp.getScore();
+				Debug.Log("picked up death with score "+ resProp.getScore());
 				Destroy(col.gameObject);
 				SetScoreText();
 
@@ -134,11 +133,10 @@ namespace UnityStandardAssets.CrossPlatformInput {
 			}
 		}
 
+
 		// function only called after the player dies to get the score that the team manager has to substract
 		// hence the score has to be reset to 0 after that
 		public int getScore(){
-			int scoreToRemove = score;
-			score = 0;
 			return scoreToRemove;
 		}
 

@@ -8,7 +8,7 @@ public class StartSceneGUI : MonoBehaviour {
 
   public NetworkManager nm;
   public Text networkAddr;
-  public Text name;
+  public Text nameT;
 
   void Start(){
     nm = NetworkManager.singleton;
@@ -26,7 +26,7 @@ public class StartSceneGUI : MonoBehaviour {
 
   public void SendJoinMessage(){
     JoinMessage jm = new JoinMessage();
-    jm.name = name.text;
+    jm.name = nameT.text;
     nm.client.Send(Msgs.clientJoinMsg, jm);
   }
 

@@ -27,7 +27,7 @@ public class PlanetsNetworkManager : NetworkManager {
     public string round1Scene; //Round 1 name
     public string round2Scene;
     TeamManager teamManager = new TeamManager();
-
+    private float timerRound = 20; //This is the time communicated to clients
 	/*
     Override the virtual default functions to build on existing behaviour 
     
@@ -40,7 +40,6 @@ public class PlanetsNetworkManager : NetworkManager {
   	public bool hasPickedTeam = false; 
 	public bool hasConnected = false;
   	public bool inRound = false;
-  	int timerRound = 180;
 
 
 	public void SceneChange() {
@@ -52,6 +51,15 @@ public class PlanetsNetworkManager : NetworkManager {
     	dict = new Dictionary<int, PlayerData>();
   	}
 	
+    public void Update(){
+        if (NetworkManager.networkSceneName== "Round1"){
+            timerRound -= Time.deltaTime;
+        }
+        else
+        {
+            timerRound = 20;
+        }
+    }
 	// register needed handlers when server starts
   	public override void OnStartServer() {
 
@@ -62,13 +70,20 @@ public class PlanetsNetworkManager : NetworkManager {
 	    NetworkServer.RegisterHandler(Msgs.requestTeamMsg, OnServerRecieveTeamRequest);
 	    NetworkServer.RegisterHandler(Msgs.clientTeamScore, OnServerReceiveScore);
 	    NetworkServer.RegisterHandler(Msgs.requestTeamScores, OnServerRecieveTeamScoresRequest);
+        NetworkServer.RegisterHandler(Msgs.requestCurrentTime, OnServerRecieveTimeRequest);
 
-  	}
+    }
 
+    //This function sends the current in-game time to the client requesting time.
+    private void OnServerRecieveTimeRequest(NetworkMessage netMsg){
+        TimeMessage timeMessage = new TimeMessage();
+        timeMessage.time = timerRound;
+        NetworkServer.SendToClient(IDFromConn(netMsg.conn), Msgs.sendCurrentTime, timeMessage);
+    }
 
-  	private int IDFromConn(NetworkConnection nc) {
-
-    	return NetworkServer.connections.IndexOf(nc);
+    private int IDFromConn(NetworkConnection nc) {
+ 			return nc.connectionId;
+    	//return NetworkServer.connections.IndexOf(nc);
   	}
 
  	// when the client requests teams lists, send
@@ -93,7 +108,7 @@ public class PlanetsNetworkManager : NetworkManager {
 	  	AddScore sc = msg.ReadMessage<AddScore>();
 	  	//Debug.Log("got scoooooreeee");
 	  	int id = IDFromConn(msg.conn);
-	  	//Debug.Log("team: " + dict[id].team);
+	  	Debug.Log("team: " + dict[id].team);
 	  	// add the score to the correct team
 	  	teamManager.addScore(sc.score, dict[id].team);
 
@@ -178,7 +193,8 @@ public class PlanetsNetworkManager : NetworkManager {
 
 	// called when a client disconnects
 	public override void OnServerDisconnect(NetworkConnection conn) {
-
+		int id = IDFromConn(conn);
+		dict.Remove(id);
 		NetworkServer.DestroyPlayersForConnection(conn);
 
 	}
@@ -196,7 +212,7 @@ public class PlanetsNetworkManager : NetworkManager {
 	public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId) {
 		/* This is where you can register players with teams, and spawn the player at custom points in the team space */
 		//hasConnected = true;
-    	int id = IDFromConn(conn);
+    int id = IDFromConn(conn);
 		GameObject player = Instantiate (dict[id].team==0?player1:(dict[id].team==1?player2:observer), GetStartPosition ().position, Quaternion.identity) as GameObject;
 		NetworkServer.AddPlayerForConnection (conn, player, playerControllerId);
 		
@@ -230,11 +246,11 @@ public class PlanetsNetworkManager : NetworkManager {
 	}
 	
 	// called when disconnected from a server
-	public override void OnClientDisconnect(NetworkConnection conn) {
+	public override void OnClientDisconnect(NetworkConnection conn){
 		StopClient();
 	}
 	
-	public override void OnClientSceneChanged(NetworkConnection conn) {
+	public override void OnClientSceneChanged(NetworkConnection conn){
 		//ClientScene.Ready(conn);
 	}
 
@@ -299,7 +315,7 @@ public class TeamManager {
 		if ( team == 0 || team == 1 ) {
 			teams[team].addScore(score);
 		} else {
-			Debug.LogError("ERROR: You are trying to access a non-existant team ! ");
+			Debug.LogError("ERROR[addScore]: You are trying to access a non-existant team ! ");
 		}
 
 	}
@@ -308,7 +324,7 @@ public class TeamManager {
 		if ( team == 0 || team == 1 ) {
 			teams[team].removeScore(score);
 		} else {
-			Debug.LogError("ERROR: You are trying to access a non-existant team ! ");
+			Debug.LogError("ERROR[removeScore]: You are trying to access a non-existant team ! ");
 		}
 
 	}
@@ -321,7 +337,7 @@ public class TeamManager {
 
 		} else {
 
-			Debug.LogError("ERROR: You are trying to access a non-existant team ! ");
+			Debug.LogError("ERROR[deletePlayer]: You are trying to access a non-existant team ! ");
 		}
 
 	}
@@ -334,7 +350,7 @@ public class TeamManager {
 
 		} else {
 
-			Debug.LogError("ERROR: You are trying to access a non-existant team ! ");
+			Debug.LogError("ERROR[addPlayerToTeam]: You are trying to access a non-existant team ! ");
 
 		}
 
@@ -349,7 +365,7 @@ public class TeamManager {
 
 		} else {
 
-			Debug.LogError("ERROR: You are trying to access a non-existant team ! ");
+			Debug.LogError("ERROR[getListTeam]: You are trying to access a non-existant team ! ");
 			return null;
 
 		}
@@ -365,7 +381,7 @@ public class TeamManager {
 
 		} else {
 
-			Debug.LogError("ERROR: You are trying to access a non-existant team ! ");
+			Debug.LogError("ERROR[getScore]: You are trying to access a non-existant team ! ");
 			return 0;
 
 		}

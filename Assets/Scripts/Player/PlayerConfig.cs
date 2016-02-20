@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 
 class PlayerConfig : MonoBehaviour {
 
-  public bool isObserver;
+  public bool isObserver = true; //Initialised as true
   public static PlayerConfig singleton;
 
   public void Start(){

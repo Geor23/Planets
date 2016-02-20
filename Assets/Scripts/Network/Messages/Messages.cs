@@ -21,6 +21,8 @@ class Msgs : MsgType {
 	public const short clientTeamScore = 55;
   public const short serverTeamScore = 56;
   public const short requestTeamScores = 57;
+    public const short requestCurrentTime = 58;
+    public const short sendCurrentTime = 59;
 
 }
 
@@ -46,4 +48,8 @@ public class AddScore : MessageBase {
 public class TeamScore : MessageBase {
   public int team;
   public int score;
+}
+
+public class TimeMessage : MessageBase{
+    public float time;
 }
