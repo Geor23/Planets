@@ -24,6 +24,10 @@ public class TimerDisplayScript : MonoBehaviour {
 
     void Update(){
         time -= Time.deltaTime;
-        textField.text = time.ToString();
+        if (time > 0){
+            textField.text = time.ToString();
+        }else{
+            textField.text = "Round ending...";
+        }
     }
 }
