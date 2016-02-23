@@ -113,7 +113,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
 				SetScoreText();
 
 				AddScore sc = new AddScore();
-				sc.team = (int) gameObject.GetComponent<TeamMember>().getTeamID();
+				sc.team = 0;
 				sc.score = (int) resProp.getScore();
 				NetworkManager.singleton.client.Send(Msgs.clientTeamScore, sc);
 			}
@@ -127,7 +127,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
 				SetScoreText();
 
 				AddScore sc = new AddScore();
-				sc.team = (int) gameObject.GetComponent<TeamMember>().getTeamID();
+				sc.team = 0;
 				sc.score = (int) resProp.getScore();
 				NetworkManager.singleton.client.Send(Msgs.clientTeamScore, sc);
 			}
