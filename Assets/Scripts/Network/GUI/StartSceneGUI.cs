@@ -31,6 +31,7 @@ public class StartSceneGUI : MonoBehaviour {
   }
 
   public void StartHost(){
+    nm = NetworkManager.singleton;
     nm.StartHost();
     SendJoinMessage();
   }
