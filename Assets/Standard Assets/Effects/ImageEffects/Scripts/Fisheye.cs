@@ -39,7 +39,7 @@ namespace UnityStandardAssets.ImageEffects
 
             float ar = (source.width * 1.0f) / (source.height * 1.0f);
 
-            fisheyeMaterial.SetVector ("intensity", new Vector4 ((-strengthX) * ar * oneOverBaseSize, (-strengthY) * oneOverBaseSize, (-strengthX) * ar * oneOverBaseSize, (-strengthY) * oneOverBaseSize));
+            fisheyeMaterial.SetVector ("intensity", new Vector4 (strengthX * ar * oneOverBaseSize, strengthY * oneOverBaseSize, strengthX * ar * oneOverBaseSize, strengthY * oneOverBaseSize));
             Graphics.Blit (source, destination, fisheyeMaterial);
         }
     }
