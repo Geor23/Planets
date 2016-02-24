@@ -25,8 +25,8 @@ static class Const {
 }
 
 class RoundScores {
-	int pirateScore;
-	int superCorpScore;
+	List<int> pirateScore = new List<int>();
+	List<int> superCorpScore = new List<int>();
 }
 
 public class PlanetsNetworkManager : NetworkManager {
@@ -90,6 +90,10 @@ public class PlanetsNetworkManager : NetworkManager {
             	if (roundManager.getFinishedState() == 1) {
             		ServerChangeScene(roundList[roundManager.getRoundId()]);
             		timerRound = Const.INITIALTIMER;
+            		sendTeam(0);
+            		sendTeam(1);
+            		RoundScores sc = roundManager.getFinalScores();
+            		sendFinalScores(sc);
             		//Get scores , display winners etc
             	}
             	else {
@@ -165,6 +169,21 @@ public class PlanetsNetworkManager : NetworkManager {
 		tl.team = (int) team;
 		tl.score = (int) teamManager.getScore(team);
 		NetworkServer.SendToAll(Msgs.serverTeamScore, tl);
+
+	}
+
+	public void sendFinalScores(RoundScores sc) {
+
+		FinalScores tl = new FinalScores();
+		tl.round1P = sc.pirateScore[0];
+		tl.round2P = sc.pirateScore[1];
+		tl.round3P = sc.pirateScore[2];
+
+		tl.round1S = sc.superCorpScore[0];
+		tl.round2S = sc.superCorpScore[1];
+		tl.round3S = sc.superCorpScore[2];
+
+		NetworkServer.SendToAll(Msgs.serverFinalScores, tl);
 
 	}
 
@@ -465,6 +484,21 @@ public class RoundManager {
 		rounds[2].changeState(Const.NOTSTARTED); // update state of all rounds to not started
 
 	}
+
+public RoundScores getFinalScores() {
+	
+	RoundScores sc;
+
+	sc.pirateScore.Add(rounds[0].getPiratesFinalScore());
+	sc.pirateScore.Add(rounds[1].getPiratesFinalScore());
+	sc.pirateScore.Add(rounds[2].getPiratesFinalScore());
+
+	sc.superCorpScore.Add(rounds[0].getSuperCorpFinalScore());
+	sc.superCorpScore.Add(rounds[1].getSuperCorpFinalScore());
+	sc.superCorpScore.Add(rounds[2].getSuperCorpFinalScore());
+
+	return sc;
+}
 
 	public void changeRound() {
 

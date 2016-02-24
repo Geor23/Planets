@@ -21,8 +21,10 @@ class Msgs : MsgType {
 	public const short clientTeamScore = 55;
   public const short serverTeamScore = 56;
   public const short requestTeamScores = 57;
-    public const short requestCurrentTime = 58;
-    public const short sendCurrentTime = 59;
+  public const short requestCurrentTime = 58;
+  public const short sendCurrentTime = 59;
+  public const short serverFinalScores = 60;
+
 
 }
 
@@ -33,6 +35,17 @@ public class JoinMessage : MessageBase {
 
 public class TeamChoice : MessageBase {
   public int teamChoice = 0;
+}
+
+public class FinalScores : MessageBase {
+
+  public int round1P ;
+  public int round1S ;
+  public int round2P ;
+  public int round2S ;
+  public int round3P ;
+  public int round3S ;
+  
 }
 
 public class TeamList : MessageBase {
