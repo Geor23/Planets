@@ -82,6 +82,11 @@ public class PlanetsNetworkManager : NetworkManager {
             	roundManager.finishRound(scoreP, scoreS);
             	//change Round
             	roundManager.changeRound();
+            	
+            	teamManager.resetScores();
+            	sendScore(0);
+    			sendScore(1);
+
             	if (roundManager.getFinishedState() == 1) {
             		ServerChangeScene(roundList[roundManager.getRoundId()]);
             		timerRound = Const.INITIALTIMER;
@@ -327,6 +332,10 @@ public class Team {
 		players.Remove(playerName) ;
 	}
 
+	public void resetScore() {
+		score = 0;
+	}
+
 }
 
 
@@ -420,6 +429,12 @@ public class TeamManager {
 
 		}
 
+	}
+
+
+	public int resetScores() {
+		teams[0].resetScore();
+		teams[1].resetScore();
 	}
 
 	
