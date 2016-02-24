@@ -63,13 +63,17 @@ public class PlanetsNetworkManager : NetworkManager {
 
   	public void Start() {
     	dict = new Dictionary<int, PlayerData>();
-    	roundList.add("Round1");
-    	roundList.add("Round2");
-    	roundList.add("LobbyScene");
+    	roundList = new List<string>();
+    	roundList.Add("Round1");
+    	roundList.Add("Round2");
+    	roundList.Add("LobbyScene");
   	}
 	
     public void Update(){
-        if ((roundList.Contains(NetworkManager.networkSceneName) &&  (roundList.IndexOf(NetworkManager.networkSceneName) != roundList.Count - 1)) {
+    	// Debug.Log(Const.INITIALTIMER);
+    	// Debug.Log(NetworkManager.networkSceneName);
+    	// Debug.Log(roundList.Count);
+        if ((roundList.Contains(NetworkManager.networkSceneName)) &&  (roundList.IndexOf(NetworkManager.networkSceneName) != (roundList.Count - 1))) {
             timerRound -= Time.deltaTime;
             if (timerRound < 0) {
             	int scoreP = teamManager.getScore(0);
@@ -215,6 +219,7 @@ public class PlanetsNetworkManager : NetworkManager {
 	public void OnServerStartGame(NetworkMessage msg) {
 
     	ServerChangeScene(round1Scene);
+    	roundManager.changeRound();
 
 	}
 
@@ -422,9 +427,10 @@ public class TeamManager {
 
 [System.Serializable]
 public class RoundManager {
-	private int roundId;
+	private int roundId = 0;
 	private int maxRounds = 2;
-	List<Round> rounds ;
+	List<Round> rounds = new List<Round>();
+
 	private int hasFinishedState = 0;
 
 	public RoundManager() {
@@ -432,7 +438,6 @@ public class RoundManager {
 		Round round1 = new Round();
 		Round round2 = new Round();
 
-		roundId = 0;
 		rounds.Add(round1);
 		rounds.Add(round2);
 
@@ -449,9 +454,9 @@ public class RoundManager {
 			Debug.Log("[RoundManager] : Starting game...");
 			roundId = 1 ;
 
-			if (rounds.[roundId-1].getState() != Const.NOTSTARTED) {
+			if (rounds[roundId-1].getState() != Const.NOTSTARTED) {
 
-				Debug.Error("ERROR[RoundManager-ChangeRound]: Cannot start round " + roundId);
+				Debug.LogError("ERROR[RoundManager-ChangeRound]: Cannot start round " + roundId);
 
 			} else {
 
@@ -461,19 +466,20 @@ public class RoundManager {
 
 		}  else if (roundId != maxRounds) {
 			// as long as the game is not finishing
+			Debug.Log("[RoundManager] : Changing Round...");
 
 			if (rounds[roundId-1].getState() != Const.RUNNING) {
 
-				Debug.Error("ERROR[RoundManager-ChangeRound]: The round " + roundId + " is not running so cannot be finished");
+				Debug.LogError("ERROR[RoundManager-ChangeRound]: The round " + roundId + " is not running so cannot be finished");
 
 			} else {
 
 				rounds[roundId-1].changeState(Const.FINISHED); // update state of current round to finished
 				roundId ++;
 
-				if (rounds.[roundId-1].getState() != Const.NOTSTARTED) {
+				if (rounds[roundId-1].getState() != Const.NOTSTARTED) {
 
-					Debug.Error("ERROR[RoundManager-ChangeRound]: Cannot start round " + roundId);
+					Debug.LogError("ERROR[RoundManager-ChangeRound]: Cannot start round " + roundId);
 
 				} else {
 
@@ -485,9 +491,11 @@ public class RoundManager {
 
 		} else {
 			// when the game finishes
+			Debug.Log("[RoundManager] : Finishing game...");
+
 			if (rounds[roundId-1].getState() != Const.RUNNING) {
 
-				Debug.Error("ERROR[RoundManager-ChangeRound]: The round " + roundId + " is not running so cannot be finished");
+				Debug.LogError("ERROR[RoundManager-ChangeRound]: The round " + roundId + " is not running so cannot be finished");
 
 			} else {
 					rounds[roundId-1].changeState(Const.FINISHED); // update state of current round to finished
@@ -511,7 +519,7 @@ public class RoundManager {
 
 	public void finishRound(int scoreP, int scoreS) {
 		if (rounds[roundId-1].getState() != Const.RUNNING) {
-			Debug.Error("ERROR[RoundManager-ChangeRound]: The round " + roundId + " is not running so cannot be finished");
+			Debug.LogError("ERROR[RoundManager-ChangeRound]: The round " + roundId + " is not running so cannot be finished");
 		}
 		else {
 			rounds[roundId-1].finishRound(scoreP,scoreS);
@@ -528,12 +536,12 @@ public class Round {
 
 	public void changeState (int newState) {
 
-		state = newstate;
+		state = newState;
 
 	}
 
 	public void finishRound(int scoreP, int scoreS) {
-
+		Debug.Log("Finishing Scores");
 		finalScoreTeamPirates = scoreP ;
 		finalScoreTeamSuperCorp = scoreS ;
 		
