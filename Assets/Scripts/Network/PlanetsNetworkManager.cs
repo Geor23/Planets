@@ -24,6 +24,11 @@ static class Const {
 
 }
 
+class RoundScores {
+	int pirateScore;
+	int superCorpScore;
+}
+
 public class PlanetsNetworkManager : NetworkManager {
 	
 	[SerializeField] GameObject player1;
@@ -35,6 +40,7 @@ public class PlanetsNetworkManager : NetworkManager {
     public string round2Scene;
     TeamManager teamManager = new TeamManager();
     private float timerRound = 20; //This is the time communicated to clients
+	RoundManager roundManager = new RoundManager();
 	/*
     Override the virtual default functions to build on existing behaviour 
     
@@ -47,6 +53,8 @@ public class PlanetsNetworkManager : NetworkManager {
   	public bool hasPickedTeam = false; 
 	public bool hasConnected = false;
   	public bool inRound = false;
+  	private int InitialtimerRound = 20;
+  	private List<string> roundList;
 
 
 	public void SceneChange() {
@@ -56,18 +64,28 @@ public class PlanetsNetworkManager : NetworkManager {
 
   	public void Start() {
     	dict = new Dictionary<int, PlayerData>();
+    	roundList.add("Round1");
+    	roundList.add("Round2");
+    	roundList.add("LobbyScene");
   	}
 	
     public void Update(){
-        if (NetworkManager.networkSceneName== "Round1"){
+        if ((roundList.Contains(NetworkManager.networkSceneName) &&  (roundList.IndexOf(NetworkManager.networkSceneName) != roundList.Count - 1)) {
             timerRound -= Time.deltaTime;
             if (timerRound < 0) {
             	//change Round
-            }
+            	roundManager.changeRound();
+            	if (roundManager.getFinishedState() == 1) {
+            		//Get scores , display winners etc
+            	}
+            	else {
+            		ServerChangeScene(roundList[roundManager.getRoundId()-1]);
+            		timerRound = 20;
+            	}
+        	}
         }
-        else
-        {
-            timerRound = 20;
+        else {
+        	timerRound = 20;
         }
     }
 	// register needed handlers when server starts
@@ -483,9 +501,12 @@ public class RoundManager {
 
 	}
 
-
-	pubkic int getFinishedState() {
+	public int getFinishedState() {
 		return hasFinishedState;
+	}
+
+	public void finishRound(int scoreP, int scoreS) {
+		rounds[roundId-1].finishRound(scoreP,scoreS);
 	}
 }
 
@@ -526,5 +547,7 @@ public class Round {
 		return state;
 
 	}
+
+
 
 }
