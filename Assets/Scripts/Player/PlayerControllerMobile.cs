@@ -52,19 +52,19 @@ namespace UnityStandardAssets.CrossPlatformInput {
 				Vector3 forward = transform.forward;
 				Vector3 right = transform.right;
 
-				#if UNITY_ANDROID
+#if UNITY_ANDROID
 				float aimH = CrossPlatformInputManager.GetAxis ("AimH");
 				float aimV = CrossPlatformInputManager.GetAxis ("AimV");
 				float forwardSpeed = speed * CrossPlatformInputManager.GetAxis("MoveV");
 				float strafeSpeed = speed * CrossPlatformInputManager.GetAxis("MoveH");
-				#endif
+#endif
 
-				#if UNITY_STANDALONE
+#if UNITY_STANDALONE
 				float aimH = (-(Input.GetKey ("left")?1:0) + (Input.GetKey ("right")?1:0));
 				float aimV = ((Input.GetKey ("up")?1:0) - (Input.GetKey ("down")?1:0));
 				float forwardSpeed = speed * ((Input.GetKey ("w")?1:0) - (Input.GetKey ("s")?1:0));
 				float strafeSpeed = speed * (-(Input.GetKey ("a")?1:0) + (Input.GetKey ("d")?1:0));
-				#endif
+#endif
 
 				Vector3 turretDirection = ((forward * aimV) + (right * aimH)).normalized;
 				rotateObject(turret, turretDirection);
