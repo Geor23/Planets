@@ -82,7 +82,7 @@ public class PlanetsNetworkManager : NetworkManager {
             	roundManager.finishRound(scoreP, scoreS);
             	//change Round
             	roundManager.changeRound();
-            	
+
             	teamManager.resetScores();
             	sendScore(0);
     			sendScore(1);
@@ -432,7 +432,7 @@ public class TeamManager {
 	}
 
 
-	public int resetScores() {
+	public void resetScores() {
 		teams[0].resetScore();
 		teams[1].resetScore();
 	}
