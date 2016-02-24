@@ -20,7 +20,7 @@ GameObject:
   - 222: {fileID: 22230050}
   - 114: {fileID: 11438494}
   - 114: {fileID: 11495702}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -35,7 +35,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 453450}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53,7 +53,7 @@ GameObject:
   - 20: {fileID: 2084426}
   - 92: {fileID: 9260222}
   - 124: {fileID: 12476776}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -70,7 +70,7 @@ GameObject:
   - 4: {fileID: 404412}
   - 33: {fileID: 3396446}
   - 23: {fileID: 2311930}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -87,7 +87,7 @@ GameObject:
   - 4: {fileID: 458106}
   - 33: {fileID: 3385420}
   - 23: {fileID: 2388526}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -431,6 +431,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ResourcePickUp: {fileID: 116834, guid: 976667ad8326a483eaa9c21ec560f8b2, type: 2}
+  projectileLifetime: 1
 --- !u!124 &12476776
 Behaviour:
   m_ObjectHideFlags: 1
@@ -655,6 +656,14 @@ Prefab:
       propertyPath: ResourcePickUp
       value: 
       objectReference: {fileID: 116834, guid: 976667ad8326a483eaa9c21ec560f8b2, type: 2}
+    - target: {fileID: 0}
+      propertyPath: projectileLifetime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 158602}

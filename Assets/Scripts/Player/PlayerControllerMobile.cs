@@ -89,7 +89,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
 					if(Time.time < nextFire)
 						return;
 
-	        GetComponent<PlayerNetworkHandler>().CmdSpawnProjectile(rb.position + direction + upDir, direction);
+	        GetComponent<PlayerNetworkHandler>().CmdSpawnProjectile(rb.position + direction, direction);
 	      	nextFire = Time.time + fireRate;
 	      }
 			}
