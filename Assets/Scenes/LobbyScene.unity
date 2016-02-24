@@ -218,6 +218,7 @@ GameObject:
   - 92: {fileID: 328971357}
   - 124: {fileID: 328971356}
   - 81: {fileID: 328971355}
+  - 114: {fileID: 328971360}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -292,6 +293,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!114 &328971360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 328971354}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4739c22ef73ad62488fe344c8fe9addd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  strengthX: 0.69
+  strengthY: 0.7
+  fishEyeShader: {fileID: 4800000, guid: 874ceab4425f64bccb1d14032f4452b1, type: 3}
 --- !u!1 &573763696
 GameObject:
   m_ObjectHideFlags: 0
@@ -668,8 +683,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5c37905f60904b45b3b613890f4fc08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  observerVisible: 0
-  playerVisible: 0
+  observerVisible: 1
 --- !u!1 &896364582
 GameObject:
   m_ObjectHideFlags: 0
@@ -1339,7 +1353,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   observerVisible: 1
-  playerVisible: 0
 --- !u!1 &1804787536
 GameObject:
   m_ObjectHideFlags: 0

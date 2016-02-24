@@ -12,9 +12,10 @@ class ClientVisibility : MonoBehaviour{
 
   public void Start(){
     bool res = true;
-    if(!observerVisible && PlayerConfig.singleton.isObserver) {
-     res = false;
+    if(!observerVisible && PlayerConfig.singleton.GetObserver()) {
+      res = false;
     }
+        Debug.Log(PlayerConfig.singleton.GetObserver());
     gameObject.SetActive(res);
   }
 }

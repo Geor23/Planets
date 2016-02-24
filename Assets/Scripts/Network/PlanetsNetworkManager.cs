@@ -147,14 +147,10 @@ public class PlanetsNetworkManager : NetworkManager {
 
 	    // if the player is choosing the team for the first time
 		if (dict[id].team == -1) {
-
 			// update the team and send updated list to all clients
 			dict[id].team = choice;	
-			teamManager.addPlayerToTeam(dict[id].name, dict[id].team);
-			sendTeam (dict[id].team);
 
 		} else if (dict[id].team != choice) {	// if the player has switched teams
-
 			// delete player from old list and send updated list to all clients
 			teamManager.deletePlayer(dict[id].name, dict[id].team);
 			sendTeam (dict[id].team);
@@ -214,7 +210,7 @@ public class PlanetsNetworkManager : NetworkManager {
 		//hasConnected = true;
     int id = IDFromConn(conn);
 		GameObject player = Instantiate (dict[id].team==0?player1:(dict[id].team==1?player2:observer), GetStartPosition ().position, Quaternion.identity) as GameObject;
-		NetworkServer.AddPlayerForConnection (conn, player, playerControllerId);
+        NetworkServer.AddPlayerForConnection (conn, player, playerControllerId);
 		
 	}
 	
