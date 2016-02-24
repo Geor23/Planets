@@ -403,6 +403,7 @@ public class RoundManager {
 	private int roundId;
 	private int maxRounds = 2;
 	List<Round> rounds ;
+	private int hasFinishedState = 0;
 
 	public RoundManager() {
 
@@ -420,27 +421,60 @@ public class RoundManager {
 
 	public void changeRound() {
 
-		// reset timer
-
 		if (roundId == 0) {
 			// game starts now
+
 			Debug.Log("[RoundManager] : Starting game...");
 			roundId = 1 ;
-			rounds[roundId-1].changeState(Const.RUNNING); // update state of new round to running
+
+			if (rounds.[roundId-1].getState() != Const.NOTSTARTED) {
+
+				Debug.Error("ERROR[RoundManager-ChangeRound]: Cannot start round " + roundId);
+
+			} else {
+
+				rounds[roundId-1].changeState(Const.RUNNING); // update state of new round to running
+
+			}
 
 		}  else if (roundId != maxRounds) {
 			// as long as the game is not finishing
-			rounds[roundId-1].changeState(Const.FINISHED); // update state of current round to finished
-			roundId ++;
-			rounds[roundId-1].changeState(Const.RUNNING); // update state of new round to running
+
+			if (rounds[roundId-1].getState() != Const.RUNNING) {
+
+				Debug.Error("ERROR[RoundManager-ChangeRound]: The round " + roundId + " is not running so cannot be finished");
+
+			} else {
+
+				rounds[roundId-1].changeState(Const.FINISHED); // update state of current round to finished
+				roundId ++;
+
+				if (rounds.[roundId-1].getState() != Const.NOTSTARTED) {
+
+					Debug.Error("ERROR[RoundManager-ChangeRound]: Cannot start round " + roundId);
+
+				} else {
+
+					rounds[roundId-1].changeState(Const.RUNNING); // update state of new round to running
+
+				}
+			}
+			
 
 		} else {
 			// when the game finishes
-			rounds[roundId-1].changeState(Const.FINISHED); // update state of current round to finished
-			// game over
-			// call game manager to get final scores
+			if (rounds[roundId-1].getState() != Const.RUNNING) {
 
-		}
+				Debug.Error("ERROR[RoundManager-ChangeRound]: The round " + roundId + " is not running so cannot be finished");
+
+			} else {
+					rounds[roundId-1].changeState(Const.FINISHED); // update state of current round to finished
+				// game over
+				// call game manager to get final scores
+				hasFinishedState = 1;
+				}
+			}
+
 	}
 
 	public int getRoundId() {
@@ -449,6 +483,10 @@ public class RoundManager {
 
 	}
 
+
+	pubkic int getFinishedState() {
+		return hasFinishedState;
+	}
 }
 
 [System.Serializable]
@@ -459,7 +497,9 @@ public class Round {
 	private int finalScoreTeamSuperCorp = 0;
 
 	public void changeState (int newState) {
+
 		state = newstate;
+
 	}
 
 	public void finishRound(int scoreP, int scoreS) {
@@ -470,11 +510,21 @@ public class Round {
 	}
 
 	public int getPiratesFinalScore() {
+
 		return finalScoreTeamPirates;
+
 	} 
 
 	public int getSuperCorpFinalScore() {
+
 		return finalScoreTeamSuperCorp;
+
 	} 
+
+	public int getState() {
+
+		return state;
+
+	}
 
 }
