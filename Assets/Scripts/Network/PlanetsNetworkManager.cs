@@ -17,6 +17,13 @@ class PlayerData {
 
 }
 
+static class Const {
+    public const int RUNNING = 1;
+    public const int FINISHED = -1;
+    public const int NOTSTARTED = 0;
+
+}
+
 public class PlanetsNetworkManager : NetworkManager {
 	
 	[SerializeField] GameObject player1;
@@ -54,6 +61,9 @@ public class PlanetsNetworkManager : NetworkManager {
     public void Update(){
         if (NetworkManager.networkSceneName== "Round1"){
             timerRound -= Time.deltaTime;
+            if (timerRound < 0) {
+            	//change Round
+            }
         }
         else
         {
@@ -208,7 +218,7 @@ public class PlanetsNetworkManager : NetworkManager {
 	public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId) {
 		/* This is where you can register players with teams, and spawn the player at custom points in the team space */
 		//hasConnected = true;
-    int id = IDFromConn(conn);
+    	int id = IDFromConn(conn);
 		GameObject player = Instantiate (dict[id].team==0?player1:(dict[id].team==1?player2:observer), GetStartPosition ().position, Quaternion.identity) as GameObject;
         NetworkServer.AddPlayerForConnection (conn, player, playerControllerId);
 		
@@ -385,4 +395,86 @@ public class TeamManager {
 	}
 
 	
+}
+
+
+[System.Serializable]
+public class RoundManager {
+	private int roundId;
+	private int maxRounds = 2;
+	List<Round> rounds ;
+
+	public RoundManager() {
+
+		Round round1 = new Round();
+		Round round2 = new Round();
+
+		roundId = 0;
+		rounds.Add(round1);
+		rounds.Add(round2);
+
+		rounds[0].changeState(Const.NOTSTARTED); // update state of all rounds to not started
+		rounds[1].changeState(Const.NOTSTARTED); // update state of all rounds to not started
+
+	}
+
+	public void changeRound() {
+
+		// reset timer
+
+		if (roundId == 0) {
+			// game starts now
+			Debug.Log("[RoundManager] : Starting game...");
+			roundId = 1 ;
+			rounds[roundId-1].changeState(Const.RUNNING); // update state of new round to running
+
+		}  else if (roundId != maxRounds) {
+			// as long as the game is not finishing
+			rounds[roundId-1].changeState(Const.FINISHED); // update state of current round to finished
+			roundId ++;
+			rounds[roundId-1].changeState(Const.RUNNING); // update state of new round to running
+
+		} else {
+			// when the game finishes
+			rounds[roundId-1].changeState(Const.FINISHED); // update state of current round to finished
+			// game over
+			// call game manager to get final scores
+
+		}
+	}
+
+	public int getRoundId() {
+
+		return roundId;
+
+	}
+
+}
+
+[System.Serializable]
+public class Round {
+
+	private int state ; // 0 = not started, 1 = running, -1 = finished
+	private int finalScoreTeamPirates = 0;
+	private int finalScoreTeamSuperCorp = 0;
+
+	public void changeState (int newState) {
+		state = newstate;
+	}
+
+	public void finishRound(int scoreP, int scoreS) {
+
+		finalScoreTeamPirates = scoreP ;
+		finalScoreTeamSuperCorp = scoreS ;
+		
+	}
+
+	public int getPiratesFinalScore() {
+		return finalScoreTeamPirates;
+	} 
+
+	public int getSuperCorpFinalScore() {
+		return finalScoreTeamSuperCorp;
+	} 
+
 }
