@@ -89,6 +89,8 @@ namespace UnityStandardAssets.CrossPlatformInput {
 		}
 		
 		void OnCollisionEnter(Collision col){
+
+			if (!nIdentity.isLocalPlayer) return;
 			if(col.gameObject.CompareTag("projectile")){
 				
 				if(hasCollide == false){
