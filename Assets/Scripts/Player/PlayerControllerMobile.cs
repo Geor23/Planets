@@ -15,7 +15,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
 		private bool hasCollide = false;
 
 		public float speed = 3.0F;
-		public float rotSpeed = 12.0F;
+		public float rotSpeed = 20.0F;
 
 		public Transform planet;
 		public Transform model;
@@ -65,17 +65,19 @@ namespace UnityStandardAssets.CrossPlatformInput {
 				float forwardSpeed = speed * ((Input.GetKey ("w")?1:0) - (Input.GetKey ("s")?1:0));
 				float strafeSpeed = speed * (-(Input.GetKey ("a")?1:0) + (Input.GetKey ("d")?1:0));
 #endif
+				Vector3 moveDir = forwardSpeed * forward + strafeSpeed * right;
+				rotateObject(model, moveDir.normalized);
 
 				Vector3 turretDirection = ((forward * aimV) + (right * aimH)).normalized;
 				rotateObject(turret, turretDirection);
 
-				Vector3 moveDir = forwardSpeed * forward + strafeSpeed * right;
-				rotateObject(model, moveDir.normalized);
 				rb.MovePosition(transform.position + moveDir * Time.deltaTime*5);
 			}
 		}
 		void rotateObject (Transform obj, Vector3 direction) {
-			if (direction.magnitude > 0.1) {
+			if (direction.magnitude == 0) {
+				direction = model.forward;
+			}
 				Vector3 upDir = (model.position - planet.position).normalized;	
 				Quaternion currentRotation = Quaternion.LookRotation(direction, upDir);
 				obj.rotation = Quaternion.Lerp(obj.rotation, currentRotation, Time.deltaTime*rotSpeed);
@@ -89,10 +91,9 @@ namespace UnityStandardAssets.CrossPlatformInput {
 					if(Time.time < nextFire)
 						return;
 
-	        GetComponent<PlayerNetworkHandler>().CmdSpawnProjectile(rb.position + direction, direction);
+	        GetComponent<PlayerNetworkHandler>().CmdSpawnProjectile(rb.position + turret.forward, turret.forward);
 	      	nextFire = Time.time + fireRate;
 	      }
-			}
 		}
 		
 		void OnCollisionEnter(Collision col){
