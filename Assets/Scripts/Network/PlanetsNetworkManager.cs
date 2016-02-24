@@ -21,7 +21,7 @@ static class Const {
     public const int RUNNING = 1;
     public const int FINISHED = -1;
     public const int NOTSTARTED = 0;
-
+    public const int INITIALTIMER = 20;
 }
 
 class RoundScores {
@@ -39,7 +39,7 @@ public class PlanetsNetworkManager : NetworkManager {
     public string round1Scene; //Round 1 name
     public string round2Scene;
     TeamManager teamManager = new TeamManager();
-    private float timerRound = 20; //This is the time communicated to clients
+    private float timerRound = Const.INITIALTIMER; //This is the time communicated to clients
 	RoundManager roundManager = new RoundManager();
 	/*
     Override the virtual default functions to build on existing behaviour 
@@ -53,7 +53,6 @@ public class PlanetsNetworkManager : NetworkManager {
   	public bool hasPickedTeam = false; 
 	public bool hasConnected = false;
   	public bool inRound = false;
-  	private int InitialtimerRound = 20;
   	private List<string> roundList;
 
 
@@ -73,19 +72,24 @@ public class PlanetsNetworkManager : NetworkManager {
         if ((roundList.Contains(NetworkManager.networkSceneName) &&  (roundList.IndexOf(NetworkManager.networkSceneName) != roundList.Count - 1)) {
             timerRound -= Time.deltaTime;
             if (timerRound < 0) {
+            	int scoreP = teamManager.getScore(0);
+            	int scoreS = teamManager.getScore(1);
+            	roundManager.finishRound(scoreP, scoreS);
             	//change Round
             	roundManager.changeRound();
             	if (roundManager.getFinishedState() == 1) {
+            		ServerChangeScene(roundList[roundManager.getRoundId()]);
+            		timerRound = Const.INITIALTIMER;
             		//Get scores , display winners etc
             	}
             	else {
             		ServerChangeScene(roundList[roundManager.getRoundId()-1]);
-            		timerRound = 20;
+            		timerRound = Const.INITIALTIMER;
             	}
         	}
         }
         else {
-        	timerRound = 20;
+        	timerRound = Const.INITIALTIMER;
         }
     }
 	// register needed handlers when server starts
@@ -506,7 +510,12 @@ public class RoundManager {
 	}
 
 	public void finishRound(int scoreP, int scoreS) {
-		rounds[roundId-1].finishRound(scoreP,scoreS);
+		if (rounds[roundId-1].getState() != Const.RUNNING) {
+			Debug.Error("ERROR[RoundManager-ChangeRound]: The round " + roundId + " is not running so cannot be finished");
+		}
+		else {
+			rounds[roundId-1].finishRound(scoreP,scoreS);
+		}
 	}
 }
 
