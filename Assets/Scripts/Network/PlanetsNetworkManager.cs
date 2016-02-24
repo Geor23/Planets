@@ -66,7 +66,8 @@ public class PlanetsNetworkManager : NetworkManager {
     	roundList = new List<string>();
     	roundList.Add("Round1");
     	roundList.Add("Round2");
-    	roundList.Add("LobbyScene");
+    	roundList.Add("Round3");
+    	roundList.Add("GameOver");
   	}
 	
     public void Update(){
@@ -428,7 +429,7 @@ public class TeamManager {
 [System.Serializable]
 public class RoundManager {
 	private int roundId = 0;
-	private int maxRounds = 2;
+	private int maxRounds = 3;
 	List<Round> rounds = new List<Round>();
 
 	private int hasFinishedState = 0;
@@ -437,12 +438,16 @@ public class RoundManager {
 
 		Round round1 = new Round();
 		Round round2 = new Round();
+		Round round3 = new Round();
 
 		rounds.Add(round1);
 		rounds.Add(round2);
+		rounds.Add(round3);
+
 
 		rounds[0].changeState(Const.NOTSTARTED); // update state of all rounds to not started
 		rounds[1].changeState(Const.NOTSTARTED); // update state of all rounds to not started
+		rounds[2].changeState(Const.NOTSTARTED); // update state of all rounds to not started
 
 	}
 
