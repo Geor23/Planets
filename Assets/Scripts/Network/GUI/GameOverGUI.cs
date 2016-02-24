@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.Networking;
 using UnityEngine.Networking.NetworkSystem;
 
-public class LobbyGUI : MonoBehaviour {
+public class GameOverGUI : MonoBehaviour {
 
   NetworkManager nm;
 	public Text teamP;
@@ -14,10 +14,12 @@ public class LobbyGUI : MonoBehaviour {
   public Text ScoreS;
 
   public void Start() {
-    
+
     nm = NetworkManager.singleton;
 	  nm.client.RegisterHandler (Msgs.serverTeamMsg, OnClientReceiveTeamList);
     nm.client.RegisterHandler (Msgs.serverFinalScores, OnClientReceiveScores);
+    nm.client.Send(Msgs.requestTeamMsg, new EmptyMessage());
+    nm.client.Send(Msgs.requestFinalScores, new EmptyMessage());
 
   }
 
@@ -43,7 +45,6 @@ public class LobbyGUI : MonoBehaviour {
 
 
   public void OnClientReceiveScores(NetworkMessage msg) {
-
     FinalScores tl = msg.ReadMessage<FinalScores>(); 
     int pirateCounter = 0;
     int superCorpCounter = 0;
@@ -57,8 +58,8 @@ public class LobbyGUI : MonoBehaviour {
     if (tl.round3P >= tl.round3S) pirateCounter ++;
     else superCorpCounter ++;
 
-    scoreP.text = pirateCounter.ToString();
-    scoreS.text = superCorpCounter.ToString();
+    ScoreP.text = pirateCounter.ToString();
+    ScoreS.text = superCorpCounter.ToString();
 
   }
 

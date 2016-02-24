@@ -24,9 +24,9 @@ static class Const {
     public const int INITIALTIMER = 20;
 }
 
-class RoundScores {
-	List<int> pirateScore = new List<int>();
-	List<int> superCorpScore = new List<int>();
+public class RoundScores {
+	public List<int> pirateScore = new List<int>();
+	public List<int> superCorpScore = new List<int>();
 }
 
 public class PlanetsNetworkManager : NetworkManager {
@@ -90,10 +90,6 @@ public class PlanetsNetworkManager : NetworkManager {
             	if (roundManager.getFinishedState() == 1) {
             		ServerChangeScene(roundList[roundManager.getRoundId()]);
             		timerRound = Const.INITIALTIMER;
-            		sendTeam(0);
-            		sendTeam(1);
-            		RoundScores sc = roundManager.getFinalScores();
-            		sendFinalScores(sc);
             		//Get scores , display winners etc
             	}
             	else {
@@ -114,10 +110,16 @@ public class PlanetsNetworkManager : NetworkManager {
 	    NetworkServer.RegisterHandler(Msgs.clientTeamMsg, OnServerRecieveTeamChoice);
 	    NetworkServer.RegisterHandler(Msgs.startGame, OnServerStartGame);
 	    NetworkServer.RegisterHandler(Msgs.requestTeamMsg, OnServerRecieveTeamRequest);
+	   	NetworkServer.RegisterHandler(Msgs.requestFinalScores, OnServerRecieveFinalScoresRequest);
 	    NetworkServer.RegisterHandler(Msgs.clientTeamScore, OnServerReceiveScore);
 	    NetworkServer.RegisterHandler(Msgs.requestTeamScores, OnServerRecieveTeamScoresRequest);
         NetworkServer.RegisterHandler(Msgs.requestCurrentTime, OnServerRecieveTimeRequest);
 
+    }
+
+    public void OnServerRecieveFinalScoresRequest(NetworkMessage netMsg){
+    	RoundScores sc = roundManager.getFinalScores();
+		sendFinalScores(sc);
     }
 
     //This function sends the current in-game time to the client requesting time.
@@ -175,6 +177,7 @@ public class PlanetsNetworkManager : NetworkManager {
 	public void sendFinalScores(RoundScores sc) {
 
 		FinalScores tl = new FinalScores();
+
 		tl.round1P = sc.pirateScore[0];
 		tl.round2P = sc.pirateScore[1];
 		tl.round3P = sc.pirateScore[2];
@@ -485,20 +488,20 @@ public class RoundManager {
 
 	}
 
-public RoundScores getFinalScores() {
+	public RoundScores getFinalScores() {
 	
-	RoundScores sc;
+		RoundScores sc = new RoundScores();
 
-	sc.pirateScore.Add(rounds[0].getPiratesFinalScore());
-	sc.pirateScore.Add(rounds[1].getPiratesFinalScore());
-	sc.pirateScore.Add(rounds[2].getPiratesFinalScore());
+		sc.pirateScore.Add(rounds[0].getPiratesFinalScore());
+		sc.pirateScore.Add(rounds[1].getPiratesFinalScore());
+		sc.pirateScore.Add(rounds[2].getPiratesFinalScore());
 
-	sc.superCorpScore.Add(rounds[0].getSuperCorpFinalScore());
-	sc.superCorpScore.Add(rounds[1].getSuperCorpFinalScore());
-	sc.superCorpScore.Add(rounds[2].getSuperCorpFinalScore());
+		sc.superCorpScore.Add(rounds[0].getSuperCorpFinalScore());
+		sc.superCorpScore.Add(rounds[1].getSuperCorpFinalScore());
+		sc.superCorpScore.Add(rounds[2].getSuperCorpFinalScore());
 
-	return sc;
-}
+		return sc;
+	}
 
 	public void changeRound() {
 

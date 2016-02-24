@@ -612,7 +612,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 3
+  m_Text: 
 --- !u!222 &1006945332
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -777,6 +777,7 @@ GameObject:
   - 223: {fileID: 1373486696}
   - 114: {fileID: 1373486695}
   - 114: {fileID: 1373486694}
+  - 114: {fileID: 1373486697}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -864,6 +865,21 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &1373486697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1373486692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 371b4f3e36a0940d19bd646858007537, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  teamP: {fileID: 1415526466}
+  teamS: {fileID: 896364584}
+  ScoreP: {fileID: 1006945331}
+  ScoreS: {fileID: 588825516}
 --- !u!1 &1415526465
 GameObject:
   m_ObjectHideFlags: 0

@@ -24,6 +24,7 @@ class Msgs : MsgType {
   public const short requestCurrentTime = 58;
   public const short sendCurrentTime = 59;
   public const short serverFinalScores = 60;
+  public const short requestFinalScores = 61;
 
 
 }
@@ -45,7 +46,7 @@ public class FinalScores : MessageBase {
   public int round2S ;
   public int round3P ;
   public int round3S ;
-  
+
 }
 
 public class TeamList : MessageBase {
