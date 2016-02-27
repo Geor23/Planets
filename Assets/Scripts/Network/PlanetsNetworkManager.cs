@@ -185,13 +185,24 @@ public class PlanetsNetworkManager : NetworkManager {
 		FinalScores tl = new FinalScores();
 
 		tl.round1P = sc.pirateScore[0];
-		tl.round2P = sc.pirateScore[1];
-		tl.round3P = sc.pirateScore[2];
-
 		tl.round1S = sc.superCorpScore[0];
-		tl.round2S = sc.superCorpScore[1];
-		tl.round3S = sc.superCorpScore[2];
 
+		if (roundManager.getRoundId() == 3) {
+			tl.round2P = sc.pirateScore[1];
+			tl.round2S = sc.superCorpScore[1];
+		} else {
+			tl.round2P = -1;
+			tl.round2S = -1;
+		}
+		
+		if (roundManager.getFinishedState() == 1) {
+			tl.round3P = sc.pirateScore[2];
+			tl.round3S = sc.superCorpScore[2];
+		} else {
+			tl.round3P = -1;
+			tl.round3S = -1;
+		}
+		
 		NetworkServer.SendToAll(Msgs.serverFinalScores, tl);
 
 	}
@@ -587,9 +598,8 @@ public class RoundManager {
 				Debug.LogError("ERROR[RoundManager-ChangeRound]: The round " + roundId + " is not running so cannot be finished");
 
 			} else {
-					rounds[roundId-1].changeState(Const.FINISHED); // update state of current round to finished
-				// game over
-				// call game manager to get final scores
+				
+				rounds[roundId-1].changeState(Const.FINISHED); // update state of current round to finished
 				hasFinishedState = 1;
 				}
 			}
