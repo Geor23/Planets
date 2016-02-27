@@ -102,6 +102,7 @@ public class PlanetsNetworkManager : NetworkManager {
         	timerRound = Const.INITIALTIMER;
         }
     }
+
 	// register needed handlers when server starts
   	public override void OnStartServer() {
 
@@ -119,7 +120,7 @@ public class PlanetsNetworkManager : NetworkManager {
 
     public void OnServerRecieveFinalScoresRequest(NetworkMessage netMsg){
     	RoundScores sc = roundManager.getFinalScores();
-		sendFinalScores(sc);
+		sendFinalScores(sc);	
     }
 
     //This function sends the current in-game time to the client requesting time.
@@ -212,7 +213,11 @@ public class PlanetsNetworkManager : NetworkManager {
 	    // if the player is choosing the team for the first time
 		if (dict[id].team == -1) {
 			// update the team and send updated list to all clients
+			
 			dict[id].team = choice;	
+			teamManager.addPlayerToTeam(dict[id].name, dict[id].team);
+
+			sendTeam (dict[id].team);
 
 		} else if (dict[id].team != choice) {	// if the player has switched teams
 			// delete player from old list and send updated list to all clients
