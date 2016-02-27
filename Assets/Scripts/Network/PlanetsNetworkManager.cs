@@ -118,6 +118,7 @@ public class PlanetsNetworkManager : NetworkManager {
 
     }
 
+
     public void OnServerRecieveFinalScoresRequest(NetworkMessage netMsg){
     	RoundScores sc = roundManager.getFinalScores();
 		sendFinalScores(sc);
@@ -158,7 +159,9 @@ public class PlanetsNetworkManager : NetworkManager {
 	  	//Debug.Log("got scoooooreeee");
 	  	int id = IDFromConn(msg.conn);
 	  	Debug.Log("team: " + dict[id].team);
-	  	// add the score to the correct team
+        // add the score to the correct team
+        GameObject obj = sc.obj; //Object interacted with for score
+        //obj.GetComponent<ResourceController>().setScore(1);
 	  	teamManager.addScore(sc.score, dict[id].team);
 
 	  	// send to everyone the updated team score

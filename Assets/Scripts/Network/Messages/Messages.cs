@@ -18,13 +18,14 @@ class Msgs : MsgType {
   public const short startGame = 52;      // 
   public const short serverTeamMsg = 53;  // server sends client the team list
   public const short requestTeamMsg = 54; // client sends server a request for the team list
-	public const short clientTeamScore = 55;
+  public const short clientTeamScore = 55;
   public const short serverTeamScore = 56;
   public const short requestTeamScores = 57;
   public const short requestCurrentTime = 58;
   public const short sendCurrentTime = 59;
   public const short serverFinalScores = 60;
   public const short requestFinalScores = 61;
+  public const short destroyObjectRequest = 62;
 
 
 }
@@ -57,6 +58,7 @@ public class TeamList : MessageBase {
 public class AddScore : MessageBase {
 	public int score;
 	public int team;
+    public GameObject obj;
 }
 
 public class TeamScore : MessageBase {

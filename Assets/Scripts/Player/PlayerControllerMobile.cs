@@ -8,8 +8,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
 	public class PlayerControllerMobile : MonoBehaviour {
 		private NetworkIdentity nIdentity;
 		private NetworkManager nm;
-
-		private const float fireRate = 0.3F;
+        private const float fireRate = 0.3F;
 		private float nextFire = 0.0F;
 
 		private bool hasCollide = false;
@@ -119,16 +118,27 @@ namespace UnityStandardAssets.CrossPlatformInput {
 			if(col.gameObject.CompareTag("ResourcePickUp")){
 				ResourceProperties resProp = col.gameObject.GetComponent<ResourceProperties>();
 				score = score + resProp.getScore();
-				Destroy(col.gameObject);
+                //Network.Destroy(col.gameObject);
 				SetScoreText();
-
 				AddScore sc = new AddScore();
 				sc.team = 0;
 				sc.score = (int) resProp.getScore();
-				NetworkManager.singleton.client.Send(Msgs.clientTeamScore, sc);
+                sc.obj = col.gameObject;
+				nm.client.Send(Msgs.clientTeamScore, sc);
 			}
 
-			if(col.gameObject.CompareTag("ResourcePickUpDeath")){
+            if (col.gameObject.CompareTag("StaticResource")){
+                ResourceController resProp = col.gameObject.GetComponent<ResourceController>();
+                score = score + resProp.getScore();
+                SetScoreText();
+                AddScore sc = new AddScore();
+                sc.team = 0;
+                sc.score = (int)resProp.getScore();
+                sc.obj = col.gameObject;
+                nm.client.Send(Msgs.clientTeamScore, sc);
+            }
+
+            if (col.gameObject.CompareTag("ResourcePickUpDeath")){
 
 				DeathResourceProperties resProp = col.gameObject.GetComponent<DeathResourceProperties>();
 				score = score + resProp.getScore();
@@ -150,8 +160,12 @@ namespace UnityStandardAssets.CrossPlatformInput {
 			return scoreToRemove;
 		}
 
-			
-		void SetScoreText(){
+		public void SetScoreText(){
+            scoreText.text = "Score: " + score.ToString();
+        }	
+
+		public void SetScoreTextNew(int scoreVal){
+            score += scoreVal;
 			scoreText.text = "Score: " + score.ToString();
 		}
 	}
