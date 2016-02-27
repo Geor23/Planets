@@ -95,9 +95,8 @@ public class PlanetsNetworkManager : NetworkManager {
             	if (roundManager.getFinishedState() == 1) {
             		ServerChangeScene( roundList[ 2 * ( roundManager.getRoundId() - 1 ) + 1 ] );
             		timerRound = Const.INITIALTIMER;
-            		//Get scores , display winners etc
             	} else {
-            		ServerChangeScene( roundList[ 2 * ( roundManager.getRoundId() - 1 ) -1 ] );
+            		ServerChangeScene( roundList[ 2 * ( roundManager.getRoundId() - 1 ) - 1 ] );
             		timerRound = Const.ROUNDOVERTIMER;
             	}
         	}

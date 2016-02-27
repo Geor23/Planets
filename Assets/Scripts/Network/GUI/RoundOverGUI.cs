@@ -74,13 +74,18 @@ public class RoundOverGUI : MonoBehaviour {
 
     if (tl.round1P >= tl.round1S) pirateCounter ++;
     else superCorpCounter ++;
-
-    if (tl.round2P >= tl.round2S) pirateCounter ++;
-    else superCorpCounter ++;
-
-    if (tl.round3P >= tl.round3S) pirateCounter ++;
-    else superCorpCounter ++;
-
+    
+    
+    if ((tl.round2P != 0) || (tl.round2S != 0) || (tl.round3P != 0) || (tl.round3S != 0)) {
+      if (tl.round2P >= tl.round2S) pirateCounter ++;
+      else superCorpCounter ++;
+    }
+      
+    if ((tl.round3P != 0) || (tl.round3S != 0)) {
+      if (tl.round3P >= tl.round3S) pirateCounter ++;
+      else superCorpCounter ++;
+    }
+    
     ScoreP.text = pirateCounter.ToString();
     ScoreS.text = superCorpCounter.ToString();
 
