@@ -5,10 +5,10 @@ public class ResourceProperties : MonoBehaviour {
 	public int minScore;
 	public int maxScore;
 	//Add some way to influence score frequency (ie, make lower 70% of values appear 90% of the time etc)
-	private int score;
+	private int score = 1;
 	// Use this for initialization
 	void Start () {
-		score = Random.Range (minScore, maxScore);
+		//score = Random.Range (minScore, maxScore);
 		Rescale();
 	}
 
@@ -18,6 +18,7 @@ public class ResourceProperties : MonoBehaviour {
 
 	public void setScore(int scoreToSet){
 		score = scoreToSet;
+        Rescale();
 	}
 
 	void OnCollisionEnter(Collision col) {
@@ -31,6 +32,7 @@ public class ResourceProperties : MonoBehaviour {
 				}
 		}
 	}
+    
 	void Rescale () {
 		float scale;
 		float tmp = (maxScore - minScore)/5;

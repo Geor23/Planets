@@ -54,6 +54,7 @@ public class PlanetsNetworkManager : NetworkManager {
   	public bool hasPickedTeam = false; 
 	public bool hasConnected = false;
   	public bool inRound = false;
+    public bool timerOn = true;
   	private List<string> roundList;
 
 
@@ -86,7 +87,7 @@ public class PlanetsNetworkManager : NetworkManager {
     	} else if ((roundList.Contains(NetworkManager.networkSceneName)) &&  (roundList.IndexOf(NetworkManager.networkSceneName) != (roundList.Count - 1))) {
            
             timerRound -= Time.deltaTime;
-            if (timerRound < 0) {
+            if ((timerRound < 0) && (timerOn)) {
             	int scoreP = teamManager.getScore(0);
             	int scoreS = teamManager.getScore(1);
             	roundManager.finishRound(scoreP, scoreS);
@@ -122,6 +123,7 @@ public class PlanetsNetworkManager : NetworkManager {
         NetworkServer.RegisterHandler(Msgs.requestCurrentTime, OnServerRecieveTimeRequest);
 
     }
+
 
     public void OnServerRecieveFinalScoresRequest(NetworkMessage netMsg){
     	RoundScores sc = roundManager.getFinalScores();
@@ -163,7 +165,9 @@ public class PlanetsNetworkManager : NetworkManager {
 	  	//Debug.Log("got scoooooreeee");
 	  	int id = IDFromConn(msg.conn);
 	  	Debug.Log("team: " + dict[id].team);
-	  	// add the score to the correct team
+        // add the score to the correct team
+        GameObject obj = sc.obj; //Object interacted with for score
+        //obj.GetComponent<ResourceController>().setScore(1);
 	  	teamManager.addScore(sc.score, dict[id].team);
 
 	  	// send to everyone the updated team score
