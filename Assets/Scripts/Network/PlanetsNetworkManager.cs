@@ -77,13 +77,13 @@ public class PlanetsNetworkManager : NetworkManager {
     	// Debug.Log(Const.INITIALTIMER);
     	// Debug.Log(NetworkManager.networkSceneName);
     	// Debug.Log(roundList.Count);
-    	if (NetworkManager.networkSceneName.equals("RoundOver")) {
+    	if (NetworkManager.networkSceneName == "RoundOver" ) {
 
     		timerRound -= Time.deltaTime;
 
     		if (timerRound < 0) {
 
-            	ServerChangeScene( 2*( roundList[roundManager.getRoundId()-1] ) );
+            	ServerChangeScene( roundList[ 2 * (roundManager.getRoundId() - 1) ] );
             	timerRound = Const.INITIALTIMER;
 
         	}
@@ -99,7 +99,7 @@ public class PlanetsNetworkManager : NetworkManager {
             	roundManager.finishRound(scoreP, scoreS);
             	roundManager.changeRound();
             	teamManager.resetScores();
-            	ServerChangeScene( 2*( roundList[roundManager.getRoundId()-1] ) + 1);
+            	ServerChangeScene( roundList[ 2 * ( roundManager.getRoundId() - 1 ) + 1 ] );
             	timerRound = Const.ROUNDOVERTIMER;
             	
         	}
