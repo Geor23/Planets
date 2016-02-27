@@ -9,12 +9,12 @@ public class SimpleTimer : NetworkBehaviour {
   public float timerRound = 20;
 
   void Update(){
-    if(isServer){
-      timerRound -= Time.deltaTime;
-      if ( timerRound < 0){
-         NetworkManager.singleton.ServerChangeScene("LobbyScene");
-      }
-    }
+    // if(isServer){
+    //   timerRound -= Time.deltaTime;
+    //   if ( timerRound < 0){
+    //      NetworkManager.singleton.ServerChangeScene("LobbyScene");
+    //   }
+    // }
   }
 
 }

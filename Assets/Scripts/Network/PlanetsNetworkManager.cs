@@ -17,6 +17,18 @@ class PlayerData {
 
 }
 
+static class Const {
+    public const int RUNNING = 1;
+    public const int FINISHED = -1;
+    public const int NOTSTARTED = 0;
+    public const int INITIALTIMER = 20;
+}
+
+public class RoundScores {
+	public List<int> pirateScore = new List<int>();
+	public List<int> superCorpScore = new List<int>();
+}
+
 public class PlanetsNetworkManager : NetworkManager {
 	
 	[SerializeField] GameObject player1;
@@ -27,7 +39,8 @@ public class PlanetsNetworkManager : NetworkManager {
     public string round1Scene; //Round 1 name
     public string round2Scene;
     TeamManager teamManager = new TeamManager();
-    private float timerRound = 20; //This is the time communicated to clients
+    private float timerRound = Const.INITIALTIMER; //This is the time communicated to clients
+	RoundManager roundManager = new RoundManager();
 	/*
     Override the virtual default functions to build on existing behaviour 
     
@@ -40,6 +53,8 @@ public class PlanetsNetworkManager : NetworkManager {
   	public bool hasPickedTeam = false; 
 	public bool hasConnected = false;
   	public bool inRound = false;
+    public bool timerOn = true;
+  	private List<string> roundList;
 
 
 	public void SceneChange() {
@@ -49,15 +64,43 @@ public class PlanetsNetworkManager : NetworkManager {
 
   	public void Start() {
     	dict = new Dictionary<int, PlayerData>();
+    	roundList = new List<string>();
+    	roundList.Add("Round1");
+    	roundList.Add("Round2");
+    	roundList.Add("Round3");
+    	roundList.Add("GameOver");
   	}
 	
     public void Update(){
-        if (NetworkManager.networkSceneName== "Round1"){
+    	// Debug.Log(Const.INITIALTIMER);
+    	// Debug.Log(NetworkManager.networkSceneName);
+    	// Debug.Log(roundList.Count);
+        if ((roundList.Contains(NetworkManager.networkSceneName)) &&  (roundList.IndexOf(NetworkManager.networkSceneName) != (roundList.Count - 1))) {
             timerRound -= Time.deltaTime;
+            if ((timerRound < 0) && (timerOn)) {
+            	int scoreP = teamManager.getScore(0);
+            	int scoreS = teamManager.getScore(1);
+            	roundManager.finishRound(scoreP, scoreS);
+            	//change Round
+            	roundManager.changeRound();
+
+            	teamManager.resetScores();
+            	sendScore(0);
+    			sendScore(1);
+
+            	if (roundManager.getFinishedState() == 1) {
+            		ServerChangeScene(roundList[roundManager.getRoundId()]);
+            		timerRound = Const.INITIALTIMER;
+            		//Get scores , display winners etc
+            	}
+            	else {
+            		ServerChangeScene(roundList[roundManager.getRoundId()-1]);
+            		timerRound = Const.INITIALTIMER;
+            	}
+        	}
         }
-        else
-        {
-            timerRound = 20;
+        else {
+        	timerRound = Const.INITIALTIMER;
         }
     }
 	// register needed handlers when server starts
@@ -68,10 +111,17 @@ public class PlanetsNetworkManager : NetworkManager {
 	    NetworkServer.RegisterHandler(Msgs.clientTeamMsg, OnServerRecieveTeamChoice);
 	    NetworkServer.RegisterHandler(Msgs.startGame, OnServerStartGame);
 	    NetworkServer.RegisterHandler(Msgs.requestTeamMsg, OnServerRecieveTeamRequest);
+	   	NetworkServer.RegisterHandler(Msgs.requestFinalScores, OnServerRecieveFinalScoresRequest);
 	    NetworkServer.RegisterHandler(Msgs.clientTeamScore, OnServerReceiveScore);
 	    NetworkServer.RegisterHandler(Msgs.requestTeamScores, OnServerRecieveTeamScoresRequest);
         NetworkServer.RegisterHandler(Msgs.requestCurrentTime, OnServerRecieveTimeRequest);
 
+    }
+
+
+    public void OnServerRecieveFinalScoresRequest(NetworkMessage netMsg){
+    	RoundScores sc = roundManager.getFinalScores();
+		sendFinalScores(sc);
     }
 
     //This function sends the current in-game time to the client requesting time.
@@ -109,7 +159,9 @@ public class PlanetsNetworkManager : NetworkManager {
 	  	//Debug.Log("got scoooooreeee");
 	  	int id = IDFromConn(msg.conn);
 	  	Debug.Log("team: " + dict[id].team);
-	  	// add the score to the correct team
+        // add the score to the correct team
+        GameObject obj = sc.obj; //Object interacted with for score
+        //obj.GetComponent<ResourceController>().setScore(1);
 	  	teamManager.addScore(sc.score, dict[id].team);
 
 	  	// send to everyone the updated team score
@@ -123,6 +175,22 @@ public class PlanetsNetworkManager : NetworkManager {
 		tl.team = (int) team;
 		tl.score = (int) teamManager.getScore(team);
 		NetworkServer.SendToAll(Msgs.serverTeamScore, tl);
+
+	}
+
+	public void sendFinalScores(RoundScores sc) {
+
+		FinalScores tl = new FinalScores();
+
+		tl.round1P = sc.pirateScore[0];
+		tl.round2P = sc.pirateScore[1];
+		tl.round3P = sc.pirateScore[2];
+
+		tl.round1S = sc.superCorpScore[0];
+		tl.round2S = sc.superCorpScore[1];
+		tl.round3S = sc.superCorpScore[2];
+
+		NetworkServer.SendToAll(Msgs.serverFinalScores, tl);
 
 	}
 
@@ -183,6 +251,7 @@ public class PlanetsNetworkManager : NetworkManager {
 	public void OnServerStartGame(NetworkMessage msg) {
 
     	ServerChangeScene(round1Scene);
+    	roundManager.changeRound();
 
 	}
 
@@ -208,7 +277,7 @@ public class PlanetsNetworkManager : NetworkManager {
 	public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId) {
 		/* This is where you can register players with teams, and spawn the player at custom points in the team space */
 		//hasConnected = true;
-    int id = IDFromConn(conn);
+    	int id = IDFromConn(conn);
 		GameObject player = Instantiate (dict[id].team==0?player1:(dict[id].team==1?player2:observer), GetStartPosition ().position, Quaternion.identity) as GameObject;
         NetworkServer.AddPlayerForConnection (conn, player, playerControllerId);
 		
@@ -287,6 +356,10 @@ public class Team {
 
 	public void removePlayer (string playerName) {
 		players.Remove(playerName) ;
+	}
+
+	public void resetScore() {
+		score = 0;
 	}
 
 }
@@ -384,5 +457,175 @@ public class TeamManager {
 
 	}
 
+
+	public void resetScores() {
+		teams[0].resetScore();
+		teams[1].resetScore();
+	}
+
 	
+}
+
+
+[System.Serializable]
+public class RoundManager {
+	private int roundId = 0;
+	private int maxRounds = 3;
+	List<Round> rounds = new List<Round>();
+
+	private int hasFinishedState = 0;
+
+	public RoundManager() {
+
+		Round round1 = new Round();
+		Round round2 = new Round();
+		Round round3 = new Round();
+
+		rounds.Add(round1);
+		rounds.Add(round2);
+		rounds.Add(round3);
+
+
+		rounds[0].changeState(Const.NOTSTARTED); // update state of all rounds to not started
+		rounds[1].changeState(Const.NOTSTARTED); // update state of all rounds to not started
+		rounds[2].changeState(Const.NOTSTARTED); // update state of all rounds to not started
+
+	}
+
+	public RoundScores getFinalScores() {
+	
+		RoundScores sc = new RoundScores();
+
+		sc.pirateScore.Add(rounds[0].getPiratesFinalScore());
+		sc.pirateScore.Add(rounds[1].getPiratesFinalScore());
+		sc.pirateScore.Add(rounds[2].getPiratesFinalScore());
+
+		sc.superCorpScore.Add(rounds[0].getSuperCorpFinalScore());
+		sc.superCorpScore.Add(rounds[1].getSuperCorpFinalScore());
+		sc.superCorpScore.Add(rounds[2].getSuperCorpFinalScore());
+
+		return sc;
+	}
+
+	public void changeRound() {
+
+		if (roundId == 0) {
+			// game starts now
+
+			Debug.Log("[RoundManager] : Starting game...");
+			roundId = 1 ;
+
+			if (rounds[roundId-1].getState() != Const.NOTSTARTED) {
+
+				Debug.LogError("ERROR[RoundManager-ChangeRound]: Cannot start round " + roundId);
+
+			} else {
+
+				rounds[roundId-1].changeState(Const.RUNNING); // update state of new round to running
+
+			}
+
+		}  else if (roundId != maxRounds) {
+			// as long as the game is not finishing
+			Debug.Log("[RoundManager] : Changing Round...");
+
+			if (rounds[roundId-1].getState() != Const.RUNNING) {
+
+				Debug.LogError("ERROR[RoundManager-ChangeRound]: The round " + roundId + " is not running so cannot be finished");
+
+			} else {
+
+				rounds[roundId-1].changeState(Const.FINISHED); // update state of current round to finished
+				roundId ++;
+
+				if (rounds[roundId-1].getState() != Const.NOTSTARTED) {
+
+					Debug.LogError("ERROR[RoundManager-ChangeRound]: Cannot start round " + roundId);
+
+				} else {
+
+					rounds[roundId-1].changeState(Const.RUNNING); // update state of new round to running
+
+				}
+			}
+			
+
+		} else {
+			// when the game finishes
+			Debug.Log("[RoundManager] : Finishing game...");
+
+			if (rounds[roundId-1].getState() != Const.RUNNING) {
+
+				Debug.LogError("ERROR[RoundManager-ChangeRound]: The round " + roundId + " is not running so cannot be finished");
+
+			} else {
+					rounds[roundId-1].changeState(Const.FINISHED); // update state of current round to finished
+				// game over
+				// call game manager to get final scores
+				hasFinishedState = 1;
+				}
+			}
+
+	}
+
+	public int getRoundId() {
+
+		return roundId;
+
+	}
+
+	public int getFinishedState() {
+		return hasFinishedState;
+	}
+
+	public void finishRound(int scoreP, int scoreS) {
+		if (rounds[roundId-1].getState() != Const.RUNNING) {
+			Debug.LogError("ERROR[RoundManager-ChangeRound]: The round " + roundId + " is not running so cannot be finished");
+		}
+		else {
+			rounds[roundId-1].finishRound(scoreP,scoreS);
+		}
+	}
+}
+
+[System.Serializable]
+public class Round {
+
+	private int state ; // 0 = not started, 1 = running, -1 = finished
+	private int finalScoreTeamPirates = 0;
+	private int finalScoreTeamSuperCorp = 0;
+
+	public void changeState (int newState) {
+
+		state = newState;
+
+	}
+
+	public void finishRound(int scoreP, int scoreS) {
+		Debug.Log("Finishing Scores");
+		finalScoreTeamPirates = scoreP ;
+		finalScoreTeamSuperCorp = scoreS ;
+		
+	}
+
+	public int getPiratesFinalScore() {
+
+		return finalScoreTeamPirates;
+
+	} 
+
+	public int getSuperCorpFinalScore() {
+
+		return finalScoreTeamSuperCorp;
+
+	} 
+
+	public int getState() {
+
+		return state;
+
+	}
+
+
+
 }
