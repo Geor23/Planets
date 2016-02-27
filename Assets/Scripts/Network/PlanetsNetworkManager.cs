@@ -74,34 +74,32 @@ public class PlanetsNetworkManager : NetworkManager {
   	}
 	
     public void Update(){
-    	// Debug.Log(Const.INITIALTIMER);
-    	// Debug.Log(NetworkManager.networkSceneName);
-    	// Debug.Log(roundList.Count);
-    	if (NetworkManager.networkSceneName == "RoundOver" ) {
+
+    	if ( NetworkManager.networkSceneName == "RoundOver" ) {
 
     		timerRound -= Time.deltaTime;
-
     		if (timerRound < 0) {
-
-            	ServerChangeScene( roundList[ 2 * (roundManager.getRoundId() - 1) ] );
+            	ServerChangeScene( roundList[ 2 * ( roundManager.getRoundId() - 1 ) ] );
             	timerRound = Const.INITIALTIMER;
-
         	}
 
     	} else if ((roundList.Contains(NetworkManager.networkSceneName)) &&  (roundList.IndexOf(NetworkManager.networkSceneName) != (roundList.Count - 1))) {
-            
+           
             timerRound -= Time.deltaTime;
-
             if (timerRound < 0) {
-
             	int scoreP = teamManager.getScore(0);
             	int scoreS = teamManager.getScore(1);
             	roundManager.finishRound(scoreP, scoreS);
             	roundManager.changeRound();
             	teamManager.resetScores();
-            	ServerChangeScene( roundList[ 2 * ( roundManager.getRoundId() - 1 ) + 1 ] );
-            	timerRound = Const.ROUNDOVERTIMER;
-            	
+            	if (roundManager.getFinishedState() == 1) {
+            		ServerChangeScene( roundList[ 2 * ( roundManager.getRoundId() - 1 ) + 1 ] );
+            		timerRound = Const.INITIALTIMER;
+            		//Get scores , display winners etc
+            	} else {
+            		ServerChangeScene( roundList[ 2 * ( roundManager.getRoundId() - 1 ) -1 ] );
+            		timerRound = Const.ROUNDOVERTIMER;
+            	}
         	}
 
         } else {
