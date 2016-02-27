@@ -22,6 +22,7 @@ static class Const {
     public const int FINISHED = -1;
     public const int NOTSTARTED = 0;
     public const int INITIALTIMER = 20;
+    public const int ROUNDOVERTIMER = 3;
 }
 
 public class RoundScores {
@@ -65,7 +66,9 @@ public class PlanetsNetworkManager : NetworkManager {
     	dict = new Dictionary<int, PlayerData>();
     	roundList = new List<string>();
     	roundList.Add("Round1");
+    	roundList.Add("RoundOver");
     	roundList.Add("Round2");
+    	roundList.Add("RoundOver");
     	roundList.Add("Round3");
     	roundList.Add("GameOver");
   	}
@@ -74,32 +77,37 @@ public class PlanetsNetworkManager : NetworkManager {
     	// Debug.Log(Const.INITIALTIMER);
     	// Debug.Log(NetworkManager.networkSceneName);
     	// Debug.Log(roundList.Count);
-        if ((roundList.Contains(NetworkManager.networkSceneName)) &&  (roundList.IndexOf(NetworkManager.networkSceneName) != (roundList.Count - 1))) {
+    	if (NetworkManager.networkSceneName.equals("RoundOver")) {
+
+    		timerRound -= Time.deltaTime;
+
+    		if (timerRound < 0) {
+
+            	ServerChangeScene( 2*( roundList[roundManager.getRoundId()-1] ) );
+            	timerRound = Const.INITIALTIMER;
+
+        	}
+
+    	} else if ((roundList.Contains(NetworkManager.networkSceneName)) &&  (roundList.IndexOf(NetworkManager.networkSceneName) != (roundList.Count - 1))) {
+            
             timerRound -= Time.deltaTime;
+
             if (timerRound < 0) {
+
             	int scoreP = teamManager.getScore(0);
             	int scoreS = teamManager.getScore(1);
             	roundManager.finishRound(scoreP, scoreS);
-            	//change Round
             	roundManager.changeRound();
-
             	teamManager.resetScores();
-            	sendScore(0);
-    			sendScore(1);
-
-            	if (roundManager.getFinishedState() == 1) {
-            		ServerChangeScene(roundList[roundManager.getRoundId()]);
-            		timerRound = Const.INITIALTIMER;
-            		//Get scores , display winners etc
-            	}
-            	else {
-            		ServerChangeScene(roundList[roundManager.getRoundId()-1]);
-            		timerRound = Const.INITIALTIMER;
-            	}
+            	ServerChangeScene( 2*( roundList[roundManager.getRoundId()-1] ) + 1);
+            	timerRound = Const.ROUNDOVERTIMER;
+            	
         	}
-        }
-        else {
+
+        } else {
+
         	timerRound = Const.INITIALTIMER;
+
         }
     }
 
