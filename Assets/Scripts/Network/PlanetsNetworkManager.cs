@@ -279,7 +279,7 @@ public class PlanetsNetworkManager : NetworkManager {
 		/* This is where you can register players with teams, and spawn the player at custom points in the team space */
 		//hasConnected = true;
     	int id = IDFromConn(conn);
-		GameObject player = Instantiate (dict[id].team==0?player1:(dict[id].team==1?player2:observer), GetStartPosition ().position, Quaternion.identity) as GameObject;
+		GameObject player = Instantiate (dict[id].team==0?player1:(dict[id].team==1?player2:observer), teamManager.getSpawnP(dict[id].team), Quaternion.identity) as GameObject;
         NetworkServer.AddPlayerForConnection (conn, player, playerControllerId);
 		
 	}
@@ -332,6 +332,8 @@ public class PlanetsNetworkManager : NetworkManager {
 [System.Serializable]
 public class Team {
 
+	public Vector3 spawnPoints;
+
 	public List<string> players = new List<string>() ;
 	public int score = 0 ;
 
@@ -363,6 +365,15 @@ public class Team {
 		score = 0;
 	}
 
+	public void setSpawnPoint(Vector3 spawn) {
+		spawnPoints = spawn;
+	}
+
+	public Vector3 getSpawnPoint() {
+		return spawnPoints;
+	}
+
+
 }
 
 
@@ -378,7 +389,18 @@ public class TeamManager {
 		Team teamSuperCorp = new Team() ;
 		teams.Add(teamPirates) ;	
 		teams.Add(teamSuperCorp) ;	
+		teams[0].setSpawnPoint(new Vector3(0,20,0));
+		teams[1].setSpawnPoint(new Vector3(0,-20,0));
 
+	}
+
+	public Vector3 getSpawnP(int team){
+		if  ((team == 0) || (team == 1)) {
+			return teams[team].getSpawnPoint();
+		} else {
+			Debug.LogError("EROOR[getSpawnP]: You are trying to access a non-existant team!");
+			return new Vector3(0,20,0);
+		}
 	}
 
 	public void addScore(int score, int team) {
