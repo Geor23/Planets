@@ -300,6 +300,7 @@ public class PlanetsNetworkManager : NetworkManager {
 		//hasConnected = true;
     	int id = IDFromConn(conn);
 		GameObject player = Instantiate (dict[id].team==0?player1:(dict[id].team==1?player2:observer), teamManager.getSpawnP(dict[id].team), Quaternion.identity) as GameObject;
+        player.GetComponent<Text>().text = dict[id].name;
         NetworkServer.AddPlayerForConnection (conn, player, playerControllerId);
 		
 	}
