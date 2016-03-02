@@ -7,6 +7,7 @@ public class PlayerNetworkHandler : NetworkBehaviour {
     private Transform transformT;
     private GameObject projectile;
     public GameObject ResourcePickUp;
+    public int projectileLifetime;
 
     void Start(){
       if(!isServer){
@@ -23,7 +24,7 @@ public class PlayerNetworkHandler : NetworkBehaviour {
       GameObject projectile = Instantiate(Resources.Load("projectile")) as GameObject;
       projectile.GetComponent<Transform>().position = position;
       projectile.GetComponent<ProjectileMovement>().setDirection(direction);
-      Destroy(projectile, 16);
+      Destroy(projectile, projectileLifetime);
       NetworkServer.Spawn(projectile);
       projectile.GetComponent<ServerSyncPos>().RpcSyncClient(position, direction);
     }
