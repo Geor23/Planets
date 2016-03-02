@@ -30,7 +30,6 @@ public class PlayerNetworkHandler : NetworkBehaviour {
       projectile.GetComponent<ServerSyncPos>().RpcSyncClient(position, direction);
       Text playerWhoFired = projectile.GetComponent<Text>();
       playerWhoFired.text = name;
-      Debug.Log(name + " had fired");
     }
 
 

@@ -89,7 +89,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
 #endif
 					if(Time.time < nextFire)
 						return;
-						
+
 			string name = GetComponent<Text>().text;	        
 	        Debug.Log("Got name " + name);
 
@@ -114,7 +114,9 @@ namespace UnityStandardAssets.CrossPlatformInput {
                     deathText.enabled = true;
                     deathTimerText.enabled = true;
                     mainCamera.enabled = true;
-
+                    Text shooter = col.gameObject.GetComponent<Text>();
+                    Text victim = gameObject.GetComponent<Text>();
+                    Debug.Log(shooter.text + " killed " + victim.text);
                     GetComponent<PlayerNetworkHandler>().CmdSpawnResource(gameObject.transform.position, score);
                     scoreToRemove = score;
                     score = 0;
@@ -128,7 +130,9 @@ namespace UnityStandardAssets.CrossPlatformInput {
                     deathText.enabled = true;
                     deathTimerText.enabled = true;
                     mainCamera.enabled = true;
-
+                    Text shooter = col.gameObject.GetComponent<Text>();
+                    Text victim = gameObject.GetComponent<Text>();
+                    Debug.Log(shooter.text + " killed " + victim.text);
                     GetComponent<PlayerNetworkHandler>().CmdSpawnResource(gameObject.transform.position, score);
                     scoreToRemove = score;
                     score = 0;
