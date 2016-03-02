@@ -103,7 +103,6 @@ namespace UnityStandardAssets.CrossPlatformInput {
 
 			if (!nIdentity.isLocalPlayer) return;
             if (col.gameObject.CompareTag("ProjectilePirate") && gameObject.CompareTag("PlayerSuperCorp")){
-
                 if (hasCollide == false) {
                     hasCollide = true;
                     Destroy(col.gameObject);

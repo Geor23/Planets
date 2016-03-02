@@ -20,7 +20,7 @@ GameObject:
   - 222: {fileID: 22279366}
   - 114: {fileID: 11468992}
   - 114: {fileID: 11481756}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: PlayerSuperCorp
   m_TagString: PlayerSuperCorp
   m_Icon: {fileID: 0}
@@ -37,7 +37,7 @@ GameObject:
   - 4: {fileID: 488692}
   - 33: {fileID: 3360310}
   - 23: {fileID: 2328282}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54,7 +54,7 @@ GameObject:
   - 4: {fileID: 479182}
   - 33: {fileID: 3376752}
   - 23: {fileID: 2381622}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: Turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,7 +72,7 @@ GameObject:
   - 20: {fileID: 2046330}
   - 92: {fileID: 9280622}
   - 124: {fileID: 12440630}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -87,7 +87,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 224: {fileID: 22443142}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -298,7 +298,7 @@ MonoBehaviour:
   syncPos: {x: 0, y: 0, z: 0}
   nIdentity: {fileID: 11408848}
   myTransform: {fileID: 22406784}
-  lerpRate: 5
+  lerpRate: 1
 --- !u!114 &11455690
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -567,7 +567,7 @@ Prefab:
       objectReference: {fileID: 116834, guid: 976667ad8326a483eaa9c21ec560f8b2, type: 2}
     - target: {fileID: 0}
       propertyPath: lerpRate
-      value: 15
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Enabled
@@ -579,7 +579,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Layer
-      value: 10
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
