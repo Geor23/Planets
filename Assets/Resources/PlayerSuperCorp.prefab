@@ -298,7 +298,7 @@ MonoBehaviour:
   syncPos: {x: 0, y: 0, z: 0}
   nIdentity: {fileID: 11408848}
   myTransform: {fileID: 22406784}
-  lerpRate: 5
+  lerpRate: 1
 --- !u!114 &11455690
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -567,7 +567,7 @@ Prefab:
       objectReference: {fileID: 116834, guid: 976667ad8326a483eaa9c21ec560f8b2, type: 2}
     - target: {fileID: 0}
       propertyPath: lerpRate
-      value: 15
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Enabled
