@@ -12,15 +12,23 @@ public class RunningSceneGUI : MonoBehaviour {
 	public Text teamBScore;
 	public Image piratesWin;
 	public Image superCorpWin;
+	public Text killFeed;
 	int teamA;
 	int teamB;
 	
 	public void Start() { 
 		nm = NetworkManager.singleton;
 		nm.client.RegisterHandler (Msgs.serverTeamScore, OnClientReceiveScores);
+		nm.client.RegisterHandler (Msgs.serverKillFeed, OnClientReceiveKillFeed);
 		nm.client.Send(Msgs.requestTeamScores, new EmptyMessage());
 	}
 	
+	public void OnClientReceiveKillFeed(NetworkMessage msg) {
+		Kill tl = msg.ReadMessage<Kill>(); 
+		killFeed.text = tl.msg;
+	}
+
+
 	public void OnClientReceiveScores(NetworkMessage msg) {
 
 		TeamScore tl = msg.ReadMessage<TeamScore>(); 

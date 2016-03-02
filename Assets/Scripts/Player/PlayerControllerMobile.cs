@@ -114,9 +114,13 @@ namespace UnityStandardAssets.CrossPlatformInput {
                     deathText.enabled = true;
                     deathTimerText.enabled = true;
                     mainCamera.enabled = true;
+
                     Text shooter = col.gameObject.GetComponent<Text>();
                     Text victim = gameObject.GetComponent<Text>();
-                    Debug.Log(shooter.text + " killed " + victim.text);
+                    Kill tc = new Kill();
+    				tc.msg = shooter.text + " killed " + victim.text;
+    				nm.client.Send(Msgs.clientKillFeed, tc);
+
                     GetComponent<PlayerNetworkHandler>().CmdSpawnResource(gameObject.transform.position, score);
                     scoreToRemove = score;
                     score = 0;
@@ -130,9 +134,13 @@ namespace UnityStandardAssets.CrossPlatformInput {
                     deathText.enabled = true;
                     deathTimerText.enabled = true;
                     mainCamera.enabled = true;
+
                     Text shooter = col.gameObject.GetComponent<Text>();
                     Text victim = gameObject.GetComponent<Text>();
-                    Debug.Log(shooter.text + " killed " + victim.text);
+                    Kill tc = new Kill();
+    				tc.msg = shooter.text + " killed " + victim.text;
+    				nm.client.Send(Msgs.clientKillFeed, tc);
+
                     GetComponent<PlayerNetworkHandler>().CmdSpawnResource(gameObject.transform.position, score);
                     scoreToRemove = score;
                     score = 0;

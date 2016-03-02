@@ -56,6 +56,7 @@ public class PlanetsNetworkManager : NetworkManager {
   	public bool inRound = false;
     public bool timerOn = true;
   	private List<string> roundList;
+  	String killFeed;
 
 
 	public void SceneChange() {
@@ -122,9 +123,26 @@ public class PlanetsNetworkManager : NetworkManager {
 	    NetworkServer.RegisterHandler(Msgs.clientTeamScore, OnServerReceiveScore);
 	    NetworkServer.RegisterHandler(Msgs.requestTeamScores, OnServerRecieveTeamScoresRequest);
         NetworkServer.RegisterHandler(Msgs.requestCurrentTime, OnServerRecieveTimeRequest);
+        NetworkServer.RegisterHandler(Msgs.clientKillFeed, OnServerRecieveKill);
 
     }
 
+
+    public void OnServerRecieveKill(NetworkMessage netMsg){
+    	Kill sc = netMsg.ReadMessage<Kill>();
+    	addToKillFeed(sc.msg);
+    }
+
+    public void addToKillFeed(string killToAdd){
+    	killFeed += "\n" + killToAdd;
+    	sendKillFeed();
+    }
+
+    public void sendKillFeed() {
+    	Kill tl = new Kill();
+		tl.msg = killFeed;
+		NetworkServer.SendToAll(Msgs.serverKillFeed, tl);
+    }
 
     public void OnServerRecieveFinalScoresRequest(NetworkMessage netMsg){
     	RoundScores sc = roundManager.getFinalScores();
