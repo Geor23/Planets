@@ -72,6 +72,7 @@ public class PlanetsNetworkManager : NetworkManager {
     	roundList.Add("RoundOver");
     	roundList.Add("Round3");
     	roundList.Add("GameOver");
+
   	}
 	
     public void Update(){
@@ -152,9 +153,13 @@ public class PlanetsNetworkManager : NetworkManager {
 
     // when the client requests teams lists, send
 	public void OnServerRecieveTeamScoresRequest(NetworkMessage msg) {
-
-    	sendScore(0);
-    	sendScore(1);
+        TeamScore tl = new TeamScore();
+        tl.team = 0;
+        tl.score = (int)teamManager.getScore(0);
+        NetworkServer.SendToClient(IDFromConn(msg.conn), Msgs.serverTeamScore, tl);
+        tl.team = 1;
+        tl.score = (int)teamManager.getScore(1);
+        NetworkServer.SendToClient(IDFromConn(msg.conn), Msgs.serverTeamScore, tl);
 
     }
 
