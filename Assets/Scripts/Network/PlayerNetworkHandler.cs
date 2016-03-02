@@ -43,4 +43,11 @@ public class PlayerNetworkHandler : NetworkBehaviour {
       Debug.Log("Setting the spawned resource's score to " + score);
       NetworkServer.Spawn(objClone);
     }
-}
+
+    [Command]
+    public void CmdDestroyDeathResource(GameObject obj){
+        NetworkServer.Destroy(obj);
+
+    }
+
+    }

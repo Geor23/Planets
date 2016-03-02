@@ -169,7 +169,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
 				DeathResourceProperties resProp = col.gameObject.GetComponent<DeathResourceProperties>();
 				score = score + resProp.getScore();
 				Debug.Log("picked up death with score "+ resProp.getScore());
-				Destroy(col.gameObject);
+                GetComponent<PlayerNetworkHandler>().CmdDestroyDeathResource(col.gameObject);
 				SetScoreText();
 
 				AddScore sc = new AddScore();
@@ -180,9 +180,10 @@ namespace UnityStandardAssets.CrossPlatformInput {
 		}
 
 
-		// function only called after the player dies to get the score that the team manager has to substract
-		// hence the score has to be reset to 0 after that
-		public int getScore(){
+
+        // function only called after the player dies to get the score that the team manager has to substract
+        // hence the score has to be reset to 0 after that
+        public int getScore(){
 			return scoreToRemove;
 		}
 

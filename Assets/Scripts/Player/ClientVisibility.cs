@@ -15,7 +15,6 @@ class ClientVisibility : MonoBehaviour{
     if(!observerVisible && PlayerConfig.singleton.GetObserver()) {
       res = false;
     }
-        Debug.Log(PlayerConfig.singleton.GetObserver());
     gameObject.SetActive(res);
   }
 }
