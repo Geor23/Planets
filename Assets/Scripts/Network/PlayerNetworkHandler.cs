@@ -20,14 +20,16 @@ public class PlayerNetworkHandler : NetworkBehaviour {
     }
 
     [Command]
-    public void CmdSpawnProjectile(Vector3 position, Vector3 direction){
-      GameObject projectile = Instantiate(Resources.Load("projectile")) as GameObject;
+    public void CmdSpawnProjectile(Vector3 position, Vector3 direction, String projectileName){
+      GameObject projectile = Instantiate(Resources.Load(projectileName)) as GameObject;
       projectile.GetComponent<Transform>().position = position;
       projectile.GetComponent<ProjectileMovement>().setDirection(direction);
       Destroy(projectile, projectileLifetime);
       NetworkServer.Spawn(projectile);
       projectile.GetComponent<ServerSyncPos>().RpcSyncClient(position, direction);
     }
+
+
 
     [Command]
     public void CmdSpawnResource(Vector3 position, int score){
