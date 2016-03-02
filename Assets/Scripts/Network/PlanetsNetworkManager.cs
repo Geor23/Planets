@@ -419,7 +419,7 @@ public class TeamManager {
 		if  ((team == 0) || (team == 1)) {
 			return teams[team].getSpawnPoint();
 		} else {
-			Debug.LogError("EROOR[getSpawnP]: You are trying to access a non-existant team!");
+			Debug.Log("Team is observer");
 			return new Vector3(0,20,0);
 		}
 	}
@@ -428,7 +428,7 @@ public class TeamManager {
 		if ( team == 0 || team == 1 ) {
 			teams[team].addScore(score);
 		} else {
-			Debug.LogError("ERROR[addScore]: You are trying to access a non-existant team ! ");
+			Debug.Log("ERROR[addScore]: You are trying to access a non-existant team ! ");
 		}
 
 	}
@@ -560,9 +560,7 @@ public class RoundManager {
 			roundId = 1 ;
 
 			if (rounds[roundId-1].getState() != Const.NOTSTARTED) {
-
 				Debug.LogError("ERROR[RoundManager-ChangeRound]: Cannot start round " + roundId);
-
 			} else {
 
 				rounds[roundId-1].changeState(Const.RUNNING); // update state of new round to running
@@ -587,13 +585,9 @@ public class RoundManager {
 					Debug.LogError("ERROR[RoundManager-ChangeRound]: Cannot start round " + roundId);
 
 				} else {
-
 					rounds[roundId-1].changeState(Const.RUNNING); // update state of new round to running
-
 				}
 			}
-			
-
 		} else {
 			// when the game finishes
 			Debug.Log("[RoundManager] : Finishing game...");
@@ -602,8 +596,7 @@ public class RoundManager {
 
 				Debug.LogError("ERROR[RoundManager-ChangeRound]: The round " + roundId + " is not running so cannot be finished");
 
-			} else {
-				
+			} else {	
 				rounds[roundId-1].changeState(Const.FINISHED); // update state of current round to finished
 				hasFinishedState = 1;
 				}

@@ -260,7 +260,7 @@ MonoBehaviour:
   m_LogLevel: 2
   m_PlayerPrefab: {fileID: 0}
   m_AutoCreatePlayer: 0
-  m_PlayerSpawnMethod: 0
+  m_PlayerSpawnMethod: 1
   m_OfflineScene: ServerLocalClientScne
   m_OnlineScene: LobbyScene
   m_SpawnPrefabs:
@@ -270,6 +270,8 @@ MonoBehaviour:
   - {fileID: 116834, guid: 976667ad8326a483eaa9c21ec560f8b2, type: 2}
   - {fileID: 116834, guid: 247d629bb9a114da68aa35aee9e91501, type: 2}
   - {fileID: 192962, guid: 7dc54a31299ac4abd87316f438f5f103, type: 2}
+  - {fileID: 160548, guid: 823fb5d2b403d4d4cbaf79c62f7342d8, type: 2}
+  - {fileID: 179210, guid: 19f9269165dbbbb4c93878885a6dcd42, type: 2}
   m_CustomConfig: 0
   m_MaxConnections: 4
   m_ConnectionConfig:

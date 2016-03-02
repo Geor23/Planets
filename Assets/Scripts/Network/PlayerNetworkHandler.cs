@@ -21,8 +21,8 @@ public class PlayerNetworkHandler : NetworkBehaviour {
     }
 
     [Command]
-    public void CmdSpawnProjectile(Vector3 position, Vector3 direction, string name){
-      GameObject projectile = Instantiate(Resources.Load("projectile")) as GameObject;
+    public void CmdSpawnProjectile(Vector3 position, Vector3 direction, String projectileName, String name){
+      GameObject projectile = Instantiate(Resources.Load(projectileName)) as GameObject;
       projectile.GetComponent<Transform>().position = position;
       projectile.GetComponent<ProjectileMovement>().setDirection(direction);
       Destroy(projectile, projectileLifetime);
@@ -32,6 +32,8 @@ public class PlayerNetworkHandler : NetworkBehaviour {
       playerWhoFired.text = name;
       Debug.Log(name + " had fired");
     }
+
+
 
     [Command]
     public void CmdSpawnResource(Vector3 position, int score){

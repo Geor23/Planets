@@ -6,8 +6,13 @@ TagManager:
   tags:
   - ResourcePickUp
   - ResourcePickUpDeath
-  - projectile
+  - Projectile
   - StaticResource
+  - ProjectilePirate
+  - PlayerPirate
+  - PlayerSuperCorp
+  - ProjectileSuperCorp
+  - projectile
   layers:
   - Default
   - TransparentFX
@@ -18,10 +23,10 @@ TagManager:
   - 
   - 
   - Resource
-  - Projectile
-  - Player
-  - 
-  - 
+  - PirateProjectile
+  - PiratePlayer
+  - CorpProjectile
+  - CorpPlayer
   - 
   - 
   - 

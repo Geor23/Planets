@@ -89,10 +89,17 @@ namespace UnityStandardAssets.CrossPlatformInput {
 #endif
 					if(Time.time < nextFire)
 						return;
-			string name = GetComponent<Text>().text;
-	        GetComponent<PlayerNetworkHandler>().CmdSpawnProjectile(rb.position + turret.forward, turret.forward, name);
-	        
+						
+			string name = GetComponent<Text>().text;	        
 	        Debug.Log("Got name " + name);
+
+                if (gameObject.tag == "PlayerPirate"){
+                    GetComponent<PlayerNetworkHandler>().CmdSpawnProjectile(rb.position + turret.forward, turret.forward, "ProjectilePirate", name);
+                }
+                else{
+                    GetComponent<PlayerNetworkHandler>().CmdSpawnProjectile(rb.position + turret.forward, turret.forward, "ProjectileSuperCorp", name);
+                }
+
 	      	nextFire = Time.time + fireRate;
 	      }
 		}
@@ -100,24 +107,37 @@ namespace UnityStandardAssets.CrossPlatformInput {
 		void OnCollisionEnter(Collision col){
 
 			if (!nIdentity.isLocalPlayer) return;
-			if(col.gameObject.CompareTag("projectile")){
-				
-				if(hasCollide == false){
-					hasCollide = true;
-					Destroy(col.gameObject);
-					deathText.enabled = true;
-					deathTimerText.enabled = true;
-					mainCamera.enabled = true;
+            if (col.gameObject.CompareTag("ProjectilePirate") && gameObject.CompareTag("PlayerSuperCorp")){
+                if (hasCollide == false) {
+                    hasCollide = true;
+                    Destroy(col.gameObject);
+                    deathText.enabled = true;
+                    deathTimerText.enabled = true;
+                    mainCamera.enabled = true;
 
-					GetComponent<PlayerNetworkHandler>().CmdSpawnResource(gameObject.transform.position, score);
-					scoreToRemove = score;
-					score = 0;
-					SetScoreText();
-					ClientScene.RemovePlayer(0);
-				}
-			}
-			
-			if(col.gameObject.CompareTag("ResourcePickUp")){
+                    GetComponent<PlayerNetworkHandler>().CmdSpawnResource(gameObject.transform.position, score);
+                    scoreToRemove = score;
+                    score = 0;
+                    SetScoreText();
+                    ClientScene.RemovePlayer(0);
+                }
+            } else if (col.gameObject.CompareTag("ProjectileSuperCorp") && gameObject.CompareTag("PlayerPirate")){
+                if (hasCollide == false){
+                    hasCollide = true;
+                    Destroy(col.gameObject);
+                    deathText.enabled = true;
+                    deathTimerText.enabled = true;
+                    mainCamera.enabled = true;
+
+                    GetComponent<PlayerNetworkHandler>().CmdSpawnResource(gameObject.transform.position, score);
+                    scoreToRemove = score;
+                    score = 0;
+                    SetScoreText();
+                    ClientScene.RemovePlayer(0);
+                }
+            }
+
+                if (col.gameObject.CompareTag("ResourcePickUp")){
 				ResourceProperties resProp = col.gameObject.GetComponent<ResourceProperties>();
 				score = score + resProp.getScore();
                 //Network.Destroy(col.gameObject);
