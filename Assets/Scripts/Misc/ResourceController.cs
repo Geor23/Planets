@@ -57,7 +57,7 @@ public class ResourceController : MonoBehaviour {
     void OnTriggerEnter(Collider col){
         if (col.gameObject.CompareTag("PlayerPirate")|| col.gameObject.CompareTag("PlayerSuperCorp")){
             NetworkIdentity nIdentity = col.gameObject.GetComponent<NetworkIdentity>();
-            if (nIdentity.isServer){
+            if (nIdentity.isLocalPlayer){
                 Debug.Log("Collided with a player");
                 col.gameObject.GetComponent<PlayerControllerMobile>().SetScoreTextNew(score);
                 AddScore sc = new AddScore();
