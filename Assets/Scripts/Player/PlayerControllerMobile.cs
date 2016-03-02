@@ -89,8 +89,10 @@ namespace UnityStandardAssets.CrossPlatformInput {
 #endif
 					if(Time.time < nextFire)
 						return;
-
-	        GetComponent<PlayerNetworkHandler>().CmdSpawnProjectile(rb.position + turret.forward, turret.forward);
+			string name = GetComponent<Text>().text;
+	        GetComponent<PlayerNetworkHandler>().CmdSpawnProjectile(rb.position + turret.forward, turret.forward, name);
+	        
+	        Debug.Log("Got name " + name);
 	      	nextFire = Time.time + fireRate;
 	      }
 		}

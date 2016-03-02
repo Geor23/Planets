@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Networking;
 
@@ -20,13 +21,16 @@ public class PlayerNetworkHandler : NetworkBehaviour {
     }
 
     [Command]
-    public void CmdSpawnProjectile(Vector3 position, Vector3 direction){
+    public void CmdSpawnProjectile(Vector3 position, Vector3 direction, string name){
       GameObject projectile = Instantiate(Resources.Load("projectile")) as GameObject;
       projectile.GetComponent<Transform>().position = position;
       projectile.GetComponent<ProjectileMovement>().setDirection(direction);
       Destroy(projectile, projectileLifetime);
       NetworkServer.Spawn(projectile);
       projectile.GetComponent<ServerSyncPos>().RpcSyncClient(position, direction);
+      Text playerWhoFired = projectile.GetComponent<Text>();
+      playerWhoFired.text = name;
+      Debug.Log(name + " had fired");
     }
 
     [Command]
