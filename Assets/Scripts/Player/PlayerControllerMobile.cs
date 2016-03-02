@@ -177,7 +177,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
 				DeathResourceProperties resProp = col.gameObject.GetComponent<DeathResourceProperties>();
 				//score = score + resProp.getScore();
                 score = score + int.Parse(col.gameObject.GetComponent<Text>().text);
-				Debug.Log("picked up death with score "+ resProp.getScore());
+				Debug.Log("picked up death with score "+ col.gameObject.GetComponent<Text>().text);
                 GetComponent<PlayerNetworkHandler>().CmdDestroyDeathResource(col.gameObject);
 				SetScoreText();
 
