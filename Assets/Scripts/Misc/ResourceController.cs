@@ -57,7 +57,7 @@ public class ResourceController : MonoBehaviour {
     void OnTriggerEnter(Collider col){
         if (col.gameObject.CompareTag("PlayerPirate")|| col.gameObject.CompareTag("PlayerSuperCorp")){
             NetworkIdentity nIdentity = col.gameObject.GetComponent<NetworkIdentity>();
-            if (nIdentity.isLocalPlayer){
+            if (nIdentity.isServer){
                 Debug.Log("Collided with a player");
                 col.gameObject.GetComponent<PlayerControllerMobile>().SetScoreTextNew(score);
                 AddScore sc = new AddScore();
@@ -65,6 +65,10 @@ public class ResourceController : MonoBehaviour {
                 sc.score = score;
                 sc.obj = gameObject;
                 nm.client.Send(Msgs.clientTeamScore, sc);
+            }
+            else
+            {
+                Debug.Log("I AM NOT A LOCAL IDENTITY INTERACTING");
             }
             setScore(1);
         }
