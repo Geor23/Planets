@@ -43,6 +43,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
 			deathTimerText = GameObject.Find("DeathTimerText").GetComponent<Text>();
 			mainCamera = GameObject.Find("MainCamera").GetComponent<Camera>();
 			nm.client.RegisterHandler (Msgs.serverName, OnClientReceiveName);
+			nm.client.Send(Msgs.requestName, new EmptyMessage());
 
 		}
 
