@@ -6,8 +6,8 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: PlayerMaterialGreen
-  m_Shader: {fileID: 4800000, guid: 3200cf9ab6ee64ee6a8885fa70f2d383, type: 3}
+  m_Name: ProjectileSuperCorpMaterial
+  m_Shader: {fileID: 4800000, guid: 9321a3ec377444695a0df983dc7414c2, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
   m_CustomRenderQueue: 2000
@@ -151,16 +151,16 @@ Material:
       data:
         first:
           name: _Color
-        second: {r: 0.15570934, g: 0.22078167, b: 0.88235295, a: 1}
+        second: {r: 0, g: 0, b: 0.62352943, a: 1}
       data:
         first:
           name: _SpecColor
-        second: {r: 0.31087804, g: 0.36348245, b: 0.9191176, a: 1}
+        second: {r: 0, g: 0, b: 1, a: 1}
       data:
         first:
           name: _UnlitColor
-        second: {r: 0.014597779, g: 0.08535206, b: 0.8037824, a: 1}
+        second: {r: 0, g: 0, b: 0.62352943, a: 1}
       data:
         first:
           name: _OutlineColor
-        second: {r: 0, g: 0, b: 0, a: 1}
+        second: {r: 0, g: 0, b: 1, a: 1}
