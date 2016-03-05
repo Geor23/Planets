@@ -3,6 +3,8 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using UnityEngine.Networking.NetworkSystem;
+
 
 namespace UnityStandardAssets.CrossPlatformInput {
 	public class PlayerControllerMobile : MonoBehaviour {
