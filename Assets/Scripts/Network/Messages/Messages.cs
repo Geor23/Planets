@@ -28,6 +28,8 @@ class Msgs : MsgType {
   public const short destroyObjectRequest = 62;
   public const short clientKillFeed = 63;
   public const short serverKillFeed = 64;
+  public const short requestName = 65;
+  public const short serverName = 66;
 
 
 }
@@ -50,6 +52,10 @@ public class FinalScores : MessageBase {
   public int round3P ;
   public int round3S ;
 
+}
+
+public class Name : MessageBase {
+  public string name;
 }
 
 public class Kill : MessageBase {

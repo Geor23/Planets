@@ -124,9 +124,16 @@ public class PlanetsNetworkManager : NetworkManager {
 	    NetworkServer.RegisterHandler(Msgs.requestTeamScores, OnServerRecieveTeamScoresRequest);
         NetworkServer.RegisterHandler(Msgs.requestCurrentTime, OnServerRecieveTimeRequest);
         NetworkServer.RegisterHandler(Msgs.clientKillFeed, OnServerRecieveKill);
+        NetworkServer.RegisterHandler(Msgs.requestName, OnServerSendName);
 
     }
 
+    public void OnServerSendName(NetworkMessage msg){
+    	int id = IDFromConn(msg.conn);
+    	Name tl = new Name();
+        tl.name = dict[id].name;
+        NetworkServer.SendToClient(id, Msgs.serverName, tl);
+    }
 
     public void OnServerRecieveKill(NetworkMessage netMsg){
     	Kill sc = netMsg.ReadMessage<Kill>();

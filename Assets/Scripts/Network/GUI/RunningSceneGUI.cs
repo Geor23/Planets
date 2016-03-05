@@ -21,6 +21,8 @@ public class RunningSceneGUI : MonoBehaviour {
 		nm.client.RegisterHandler (Msgs.serverTeamScore, OnClientReceiveScores);
 		nm.client.RegisterHandler (Msgs.serverKillFeed, OnClientReceiveKillFeed);
 		nm.client.Send(Msgs.requestTeamScores, new EmptyMessage());
+		nm.client.Send(Msgs.requestName, new EmptyMessage());
+
 	}
 	
 	public void OnClientReceiveKillFeed(NetworkMessage msg) {
