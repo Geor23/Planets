@@ -48,4 +48,4 @@ public class PlayerNetworkHandler : NetworkBehaviour {
     public void CmdDestroyDeathResource(GameObject obj){
         NetworkServer.Destroy(obj);
     }
-    }
+}
