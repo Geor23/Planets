@@ -77,7 +77,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
 			if (direction.magnitude == 0) {
 				direction = model.forward;
 			}
-				Vector3 upDir = (model.position - planet.position).normalized;	
+				Vector3 upDir = (model.position - planet.position).normalized;
 				Quaternion currentRotation = Quaternion.LookRotation(direction, upDir);
 				obj.rotation = Quaternion.Lerp(obj.rotation, currentRotation, Time.deltaTime*rotSpeed);
 
