@@ -19,7 +19,7 @@ Material:
       data:
         first:
           name: _Shininess
-        second: 10
+        second: 100
       data:
         first:
           name: _DiffuseThreshold
@@ -31,20 +31,24 @@ Material:
       data:
         first:
           name: _UnlitOutlineThickness
-        second: 0.4
+        second: 0.2
     m_Colors:
       data:
         first:
           name: _Color
-        second: {r: 0.6764706, g: 0.42971662, b: 0.044766437, a: 1}
+        second: {r: 0.6838235, g: 0.55544615, b: 0.44247404, a: 1}
       data:
         first:
           name: _SpecColor
-        second: {r: 0.99264705, g: 0.54867405, b: 0.07298876, a: 1}
+        second: {r: 0.75735295, g: 0.6112868, b: 0.47891438, a: 1}
       data:
         first:
           name: _UnlitColor
-        second: {r: 0.86764705, g: 0.44297516, b: 0.05741782, a: 1}
+        second: {r: 0.5735294, g: 0.440908, b: 0.32050174, a: 1}
+      data:
+        first:
+          name: _LitOutlineThicknessolor
+        second: {r: 0, g: 0, b: 0, a: 1}
       data:
         first:
           name: _OutlineColor
