@@ -148,7 +148,12 @@ public class PlanetsNetworkManager : NetworkManager {
     public void sendKillFeed() {
     	Kill tl = new Kill();
 		tl.msg = killFeed;
-		NetworkServer.SendToAll(Msgs.serverKillFeed, tl);
+		foreach (NetworkConnection conn in NetworkServer.connections) {
+			int id = IDFromConn(conn);
+			if (dict[id].team == -1) {
+				NetworkServer.SendToClient(id, Msgs.serverKillFeed, tl);
+			}
+		}
     }
 
     public void OnServerRecieveFinalScoresRequest(NetworkMessage netMsg){
