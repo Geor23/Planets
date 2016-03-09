@@ -45,60 +45,59 @@ namespace UnityStandardAssets.CrossPlatformInput {
 		}
 
 		void Update () {
-			if(nIdentity.isLocalPlayer){
+			if(!nIdentity.isLocalPlayer) return;
 
-				rb = GetComponent<Rigidbody>();
-				Vector3 forward = transform.forward;
-				Vector3 right = transform.right;
+			rb = GetComponent<Rigidbody>();
+			Vector3 forward = transform.forward;
+			Vector3 right = transform.right;
 
 #if UNITY_ANDROID
-				float aimH = CrossPlatformInputManager.GetAxis ("AimH");
-				float aimV = CrossPlatformInputManager.GetAxis ("AimV");
-				float forwardSpeed = speed * CrossPlatformInputManager.GetAxis("MoveV");
-				float strafeSpeed = speed * CrossPlatformInputManager.GetAxis("MoveH");
+			float aimH = CrossPlatformInputManager.GetAxis ("AimH");
+			float aimV = CrossPlatformInputManager.GetAxis ("AimV");
+			float forwardSpeed = speed * CrossPlatformInputManager.GetAxis("MoveV");
+			float strafeSpeed = speed * CrossPlatformInputManager.GetAxis("MoveH");
 #endif
 
 #if UNITY_STANDALONE
-				float aimH = (-(Input.GetKey ("left")?1:0) + (Input.GetKey ("right")?1:0));
-				float aimV = ((Input.GetKey ("up")?1:0) - (Input.GetKey ("down")?1:0));
-				float forwardSpeed = speed * ((Input.GetKey ("w")?1:0) - (Input.GetKey ("s")?1:0));
-				float strafeSpeed = speed * (-(Input.GetKey ("a")?1:0) + (Input.GetKey ("d")?1:0));
+			float aimH = (-(Input.GetKey ("left")?1:0) + (Input.GetKey ("right")?1:0));
+			float aimV = ((Input.GetKey ("up")?1:0) - (Input.GetKey ("down")?1:0));
+			float forwardSpeed = speed * ((Input.GetKey ("w")?1:0) - (Input.GetKey ("s")?1:0));
+			float strafeSpeed = speed * (-(Input.GetKey ("a")?1:0) + (Input.GetKey ("d")?1:0));
 #endif
-				Vector3 moveDir = forwardSpeed * forward + strafeSpeed * right;
-				rotateObject(model, moveDir.normalized);
+			Vector3 moveDir = forwardSpeed * forward + strafeSpeed * right;
+			rotateObject(model, moveDir.normalized);
 
-				Vector3 turretDirection = ((forward * aimV) + (right * aimH)).normalized;
-				rotateObject(turret, turretDirection);
+			Vector3 turretDirection = ((forward * aimV) + (right * aimH)).normalized;
+			rotateObject(turret, turretDirection);
 
-				rb.MovePosition(transform.position + moveDir * Time.deltaTime*5);
-			}
+			rb.MovePosition(transform.position + moveDir * Time.deltaTime*5);
 		}
 		void rotateObject (Transform obj, Vector3 direction) {
 			if (direction.magnitude == 0) {
 				direction = model.forward;
 			}
-				Vector3 upDir = (model.position - planet.position).normalized;
-				Quaternion currentRotation = Quaternion.LookRotation(direction, upDir);
-				obj.rotation = Quaternion.Lerp(obj.rotation, currentRotation, Time.deltaTime*rotSpeed);
+			Vector3 upDir = (model.position - planet.position).normalized;
+			Quaternion currentRotation = Quaternion.LookRotation(direction, upDir);
+			obj.rotation = Quaternion.Lerp(obj.rotation, currentRotation, Time.deltaTime*rotSpeed);
 
 #if UNITY_ANDROID
-				if(CrossPlatformInputManager.GetAxis ("AimH") + CrossPlatformInputManager.GetAxis ("AimV") != 0){
+			if(CrossPlatformInputManager.GetAxis ("AimH") + CrossPlatformInputManager.GetAxis ("AimV") != 0){
 #endif 
 #if UNITY_STANDALONE
-				if(Input.GetKey ("left") || Input.GetKey ("right") || Input.GetKey ("up") || Input.GetKey ("down")){
+			if(Input.GetKey ("left") || Input.GetKey ("right") || Input.GetKey ("up") || Input.GetKey ("down")){
 #endif
-					if(Time.time < nextFire)
-						return;
+				if(Time.time < nextFire)
+					return;
 
-			string name = GetComponent<Text>().text;	        
-	        Debug.Log("Got name " + name);
+				string name = GetComponent<Text>().text;	        
+		        Debug.Log("Got name " + name);
 
-                if (gameObject.tag == "PlayerPirate"){
-                    GetComponent<PlayerNetworkHandler>().CmdSpawnProjectile(rb.position + turret.forward, turret.forward, "ProjectilePirate", name);
-                }
-                else{
-                    GetComponent<PlayerNetworkHandler>().CmdSpawnProjectile(rb.position + turret.forward, turret.forward, "ProjectileSuperCorp", name);
-                }
+	            if (gameObject.tag == "PlayerPirate"){
+	                GetComponent<PlayerNetworkHandler>().CmdSpawnProjectile(rb.position + turret.forward, turret.forward, "ProjectilePirate", name);
+	            }
+	            else{
+	                GetComponent<PlayerNetworkHandler>().CmdSpawnProjectile(rb.position + turret.forward, turret.forward, "ProjectileSuperCorp", name);
+	            }
 
 	      	nextFire = Time.time + fireRate;
 	      }
@@ -149,18 +148,6 @@ namespace UnityStandardAssets.CrossPlatformInput {
                 }
             }
 
-                if (col.gameObject.CompareTag("ResourcePickUp")){
-				ResourceProperties resProp = col.gameObject.GetComponent<ResourceProperties>();
-				score = score + resProp.getScore();
-                //Network.Destroy(col.gameObject);
-				SetScoreText();
-				AddScore sc = new AddScore();
-				sc.team = 0;
-				sc.score = (int) resProp.getScore();
-                sc.obj = col.gameObject;
-				nm.client.Send(Msgs.clientTeamScore, sc);
-			}
-
             if (col.gameObject.CompareTag("StaticResource")){
                 ResourceController resProp = col.gameObject.GetComponent<ResourceController>();
                 score = score + resProp.getScore();
@@ -178,10 +165,6 @@ namespace UnityStandardAssets.CrossPlatformInput {
 				//score = score + resProp.getScore();
                 score = score + int.Parse(col.gameObject.GetComponent<Text>().text);
 				Debug.Log("picked up death with score "+ col.gameObject.GetComponent<Text>().text);
-// =======
-// 				score = score + resProp.getScore();
-// 				Debug.Log("picked up death with score "+ resProp.getScore());
-// >>>>>>> dev
                 GetComponent<PlayerNetworkHandler>().CmdDestroyDeathResource(col.gameObject);
 				SetScoreText();
 
