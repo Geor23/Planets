@@ -38,7 +38,7 @@ public class PlayerNetworkHandler : NetworkBehaviour {
     public void CmdSpawnResource(Vector3 position, int score){
           //spawn a resource in the position the player died
       GameObject objClone = (GameObject)Instantiate(ResourcePickUp, position, Quaternion.identity);
-      
+      objClone.GetComponent<Text>().text = score.ToString();
       objClone.GetComponent<DeathResourceProperties>().setScore(score);
       Debug.Log("Setting the spawned resource's score to " + score);
       NetworkServer.Spawn(objClone);
@@ -47,7 +47,5 @@ public class PlayerNetworkHandler : NetworkBehaviour {
     [Command]
     public void CmdDestroyDeathResource(GameObject obj){
         NetworkServer.Destroy(obj);
-
     }
-
-    }
+}
