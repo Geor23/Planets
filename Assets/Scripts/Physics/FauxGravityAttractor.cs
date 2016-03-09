@@ -14,7 +14,7 @@ public class FauxGravityAttractor : MonoBehaviour {
   public void Attract(GameObject obj){
     var body = obj.transform;
     var tmpGrav = gravity;
-    if (obj.tag == "projectileSuperCorp" || obj.tag == "ProjectilePirate") tmpGrav = -1000;
+    if (obj.tag == "ProjectileSuperCorp" || obj.tag == "ProjectilePirate") tmpGrav = -1000;
     gravityUp = (body.position - transform.position).normalized;
     bodyUp = body.up;
         if (!float.IsNaN(body.rotation.w)){
