@@ -124,9 +124,16 @@ public class PlanetsNetworkManager : NetworkManager {
 	    NetworkServer.RegisterHandler(Msgs.requestTeamScores, OnServerRecieveTeamScoresRequest);
         NetworkServer.RegisterHandler(Msgs.requestCurrentTime, OnServerRecieveTimeRequest);
         NetworkServer.RegisterHandler(Msgs.clientKillFeed, OnServerRecieveKill);
+        NetworkServer.RegisterHandler(Msgs.requestName, OnServerSendName);
 
     }
 
+    public void OnServerSendName(NetworkMessage msg){
+    	int id = IDFromConn(msg.conn);
+    	Name tl = new Name();
+        tl.name = dict[id].name;
+        NetworkServer.SendToClient(id, Msgs.serverName, tl);
+    }
 
     public void OnServerRecieveKill(NetworkMessage netMsg){
     	Kill sc = netMsg.ReadMessage<Kill>();
@@ -141,7 +148,12 @@ public class PlanetsNetworkManager : NetworkManager {
     public void sendKillFeed() {
     	Kill tl = new Kill();
 		tl.msg = killFeed;
-		NetworkServer.SendToAll(Msgs.serverKillFeed, tl);
+		foreach (NetworkConnection conn in NetworkServer.connections) {
+			int id = IDFromConn(conn);
+			if (dict[id].team == -1) {
+				NetworkServer.SendToClient(id, Msgs.serverKillFeed, tl);
+			}
+		}
     }
 
     public void OnServerRecieveFinalScoresRequest(NetworkMessage netMsg){
