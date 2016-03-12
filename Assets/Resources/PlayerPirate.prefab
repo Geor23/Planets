@@ -70,6 +70,7 @@ GameObject:
   - 4: {fileID: 404412}
   - 33: {fileID: 3396446}
   - 23: {fileID: 2311930}
+  - 114: {fileID: 11467926}
   m_Layer: 10
   m_Name: Turret
   m_TagString: Untagged
@@ -276,6 +277,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3d008748c0ca2643901c50fc8e402b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nIdentity: {fileID: 11489970}
   playerTransform: {fileID: 453450}
   lerpRate: 15
 --- !u!114 &11438494
@@ -339,6 +341,38 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nIdentity: {fileID: 11489970}
   cam1: {fileID: 2084426}
+--- !u!114 &11467926
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 194638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 226
+    i1: 190
+    i2: 200
+    i3: 119
+    i4: 156
+    i5: 239
+    i6: 100
+    i7: 124
+    i8: 186
+    i9: 202
+    i10: 227
+    i11: 5
+    i12: 194
+    i13: 83
+    i14: 254
+    i15: 192
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!114 &11477032
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -417,6 +451,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3d008748c0ca2643901c50fc8e402b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nIdentity: {fileID: 11467926}
   playerTransform: {fileID: 404412}
   lerpRate: 15
 --- !u!114 &11497336
