@@ -3,6 +3,7 @@
 public class PlayerSyncRotation extends NetworkBehaviour {
 	@SyncVar private var syncPlayerRotation:Quaternion;
 
+	var nIdentity:NetworkIdentity;
 	@SerializeField private var playerTransform:Transform;
 	@SerializeField private var lerpRate:float = 15;
 
@@ -12,7 +13,7 @@ public class PlayerSyncRotation extends NetworkBehaviour {
 	
 	// Update is called once per frame
 	function Update(){
-	    if((!isLocalPlayer)||(isServer)) LerpRotations ();
+	    if((!nIdentity.isLocalPlayer)||(isServer)) LerpRotations ();
 	}
 
 
@@ -32,7 +33,7 @@ public class PlayerSyncRotation extends NetworkBehaviour {
 	    }
         @ClientCallback
 	        function TransmitRotations(){
-	            if (isLocalPlayer){
+	            if (nIdentity.isLocalPlayer){
 	                if(Quaternion.Angle(playerTransform.rotation, lastPlayerRot) > threshold) {
 	                    CmdProvideRotationsToServer(playerTransform.rotation);
 	                    lastPlayerRot = playerTransform.rotation;
