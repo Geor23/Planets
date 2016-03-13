@@ -90,7 +90,6 @@ namespace UnityStandardAssets.CrossPlatformInput {
 					return;
 
 				string name = GetComponent<Text>().text;	        
-		        Debug.Log("Got name " + name);
 
 	            if (gameObject.tag == "PlayerPirate"){
 	                GetComponent<PlayerNetworkHandler>().CmdSpawnProjectile(rb.position + turret.forward, turret.forward, "ProjectilePirate", name);

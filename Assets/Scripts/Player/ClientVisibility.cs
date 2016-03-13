@@ -8,7 +8,6 @@ using UnityEngine.Networking;
 class ClientVisibility : MonoBehaviour{
 
   public bool observerVisible;
-  //public bool playerVisible;
 
   public void Start(){
     bool res = true;

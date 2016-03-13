@@ -14,7 +14,7 @@ public class SettingsPanelController : MonoBehaviour {
 			settingsPanel.SetActive(false);
 			isOpen = false;
 		}
-		}
+	}
 
 
 }
