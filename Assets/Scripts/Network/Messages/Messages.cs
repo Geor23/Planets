@@ -56,6 +56,7 @@ public class FinalScores : MessageBase {
 
 public class Name : MessageBase {
   public string name;
+  public int id;
 }
 
 public class Kill : MessageBase {

@@ -24,6 +24,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
 
 		public Text scoreText;
 		public Text winText;
+		public Text id;
 		public Text deathText;
 		public Text deathTimerText;
 		public GameObject ResourcePickUp;
@@ -43,10 +44,10 @@ namespace UnityStandardAssets.CrossPlatformInput {
 			winText = GameObject.Find("WinText").GetComponent<Text>();
 			deathText = GameObject.Find("DeathText").GetComponent<Text>();
 			deathTimerText = GameObject.Find("DeathTimerText").GetComponent<Text>();
+			id = GameObject.Find("ID").GetComponent<Text>();
 			mainCamera = GameObject.Find("MainCamera").GetComponent<Camera>();
 			nm.client.RegisterHandler (Msgs.serverName, OnClientReceiveName);
 			nm.client.Send(Msgs.requestName, new EmptyMessage());
-
 		}
 
 		public void OnClientReceiveName(NetworkMessage msg) {
@@ -54,6 +55,8 @@ namespace UnityStandardAssets.CrossPlatformInput {
 				Name tl = msg.ReadMessage<Name>(); 
 				Text name = gameObject.GetComponent<Text>();
 				name.text = tl.name;
+				id.text = tl.id.ToString();
+
 			}
 		}
 
