@@ -3,6 +3,8 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using UnityEngine.Networking.NetworkSystem;
+
 
 namespace UnityStandardAssets.CrossPlatformInput {
 	public class PlayerControllerMobile : MonoBehaviour {
@@ -43,7 +45,19 @@ namespace UnityStandardAssets.CrossPlatformInput {
 			deathText = GameObject.Find("DeathText").GetComponent<Text>();
 			deathTimerText = GameObject.Find("DeathTimerText").GetComponent<Text>();
 			mainCamera = GameObject.Find("MainCamera").GetComponent<Camera>();
+			nm.client.RegisterHandler (Msgs.serverName, OnClientReceiveName);
+			nm.client.Send(Msgs.requestName, new EmptyMessage());
+
 		}
+
+		public void OnClientReceiveName(NetworkMessage msg) {
+			if(nIdentity.isLocalPlayer) {
+				Name tl = msg.ReadMessage<Name>(); 
+				Text name = gameObject.GetComponent<Text>();
+				name.text = tl.name;
+			}
+		}
+
 
 		void Update () {
 			if(!nIdentity.isLocalPlayer) return;
