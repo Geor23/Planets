@@ -120,10 +120,11 @@ public class PlanetsNetworkManager : NetworkManager {
 	    NetworkServer.RegisterHandler(Msgs.startGame, OnServerStartGame);
 	    NetworkServer.RegisterHandler(Msgs.requestTeamMsg, OnServerRecieveTeamRequest);
 	   	NetworkServer.RegisterHandler(Msgs.requestFinalScores, OnServerRecieveFinalScoresRequest);
-	    NetworkServer.RegisterHandler(Msgs.clientTeamScore, OnServerReceiveScore);
+	    NetworkServer.RegisterHandler(Msgs.clientTeamScore, OnServerRecieveScore);
 	    NetworkServer.RegisterHandler(Msgs.requestTeamScores, OnServerRecieveTeamScoresRequest);
         NetworkServer.RegisterHandler(Msgs.requestCurrentTime, OnServerRecieveTimeRequest);
         NetworkServer.RegisterHandler(Msgs.clientKillFeed, OnServerRecieveKill);
+        NetworkServer.RegisterHandler(Msgs.deathResourceCollision, OnServerRecieveDeathResourceCollision);
 
     }
 
@@ -181,15 +182,14 @@ public class PlanetsNetworkManager : NetworkManager {
 
     }
 
-  	public void OnServerReceiveScore(NetworkMessage msg) {
-
+  	public void OnServerRecieveScore(NetworkMessage msg) {
   		// read the message
 	  	AddScore sc = msg.ReadMessage<AddScore>();
 	  	//Debug.Log("got scoooooreeee");
 	  	int id = IDFromConn(msg.conn);
 	  	Debug.Log("team: " + dict[id].team);
         // add the score to the correct team
-        GameObject obj = sc.obj; //Object interacted with for score
+        //GameObject obj = sc.obj; //Object interacted with for score
         //obj.GetComponent<ResourceController>().setScore(1);
 	  	teamManager.addScore(sc.score, dict[id].team);
 
@@ -197,8 +197,26 @@ public class PlanetsNetworkManager : NetworkManager {
 	  	sendScore(dict[id].team);
 	}
 
-	// send the team list of players to all clients
-	public void sendScore(int team) {
+
+    public void OnServerRecieveDeathResourceCollision(NetworkMessage msg){
+        // read the message
+        DeathResource dr = msg.ReadMessage<DeathResource>();
+        int id = IDFromConn(msg.conn);
+        GameObject resource = dr.drID;
+        Debug.Log("team: " + dict[id].team);
+        // add the score to the correct team
+        int score = int.Parse(resource.GetComponent<Text>().text);
+        teamManager.addScore(score, dict[id].team);
+        Destroy(resource);
+        // send to everyone the updated team score
+        sendScore(dict[id].team);
+        UpdateLocalScore sc = new UpdateLocalScore();
+        sc.score = score;
+        NetworkServer.SendToClient(IDFromConn(msg.conn), Msgs.updateLocalScore, sc);
+    }
+
+    // send the team list of players to all clients
+    public void sendScore(int team) {
 
 		TeamScore tl = new TeamScore();
 		tl.team = (int) team;

@@ -70,6 +70,7 @@ public class ResourceController : MonoBehaviour {
             {
                 Debug.Log("I AM NOT A LOCAL IDENTITY INTERACTING");
             }
+            //This means each client locally updates score upon witnessing a collision
             setScore(1);
         }
     }
