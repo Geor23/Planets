@@ -17,6 +17,7 @@ GameObject:
   - 114: {fileID: 11448070}
   - 222: {fileID: 22261376}
   - 114: {fileID: 11410500}
+  - 148: {fileID: 14811138}
   m_Layer: 8
   m_Name: ResourcePickUpDeath
   m_TagString: ResourcePickUpDeath
@@ -172,6 +173,18 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!148 &14811138
+NetworkView:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 116834}
+  m_Enabled: 1
+  m_StateSynchronization: 1
+  m_Observed: {fileID: 22447542}
+  m_ViewID:
+    m_ID: 0
+    m_Type: 0
 --- !u!222 &22261376
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -189,7 +202,7 @@ RectTransform:
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 0
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -4.0644045, y: 13.55}

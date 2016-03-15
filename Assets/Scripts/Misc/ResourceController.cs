@@ -66,6 +66,7 @@ public class ResourceController : MonoBehaviour {
                 sc.obj = gameObject;
                 nm.client.Send(Msgs.clientTeamScore, sc);
             }
+
             setScore(1);
         }
     }

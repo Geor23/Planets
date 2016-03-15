@@ -38,7 +38,8 @@ namespace UnityStandardAssets.CrossPlatformInput {
 		void Start(){
 			nIdentity = GetComponent<NetworkIdentity>();
 			nm = NetworkManager.singleton;
-			score = 0;
+      nm.client.RegisterHandler(Msgs.updateLocalScore, OnClientPickupDeath);
+      score = 0;
 			scoreText = GameObject.Find("ScoreText").GetComponent<Text>();
 			winText = GameObject.Find("WinText").GetComponent<Text>();
 			deathText = GameObject.Find("DeathText").GetComponent<Text>();
@@ -104,12 +105,11 @@ namespace UnityStandardAssets.CrossPlatformInput {
 					return;
 
 				string name = GetComponent<Text>().text;	        
-
 	            if (gameObject.tag == "PlayerPirate"){
-	                GetComponent<PlayerNetworkHandler>().CmdSpawnProjectile(rb.position + turret.forward, turret.forward, "ProjectilePirate", name);
+	                  GetComponent<PlayerNetworkHandler>().CmdSpawnProjectile(rb.position + turret.forward, turret.forward, "ProjectilePirate", name);
 	            }
 	            else{
-	                GetComponent<PlayerNetworkHandler>().CmdSpawnProjectile(rb.position + turret.forward, turret.forward, "ProjectileSuperCorp", name);
+                    GetComponent<PlayerNetworkHandler>().CmdSpawnProjectile(rb.position + turret.forward, turret.forward, "ProjectileSuperCorp", name);
 	            }
 
 	      	nextFire = Time.time + fireRate;
@@ -130,11 +130,17 @@ namespace UnityStandardAssets.CrossPlatformInput {
                     Text shooter = col.gameObject.GetComponent<Text>();
                     Text victim = gameObject.GetComponent<Text>();
                     Kill tc = new Kill();
-    				tc.msg = shooter.text + " killed " + victim.text;
-    				nm.client.Send(Msgs.clientKillFeed, tc);
-
+    				        tc.msg = shooter.text + " killed " + victim.text;
+    				        nm.client.Send(Msgs.clientKillFeed, tc);
                     GetComponent<PlayerNetworkHandler>().CmdSpawnResource(gameObject.transform.position, score);
                     scoreToRemove = score;
+
+                    AddScore sc = new AddScore();
+                    sc.team = 0;
+                    sc.score = -score;
+                    sc.obj = col.gameObject;
+                    nm.client.Send(Msgs.clientTeamScore, sc);
+
                     score = 0;
                     SetScoreText();
                     ClientScene.RemovePlayer(0);
@@ -150,8 +156,14 @@ namespace UnityStandardAssets.CrossPlatformInput {
                     Text shooter = col.gameObject.GetComponent<Text>();
                     Text victim = gameObject.GetComponent<Text>();
                     Kill tc = new Kill();
-    				tc.msg = shooter.text + " killed " + victim.text;
-    				nm.client.Send(Msgs.clientKillFeed, tc);
+    				        tc.msg = shooter.text + " killed " + victim.text;
+    				        nm.client.Send(Msgs.clientKillFeed, tc);
+
+                    AddScore sc = new AddScore();
+                    sc.team = 0;
+                    sc.score = -score;
+                    sc.obj = col.gameObject;
+                    nm.client.Send(Msgs.clientTeamScore, sc);
 
                     GetComponent<PlayerNetworkHandler>().CmdSpawnResource(gameObject.transform.position, score);
                     scoreToRemove = score;
@@ -176,19 +188,25 @@ namespace UnityStandardAssets.CrossPlatformInput {
 
 				DeathResourceProperties resProp = col.gameObject.GetComponent<DeathResourceProperties>();
 				//score = score + resProp.getScore();
-                score = score + int.Parse(col.gameObject.GetComponent<Text>().text);
+        //score = score + int.Parse(col.gameObject.GetComponent<Text>().text);
 				Debug.Log("picked up death with score "+ col.gameObject.GetComponent<Text>().text);
-                GetComponent<PlayerNetworkHandler>().CmdDestroyDeathResource(col.gameObject);
+        //GetComponent<PlayerNetworkHandler>().CmdDestroyDeathResource(col.gameObject);
 				SetScoreText();
 
-				AddScore sc = new AddScore();
-				sc.team = 0;
-				sc.score = (int) resProp.getScore();
-				NetworkManager.singleton.client.Send(Msgs.clientTeamScore, sc);
+				DeathResource dr  = new DeathResource();
+				dr.team = 0;
+				dr.score = (int) resProp.getScore();
+        dr.drID = col.gameObject;
+				nm.client.Send(Msgs.deathResourceCollision, dr);
 			}
 		}
-
-
+        //If the player dies before the server updates score, score will not be counted. Potential error?
+        public void OnClientPickupDeath(NetworkMessage msg){
+            UpdateLocalScore uls = msg.ReadMessage<UpdateLocalScore>(); //Recieve death resource score from server
+            int scoreAdd = uls.score; 
+            score += scoreAdd; //Add to existing score
+            SetScoreText();
+        }
 
         // function only called after the player dies to get the score that the team manager has to substract
         // hence the score has to be reset to 0 after that
@@ -197,12 +215,12 @@ namespace UnityStandardAssets.CrossPlatformInput {
 		}
 
 		public void SetScoreText(){
-            scoreText.text = "Score: " + score.ToString();
+            scoreText.text = score.ToString();
         }	
 
 		public void SetScoreTextNew(int scoreVal){
             score += scoreVal;
-			scoreText.text = "Score: " + score.ToString();
+			scoreText.text = score.ToString();
 		}
 	}
 }
