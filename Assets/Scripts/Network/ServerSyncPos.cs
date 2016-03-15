@@ -12,7 +12,6 @@ public class ServerSyncPos : NetworkBehaviour {
   public void RpcSyncClient(Vector3 position, Vector3 direction){
     if(isServer)
       return;
-    Debug.LogError("We are in SyncPos: " + position);
     GetComponent<Transform>().position = position;
     GetComponent<ProjectileMovement>().setDirection(direction);
   }

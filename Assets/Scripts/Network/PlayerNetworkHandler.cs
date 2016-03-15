@@ -10,30 +10,17 @@ public class PlayerNetworkHandler : NetworkBehaviour {
     public GameObject ResourcePickUp;
     public int projectileLifetime;
 
-    void Start(){
-      if(!isServer){
-/*
-        projectile = Instantiate(Resources.Load("projectile")) as GameObject;
-        projectile.GetComponent<Transform>().position = new Vector3(100,100,100);
-        ClientScene.RegisterPrefab(projectile);
-*/
-      }
-    }
-
     [Command]
     public void CmdSpawnProjectile(Vector3 position, Vector3 direction, String projectileName, String name){
-      //GameObject projectile = Instantiate(Resources.Load(projectileName)) as GameObject;
-      Debug.LogError("We are in Handler, value is: " + position);
-      //projectile.GetComponent<Transform>().position = position;
-      //projectile.GetComponent<ProjectileMovement>().setDirection(direction);
-      //Destroy(projectile, projectileLifetime);
-  //    NetworkServer.Spawn(projectile);
-   //   projectile.GetComponent<ServerSyncPos>().RpcSyncClient(position, direction);
-     // Text playerWhoFired = projectile.GetComponent<Text>();
-     // playerWhoFired.text = name;
+      GameObject projectile = Instantiate(Resources.Load(projectileName)) as GameObject;
+      projectile.GetComponent<Transform>().position = position;
+      projectile.GetComponent<ProjectileMovement>().setDirection(direction);
+      Destroy(projectile, projectileLifetime);
+      NetworkServer.Spawn(projectile);
+      projectile.GetComponent<ServerSyncPos>().RpcSyncClient(position, direction);
+      Text playerWhoFired = projectile.GetComponent<Text>();
+      playerWhoFired.text = name;
     }
-
-
 
     [Command]
     public void CmdSpawnResource(Vector3 position, int score){

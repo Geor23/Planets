@@ -91,15 +91,11 @@ namespace UnityStandardAssets.CrossPlatformInput {
 					return;
 
 				string name = GetComponent<Text>().text;	        
-		        Debug.Log("Got name " + name);
 
 	            if (gameObject.tag == "PlayerPirate"){
-                    Debug.LogError("I am a pirate in PlayerController: " + rb.position);
-                    Debug.LogError("I AM A PIRATE, THE TURRET IS: " + turret.forward);
 	                  GetComponent<PlayerNetworkHandler>().CmdSpawnProjectile(rb.position + turret.forward, turret.forward, "ProjectilePirate", name);
 	            }
 	            else{
-                    Debug.LogError("I am a corp in PlayerController: " + rb.position);
                     GetComponent<PlayerNetworkHandler>().CmdSpawnProjectile(rb.position + turret.forward, turret.forward, "ProjectileSuperCorp", name);
 	            }
 
