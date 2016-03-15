@@ -352,9 +352,6 @@ public class PlanetsNetworkManager : NetworkManager {
 		GameObject player = playerController.gameObject;
 		if (player != null){
 			int id = IDFromConn(conn);
-			int sc = player.GetComponent<UnityStandardAssets.CrossPlatformInput.PlayerControllerMobile>().getScore();
-			teamManager.removeScore(sc, dict[id].team);
-			Debug.Log("Player died. Removing "+sc+ " points from team "+ dict[id].team);
 			sendScore(dict[id].team);
 			if (playerController.unetView != null)
 				NetworkServer.Destroy(player);

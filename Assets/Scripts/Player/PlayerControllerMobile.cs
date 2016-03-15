@@ -91,7 +91,6 @@ namespace UnityStandardAssets.CrossPlatformInput {
 					return;
 
 				string name = GetComponent<Text>().text;	        
-
 	            if (gameObject.tag == "PlayerPirate"){
 	                  GetComponent<PlayerNetworkHandler>().CmdSpawnProjectile(rb.position + turret.forward, turret.forward, "ProjectilePirate", name);
 	            }
@@ -117,11 +116,17 @@ namespace UnityStandardAssets.CrossPlatformInput {
                     Text shooter = col.gameObject.GetComponent<Text>();
                     Text victim = gameObject.GetComponent<Text>();
                     Kill tc = new Kill();
-    				tc.msg = shooter.text + " killed " + victim.text;
-    				nm.client.Send(Msgs.clientKillFeed, tc);
-
+    				        tc.msg = shooter.text + " killed " + victim.text;
+    				        nm.client.Send(Msgs.clientKillFeed, tc);
                     GetComponent<PlayerNetworkHandler>().CmdSpawnResource(gameObject.transform.position, score);
                     scoreToRemove = score;
+
+                    AddScore sc = new AddScore();
+                    sc.team = 0;
+                    sc.score = -score;
+                    sc.obj = col.gameObject;
+                    nm.client.Send(Msgs.clientTeamScore, sc);
+
                     score = 0;
                     SetScoreText();
                     ClientScene.RemovePlayer(0);
@@ -137,8 +142,14 @@ namespace UnityStandardAssets.CrossPlatformInput {
                     Text shooter = col.gameObject.GetComponent<Text>();
                     Text victim = gameObject.GetComponent<Text>();
                     Kill tc = new Kill();
-    				tc.msg = shooter.text + " killed " + victim.text;
-    				nm.client.Send(Msgs.clientKillFeed, tc);
+    				        tc.msg = shooter.text + " killed " + victim.text;
+    				        nm.client.Send(Msgs.clientKillFeed, tc);
+
+                    AddScore sc = new AddScore();
+                    sc.team = 0;
+                    sc.score = -score;
+                    sc.obj = col.gameObject;
+                    nm.client.Send(Msgs.clientTeamScore, sc);
 
                     GetComponent<PlayerNetworkHandler>().CmdSpawnResource(gameObject.transform.position, score);
                     scoreToRemove = score;
