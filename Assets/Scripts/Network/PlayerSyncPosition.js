@@ -20,7 +20,7 @@ public class PlayerSyncPosition extends NetworkBehaviour {
 	function FixedUpdate () {
 		TransmitPosition();
 	}
-//Updates location of only other players
+	//Updates location of only other players
 	function LerpPosition(){
 	    if (!nIdentity.isLocalPlayer) {
 	        if (!float.IsNaN(myTransform.position.x) && !float.IsNaN(myTransform.position.y) && !float.IsNaN(myTransform.position.z)){
@@ -29,11 +29,11 @@ public class PlayerSyncPosition extends NetworkBehaviour {
 		}
 	}
 	//Command sent to server from client. Called by client, run on server
-@Command
+	@Command
 	function CmdProvidePositionToServer(pos:Vector3){
 		syncPos = pos;
 	}
-@ClientCallback
+	@ClientCallback
 	function TransmitPosition (){
 		if (nIdentity.isLocalPlayer && Vector3.Distance(myTransform.position, lastPost) > threshold) {
 			CmdProvidePositionToServer (myTransform.position);
