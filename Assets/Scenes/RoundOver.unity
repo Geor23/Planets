@@ -197,7 +197,7 @@ GameObject:
   - 222: {fileID: 573763699}
   - 114: {fileID: 573763698}
   m_Layer: 5
-  m_Name: TeamBPanel
+  m_Name: SuperCorpPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -283,10 +283,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1373486693}
   m_RootOrder: 6
-  m_AnchorMin: {x: 0.3648903, y: 0.61965305}
-  m_AnchorMax: {x: 0.5, y: 0.859}
-  m_AnchoredPosition: {x: 0.5, y: 0}
-  m_SizeDelta: {x: -1, y: 3}
+  m_AnchorMin: {x: 0.3648903, y: 0.63621926}
+  m_AnchorMax: {x: 0.5126962, y: 0.88100004}
+  m_AnchoredPosition: {x: 1.5000076, y: -0.25}
+  m_SizeDelta: {x: -6.58, y: -0.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &588825516
 MonoBehaviour:
@@ -308,9 +308,9 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 31e69a86e7ab840c0807ee1f50009174, type: 3}
     m_FontSize: 90
-    m_FontStyle: 1
+    m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 9
     m_MaxSize: 90
@@ -338,7 +338,7 @@ GameObject:
   - 222: {fileID: 620727029}
   - 114: {fileID: 620727028}
   m_Layer: 5
-  m_Name: GameOver
+  m_Name: NewRoundText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -358,8 +358,8 @@ RectTransform:
   m_RootOrder: 4
   m_AnchorMin: {x: 0.5507929, y: 0.78000003}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 9.410004, y: 7}
-  m_SizeDelta: {x: 19.190002, y: 2}
+  m_AnchoredPosition: {x: 0.62750244, y: -0.5}
+  m_SizeDelta: {x: 1.935, y: 0.99998}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &620727028
 MonoBehaviour:
@@ -381,19 +381,19 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 31e69a86e7ab840c0807ee1f50009174, type: 3}
     m_FontSize: 40
-    m_FontStyle: 1
+    m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 1
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
+    m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: New round starts in ...
+  m_Text: New  round  starts  in  ...
 --- !u!222 &620727029
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -425,15 +425,15 @@ RectTransform:
   m_GameObject: {fileID: 798066946}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.1880001, y: 1.1880001, z: 1.1880001}
   m_Children: []
   m_Father: {fileID: 1373486693}
   m_RootOrder: 2
-  m_AnchorMin: {x: 0.16210972, y: 0.5}
-  m_AnchorMax: {x: 0.27745774, y: 0.53651124}
-  m_AnchoredPosition: {x: -1.5000095, y: -10.070961}
-  m_SizeDelta: {x: 1, y: 1}
-  m_Pivot: {x: 0.5, y: -8.505916}
+  m_AnchorMin: {x: 0.14630379, y: 0.58100003}
+  m_AnchorMax: {x: 0.29900002, y: 0.62868917}
+  m_AnchoredPosition: {x: -0.5, y: -0.59265995}
+  m_SizeDelta: {x: -19, y: -6}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &798066948
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -454,19 +454,19 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 20
+    m_Font: {fileID: 12800000, guid: 31e69a86e7ab840c0807ee1f50009174, type: 3}
+    m_FontSize: 15
     m_FontStyle: 0
     m_BestFit: 1
-    m_MinSize: 10
-    m_MaxSize: 40
-    m_Alignment: 0
+    m_MinSize: 15
+    m_MaxSize: 15
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Team Pirates
+  m_Text: Pirates
 --- !u!222 &798066949
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -527,16 +527,16 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 31e69a86e7ab840c0807ee1f50009174, type: 3}
     m_FontSize: 90
-    m_FontStyle: 1
+    m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 9
     m_MaxSize: 90
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
+    m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 
@@ -557,7 +557,7 @@ GameObject:
   - 222: {fileID: 896364585}
   - 114: {fileID: 896364584}
   m_Layer: 5
-  m_Name: TeamBText
+  m_Name: SuperCorpText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -600,7 +600,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 31e69a86e7ab840c0807ee1f50009174, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 0
@@ -648,10 +648,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1373486693}
   m_RootOrder: 5
-  m_AnchorMin: {x: 0.12971309, y: 0.61965305}
-  m_AnchorMax: {x: 0.25943884, y: 0.859}
-  m_AnchoredPosition: {x: 0.5, y: 0}
-  m_SizeDelta: {x: 4, y: 3}
+  m_AnchorMin: {x: 0.15530379, y: 0.63621926}
+  m_AnchorMax: {x: 0.2908227, y: 0.88100004}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: -1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1006945331
 MonoBehaviour:
@@ -673,9 +673,9 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 31e69a86e7ab840c0807ee1f50009174, type: 3}
     m_FontSize: 90
-    m_FontStyle: 1
+    m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 90
@@ -721,10 +721,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1373486693}
   m_RootOrder: 3
-  m_AnchorMin: {x: 0.37332913, y: 0.5}
-  m_AnchorMax: {x: 0.51582277, y: 0.55071}
-  m_AnchoredPosition: {x: -3.7700005, y: -2.0700073}
-  m_SizeDelta: {x: -2.5800018, y: -1}
+  m_AnchorMin: {x: 0.3648903, y: 0.58100003}
+  m_AnchorMax: {x: 0.5126962, y: 0.62868917}
+  m_AnchoredPosition: {x: 1.5, y: -1}
+  m_SizeDelta: {x: -6.580002, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1030604269
 MonoBehaviour:
@@ -746,19 +746,19 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 20
+    m_Font: {fileID: 12800000, guid: 31e69a86e7ab840c0807ee1f50009174, type: 3}
+    m_FontSize: 16
     m_FontStyle: 0
     m_BestFit: 1
-    m_MinSize: 10
-    m_MaxSize: 40
-    m_Alignment: 0
+    m_MinSize: 16
+    m_MaxSize: 16
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Team Super-Corp
+  m_Text: Super-Corp
 --- !u!222 &1030604270
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -965,7 +965,7 @@ GameObject:
   - 222: {fileID: 1415526467}
   - 114: {fileID: 1415526466}
   m_Layer: 5
-  m_Name: TeamAText
+  m_Name: PiratesText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -991,7 +991,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 31e69a86e7ab840c0807ee1f50009174, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 0
@@ -1038,7 +1038,7 @@ GameObject:
   - 222: {fileID: 2105018064}
   - 114: {fileID: 2105018063}
   m_Layer: 5
-  m_Name: TeamAPanel
+  m_Name: PiratesPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
