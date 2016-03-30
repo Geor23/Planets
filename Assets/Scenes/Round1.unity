@@ -967,7 +967,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 1f8d3f3ac3a9b4e00bc3f09904a7db9b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 56eaa8dc689cc49829c4de8ac722c5da, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -1583,6 +1583,11 @@ Prefab:
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 2075959799}
+    - target: {fileID: 11425568, guid: de7313b6ae31e46d281b8a7a965b6def, type: 2}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 31e69a86e7ab840c0807ee1f50009174,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: de7313b6ae31e46d281b8a7a965b6def, type: 2}
   m_IsPrefabParent: 0
@@ -1755,6 +1760,11 @@ Prefab:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11440892, guid: 646b9d27b70e5445dab0d678b02b460b, type: 2}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 31e69a86e7ab840c0807ee1f50009174,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 646b9d27b70e5445dab0d678b02b460b, type: 2}
   m_IsPrefabParent: 0
@@ -2669,12 +2679,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8eb92b01411cc5e4fb3abb736e9c7145, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  field: {fileID: 479819139}
-  textBox: {fileID: 11438494, guid: e2bec8779cef647cbacae305c253fec0, type: 2}
-  nIdentity: {fileID: 11489970, guid: e2bec8779cef647cbacae305c253fec0, type: 2}
-  textOnScreen: {fileID: 727503529}
-  listPlayers: {fileID: 0}
-  button: {fileID: 2114955858}
 --- !u!1 &1924829316
 GameObject:
   m_ObjectHideFlags: 0
