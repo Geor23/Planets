@@ -11,8 +11,4 @@ public class ProjectileMovement : MonoBehaviour {
     direction = dir;
     rb.velocity = direction*speedFactor;
   }
-
-  void Update () {
-  	
-  }
 }

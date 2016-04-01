@@ -66,10 +66,7 @@ public class ResourceController : MonoBehaviour {
                 sc.obj = gameObject;
                 nm.client.Send(Msgs.clientTeamScore, sc);
             }
-            else
-            {
-                Debug.Log("I AM NOT A LOCAL IDENTITY INTERACTING");
-            }
+
             setScore(1);
         }
     }

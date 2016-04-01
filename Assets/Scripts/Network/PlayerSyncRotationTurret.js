@@ -1,6 +1,6 @@
 ﻿import UnityEngine.Networking;
 
-public class PlayerSyncRotation extends NetworkBehaviour {
+public class PlayerSyncRotationTurret extends NetworkBehaviour {
 	@SyncVar private var syncPlayerRotation:Quaternion;
 
 	var nIdentity:NetworkIdentity;

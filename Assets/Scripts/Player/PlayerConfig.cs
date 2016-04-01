@@ -16,9 +16,9 @@ class PlayerConfig : MonoBehaviour {
   
   public void SetObserver(bool observe) {
         isObserver = observe;
-    }
+  }
 
   public bool GetObserver(){
         return isObserver;
-    }
+  }
 }

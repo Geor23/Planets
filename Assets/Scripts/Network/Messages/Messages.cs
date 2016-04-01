@@ -28,9 +28,10 @@ class Msgs : MsgType {
   public const short destroyObjectRequest = 62;
   public const short clientKillFeed = 63;
   public const short serverKillFeed = 64;
-  public const short requestName = 65;
-  public const short serverName = 66;
-
+  public const short deathResourceCollision = 65;
+  public const short updateLocalScore = 66;
+  public const short requestName = 67;
+  public const short serverName = 68;
 
 }
 
@@ -81,4 +82,15 @@ public class TeamScore : MessageBase {
 
 public class TimeMessage : MessageBase{
     public float time;
+}
+
+public class DeathResource : MessageBase
+{
+    public int team;
+    public int score;
+    public GameObject drID;
+}
+
+public class UpdateLocalScore : MessageBase {
+    public int score;
 }

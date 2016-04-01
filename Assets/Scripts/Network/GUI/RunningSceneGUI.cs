@@ -10,6 +10,7 @@ public class RunningSceneGUI : MonoBehaviour {
 	NetworkManager nm;
 	public Text teamAScore;
 	public Text teamBScore;
+  public Text scoreText;
 	public Image piratesWin;
 	public Image superCorpWin;
 	public Text killFeed;
@@ -24,7 +25,7 @@ public class RunningSceneGUI : MonoBehaviour {
 
 	}
 	
-	public void OnClientReceiveKillFeed(NetworkMessage msg) {
+    public void OnClientReceiveKillFeed(NetworkMessage msg) {
 		Kill tl = msg.ReadMessage<Kill>(); 
 		killFeed.text = tl.msg;
 	}
