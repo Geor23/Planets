@@ -39,7 +39,7 @@ GameObject:
   - 132: {fileID: 13241360}
   - 114: {fileID: 11411396}
   m_Layer: 13
-  m_Name: ID
+  m_Name: unId
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -433,6 +433,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ResourcePickUp: {fileID: 116834, guid: 976667ad8326a483eaa9c21ec560f8b2, type: 2}
   projectileLifetime: 2
+  idForObsScreen: {fileID: 13241360}
 --- !u!114 &11487278
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -678,6 +679,14 @@ Prefab:
       propertyPath: m_CullingMask.m_Bits
       value: 4294959103
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Name
+      value: unId
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: idForObsScreen
+      value: 
+      objectReference: {fileID: 13241360}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 135240}

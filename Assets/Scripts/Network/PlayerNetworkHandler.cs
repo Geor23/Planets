@@ -9,6 +9,7 @@ public class PlayerNetworkHandler : NetworkBehaviour {
     private GameObject projectile;
     public GameObject ResourcePickUp;
     public int projectileLifetime;
+    public GUIText idForObsScreen;
 
     [Command]
     public void CmdSpawnProjectile(Vector3 position, Vector3 direction, String projectileName, String name){
@@ -35,5 +36,10 @@ public class PlayerNetworkHandler : NetworkBehaviour {
     [Command]
     public void CmdDestroyDeathResource(GameObject obj){
         NetworkServer.Destroy(obj);
+    }
+
+    [Command]
+    public void CmdSetId(string id) {
+      idForObsScreen.text = id;
     }
 }
