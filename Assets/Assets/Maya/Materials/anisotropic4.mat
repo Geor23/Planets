@@ -6,11 +6,11 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: PlayerMaterialGreen
+  m_Name: anisotropic4
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
-  m_CustomRenderQueue: 2000
+  m_CustomRenderQueue: -1
   stringTagMap: {}
   m_SavedProperties:
     serializedVersion: 2
@@ -93,10 +93,6 @@ Material:
         second: 0.5
       data:
         first:
-          name: _Shininess
-        second: 10
-      data:
-        first:
           name: _Parallax
         second: 0.02
       data:
@@ -131,18 +127,6 @@ Material:
         first:
           name: _Metallic
         second: 0
-      data:
-        first:
-          name: _DiffuseThreshold
-        second: 0.1
-      data:
-        first:
-          name: _LitOutlineThickness
-        second: 0.1
-      data:
-        first:
-          name: _UnlitOutlineThickness
-        second: 0.4
     m_Colors:
       data:
         first:
@@ -151,16 +135,4 @@ Material:
       data:
         first:
           name: _Color
-        second: {r: 0.15570934, g: 0.22078167, b: 0.88235295, a: 1}
-      data:
-        first:
-          name: _SpecColor
-        second: {r: 0.31087804, g: 0.36348245, b: 0.9191176, a: 1}
-      data:
-        first:
-          name: _UnlitColor
-        second: {r: 0.014597779, g: 0.08535206, b: 0.8037824, a: 1}
-      data:
-        first:
-          name: _OutlineColor
-        second: {r: 0, g: 0, b: 0, a: 1}
+        second: {r: 1, g: 1, b: 1, a: 1}
