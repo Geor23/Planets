@@ -42,9 +42,7 @@ function Update () {
 		var dir = target.position - camTransform1.position;
 		if(Physics.Raycast(camTransform1.position, dir, hitInfo, 1000, myLayerMask)) {
 			Debug.Log(hitInfo.transform.name);
-			if (hitInfo.transform.name == "Planet")
-		    	Debug.Log("on the other side of cam1");
-		    else Debug.Log("on the side of cam1");
+		    Debug.Log("on the other side of cam1");
 		} else Debug.Log("on the side of cam1");
 
 		thisTransform.position = cam1.WorldToViewportPoint(target.position + offset);
