@@ -36,18 +36,10 @@ public class LobbyGUI : MonoBehaviour {
     PlayerConfig.singleton.SetObserver(false);
     }
 
-  public void ChooseObserver() {
-
-    TeamChoice tc = new TeamChoice();
-    tc.teamChoice = (int) TeamID.TEAM_OBSERVER;
-    nm.client.Send(Msgs.clientTeamMsg, tc);
-
-  }
 
   public void StartGame() {
 
     if(PlayerConfig.singleton.GetObserver()) {
-      ChooseObserver();
       Debug.Log("Player is observer on start game!");
     }
     nm.client.Send(Msgs.startGame, new EmptyMessage());
