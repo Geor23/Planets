@@ -101,8 +101,8 @@ namespace UnityStandardAssets.CrossPlatformInput
 				newPos.y = (data.position.y - m_StartPos.y - anchorPoint.y);
 			}
 			GetComponent<RectTransform>().anchoredPosition = Vector3.ClampMagnitude (new Vector3(newPos.x, newPos.y, newPos.z), MovementRange) + m_StartPos;
-			float angle = Mathf.Atan2(newPos.y, newPos.x) * Mathf.Rad2Deg;
-			GetComponent<Image>().transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+			//float angle = Mathf.Atan2(newPos.y, newPos.x) * Mathf.Rad2Deg;
+			//GetComponent<Image>().transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 			//GetComponent<RectTransform>().anchoredPosition = new Vector3(data.position.x, data.position.y, newPos.z);
 			UpdateVirtualAxes(Vector3.ClampMagnitude (new Vector3(newPos.x, newPos.y, newPos.z), MovementRange) + m_StartPos);
 		}
