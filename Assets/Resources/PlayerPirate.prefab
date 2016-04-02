@@ -374,8 +374,11 @@ MonoBehaviour:
   offset: {x: 0, y: 1, z: 0}
   clampToScreen: 0
   clampBorderSize: 0.05
-  useMainCamera: 1
-  cameraToUse: {fileID: 0}
+  cameraToUse1: {fileID: 2073808, guid: 2d1995fadd0c04b3eab52ed051bc1936, type: 2}
+  cameraToUse2: {fileID: 2081110, guid: 2d1995fadd0c04b3eab52ed051bc1936, type: 2}
+  myLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
 --- !u!114 &11466160
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -767,6 +770,18 @@ Prefab:
       propertyPath: idForObsScreen
       value: 
       objectReference: {fileID: 13263420}
+    - target: {fileID: 0}
+      propertyPath: cameraToUse1
+      value: 
+      objectReference: {fileID: 2073808, guid: 2d1995fadd0c04b3eab52ed051bc1936, type: 2}
+    - target: {fileID: 0}
+      propertyPath: cameraToUse2
+      value: 
+      objectReference: {fileID: 2081110, guid: 2d1995fadd0c04b3eab52ed051bc1936, type: 2}
+    - target: {fileID: 0}
+      propertyPath: myLayerMask.m_Bits
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 158602}

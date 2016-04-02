@@ -41,5 +41,6 @@ public class PlayerNetworkHandler : NetworkBehaviour {
     [Command]
     public void CmdSetId(string id) {
       idForObsScreen.text = id;
+      Debug.Log(idForObsScreen.text);
     }
 }
