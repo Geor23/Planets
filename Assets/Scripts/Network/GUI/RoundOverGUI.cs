@@ -14,7 +14,7 @@ public class RoundOverGUI : MonoBehaviour {
   public Text ScoreS;
   public Text timer;
 
-  float time=99.0F;
+  public float time=10.0F;
    
 
   public void Start() {
@@ -40,7 +40,7 @@ public class RoundOverGUI : MonoBehaviour {
     void Update(){
         time -= Time.deltaTime;
         if (time > 0){
-            timer.text = time.ToString();
+            timer.text = time.ToString().Substring(0, 3);
         } else {
             //textField.text = "Round ending...";
         }
