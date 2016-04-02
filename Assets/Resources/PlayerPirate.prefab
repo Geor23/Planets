@@ -371,7 +371,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 453450}
-  offset: {x: 0, y: 1, z: 0}
+  offset: {x: 0, y: 0, z: 0}
   clampToScreen: 0
   clampBorderSize: 0.05
   cameraToUse1: {fileID: 2073808, guid: 2d1995fadd0c04b3eab52ed051bc1936, type: 2}
@@ -498,8 +498,8 @@ GUIText:
   m_TabSize: 4
   m_Font: {fileID: 0}
   m_Material: {fileID: 0}
-  m_FontSize: 0
-  m_FontStyle: 0
+  m_FontSize: 14
+  m_FontStyle: 1
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
@@ -781,6 +781,26 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: myLayerMask.m_Bits
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clampToScreen
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_FontSize
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_FontStyle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clampBorderSize
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: offset.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
