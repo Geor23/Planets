@@ -5,7 +5,6 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 using UnityEngine.Networking.NetworkSystem;
 
-
 namespace UnityStandardAssets.CrossPlatformInput {
 	public class PlayerControllerMobile : MonoBehaviour {
 		private NetworkIdentity nIdentity;
@@ -24,6 +23,8 @@ namespace UnityStandardAssets.CrossPlatformInput {
 
 		public Text scoreText;
 		public Text winText;
+		public Text id;
+		// public GUIText idForObsScreen;
 		public Text deathText;
 		public Text deathTimerText;
 		public GameObject ResourcePickUp;
@@ -33,21 +34,24 @@ namespace UnityStandardAssets.CrossPlatformInput {
 		public int score;
 		public int scoreToRemove;
 
+		// NetworkView networkView;
+
 		Rigidbody rb;
 
 		void Start(){
 			nIdentity = GetComponent<NetworkIdentity>();
 			nm = NetworkManager.singleton;
-      nm.client.RegisterHandler(Msgs.updateLocalScore, OnClientPickupDeath);
-      score = 0;
+			// networkView = gameObject.GetComponent<NetworkView>();
+      		nm.client.RegisterHandler(Msgs.updateLocalScore, OnClientPickupDeath);
+      		score = 0;
 			scoreText = GameObject.Find("ScoreText").GetComponent<Text>();
 			winText = GameObject.Find("WinText").GetComponent<Text>();
 			deathText = GameObject.Find("DeathText").GetComponent<Text>();
 			deathTimerText = GameObject.Find("DeathTimerText").GetComponent<Text>();
+			id = GameObject.Find("ID").GetComponent<Text>();
 			mainCamera = GameObject.Find("MainCamera").GetComponent<Camera>();
 			nm.client.RegisterHandler (Msgs.serverName, OnClientReceiveName);
 			nm.client.Send(Msgs.requestName, new EmptyMessage());
-
 		}
 
 		public void OnClientReceiveName(NetworkMessage msg) {
@@ -55,6 +59,10 @@ namespace UnityStandardAssets.CrossPlatformInput {
 				Name tl = msg.ReadMessage<Name>(); 
 				Text name = gameObject.GetComponent<Text>();
 				name.text = tl.name;
+				id.text = tl.id.ToString();
+				// networkView.RPC ("SetId", RPCMode.All, id.text);
+				GetComponent<PlayerNetworkHandler>().CmdSetId(id.text);
+
 			}
 		}
 
@@ -66,19 +74,20 @@ namespace UnityStandardAssets.CrossPlatformInput {
 			Vector3 forward = transform.forward;
 			Vector3 right = transform.right;
 
-#if UNITY_ANDROID
+			#if UNITY_ANDROID
 			float aimH = CrossPlatformInputManager.GetAxis ("AimH");
 			float aimV = CrossPlatformInputManager.GetAxis ("AimV");
 			float forwardSpeed = speed * CrossPlatformInputManager.GetAxis("MoveV");
 			float strafeSpeed = speed * CrossPlatformInputManager.GetAxis("MoveH");
-#endif
+			#endif
 
-#if UNITY_STANDALONE
+			#if UNITY_STANDALONE
 			float aimH = (-(Input.GetKey ("left")?1:0) + (Input.GetKey ("right")?1:0));
 			float aimV = ((Input.GetKey ("up")?1:0) - (Input.GetKey ("down")?1:0));
 			float forwardSpeed = speed * ((Input.GetKey ("w")?1:0) - (Input.GetKey ("s")?1:0));
 			float strafeSpeed = speed * (-(Input.GetKey ("a")?1:0) + (Input.GetKey ("d")?1:0));
-#endif
+			#endif
+
 			Vector3 moveDir = forwardSpeed * forward + strafeSpeed * right;
 			rotateObject(model, moveDir.normalized);
 
@@ -87,6 +96,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
 
 			rb.MovePosition(transform.position + moveDir * Time.deltaTime*5);
 		}
+
 		void rotateObject (Transform obj, Vector3 direction) {
 			if (direction.magnitude == 0) {
 				direction = model.forward;
@@ -95,12 +105,12 @@ namespace UnityStandardAssets.CrossPlatformInput {
 			Quaternion currentRotation = Quaternion.LookRotation(direction, upDir);
 			obj.rotation = Quaternion.Lerp(obj.rotation, currentRotation, Time.deltaTime*rotSpeed);
 
-#if UNITY_ANDROID
+			#if UNITY_ANDROID
 			if(CrossPlatformInputManager.GetAxis ("AimH") + CrossPlatformInputManager.GetAxis ("AimV") != 0){
-#endif 
-#if UNITY_STANDALONE
+			#endif 
+			#if UNITY_STANDALONE
 			if(Input.GetKey ("left") || Input.GetKey ("right") || Input.GetKey ("up") || Input.GetKey ("down")){
-#endif
+			#endif
 				if(Time.time < nextFire)
 					return;
 
@@ -188,18 +198,19 @@ namespace UnityStandardAssets.CrossPlatformInput {
 
 				DeathResourceProperties resProp = col.gameObject.GetComponent<DeathResourceProperties>();
 				//score = score + resProp.getScore();
-        //score = score + int.Parse(col.gameObject.GetComponent<Text>().text);
+        		//score = score + int.Parse(col.gameObject.GetComponent<Text>().text);
 				Debug.Log("picked up death with score "+ col.gameObject.GetComponent<Text>().text);
-        //GetComponent<PlayerNetworkHandler>().CmdDestroyDeathResource(col.gameObject);
+        		//GetComponent<PlayerNetworkHandler>().CmdDestroyDeathResource(col.gameObject);
 				SetScoreText();
 
 				DeathResource dr  = new DeathResource();
 				dr.team = 0;
 				dr.score = (int) resProp.getScore();
-        dr.drID = col.gameObject;
+        		dr.drID = col.gameObject;
 				nm.client.Send(Msgs.deathResourceCollision, dr);
 			}
 		}
+
         //If the player dies before the server updates score, score will not be counted. Potential error?
         public void OnClientPickupDeath(NetworkMessage msg){
             UpdateLocalScore uls = msg.ReadMessage<UpdateLocalScore>(); //Recieve death resource score from server
@@ -222,5 +233,11 @@ namespace UnityStandardAssets.CrossPlatformInput {
             score += scoreVal;
 			scoreText.text = score.ToString();
 		}
+
+		// [RPC]
+	 //    void SetId (string id) {
+	 //    	idForObsScreen.text = id ;
+	 //    }
+
 	}
 }

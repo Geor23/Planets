@@ -27,6 +27,24 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &171320
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 224: {fileID: 22427758}
+  - 222: {fileID: 22221400}
+  - 132: {fileID: 13241360}
+  - 114: {fileID: 11411396}
+  m_Layer: 13
+  m_Name: unId
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &176330
 GameObject:
   m_ObjectHideFlags: 1
@@ -105,7 +123,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 22406784}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!4 &479182
 Transform:
   m_ObjectHideFlags: 1
@@ -154,7 +172,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4294959103
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -284,6 +302,26 @@ MonoBehaviour:
     i15: 116
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
+--- !u!114 &11411396
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 171320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 413d80dbf17e94a979026435b8a749fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 22443142}
+  offset: {x: 0, y: 0, z: 0}
+  clampToScreen: 0
+  clampBorderSize: 0.05
+  cameraToUse1: {fileID: 2073808, guid: 2d1995fadd0c04b3eab52ed051bc1936, type: 2}
+  cameraToUse2: {fileID: 2081110, guid: 2d1995fadd0c04b3eab52ed051bc1936, type: 2}
+  myLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
 --- !u!114 &11412880
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -345,6 +383,7 @@ MonoBehaviour:
   turret: {fileID: 479182}
   scoreText: {fileID: 0}
   winText: {fileID: 0}
+  id: {fileID: 0}
   deathText: {fileID: 0}
   deathTimerText: {fileID: 0}
   ResourcePickUp: {fileID: 116834, guid: 976667ad8326a483eaa9c21ec560f8b2, type: 2}
@@ -397,6 +436,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ResourcePickUp: {fileID: 116834, guid: 976667ad8326a483eaa9c21ec560f8b2, type: 2}
   projectileLifetime: 2
+  idForObsScreen: {fileID: 13241360}
 --- !u!114 &11487278
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -429,6 +469,29 @@ Behaviour:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 178318}
   m_Enabled: 1
+--- !u!132 &13241360
+GUIText:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 171320}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Text: newwwwwww
+  m_Anchor: 0
+  m_Alignment: 0
+  m_PixelOffset: {x: 0, y: 0}
+  m_LineSpacing: 1
+  m_TabSize: 4
+  m_Font: {fileID: 0}
+  m_Material: {fileID: 0}
+  m_FontSize: 14
+  m_FontStyle: 1
+  m_Color:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_PixelCorrect: 1
+  m_RichText: 1
 --- !u!135 &13539184
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -441,6 +504,12 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!222 &22221400
+CanvasRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 171320}
 --- !u!222 &22279366
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -458,6 +527,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 479182}
+  - {fileID: 22427758}
   - {fileID: 438832}
   - {fileID: 22443142}
   m_Father: {fileID: 0}
@@ -466,6 +536,23 @@ RectTransform:
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!224 &22427758
+RectTransform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 171320}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 90}
+  m_LocalScale: {x: 0.020283977, y: 0.020283977, z: 0.020283977}
+  m_Children: []
+  m_Father: {fileID: 22406784}
+  m_RootOrder: 1
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -0.017752826, y: 0.017557502}
+  m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22443142
 RectTransform:
@@ -479,7 +566,7 @@ RectTransform:
   m_Children:
   - {fileID: 488692}
   m_Father: {fileID: 22406784}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -582,7 +669,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Layer
-      value: 12
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: speed
@@ -592,6 +679,46 @@ Prefab:
       propertyPath: nIdentity
       value: 
       objectReference: {fileID: 11408848}
+    - target: {fileID: 0}
+      propertyPath: m_CullingMask.m_Bits
+      value: 4294959103
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Name
+      value: unId
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: idForObsScreen
+      value: 
+      objectReference: {fileID: 13241360}
+    - target: {fileID: 0}
+      propertyPath: cameraToUse1
+      value: 
+      objectReference: {fileID: 2073808, guid: 2d1995fadd0c04b3eab52ed051bc1936, type: 2}
+    - target: {fileID: 0}
+      propertyPath: cameraToUse2
+      value: 
+      objectReference: {fileID: 2081110, guid: 2d1995fadd0c04b3eab52ed051bc1936, type: 2}
+    - target: {fileID: 0}
+      propertyPath: myLayerMask.m_Bits
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_FontStyle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_FontSize
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clampBorderSize
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: offset.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 135240}

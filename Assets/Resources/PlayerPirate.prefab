@@ -60,6 +60,24 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
+--- !u!1 &181750
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 224: {fileID: 22410974}
+  - 222: {fileID: 22284502}
+  - 132: {fileID: 13263420}
+  - 114: {fileID: 11463260}
+  m_Layer: 13
+  m_Name: unId
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &194638
 GameObject:
   m_ObjectHideFlags: 0
@@ -117,7 +135,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 22445154}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!4 &453450
 Transform:
   m_ObjectHideFlags: 1
@@ -130,7 +148,7 @@ Transform:
   m_Children:
   - {fileID: 458106}
   m_Father: {fileID: 22445154}
-  m_RootOrder: 2
+  m_RootOrder: 3
 --- !u!4 &458106
 Transform:
   m_ObjectHideFlags: 1
@@ -167,7 +185,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4294959103
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -341,6 +359,26 @@ MonoBehaviour:
   nIdentity: {fileID: 11489970}
   myTransform: {fileID: 22445154}
   lerpRate: 1
+--- !u!114 &11463260
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 181750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 413d80dbf17e94a979026435b8a749fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 453450}
+  offset: {x: 0, y: 0, z: 0}
+  clampToScreen: 0
+  clampBorderSize: 0.05
+  cameraToUse1: {fileID: 2073808, guid: 2d1995fadd0c04b3eab52ed051bc1936, type: 2}
+  cameraToUse2: {fileID: 2081110, guid: 2d1995fadd0c04b3eab52ed051bc1936, type: 2}
+  myLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
 --- !u!114 &11466160
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -384,6 +422,7 @@ MonoBehaviour:
   turret: {fileID: 404412}
   scoreText: {fileID: 0}
   winText: {fileID: 0}
+  id: {fileID: 0}
   deathText: {fileID: 0}
   deathTimerText: {fileID: 0}
   ResourcePickUp: {fileID: 116834, guid: 976667ad8326a483eaa9c21ec560f8b2, type: 2}
@@ -435,6 +474,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ResourcePickUp: {fileID: 116834, guid: 976667ad8326a483eaa9c21ec560f8b2, type: 2}
   projectileLifetime: 2
+  idForObsScreen: {fileID: 13263420}
 --- !u!124 &12476776
 Behaviour:
   m_ObjectHideFlags: 1
@@ -442,6 +482,29 @@ Behaviour:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 176450}
   m_Enabled: 1
+--- !u!132 &13263420
+GUIText:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 181750}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Text: textttttt
+  m_Anchor: 0
+  m_Alignment: 0
+  m_PixelOffset: {x: 0, y: 0}
+  m_LineSpacing: 1
+  m_TabSize: 4
+  m_Font: {fileID: 0}
+  m_Material: {fileID: 0}
+  m_FontSize: 14
+  m_FontStyle: 1
+  m_Color:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_PixelCorrect: 1
+  m_RichText: 1
 --- !u!135 &13543422
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -460,6 +523,29 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 158602}
+--- !u!222 &22284502
+CanvasRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 181750}
+--- !u!224 &22410974
+RectTransform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 181750}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 90}
+  m_LocalScale: {x: 0.020283977, y: 0.020283977, z: 0.020283977}
+  m_Children: []
+  m_Father: {fileID: 22445154}
+  m_RootOrder: 1
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -0.011614025, y: 0.023699045}
+  m_SizeDelta: {x: 160, y: 30}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22445154
 RectTransform:
   m_ObjectHideFlags: 1
@@ -471,6 +557,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 404412}
+  - {fileID: 22410974}
   - {fileID: 441958}
   - {fileID: 453450}
   m_Father: {fileID: 0}
@@ -665,7 +752,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Layer
-      value: 10
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: lerpRate
@@ -674,6 +761,46 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: speed
       value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_CullingMask.m_Bits
+      value: 4294959103
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: idForObsScreen
+      value: 
+      objectReference: {fileID: 13263420}
+    - target: {fileID: 0}
+      propertyPath: cameraToUse1
+      value: 
+      objectReference: {fileID: 2073808, guid: 2d1995fadd0c04b3eab52ed051bc1936, type: 2}
+    - target: {fileID: 0}
+      propertyPath: cameraToUse2
+      value: 
+      objectReference: {fileID: 2081110, guid: 2d1995fadd0c04b3eab52ed051bc1936, type: 2}
+    - target: {fileID: 0}
+      propertyPath: myLayerMask.m_Bits
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clampToScreen
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_FontSize
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_FontStyle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clampBorderSize
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: offset.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

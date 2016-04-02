@@ -14,6 +14,7 @@ class PlayerData {
 
   	public int team;
   	public string name;
+  	public int uniqueId;
 
 }
 
@@ -36,6 +37,7 @@ public class PlanetsNetworkManager : NetworkManager {
 	[SerializeField] GameObject player2;
   	[SerializeField] GameObject observer;
 
+  	public int key = 0;
 	GameObject chosenCharacter;
     public string round1Scene; //Round 1 name
     public string round2Scene;
@@ -132,6 +134,7 @@ public class PlanetsNetworkManager : NetworkManager {
     	int id = IDFromConn(msg.conn);
     	Name tl = new Name();
         tl.name = dict[id].name;
+        tl.id = dict[id].uniqueId;
         NetworkServer.SendToClient(id, Msgs.serverName, tl);
     }
 
@@ -271,6 +274,8 @@ public class PlanetsNetworkManager : NetworkManager {
 	    dict.Add(id, new PlayerData());
 	    dict[id].name = name;
 		dict[id].team = -1;
+		dict[id].uniqueId = key;
+		key++ ;
 
 	    Debug.Log("Player " + name + " joined the game");
 	}
