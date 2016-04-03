@@ -34,6 +34,15 @@ namespace UnityStandardAssets.CrossPlatformInput {
 		public int score;
 		public int scoreToRemove;
 
+		public Image idImgPir;
+		public Image idImgSup;
+
+		public AudioClip endRoundSound;
+		private float throwSpeed = 2000f;
+	    private AudioSource source;
+	    private float volLowRange = .5f;
+	    private float volHighRange = 1.0f;
+
 		// NetworkView networkView;
 
 		Rigidbody rb;
@@ -52,6 +61,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
 			mainCamera = GameObject.Find("MainCamera").GetComponent<Camera>();
 			nm.client.RegisterHandler (Msgs.serverName, OnClientReceiveName);
 			nm.client.Send(Msgs.requestName, new EmptyMessage());
+			source = GetComponent<AudioSource>();
 		}
 
 		public void OnClientReceiveName(NetworkMessage msg) {
