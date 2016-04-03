@@ -37,11 +37,6 @@ namespace UnityStandardAssets.CrossPlatformInput {
 		public Image idImgPir;
 		public Image idImgSup;
 
-		public AudioClip endRoundSound;
-		private float throwSpeed = 2000f;
-	    private AudioSource source;
-	    private float volLowRange = .5f;
-	    private float volHighRange = 1.0f;
 
 		// NetworkView networkView;
 
@@ -61,7 +56,14 @@ namespace UnityStandardAssets.CrossPlatformInput {
 			mainCamera = GameObject.Find("MainCamera").GetComponent<Camera>();
 			nm.client.RegisterHandler (Msgs.serverName, OnClientReceiveName);
 			nm.client.Send(Msgs.requestName, new EmptyMessage());
-			source = GetComponent<AudioSource>();
+			if (gameObject.tag == "PlayerPirate"){
+				idImgPir.gameObject.SetActive(true);
+				idImgSup.gameObject.SetActive(false);
+	        } else{
+				idImgSup.gameObject.SetActive(true);
+				idImgPir.gameObject.SetActive(false);
+	        }
+
 		}
 
 		public void OnClientReceiveName(NetworkMessage msg) {
