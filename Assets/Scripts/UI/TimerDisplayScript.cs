@@ -28,7 +28,7 @@ public class TimerDisplayScript : MonoBehaviour {
 
     void Update(){
         time -= Time.deltaTime;
-        if (time == 1.0) {
+        if (time <= 1.0) {
               source.PlayOneShot(endRoundSound, 1.0F);
         } 
         if (time > 0){
