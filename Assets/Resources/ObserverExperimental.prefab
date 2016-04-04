@@ -11,7 +11,6 @@ GameObject:
   - 20: {fileID: 2081110}
   - 92: {fileID: 9201006}
   - 124: {fileID: 12428902}
-  - 114: {fileID: 11459848}
   - 114: {fileID: 11485562}
   m_Layer: 0
   m_Name: ObserverCameraBack
@@ -50,7 +49,6 @@ GameObject:
   - 20: {fileID: 2073808}
   - 92: {fileID: 9251532}
   - 124: {fileID: 12464448}
-  - 114: {fileID: 11433604}
   m_Layer: 0
   m_Name: ObserverCamera
   m_TagString: MainCamera
@@ -70,6 +68,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 22418878}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &481696
 Transform:
   m_ObjectHideFlags: 1
@@ -82,6 +81,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 22418878}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &2073808
 Camera:
   m_ObjectHideFlags: 1
@@ -178,20 +178,6 @@ MonoBehaviour:
   nIdentity: {fileID: 11449068}
   cam1: {fileID: 2073808}
   cam2: {fileID: 2081110}
---- !u!114 &11433604
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 182412}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4739c22ef73ad62488fe344c8fe9addd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  strengthX: 0.9
-  strengthY: 0.9
-  fishEyeShader: {fileID: 4800000, guid: 874ceab4425f64bccb1d14032f4452b1, type: 3}
 --- !u!114 &11437070
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -257,20 +243,6 @@ MonoBehaviour:
     i15: 54
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
---- !u!114 &11459848
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 103576}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4739c22ef73ad62488fe344c8fe9addd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  strengthX: 0.9
-  strengthY: 0.9
-  fishEyeShader: {fileID: 4800000, guid: 874ceab4425f64bccb1d14032f4452b1, type: 3}
 --- !u!114 &11485562
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -316,6 +288,7 @@ RectTransform:
   - {fileID: 481696}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -20.785065, y: -19.3}
