@@ -1,46 +1,29 @@
 fileFormatVersion: 2
-guid: 3fe3c4b1f462147bd923b1a7ffd35a8c
-timeCreated: 1459622137
+guid: ec6c9396a40914299aad88700f972785
+timeCreated: 1459775998
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
     100000: Background1
-    100002: directionalLight1
-    100004: Flame
-    100006: Flame1
-    100008: Flame2
-    100010: Flame3
-    100012: //RootNode
-    100014: SuperCorpShip
+    100002: Flame
+    100004: //RootNode
+    100006: SuperCorpShip
     400000: Background1
-    400002: directionalLight1
-    400004: Flame
-    400006: Flame1
-    400008: Flame2
-    400010: Flame3
-    400012: //RootNode
-    400014: SuperCorpShip
+    400002: Flame
+    400004: //RootNode
+    400006: SuperCorpShip
     2300000: Background1
-    2300002: Flame1
-    2300004: Flame2
-    2300006: Flame3
-    2300008: SuperCorpShip
+    2300002: SuperCorpShip
     3300000: Background1
-    3300002: Flame1
-    3300004: Flame2
-    3300006: Flame3
-    3300008: SuperCorpShip
+    3300002: SuperCorpShip
     4300000: SuperCorpShip
-    4300002: Flame1
-    4300004: Flame2
-    4300006: Flame3
-    4300008: Background1
+    4300002: Background1
     9500000: //RootNode
   materials:
     importMaterials: 1
     materialName: 0
-    materialSearch: 2
+    materialSearch: 1
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
@@ -68,7 +51,7 @@ ModelImporter:
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 0
+    optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
     secondaryUVAngleDistortion: 8
@@ -79,7 +62,7 @@ ModelImporter:
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
-    tangentImportMode: 0
+    tangentImportMode: 3
   importAnimation: 1
   copyAvatar: 0
   humanDescription:
