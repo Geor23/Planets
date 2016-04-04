@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 
 class PlayerConfig : MonoBehaviour {
 
-  private bool isObserver = true; //Initialised as true
+  private int team = -1; //Initialised as observer - -1: obs, 0: pirate, 1:supercorp
   public static PlayerConfig singleton;
 
   private void Start(){
@@ -14,11 +14,15 @@ class PlayerConfig : MonoBehaviour {
     singleton = this;
   }
   
-  public void SetObserver(bool observe) {
-        isObserver = observe;
+  public void SetTeam(int steam) {
+        team = steam;
   }
 
   public bool GetObserver(){
-        return isObserver;
+        return (team==-1);
+  }
+
+  public int getTeam() {
+    return team;
   }
 }
