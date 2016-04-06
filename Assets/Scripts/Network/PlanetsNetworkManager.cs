@@ -79,6 +79,7 @@ public class PlanetsNetworkManager : NetworkManager {
   	}
 	
     public void Update(){
+    	if(!NetworkServer.active) return;
 
     	if ( NetworkManager.networkSceneName == "RoundOver" ) {
 
