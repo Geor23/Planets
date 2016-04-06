@@ -31,9 +31,11 @@ public class RunningSceneGUI : MonoBehaviour {
 		if (PlayerConfig.singleton.getTeam()==0){
 			idImgPir.gameObject.SetActive(true);
 			idImgSup.gameObject.SetActive(false);
-        } else {
-        	Debug.Log(gameObject.tag);
+        } else if (PlayerConfig.singleton.getTeam()==1){
 			idImgSup.gameObject.SetActive(true);
+			idImgPir.gameObject.SetActive(false);
+        } else { //observers should not see this
+        	idImgSup.gameObject.SetActive(false);
 			idImgPir.gameObject.SetActive(false);
         }
 
