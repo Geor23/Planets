@@ -9,10 +9,13 @@ namespace UnityStandardAssets.CrossPlatformInput {
 	public class PlayerControllerMobile : MonoBehaviour {
 		private NetworkIdentity nIdentity;
 		private NetworkManager nm;
-        private const float fireRate = 0.3F;
+    private const float fireRate = 0.3F;
 		private float nextFire = 0.0F;
 
 		private bool hasCollide = false;
+
+		public bool doubleScore = false;
+		private float doubleScoreTime = 5;
 
 		public float speed = 3.0F;
 		public float rotSpeed = 20.0F;
@@ -69,6 +72,16 @@ namespace UnityStandardAssets.CrossPlatformInput {
 
 		void Update () {
 			if(!nIdentity.isLocalPlayer) return;
+
+			//DoubleScore
+			if(doubleScore == true){
+				doubleScoreTime -= Time.deltaTime;
+				Debug.Log(doubleScoreTime);
+				if(doubleScoreTime <= 0){
+					doubleScore = false;
+					Debug.Log("End of double Score");
+				}
+			}
 
 			rb = GetComponent<Rigidbody>();
 			Vector3 forward = transform.forward;
@@ -129,6 +142,12 @@ namespace UnityStandardAssets.CrossPlatformInput {
 		void OnCollisionEnter(Collision col){
 
 			if (!nIdentity.isLocalPlayer) return;
+
+						if (col.gameObject.CompareTag("DoubleScore")){
+							doubleScore = true;
+							Destroy(col.gameObject);
+						}
+
             if (col.gameObject.CompareTag("ProjectilePirate") && gameObject.CompareTag("PlayerSuperCorp")){
                 if (hasCollide == false) {
                     hasCollide = true;
@@ -185,7 +204,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
 
             if (col.gameObject.CompareTag("StaticResource")){
                 ResourceController resProp = col.gameObject.GetComponent<ResourceController>();
-                score = score + resProp.getScore();
+              	score = score + resProp.getScore();
                 SetScoreText();
                 AddScore sc = new AddScore();
                 sc.team = 0;
@@ -233,6 +252,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
             score += scoreVal;
 			scoreText.text = score.ToString();
 		}
+
 
 		// [RPC]
 	 //    void SetId (string id) {
