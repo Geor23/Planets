@@ -1,4 +1,7 @@
-﻿Shader "ProjectileSuperCorpShader" {
+﻿// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
+// Upgrade NOTE: replaced '_World2Object' with 'unity_WorldToObject'
+
+Shader "ProjectileSuperCorpShader" {
    Properties {
       _Color ("Diffuse Color", Color) = (1,1,1,1) 
       _UnlitColor ("Unlit Diffuse Color", Color) = (0.5,0.5,0.5,1) 
@@ -47,8 +50,8 @@
          {
             vertexOutput output;
  
-            float4x4 modelMatrix = _Object2World;
-            float4x4 modelMatrixInverse = _World2Object; 
+            float4x4 modelMatrix = unity_ObjectToWorld;
+            float4x4 modelMatrixInverse = unity_WorldToObject; 
  
             output.posWorld = mul(modelMatrix, input.vertex);
             output.normalDir = normalize(
@@ -155,8 +158,8 @@
          {
             vertexOutput output;
  
-            float4x4 modelMatrix = _Object2World;
-            float4x4 modelMatrixInverse = _World2Object;
+            float4x4 modelMatrix = unity_ObjectToWorld;
+            float4x4 modelMatrixInverse = unity_WorldToObject;
  
             output.posWorld = mul(modelMatrix, input.vertex);
             output.normalDir = normalize(

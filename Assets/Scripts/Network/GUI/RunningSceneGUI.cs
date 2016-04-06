@@ -10,10 +10,16 @@ public class RunningSceneGUI : MonoBehaviour {
 	NetworkManager nm;
 	public Text teamAScore;
 	public Text teamBScore;
-  public Text scoreText;
+  	public Text scoreText;
 	public Image piratesWin;
 	public Image superCorpWin;
+
+	public Image idImgPir;
+	public Image idImgSup;
+
+	
 	public Text killFeed;
+
 	int teamA;
 	int teamB;
 	
@@ -22,8 +28,16 @@ public class RunningSceneGUI : MonoBehaviour {
 		nm.client.RegisterHandler (Msgs.serverTeamScore, OnClientReceiveScores);
 		nm.client.RegisterHandler (Msgs.serverKillFeed, OnClientReceiveKillFeed);
 		nm.client.Send(Msgs.requestTeamScores, new EmptyMessage());
+		if (PlayerConfig.singleton.getTeam()==0){
+			idImgPir.gameObject.SetActive(true);
+			idImgSup.gameObject.SetActive(false);
+        } else {
+        	Debug.Log(gameObject.tag);
+			idImgSup.gameObject.SetActive(true);
+			idImgPir.gameObject.SetActive(false);
+        }
 
-	}
+    }
 	
     public void OnClientReceiveKillFeed(NetworkMessage msg) {
 		Kill tl = msg.ReadMessage<Kill>(); 
