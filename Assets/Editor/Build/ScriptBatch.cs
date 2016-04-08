@@ -39,7 +39,7 @@ class ScriptBatch {
     }
 
     [MenuItem("BUILD/OSX Local Server+Client")]
-    public static void WindowsServerAndClient (){
+    public static void OSXServerAndClient (){
         List<string> serverLocalClientLevels = MandatoryScenes(); 
         serverLocalClientLevels.Insert(0, "Assets/Scenes/ServerLocalClientScne.unity");
         string path = EditorUtility.SaveFolderPanel("Choose location to build in", "", "");
