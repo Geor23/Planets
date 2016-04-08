@@ -12,11 +12,15 @@ public class TimerDisplayScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+      if(!NetworkClient.active) {
+        this.enabled = false;
+        return;
+      }
       NetworkManager nm = NetworkManager.singleton;
       nm.client.RegisterHandler(Msgs.sendCurrentTime, OnClientReceiveTime); //Creates a handler for when the client recieves a time from the server
       nm.client.Send(Msgs.requestCurrentTime, new EmptyMessage()); //Requests the current time in-game
       source = GetComponent<AudioSource>();
-}
+  } 
 
     void OnClientReceiveTime(NetworkMessage msg){
        TimeMessage tm = msg.ReadMessage<TimeMessage>();

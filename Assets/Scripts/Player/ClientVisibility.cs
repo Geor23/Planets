@@ -10,6 +10,10 @@ class ClientVisibility : MonoBehaviour{
   public bool observerVisible;
 
   public void Start(){
+  	if(!NetworkClient.active) {
+  		this.enabled = false;
+  		return;
+  	}
     bool res = true;
     if(!observerVisible && PlayerConfig.singleton.GetObserver()) {
       res = false;

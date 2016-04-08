@@ -18,6 +18,10 @@ public class RoundOverGUI : MonoBehaviour {
    
 
   public void Start() {
+    if(!NetworkClient.active) {
+      this.enabled = false;
+      return;
+    }
 
     nm = NetworkManager.singleton;
 	  nm.client.RegisterHandler (Msgs.serverTeamMsg, OnClientReceiveTeamList);
