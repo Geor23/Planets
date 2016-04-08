@@ -59,7 +59,12 @@ public class ResourceController : MonoBehaviour {
             NetworkIdentity nIdentity = col.gameObject.GetComponent<NetworkIdentity>();
             if (nIdentity.isLocalPlayer){
                 Debug.Log("Collided with a player");
-                col.gameObject.GetComponent<PlayerControllerMobile>().SetScoreTextNew(score);
+                //DoubleScore Powerup
+                if(col.gameObject.GetComponent<PlayerControllerMobile>().doubleScore == true){
+                    col.gameObject.GetComponent<PlayerControllerMobile>().SetScoreTextNew(score*2);
+                } else {
+                    col.gameObject.GetComponent<PlayerControllerMobile>().SetScoreTextNew(score);
+                }
                 AddScore sc = new AddScore();
                 sc.team = 0;
                 sc.score = score;
