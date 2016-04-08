@@ -5,151 +5,205 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 using UnityEngine.Networking.NetworkSystem;
 
-namespace UnityStandardAssets.CrossPlatformInput {
-	public class PlayerControllerMobile : MonoBehaviour {
-		private NetworkIdentity nIdentity;
-		private NetworkManager nm;
-    private const float fireRate = 0.3F;
-		private float nextFire = 0.0F;
+namespace UnityStandardAssets.CrossPlatformInput
+{
+    public class PlayerControllerMobile : MonoBehaviour
+    {
+        private NetworkIdentity nIdentity;
+        private NetworkManager nm;
+        private const float fireRate = 0.3F;
+        private float currentFireRate = fireRate;
+        private float nextFire = 0.0F;
 
-		private bool hasCollide = false;
+        private bool hasCollide = false;
 
-		public bool doubleScore = false;
-		private float doubleScoreTime = 5;
-
-		public float speed = 3.0F;
-		public float rotSpeed = 20.0F;
-
-		public Transform planet;
-		public Transform model;
-		public Transform turret;
-
-		public Text scoreText;
-		public Text winText;
-		public Text id;
-		// public GUIText idForObsScreen;
-		public Text deathText;
-		public Text deathTimerText;
-		public GameObject ResourcePickUp;
-
-		public Camera mainCamera;
-
-		public int score;
-		public int scoreToRemove;
-
-		// NetworkView networkView;
-
-		Rigidbody rb;
-
-		void Start(){
-			nIdentity = GetComponent<NetworkIdentity>();
-			nm = NetworkManager.singleton;
-			// networkView = gameObject.GetComponent<NetworkView>();
-      		nm.client.RegisterHandler(Msgs.updateLocalScore, OnClientPickupDeath);
-      		score = 0;
-			scoreText = GameObject.Find("ScoreText").GetComponent<Text>();
-			winText = GameObject.Find("WinText").GetComponent<Text>();
-			deathText = GameObject.Find("DeathText").GetComponent<Text>();
-			deathTimerText = GameObject.Find("DeathTimerText").GetComponent<Text>();
-			id = GameObject.Find("ID").GetComponent<Text>();
-			mainCamera = GameObject.Find("MainCamera").GetComponent<Camera>();
-			nm.client.RegisterHandler (Msgs.serverName, OnClientReceiveName);
-			nm.client.Send(Msgs.requestName, new EmptyMessage());
-		}
-
-		public void OnClientReceiveName(NetworkMessage msg) {
-			if(nIdentity.isLocalPlayer) {
-				Name tl = msg.ReadMessage<Name>(); 
-				Text name = gameObject.GetComponent<Text>();
-				name.text = tl.name;
-				id.text = tl.id.ToString();
-				// networkView.RPC ("SetId", RPCMode.All, id.text);
-				GetComponent<PlayerNetworkHandler>().CmdSetId(id.text);
-
-			}
-		}
+        //Becomes true upon coming into contact with a double score object. Gives double score for 5 seconds
+        public bool doubleScore = false;
+        private const float doubleScoreTimeInit = 5;
+        private float doubleScoreTime = doubleScoreTimeInit;
 
 
-		void Update () {
-			if(!nIdentity.isLocalPlayer) return;
+        private bool fasterFire = false;
+        private float fasterFireSpeed = 0.1F;
+        private const float fasterFireTimeInit = 5;
+        private float fasterFireTime = fasterFireTimeInit;
 
-			//DoubleScore
-			if(doubleScore == true){
-				doubleScoreTime -= Time.deltaTime;
-				Debug.Log(doubleScoreTime);
-				if(doubleScoreTime <= 0){
-					doubleScore = false;
-					Debug.Log("End of double Score");
-				}
-			}
+        private bool shielded = false;
+        private const float shieldedTimeInit = 5;
+        private float shieldedTime = shieldedTimeInit;
 
-			rb = GetComponent<Rigidbody>();
-			Vector3 forward = transform.forward;
-			Vector3 right = transform.right;
+        public float speed = 3.0F;
+        public float rotSpeed = 20.0F;
 
-			#if UNITY_ANDROID
+        public Transform planet;
+        public Transform model;
+        public Transform turret;
+
+        public Text scoreText;
+        public Text winText;
+        public Text id;
+        // public GUIText idForObsScreen;
+        public Text deathText;
+        public Text deathTimerText;
+        public GameObject ResourcePickUp;
+
+        public Camera mainCamera;
+
+        public int score;
+        public int scoreToRemove;
+
+        // NetworkView networkView;
+
+        Rigidbody rb;
+
+        void Start()
+        {
+            nIdentity = GetComponent<NetworkIdentity>();
+            nm = NetworkManager.singleton;
+            // networkView = gameObject.GetComponent<NetworkView>();
+            nm.client.RegisterHandler(Msgs.updateLocalScore, OnClientPickupDeath);
+            score = 0;
+            scoreText = GameObject.Find("ScoreText").GetComponent<Text>();
+            winText = GameObject.Find("WinText").GetComponent<Text>();
+            deathText = GameObject.Find("DeathText").GetComponent<Text>();
+            deathTimerText = GameObject.Find("DeathTimerText").GetComponent<Text>();
+            id = GameObject.Find("ID").GetComponent<Text>();
+            mainCamera = GameObject.Find("MainCamera").GetComponent<Camera>();
+            nm.client.RegisterHandler(Msgs.serverName, OnClientReceiveName);
+            nm.client.Send(Msgs.requestName, new EmptyMessage());
+        }
+
+        public void OnClientReceiveName(NetworkMessage msg)
+        {
+            if (nIdentity.isLocalPlayer)
+            {
+                Name tl = msg.ReadMessage<Name>();
+                Text name = gameObject.GetComponent<Text>();
+                name.text = tl.name;
+                id.text = tl.id.ToString();
+                // networkView.RPC ("SetId", RPCMode.All, id.text);
+                GetComponent<PlayerNetworkHandler>().CmdSetId(id.text);
+
+            }
+        }
+
+
+        void Update()
+        {
+            if (!nIdentity.isLocalPlayer) return;
+
+            //DoubleScore
+            if (doubleScore == true)
+            {
+                doubleScoreTime -= Time.deltaTime;
+                Debug.Log(doubleScoreTime);
+                if (doubleScoreTime <= 0)
+                {
+                    doubleScore = false;
+                    doubleScoreTime = doubleScoreTimeInit;
+                    Debug.Log("End of double Score");
+                }
+            }
+            if (fasterFire == true)
+            {
+                fasterFireTime -= Time.deltaTime;
+                if (fasterFireTime <= 0)
+                {
+                    fasterFire = false;
+                    fasterFireTime = fasterFireTimeInit; //Resets timer
+                    currentFireRate = fireRate; //Resets fire rate to classic fire rate
+                }
+            }
+
+            if (shielded == true){
+              shieldedTime -= Time.deltaTime;
+              if (shieldedTime <= 0){
+                shielded = false;
+                shieldedTime = fasterFireTimeInit; //Resets timer
+              }
+            }
+
+            rb = GetComponent<Rigidbody>();
+            Vector3 forward = transform.forward;
+            Vector3 right = transform.right;
+
+#if UNITY_ANDROID
 			float aimH = CrossPlatformInputManager.GetAxis ("AimH");
 			float aimV = CrossPlatformInputManager.GetAxis ("AimV");
 			float forwardSpeed = speed * CrossPlatformInputManager.GetAxis("MoveV");
 			float strafeSpeed = speed * CrossPlatformInputManager.GetAxis("MoveH");
-			#endif
+#endif
 
-			#if UNITY_STANDALONE
-			float aimH = (-(Input.GetKey ("left")?1:0) + (Input.GetKey ("right")?1:0));
-			float aimV = ((Input.GetKey ("up")?1:0) - (Input.GetKey ("down")?1:0));
-			float forwardSpeed = speed * ((Input.GetKey ("w")?1:0) - (Input.GetKey ("s")?1:0));
-			float strafeSpeed = speed * (-(Input.GetKey ("a")?1:0) + (Input.GetKey ("d")?1:0));
-			#endif
+#if UNITY_STANDALONE
+            float aimH = (-(Input.GetKey("left") ? 1 : 0) + (Input.GetKey("right") ? 1 : 0));
+            float aimV = ((Input.GetKey("up") ? 1 : 0) - (Input.GetKey("down") ? 1 : 0));
+            float forwardSpeed = speed * ((Input.GetKey("w") ? 1 : 0) - (Input.GetKey("s") ? 1 : 0));
+            float strafeSpeed = speed * (-(Input.GetKey("a") ? 1 : 0) + (Input.GetKey("d") ? 1 : 0));
+#endif
 
-			Vector3 moveDir = forwardSpeed * forward + strafeSpeed * right;
-			rotateObject(model, moveDir.normalized);
+            Vector3 moveDir = forwardSpeed * forward + strafeSpeed * right;
+            rotateObject(model, moveDir.normalized);
 
-			Vector3 turretDirection = ((forward * aimV) + (right * aimH)).normalized;
-			rotateObject(turret, turretDirection);
+            Vector3 turretDirection = ((forward * aimV) + (right * aimH)).normalized;
+            rotateObject(turret, turretDirection);
 
-			rb.MovePosition(transform.position + moveDir * Time.deltaTime*5);
-		}
+            rb.MovePosition(transform.position + moveDir * Time.deltaTime * 5);
+        }
 
-		void rotateObject (Transform obj, Vector3 direction) {
-			if (direction.magnitude == 0) {
-				direction = model.forward;
-			}
-			Vector3 upDir = (model.position - planet.position).normalized;
-			Quaternion currentRotation = Quaternion.LookRotation(direction, upDir);
-			obj.rotation = Quaternion.Lerp(obj.rotation, currentRotation, Time.deltaTime*rotSpeed);
+        void rotateObject(Transform obj, Vector3 direction)
+        {
+            if (direction.magnitude == 0)
+            {
+                direction = model.forward;
+            }
+            Vector3 upDir = (model.position - planet.position).normalized;
+            Quaternion currentRotation = Quaternion.LookRotation(direction, upDir);
+            obj.rotation = Quaternion.Lerp(obj.rotation, currentRotation, Time.deltaTime * rotSpeed);
 
-			#if UNITY_ANDROID
+#if UNITY_ANDROID
 			if(CrossPlatformInputManager.GetAxis ("AimH") + CrossPlatformInputManager.GetAxis ("AimV") != 0){
-			#endif 
-			#if UNITY_STANDALONE
-			if(Input.GetKey ("left") || Input.GetKey ("right") || Input.GetKey ("up") || Input.GetKey ("down")){
-			#endif
-				if(Time.time < nextFire)
-					return;
+#endif
+#if UNITY_STANDALONE
+            if (Input.GetKey("left") || Input.GetKey("right") || Input.GetKey("up") || Input.GetKey("down"))
+            {
+#endif
+                if (Time.time < nextFire)
+                    return;
 
-				string name = GetComponent<Text>().text;	        
-	            if (gameObject.tag == "PlayerPirate"){
-	                  GetComponent<PlayerNetworkHandler>().CmdSpawnProjectile(rb.position + turret.forward, turret.forward, "ProjectilePirate", name);
-	            }
-	            else{
+                string name = GetComponent<Text>().text;
+                if (gameObject.tag == "PlayerPirate")
+                {
+                    GetComponent<PlayerNetworkHandler>().CmdSpawnProjectile(rb.position + turret.forward, turret.forward, "ProjectilePirate", name);
+                }
+                else
+                {
                     GetComponent<PlayerNetworkHandler>().CmdSpawnProjectile(rb.position + turret.forward, turret.forward, "ProjectileSuperCorp", name);
-	            }
+                }
 
-	      	nextFire = Time.time + fireRate;
-	      }
-		}
-		
-		void OnCollisionEnter(Collision col){
+                nextFire = Time.time + currentFireRate;
+            }
+        }
 
-			if (!nIdentity.isLocalPlayer) return;
+        void OnCollisionEnter(Collision col)
+        {
 
-						if (col.gameObject.CompareTag("DoubleScore")){
-							doubleScore = true;
-							Destroy(col.gameObject);
-						}
+            if (!nIdentity.isLocalPlayer) return;
 
-            if (col.gameObject.CompareTag("ProjectilePirate") && gameObject.CompareTag("PlayerSuperCorp")){
-                if (hasCollide == false) {
+            if (col.gameObject.CompareTag("DoubleScore")){
+                doubleScore = true;
+                Destroy(col.gameObject);
+            }else if (col.gameObject.CompareTag("Shield")){ //Also need to potentially create an animation here?
+                shielded = true;
+                Destroy(col.gameObject);
+
+            }else if (col.gameObject.CompareTag("FasterFire")){ //Turn on faster fire rate. Still needs graphical additions
+                fasterFire = true;
+                Destroy(col.gameObject);
+                currentFireRate = fasterFireSpeed;
+            }
+
+            else if (col.gameObject.CompareTag("ProjectilePirate") && gameObject.CompareTag("PlayerSuperCorp")){
+                if ((hasCollide == false)&&(shielded==false)){
                     hasCollide = true;
                     Destroy(col.gameObject);
                     deathText.enabled = true;
@@ -159,8 +213,8 @@ namespace UnityStandardAssets.CrossPlatformInput {
                     Text shooter = col.gameObject.GetComponent<Text>();
                     Text victim = gameObject.GetComponent<Text>();
                     Kill tc = new Kill();
-    				        tc.msg = shooter.text + " killed " + victim.text;
-    				        nm.client.Send(Msgs.clientKillFeed, tc);
+                    tc.msg = shooter.text + " killed " + victim.text;
+                    nm.client.Send(Msgs.clientKillFeed, tc);
                     GetComponent<PlayerNetworkHandler>().CmdSpawnResource(gameObject.transform.position, score);
                     scoreToRemove = score;
 
@@ -174,8 +228,8 @@ namespace UnityStandardAssets.CrossPlatformInput {
                     SetScoreText();
                     ClientScene.RemovePlayer(0);
                 }
-            } else if (col.gameObject.CompareTag("ProjectileSuperCorp") && gameObject.CompareTag("PlayerPirate")){
-                if (hasCollide == false){
+            }else if (col.gameObject.CompareTag("ProjectileSuperCorp") && gameObject.CompareTag("PlayerPirate")){
+                if ((hasCollide == false) && (shielded == false)){
                     hasCollide = true;
                     Destroy(col.gameObject);
                     deathText.enabled = true;
@@ -185,8 +239,8 @@ namespace UnityStandardAssets.CrossPlatformInput {
                     Text shooter = col.gameObject.GetComponent<Text>();
                     Text victim = gameObject.GetComponent<Text>();
                     Kill tc = new Kill();
-    				        tc.msg = shooter.text + " killed " + victim.text;
-    				        nm.client.Send(Msgs.clientKillFeed, tc);
+                    tc.msg = shooter.text + " killed " + victim.text;
+                    nm.client.Send(Msgs.clientKillFeed, tc);
 
                     AddScore sc = new AddScore();
                     sc.team = 0;
@@ -202,9 +256,13 @@ namespace UnityStandardAssets.CrossPlatformInput {
                 }
             }
 
-            if (col.gameObject.CompareTag("StaticResource")){
+            if (col.gameObject.CompareTag("StaticResource"))
+            {
                 ResourceController resProp = col.gameObject.GetComponent<ResourceController>();
-              	score = score + resProp.getScore();
+                score = score + resProp.getScore();
+                if (doubleScore){ //If points are to count for double, double score
+                    score *= score;
+                }
                 SetScoreText();
                 AddScore sc = new AddScore();
                 sc.team = 0;
@@ -213,51 +271,56 @@ namespace UnityStandardAssets.CrossPlatformInput {
                 nm.client.Send(Msgs.clientTeamScore, sc);
             }
 
-            if (col.gameObject.CompareTag("ResourcePickUpDeath")){
+            if (col.gameObject.CompareTag("ResourcePickUpDeath"))
+            {
 
-				DeathResourceProperties resProp = col.gameObject.GetComponent<DeathResourceProperties>();
-				//score = score + resProp.getScore();
-        		//score = score + int.Parse(col.gameObject.GetComponent<Text>().text);
-				Debug.Log("picked up death with score "+ col.gameObject.GetComponent<Text>().text);
-        		//GetComponent<PlayerNetworkHandler>().CmdDestroyDeathResource(col.gameObject);
-				SetScoreText();
+                DeathResourceProperties resProp = col.gameObject.GetComponent<DeathResourceProperties>();
+                //score = score + resProp.getScore();
+                //score = score + int.Parse(col.gameObject.GetComponent<Text>().text);
+                Debug.Log("picked up death with score " + col.gameObject.GetComponent<Text>().text);
+                //GetComponent<PlayerNetworkHandler>().CmdDestroyDeathResource(col.gameObject);
+                SetScoreText();
 
-				DeathResource dr  = new DeathResource();
-				dr.team = 0;
-				dr.score = (int) resProp.getScore();
-        		dr.drID = col.gameObject;
-				nm.client.Send(Msgs.deathResourceCollision, dr);
-			}
-		}
+                DeathResource dr = new DeathResource();
+                dr.team = 0;
+                dr.score = (int)resProp.getScore();
+                dr.drID = col.gameObject;
+                nm.client.Send(Msgs.deathResourceCollision, dr);
+            }
+        }
 
         //If the player dies before the server updates score, score will not be counted. Potential error?
-        public void OnClientPickupDeath(NetworkMessage msg){
+        public void OnClientPickupDeath(NetworkMessage msg)
+        {
             UpdateLocalScore uls = msg.ReadMessage<UpdateLocalScore>(); //Recieve death resource score from server
-            int scoreAdd = uls.score; 
+            int scoreAdd = uls.score;
             score += scoreAdd; //Add to existing score
             SetScoreText();
         }
 
         // function only called after the player dies to get the score that the team manager has to substract
         // hence the score has to be reset to 0 after that
-        public int getScore(){
-			return scoreToRemove;
-		}
+        public int getScore()
+        {
+            return scoreToRemove;
+        }
 
-		public void SetScoreText(){
+        public void SetScoreText()
+        {
             scoreText.text = score.ToString();
-        }	
+        }
 
-		public void SetScoreTextNew(int scoreVal){
+        public void SetScoreTextNew(int scoreVal)
+        {
             score += scoreVal;
-			scoreText.text = score.ToString();
-		}
+            scoreText.text = score.ToString();
+        }
 
 
-		// [RPC]
-	 //    void SetId (string id) {
-	 //    	idForObsScreen.text = id ;
-	 //    }
+        // [RPC]
+        //    void SetId (string id) {
+        //    	idForObsScreen.text = id ;
+        //    }
 
-	}
+    }
 }
