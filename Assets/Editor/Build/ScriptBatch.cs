@@ -60,6 +60,6 @@ class ScriptBatch {
 
         BuildPipeline.BuildPlayer(playerLevels.ToArray(), path + "/planets-player.apk", BuildTarget.Android, BuildOptions.Development);
         BuildPipeline.BuildPlayer(serverLevels.ToArray(), path + "/planets-server.exe", BuildTarget.StandaloneLinux, BuildOptions.Development);
-        //BuildPipeline.BuildPlayer(observerLevels.ToArray(), path + "/planets-observer.exe", BuildTarget.StandaloneWindows64, BuildOptions.Development);
+        BuildPipeline.BuildPlayer(observerLevels.ToArray(), path + "/planets-observer.exe", BuildTarget.StandaloneWindows64, BuildOptions.Development);
     }
 }
