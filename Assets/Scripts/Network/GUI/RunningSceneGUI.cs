@@ -23,7 +23,11 @@ public class RunningSceneGUI : MonoBehaviour {
 	int teamA;
 	int teamB;
 	
-	public void Start() { 
+	public void Start() {
+		if(!NetworkClient.active) {
+	  		this.enabled = false;
+	  		return;
+  		}
 		nm = NetworkManager.singleton;
 		nm.client.RegisterHandler (Msgs.serverTeamScore, OnClientReceiveScores);
 		nm.client.RegisterHandler (Msgs.serverKillFeed, OnClientReceiveKillFeed);

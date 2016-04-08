@@ -12,7 +12,7 @@ public class LobbyGUI : MonoBehaviour {
 	public Text teamB;
 
   public void Start() {
-    
+    if(NetworkServer.active && !NetworkClient.active) return;
     nm = NetworkManager.singleton;
 	  nm.client.RegisterHandler (Msgs.serverTeamMsg, OnClientReceiveTeamList);
     nm.client.Send(Msgs.requestTeamMsg, new EmptyMessage());

@@ -40,6 +40,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
 
 		void Start(){
 			nIdentity = GetComponent<NetworkIdentity>();
+			if(!nIdentity.isLocalPlayer) return;
 			nm = NetworkManager.singleton;
 			// networkView = gameObject.GetComponent<NetworkView>();
       		nm.client.RegisterHandler(Msgs.updateLocalScore, OnClientPickupDeath);
