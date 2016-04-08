@@ -38,6 +38,15 @@ class ScriptBatch {
 
     }
 
+    [MenuItem("BUILD/OSX Local Server+Client")]
+    public static void WindowsServerAndClient (){
+        List<string> serverLocalClientLevels = MandatoryScenes(); 
+        serverLocalClientLevels.Insert(0, "Assets/Scenes/ServerLocalClientScne.unity");
+        string path = EditorUtility.SaveFolderPanel("Choose location to build in", "", "");
+        BuildPipeline.BuildPlayer(serverLocalClientLevels.ToArray(), path + "/serverLocalClient.exe", BuildTarget.StandaloneOSXIntel64, BuildOptions.Development);
+
+    }
+
     [MenuItem("BUILD/Deployment build (Linux Server; Android, iOS clients; Windows Observer client)")]
     public static void DeploymentServerClients (){
         //For Android
