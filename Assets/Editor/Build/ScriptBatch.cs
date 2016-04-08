@@ -51,13 +51,14 @@ class ScriptBatch {
     public static void DeploymentServerClients (){
         //For Android
         List<string> playerLevels = MandatoryScenes();
-        playerLevels.Insert(0, "ClientStartScene.unity"); 
+        playerLevels.Insert(0, "Assets/Scenes/ClientStartScene.unity"); 
         List<string> observerLevels = MandatoryScenes();
-        observerLevels.Insert(0, "ObserverStartScene.unity"); 
+        observerLevels.Insert(0, "Assets/Scenes/ObserverStartScene.unity"); 
         List<string> serverLevels = MandatoryScenes();
-        serverLevels.Insert(0, "ServerStartScene.unity"); 
+        serverLevels.Insert(0, "Assets/Scenes/ServerStartScene.unity"); 
         string path = EditorUtility.SaveFolderPanel("Choose location to build in", "", "");
 
+        EditorUserBuildSettings.androidBuildSubtarget = MobileTextureSubtarget.ASTC;
         BuildPipeline.BuildPlayer(playerLevels.ToArray(), path + "/planets-player.apk", BuildTarget.Android, BuildOptions.Development);
         BuildPipeline.BuildPlayer(serverLevels.ToArray(), path + "/planets-server.exe", BuildTarget.StandaloneLinux, BuildOptions.Development);
         BuildPipeline.BuildPlayer(observerLevels.ToArray(), path + "/planets-observer.exe", BuildTarget.StandaloneWindows64, BuildOptions.Development);
