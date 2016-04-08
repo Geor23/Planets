@@ -34,7 +34,7 @@ public class LobbyGUI : MonoBehaviour {
     tc.teamChoice =(int) TeamID.TEAM_SUPERCORP;
     nm.client.Send(Msgs.clientTeamMsg, tc);
     PlayerConfig.singleton.SetTeam(1);
-    }
+  }
 
 
   public void StartGame() {

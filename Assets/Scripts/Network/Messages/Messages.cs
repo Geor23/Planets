@@ -5,9 +5,10 @@ using UnityEngine.EventSystems;
 using UnityEngine.Networking;
 
 enum TeamID : int {
-  TEAM_OBSERVER = -1,
-  TEAM_PIRATES,
-  TEAM_SUPERCORP
+  TEAM_NEUTRAL = -2,
+  TEAM_OBSERVER = -1, 
+  TEAM_PIRATES = 0,
+  TEAM_SUPERCORP = 1
 };
 
 
