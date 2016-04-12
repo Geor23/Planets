@@ -12,6 +12,7 @@ public class UniqueObjectSynchronizer : NetworkBehaviour {
 
 	[Client]
 	void Start(){
+		nm = NetworkManager.singleton;
 		nm.client.RegisterHandler(Msgs.updatePos, UpdateLocalPos);
 		nm.client.RegisterHandler(Msgs.updateRot, UpdateLocalRot);
 		nm.client.RegisterHandler(Msgs.updateRotTurret, UpdateLocalRotTurret);
