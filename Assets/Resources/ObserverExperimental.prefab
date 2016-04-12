@@ -28,10 +28,10 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 224: {fileID: 22418878}
-  - 114: {fileID: 11432244}
   - 114: {fileID: 11449068}
   - 222: {fileID: 22216122}
   - 114: {fileID: 11437070}
+  - 114: {fileID: 11414386}
   m_Layer: 0
   m_Name: ObserverExperimental
   m_TagString: Untagged
@@ -164,7 +164,7 @@ Behaviour:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 182412}
   m_Enabled: 1
---- !u!114 &11432244
+--- !u!114 &11414386
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -172,7 +172,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 177056}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e2ffa05c7aec7442aee83f80a741ee5, type: 3}
+  m_Script: {fileID: 11500000, guid: 5a10a7020162de34c9192f6e5345e3de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   nIdentity: {fileID: 11449068}

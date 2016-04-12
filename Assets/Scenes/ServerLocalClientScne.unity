@@ -315,12 +315,13 @@ MonoBehaviour:
   player1: {fileID: 158602, guid: e2bec8779cef647cbacae305c253fec0, type: 2}
   player2: {fileID: 135240, guid: 5d90277e2d19d41e092696113922c674, type: 2}
   observer: {fileID: 177056, guid: 2d1995fadd0c04b3eab52ed051bc1936, type: 2}
+  key: 0
   round1Scene: Round1
-  round2Scene: Round2
   hasPickedTeam: 0
   hasConnected: 0
   inRound: 0
   timerOn: 1
+  onlyUpdateObservers: 1
 --- !u!4 &231695163
 Transform:
   m_ObjectHideFlags: 0
@@ -1257,6 +1258,7 @@ Canvas:
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -1617,6 +1619,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 309b4348beda94ba39eb180f1a0c5e6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  team: -2
 --- !u!4 &1632251267
 Transform:
   m_ObjectHideFlags: 0

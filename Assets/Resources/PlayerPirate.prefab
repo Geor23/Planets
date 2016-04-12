@@ -11,15 +11,15 @@ GameObject:
   - 54: {fileID: 5436378}
   - 114: {fileID: 11486382}
   - 114: {fileID: 11477032}
-  - 114: {fileID: 11466160}
   - 114: {fileID: 11489970}
-  - 114: {fileID: 11444118}
-  - 114: {fileID: 11497336}
-  - 114: {fileID: 11401264}
   - 135: {fileID: 13543422}
   - 222: {fileID: 22230050}
   - 114: {fileID: 11438494}
-  - 114: {fileID: 11417810}
+  - 114: {fileID: 11473316}
+  - 114: {fileID: 11441538}
+  - 114: {fileID: 11417794}
+  - 114: {fileID: 11407448}
+  - 114: {fileID: 11451542}
   m_Layer: 10
   m_Name: PlayerPirate
   m_TagString: PlayerPirate
@@ -283,7 +283,7 @@ Behaviour:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 176450}
   m_Enabled: 1
---- !u!114 &11401264
+--- !u!114 &11407448
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -291,26 +291,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 158602}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3d008748c0ca2643901c50fc8e402b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nIdentity: {fileID: 11489970}
-  playerTransform: {fileID: 453450}
-  lerpRate: 15
---- !u!114 &11417810
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 158602}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 832c101176b6460428e623e3ff8b56c7, type: 3}
+  m_Script: {fileID: 11500000, guid: b49ee848ad1e14082aee0c6d03badeb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   nIdentity: {fileID: 11489970}
   playerTransform: {fileID: 404412}
-  lerpRate: 15
+  lerpRate: 3
+--- !u!114 &11417794
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 158602}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e6c60731e99b4b8a9eee9991bfe73f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nIdentity: {fileID: 11489970}
+  playerTransform: {fileID: 453450}
+  lerpRate: 3
 --- !u!114 &11438494
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -344,7 +344,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Pirate
---- !u!114 &11444118
+--- !u!114 &11441538
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -352,13 +352,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 158602}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1084269b80d9e5149b810596585e98d1, type: 3}
+  m_Script: {fileID: 11500000, guid: f78e2e19827574f6ba5ca9d078adde70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncPos: {x: 0, y: 0, z: 0}
   nIdentity: {fileID: 11489970}
   myTransform: {fileID: 22445154}
-  lerpRate: 1
+  lerpRate: 3
+--- !u!114 &11451542
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 158602}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a10a7020162de34c9192f6e5345e3de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nIdentity: {fileID: 11489970}
+  cam1: {fileID: 2084426}
+  cam2: {fileID: 2084426}
 --- !u!114 &11463260
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -379,7 +392,7 @@ MonoBehaviour:
   myLayerMask:
     serializedVersion: 2
     m_Bits: 1
---- !u!114 &11466160
+--- !u!114 &11473316
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -387,12 +400,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 158602}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e2ffa05c7aec7442aee83f80a741ee5, type: 3}
+  m_Script: {fileID: 11500000, guid: 05db7401ecd78524fa3124caf39aeb42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nIdentity: {fileID: 11489970}
-  cam1: {fileID: 2084426}
-  cam2: {fileID: 2084426}
+  ResourcePickUp: {fileID: 116834, guid: 976667ad8326a483eaa9c21ec560f8b2, type: 2}
+  projectileLifetime: 2
+  idForObsScreen: {fileID: 0}
 --- !u!114 &11477032
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -415,6 +428,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41c8ac6a7c8f2474ab522a7cc873c200, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doubleScore: 0
   speed: 1.5
   rotSpeed: 12
   planet: {fileID: 495726, guid: 233eebb8d2e2ed642868c62b694d0350, type: 2}
@@ -429,6 +443,8 @@ MonoBehaviour:
   mainCamera: {fileID: 0}
   score: 0
   scoreToRemove: 0
+  projectileModel: {fileID: 160548, guid: 823fb5d2b403d4d4cbaf79c62f7342d8, type: 2}
+  shield: {fileID: 0}
 --- !u!114 &11489970
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -461,20 +477,6 @@ MonoBehaviour:
     i15: 192
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
---- !u!114 &11497336
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 158602}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc0ef561bdfc946e687b81e8f2b5c9b8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ResourcePickUp: {fileID: 116834, guid: 976667ad8326a483eaa9c21ec560f8b2, type: 2}
-  projectileLifetime: 2
-  idForObsScreen: {fileID: 13263420}
 --- !u!124 &12476776
 Behaviour:
   m_ObjectHideFlags: 1

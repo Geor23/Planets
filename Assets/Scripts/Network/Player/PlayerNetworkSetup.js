@@ -13,3 +13,11 @@ function Start(){
 		cam2.gameObject.SetActive(true);
 	}
 }
+
+/*function OnDestroy(){
+	if(!nIdentity.isLocalPlayer) return;
+	Debug.LogError("I was killed!!????");
+    Debug.LogError(UnityEngine.StackTraceUtility.ExtractStackTrace ());
+    ClientScene.RemovePlayer(0);
+    ClientScene.AddPlayer(NetworkManager.singleton.client.connection, 0);
+}*/

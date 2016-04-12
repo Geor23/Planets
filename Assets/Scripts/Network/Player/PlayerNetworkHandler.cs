@@ -18,7 +18,9 @@ public class PlayerNetworkHandler : NetworkBehaviour {
       projectile.GetComponent<ProjectileMovement>().setDirection(direction);
       Destroy(projectile, projectileLifetime);
       NetworkServer.Spawn(projectile);
-      projectile.GetComponent<ServerSyncPos>().RpcSyncClient(position, direction);
+      foreach (NetworkConnection nc in ((PlanetsNetworkManager)PlanetsNetworkManager.singleton).getUpdateListeners()){
+        projectile.GetComponent<ServerSyncPos>().TargetSyncClient(nc, position, direction);
+      }
       Text playerWhoFired = projectile.GetComponent<Text>();
       playerWhoFired.text = name;
     }

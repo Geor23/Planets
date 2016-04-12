@@ -5,9 +5,10 @@ using UnityEngine.EventSystems;
 using UnityEngine.Networking;
 
 enum TeamID : int {
-  TEAM_OBSERVER = -1,
-  TEAM_PIRATES,
-  TEAM_SUPERCORP
+  TEAM_NEUTRAL = -2,
+  TEAM_OBSERVER = -1, 
+  TEAM_PIRATES = 0,
+  TEAM_SUPERCORP = 1
 };
 
 
@@ -32,7 +33,10 @@ class Msgs : MsgType {
   public const short updateLocalScore = 66;
   public const short requestName = 67;
   public const short serverName = 68;
-
+  public const short updatePos = 69;
+  public const short updateRot = 70;
+  public const short updateRotTurret = 70;
+  public const short fireProjectile = 72;
 }
 
 public class JoinMessage : MessageBase {
@@ -84,8 +88,7 @@ public class TimeMessage : MessageBase{
     public float time;
 }
 
-public class DeathResource : MessageBase
-{
+public class DeathResource : MessageBase{
     public int team;
     public int score;
     public GameObject drID;
@@ -93,4 +96,20 @@ public class DeathResource : MessageBase
 
 public class UpdateLocalScore : MessageBase {
     public int score;
+}
+
+public class UniqueObjectMessage : MessageBase {
+    public NetworkInstanceId netId;
+}
+
+public class UpdatePos : UniqueObjectMessage {
+    public Vector3 pos;
+}
+
+public class UpdateRot : UniqueObjectMessage {
+    public Quaternion rot;
+}
+
+public class UpdateRotTurret : UniqueObjectMessage {
+    public Quaternion rot;
 }

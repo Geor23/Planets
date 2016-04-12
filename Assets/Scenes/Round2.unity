@@ -1478,6 +1478,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textField: {fileID: 818113610}
+  endRoundSound: {fileID: 0}
 --- !u!114 &818113610
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2217,6 +2218,7 @@ Canvas:
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -2272,6 +2274,8 @@ MonoBehaviour:
   scoreText: {fileID: 0}
   piratesWin: {fileID: 1966448639}
   superCorpWin: {fileID: 392081511}
+  idImgPir: {fileID: 0}
+  idImgSup: {fileID: 0}
   killFeed: {fileID: 318920302}
 --- !u!1 &1231204386
 GameObject:
@@ -2609,9 +2613,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1781443492}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83d620ca3a71e4a5497a7588546930e7, type: 3}
+  m_Script: {fileID: 11500000, guid: e18cd66618106194291a752ef3ac6bec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  viewCamera: {fileID: 2075959799}
 --- !u!1 &1788699855
 GameObject:
   m_ObjectHideFlags: 0
