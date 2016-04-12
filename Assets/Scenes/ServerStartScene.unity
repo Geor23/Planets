@@ -187,11 +187,13 @@ MonoBehaviour:
   player1: {fileID: 158602, guid: e2bec8779cef647cbacae305c253fec0, type: 2}
   player2: {fileID: 135240, guid: 5d90277e2d19d41e092696113922c674, type: 2}
   observer: {fileID: 0}
+  key: 0
   round1Scene: 
-  round2Scene: 
   hasPickedTeam: 0
   hasConnected: 0
   inRound: 0
+  timerOn: 1
+  onlyUpdateObservers: 0
 --- !u!4 &231695163
 Transform:
   m_ObjectHideFlags: 0
@@ -274,6 +276,7 @@ Canvas:
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
