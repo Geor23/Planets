@@ -12,8 +12,8 @@ public class PlayerNetworkHandler : NetworkBehaviour {
     public GUIText idForObsScreen;
 
     [Command]
-    public void CmdSpawnProjectile(Vector3 position, Vector3 direction, String projectileName, String name){
-      GameObject projectile = Instantiate(Resources.Load(projectileName)) as GameObject;
+    public void CmdSpawnProjectile(Vector3 position, Vector3 direction, GameObject projectileObj, String name){
+      GameObject projectile = Instantiate(projectileObj) as GameObject;
       projectile.GetComponent<Transform>().position = position;
       projectile.GetComponent<ProjectileMovement>().setDirection(direction);
       Destroy(projectile, projectileLifetime);
