@@ -1,6 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Diagnostics;
 
@@ -59,8 +60,29 @@ class ScriptBatch {
         string path = EditorUtility.SaveFolderPanel("Choose location to build in", "", "");
 
         EditorUserBuildSettings.androidBuildSubtarget = MobileTextureSubtarget.ASTC;
-        //BuildPipeline.BuildPlayer(playerLevels.ToArray(), path + "/planets-player.apk", BuildTarget.Android, BuildOptions.Development);
-        BuildPipeline.BuildPlayer(serverLevels.ToArray(), path + "/planets-server.exe", BuildTarget.StandaloneLinux64, BuildOptions.Development);
-        BuildPipeline.BuildPlayer(observerLevels.ToArray(), path + "/planets-observer.exe", BuildTarget.StandaloneWindows64, BuildOptions.Development);
+             // Move assets from Resources
+        DirectoryInfo dir = new DirectoryInfo("Assets/Resources/Music/");
+        FileInfo[] files = dir.GetFiles("*");
+ 
+        foreach (FileInfo file in files) {
+        string status = AssetDatabase.MoveAsset(
+                         "Assets/Resources/Music/" + file.Name,
+                         "Assets/TempResource/" + file.Name);
+        }
+
+        BuildPipeline.BuildPlayer(playerLevels.ToArray(), path + "/planets-player.apk", BuildTarget.Android, BuildOptions.Development);
+        dir = new DirectoryInfo("Assets/TempResource/");
+        files = dir.GetFiles("*");
+ 
+        foreach (FileInfo file in files) {
+        string status = AssetDatabase.MoveAsset(
+                         "Assets/TempResource/" + file.Name,
+                         "Assets/Resources/Music/"  + file.Name);
+        }
+
+        AssetDatabase.Refresh();
+        //BuildPipeline.BuildPlayer(serverLevels.ToArray(), path + "/planets-server.exe", BuildTarget.StandaloneLinux64, BuildOptions.Development);
+        
+        //BuildPipeline.BuildPlayer(observerLevels.ToArray(), path + "/planets-observer.exe", BuildTarget.StandaloneWindows64, BuildOptions.Development);
     }
 }
