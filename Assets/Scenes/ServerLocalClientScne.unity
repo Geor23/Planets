@@ -321,7 +321,7 @@ MonoBehaviour:
   hasConnected: 0
   inRound: 0
   timerOn: 1
-  onlyUpdateObservers: 0
+  onlyUpdateObservers: 1
 --- !u!4 &231695163
 Transform:
   m_ObjectHideFlags: 0
@@ -1619,7 +1619,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 309b4348beda94ba39eb180f1a0c5e6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  team: -2
+  team: -1
 --- !u!4 &1632251267
 Transform:
   m_ObjectHideFlags: 0
