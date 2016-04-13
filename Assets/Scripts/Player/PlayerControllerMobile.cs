@@ -81,6 +81,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
             mainCamera = GameObject.Find("MainCamera").GetComponent<Camera>();
             nm.client.RegisterHandler(Msgs.serverName, OnClientReceiveName);
             nm.client.Send(Msgs.requestName, new EmptyMessage());
+            nm.client.RegisterHandler(Msgs.killPlayerRequestClient, OnClientKillPlayer);
         }
 
         public void OnClientReceiveName(NetworkMessage msg)
@@ -243,66 +244,72 @@ namespace UnityStandardAssets.CrossPlatformInput {
                 if ((hasCollide == false)&&(shielded==false)){
                     hasCollide = true;
                     Destroy(col.gameObject);
-                    deathText.enabled = true; //Causes timer for next spawn to occur
-                    deathTimerText.enabled = true;
-                    mainCamera.enabled = true;
 
+                    //Update kill feed
                     Text shooter = col.gameObject.GetComponent<Text>();
                     Text victim = gameObject.GetComponent<Text>();
                     Kill tc = new Kill();
                     tc.msg = shooter.text + " killed " + victim.text;
                     nm.client.Send(Msgs.clientKillFeed, tc);
+
+                    //Remove score from team
                     GetComponent<PlayerNetworkHandler>().CmdSpawnResource(gameObject.transform.position, score);
                     scoreToRemove = score;
-
                     AddScore sc = new AddScore();
                     sc.team = 0;
                     sc.score = -score;
-                    sc.obj = col.gameObject;
+                    sc.obj = this.gameObject;
                     nm.client.Send(Msgs.clientTeamScore, sc);
 
-                    score = 0;
-                    SetScoreText();
-                    GetComponent<FixDestroyBug>().dead = true;
-                    ClientScene.RemovePlayer(0);
+                    //GetComponent<FixDestroyBug>().dead = true;
+
+                    //Send death request to server, to send to Player
+                    KillPlayer kp = new KillPlayer();
+                    kp.netId = this.netId;
+                    kp.obj = this.gameObject;
+                    nm.client.Send(Msgs.killPlayer, kp);
                 }
             }else if (col.gameObject.CompareTag("ProjectileSuperCorp") && gameObject.CompareTag("PlayerPirate")){
                 if ((hasCollide == false) && (shielded == false)){
                     hasCollide = true;
                     Destroy(col.gameObject);
-                    deathText.enabled = true;
-                    deathTimerText.enabled = true;
-                    mainCamera.enabled = true;
 
+                    //Update kill feed
                     Text shooter = col.gameObject.GetComponent<Text>();
                     Text victim = gameObject.GetComponent<Text>();
                     Kill tc = new Kill();
                     tc.msg = shooter.text + " killed " + victim.text;
                     nm.client.Send(Msgs.clientKillFeed, tc);
 
+                    //Remove score from team
+                    GetComponent<PlayerNetworkHandler>().CmdSpawnResource(gameObject.transform.position, score);
+                    scoreToRemove = score;
                     AddScore sc = new AddScore();
                     sc.team = 0;
                     sc.score = -score;
-                    sc.obj = col.gameObject;
+                    sc.obj = this.gameObject;
                     nm.client.Send(Msgs.clientTeamScore, sc);
 
-                    GetComponent<PlayerNetworkHandler>().CmdSpawnResource(gameObject.transform.position, score);
-                    scoreToRemove = score;
-                    score = 0;
-                    SetScoreText();
-                    GetComponent<FixDestroyBug>().dead = true;
-                    ClientScene.RemovePlayer(0);
+                    //GetComponent<FixDestroyBug>().dead = true;
+
+                    //Send death request to server, to send to Player
+                    KillPlayer kp = new KillPlayer();
+                    kp.netId = this.netId;
+                    kp.obj = this.gameObject;
+                    nm.client.Send(Msgs.killPlayer, kp);
                 }
             }
            
             if (col.gameObject.CompareTag("StaticResource")){ //Dealt with on the resource currently
-                /*
+                
                 ResourceController resProp = col.gameObject.GetComponent<ResourceController>();
-                int resourceScore = resProp.getScore();
+                int resourceScore = resProp.getScore(); //May occur after resource score updated
                 if (doubleScore){ //If points are to count for double, double score
                     resourceScore *= 2;
                 }
+                
                 score += resourceScore;
+                /*
                 Debug.Log("SCORE IS" + score);
                 Debug.Log("RESOURCE IS" + resourceScore);
                 SetScoreText();
@@ -312,10 +319,10 @@ namespace UnityStandardAssets.CrossPlatformInput {
                 sc.obj = col.gameObject;
                 nm.client.Send(Msgs.clientTeamScore, sc);
                 */
+                
             }
 
-            if (col.gameObject.CompareTag("ResourcePickUpDeath"))
-            {
+            if (col.gameObject.CompareTag("ResourcePickUpDeath")){
 
                 DeathResourceProperties resProp = col.gameObject.GetComponent<DeathResourceProperties>();
                 //score = score + resProp.getScore();
@@ -368,18 +375,15 @@ namespace UnityStandardAssets.CrossPlatformInput {
 
         // function only called after the player dies to get the score that the team manager has to substract
         // hence the score has to be reset to 0 after that
-        public int getScore()
-        {
+        public int getScore(){
             return scoreToRemove;
         }   
 
-        public void SetScoreText()
-        {
+        public void SetScoreText(){
             scoreText.text = score.ToString();
         }
 
-        public void SetScoreTextNew(int scoreVal)
-        {
+        public void SetScoreTextNew(int scoreVal){
             score += scoreVal;
             scoreText.text = score.ToString();
         }
@@ -395,6 +399,15 @@ namespace UnityStandardAssets.CrossPlatformInput {
                 NetworkServer.SendToClient(nc.connectionId, Msgs.fireProjectile, uom);
                 #endif
             }
+        }
+
+        void OnClientKillPlayer(NetworkMessage msg) { //Gets called on the Player Client for death
+            deathText.enabled = true; //Causes timer for next spawn to occur
+            deathTimerText.enabled = true;
+            mainCamera.enabled = true;
+            score = 0;
+            SetScoreText();
+            ClientScene.RemovePlayer(0);
         }
 
         #if UNITY_5_4_OR_NEWER

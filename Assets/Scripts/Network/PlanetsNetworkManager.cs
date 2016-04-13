@@ -135,10 +135,11 @@ public class PlanetsNetworkManager : NetworkManager {
 	   	NetworkServer.RegisterHandler(Msgs.requestFinalScores, OnServerRecieveFinalScoresRequest);
 	    NetworkServer.RegisterHandler(Msgs.clientTeamScore, OnServerRecieveScore);
 	    NetworkServer.RegisterHandler(Msgs.requestTeamScores, OnServerRecieveTeamScoresRequest);
-        NetworkServer.RegisterHandler(Msgs.requestCurrentTime, OnServerRecieveTimeRequest);
-        NetworkServer.RegisterHandler(Msgs.clientKillFeed, OnServerRecieveKill);
-        NetworkServer.RegisterHandler(Msgs.deathResourceCollision, OnServerRecieveDeathResourceCollision);
-        NetworkServer.RegisterHandler(Msgs.requestName, OnServerSendName);
+     NetworkServer.RegisterHandler(Msgs.requestCurrentTime, OnServerRecieveTimeRequest);
+     NetworkServer.RegisterHandler(Msgs.clientKillFeed, OnServerRecieveKill);
+     NetworkServer.RegisterHandler(Msgs.deathResourceCollision, OnServerRecieveDeathResourceCollision);
+     NetworkServer.RegisterHandler(Msgs.requestName, OnServerSendName);
+     NetworkServer.RegisterHandler(Msgs.killPlayer, OnKillPlayer);
     }
 
     public void OnServerSendName(NetworkMessage msg){
@@ -210,16 +211,18 @@ public class PlanetsNetworkManager : NetworkManager {
   	public void OnServerRecieveScore(NetworkMessage msg) {
   		// read the message
 	  	AddScore sc = msg.ReadMessage<AddScore>();
-        Debug.LogError("IM DOING SCOREZ HAHAHA");
-        int id = sc.obj.GetComponent<NetworkIdentity>().connectionToClient.connectionId;
-        Debug.Log("team: " + dict[id].team);
+    Debug.LogError("IM DOING SCOREZ HAHAHA");
+    int id = sc.obj.GetComponent<NetworkIdentity>().connectionToClient.connectionId;
+    Debug.Log("team: " + dict[id].team);
 	  	teamManager.addScore(sc.score, dict[id].team);
 
 	  	// send to everyone the updated team score
 	  	sendScore(dict[id].team);
-        UpdateLocalScore ls = new UpdateLocalScore();
-        ls.score = sc.score;
-        NetworkServer.SendToClient(id, Msgs.updateLocalScore, ls);
+        if (sc.score > 0){ //If scoring not dying...
+            UpdateLocalScore ls = new UpdateLocalScore();
+            ls.score = sc.score;
+            NetworkServer.SendToClient(id, Msgs.updateLocalScore, ls);
+        }
     }
 
 
@@ -338,11 +341,16 @@ public class PlanetsNetworkManager : NetworkManager {
 
 
 	public void OnServerStartGame(NetworkMessage msg) {
-
     	ServerChangeScene(round1Scene);
     	roundManager.changeRound();
-
 	}
+
+ //Send message to the Player to request the player object to be deleted
+ public void OnKillPlayer(NetworkMessage msg) {
+        KillPlayer kp = msg.ReadMessage<KillPlayer>();
+        int id = kp.obj.GetComponent<NetworkIdentity>().connectionToClient.connectionId;
+        NetworkServer.SendToClient(id, Msgs.killPlayerRequestClient, kp);
+    }
 
 
 	// called when a client disconnects

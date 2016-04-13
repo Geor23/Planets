@@ -19,6 +19,7 @@ public class UniqueObjectSynchronizer : NetworkBehaviour {
 		nm.client.RegisterHandler(Msgs.fireProjectile, FireProjectile);
 	}
 
+
 	void UpdateLocalPos(NetworkMessage msg){
 		UpdatePos up = msg.ReadMessage<UpdatePos>();
         GameObject obj = ClientScene.FindLocalObject(up.netId);

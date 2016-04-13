@@ -37,6 +37,8 @@ class Msgs : MsgType {
   public const short updateRot = 70;
   public const short updateRotTurret = 71;
   public const short fireProjectile = 72;
+  public const short killPlayer = 73;
+  public const short killPlayerRequestClient = 74;
 }
 
 public class JoinMessage : MessageBase {
@@ -76,7 +78,7 @@ public class TeamList : MessageBase {
 public class AddScore : MessageBase {
 	public int score;
 	public int team;
-    public GameObject obj;
+ public GameObject obj;
 }
 
 public class TeamScore : MessageBase {
@@ -115,4 +117,9 @@ public class UpdateRot : MessageBase {
 public class UpdateRotTurret : MessageBase {
     public NetworkInstanceId netId;
     public Quaternion rot;
+}
+
+public class KillPlayer : MessageBase {
+    public NetworkInstanceId netId;
+    public GameObject obj;
 }
