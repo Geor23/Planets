@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: TurretMaterial
+  m_Name: Visor
   m_Shader: {fileID: 4800000, guid: 054a31a99d11e49d110086ba44295342, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
@@ -100,10 +100,6 @@ Material:
         second: 0.5
       data:
         first:
-          name: _Shininess
-        second: 10
-      data:
-        first:
           name: _Parallax
         second: 0.02
       data:
@@ -140,18 +136,6 @@ Material:
         second: 0
       data:
         first:
-          name: _DiffuseThreshold
-        second: 0.1
-      data:
-        first:
-          name: _LitOutlineThickness
-        second: 0.1
-      data:
-        first:
-          name: _UnlitOutlineThickness
-        second: 0.4
-      data:
-        first:
           name: _Outline
         second: 0.005
     m_Colors:
@@ -162,16 +146,8 @@ Material:
       data:
         first:
           name: _Color
-        second: {r: 0.33088237, g: 0.33574829, b: 0.33574829, a: 0}
-      data:
-        first:
-          name: _SpecColor
-        second: {r: 0.38235295, g: 0.38235295, b: 0.38235295, a: 0}
-      data:
-        first:
-          name: _UnlitColor
-        second: {r: 0.25735295, g: 0.25735295, b: 0.25735295, a: 0}
+        second: {r: 0.09031815, g: 0.09031815, b: 0.09031815, a: 1}
       data:
         first:
           name: _OutlineColor
-        second: {r: 0, g: 0, b: 0, a: 0}
+        second: {r: 0, g: 0, b: 0, a: 1}
