@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.Networking.NetworkSystem;
 
 namespace UnityStandardAssets.CrossPlatformInput {
+    [NetworkSettings(channel=1)]
     public class PlayerControllerMobile : NetworkBehaviour {
         private NetworkIdentity nIdentity;
         private PlanetsNetworkManager nm;

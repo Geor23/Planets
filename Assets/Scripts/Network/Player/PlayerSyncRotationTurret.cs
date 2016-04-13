@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Networking;
 
-//[NetworkSettings(channel=1)]
+[NetworkSettings(channel=1)]
 public class PlayerSyncRotationTurret : NetworkBehaviour {
     private Quaternion syncPlayerRotation;
 
