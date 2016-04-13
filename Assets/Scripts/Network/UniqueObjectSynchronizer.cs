@@ -20,22 +20,25 @@ public class UniqueObjectSynchronizer : NetworkBehaviour {
 	}
 
 	void UpdateLocalPos(NetworkMessage msg){
-        var obj = ClientScene.FindLocalObject(msg.ReadMessage<UpdatePos>().netId);
+        GameObject obj = ClientScene.FindLocalObject(msg.ReadMessage<UpdatePos>().netId);
+        Debug.Log(obj);
+        Debug.Log(msg.ReadMessage<UpdatePos>());
+        Debug.Log(msg.ReadMessage<UpdatePos>().netId);
         obj.GetComponent<PlayerSyncPosition>().TargetUpdatePos(msg);
 	}
 
 	void UpdateLocalRot(NetworkMessage msg){
-        var obj = ClientScene.FindLocalObject(msg.ReadMessage<UpdateRot>().netId);
+        GameObject obj = ClientScene.FindLocalObject(msg.ReadMessage<UpdateRot>().netId);
         obj.GetComponent<PlayerSyncRotation>().TargetUpdateRot(msg);
 	}
 
 	void UpdateLocalRotTurret(NetworkMessage msg){
-        var obj = ClientScene.FindLocalObject(msg.ReadMessage<UpdateRotTurret>().netId);
+        GameObject obj = ClientScene.FindLocalObject(msg.ReadMessage<UpdateRotTurret>().netId);
         obj.GetComponent<PlayerSyncRotationTurret>().TargetUpdateRot(msg);
 	}
 
 	void FireProjectile(NetworkMessage msg){
-        var obj = ClientScene.FindLocalObject(msg.ReadMessage<UniqueObjectMessage>().netId);
+        GameObject obj = ClientScene.FindLocalObject(msg.ReadMessage<UniqueObjectMessage>().netId);
         obj.GetComponent<UnityStandardAssets.CrossPlatformInput.PlayerControllerMobile>().TargetFireProjectile(msg);
 	}
 }

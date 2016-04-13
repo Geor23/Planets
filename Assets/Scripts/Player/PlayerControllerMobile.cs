@@ -346,7 +346,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
                 TargetFireProjectile(nc);
                 #else
                 UniqueObjectMessage uom = new UniqueObjectMessage();
-                uom.netId = netId;
+                uom.netId = nIdentity.netId;
                 NetworkServer.SendToClient(nc.connectionId, Msgs.fireProjectile, uom);
                 #endif
             }

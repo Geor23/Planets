@@ -35,7 +35,7 @@ class Msgs : MsgType {
   public const short serverName = 68;
   public const short updatePos = 69;
   public const short updateRot = 70;
-  public const short updateRotTurret = 70;
+  public const short updateRotTurret = 7;
   public const short fireProjectile = 72;
 }
 
@@ -102,14 +102,17 @@ public class UniqueObjectMessage : MessageBase {
     public NetworkInstanceId netId;
 }
 
-public class UpdatePos : UniqueObjectMessage {
+public class UpdatePos : MessageBase {
+    public NetworkInstanceId netId;
     public Vector3 pos;
 }
 
-public class UpdateRot : UniqueObjectMessage {
+public class UpdateRot : MessageBase {
+    public NetworkInstanceId netId;
     public Quaternion rot;
 }
 
-public class UpdateRotTurret : UniqueObjectMessage {
+public class UpdateRotTurret : MessageBase {
+    public NetworkInstanceId netId;
     public Quaternion rot;
 }

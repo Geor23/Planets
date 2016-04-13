@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Networking;
 
-[NetworkSettings(channel=1)]
+//[NetworkSettings(channel=1)]
 public class PlayerSyncRotationTurret : NetworkBehaviour {
     private Quaternion syncPlayerRotation;
 
@@ -40,7 +40,7 @@ public class PlayerSyncRotationTurret : NetworkBehaviour {
             TargetUpdateRotation(nc, playerRot);
             #else
             UpdateRotTurret ur = new UpdateRotTurret();
-            ur.netId = netId;
+            ur.netId = nIdentity.netId;
             ur.rot = playerRot;
             NetworkServer.SendToClient(nc.connectionId, Msgs.updateRotTurret, ur);
             #endif
