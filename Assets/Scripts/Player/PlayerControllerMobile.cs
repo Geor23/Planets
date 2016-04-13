@@ -60,7 +60,6 @@ namespace UnityStandardAssets.CrossPlatformInput {
         private bool needsReflection = false;
         private float lastMoveV;
         private float lastMoveH;
-        // NetworkView networkView;
 
         Rigidbody rb;
 
@@ -93,7 +92,6 @@ namespace UnityStandardAssets.CrossPlatformInput {
             Text name = gameObject.GetComponent<Text>();
             name.text = tl.name;
             id.text = tl.id.ToString();
-            // networkView.RPC ("SetId", RPCMode.All, id.text);
             GetComponent<PlayerNetworkHandler>().CmdSetId(id.text);
         }
 
@@ -217,14 +215,8 @@ namespace UnityStandardAssets.CrossPlatformInput {
         }
 
         void OnCollisionEnter(Collision col){
-            Debug.Log("Observer collisions only? " + nm.observerCollisionsOnly());
             if(nm.observerCollisionsOnly()){
-                Debug.Log("Is observer?" + PlayerConfig.singleton.GetObserver());
-                if(!PlayerConfig.singleton.GetObserver()) {
-                    return;
-                } else {
-                    Debug.Log("I am an observer");
-                }
+                if(!PlayerConfig.singleton.GetObserver()) return;
             } else {
                 if (!nIdentity.isLocalPlayer) return;
             }

@@ -22,21 +22,18 @@ public class UniqueObjectSynchronizer : NetworkBehaviour {
 	void UpdateLocalPos(NetworkMessage msg){
 		UpdatePos up = msg.ReadMessage<UpdatePos>();
         GameObject obj = ClientScene.FindLocalObject(up.netId);
-        Debug.Log("ReceivedPos:" + up.pos);
         obj.GetComponent<PlayerSyncPosition>().TargetUpdatePos(up);
 	}
 
 	void UpdateLocalRot(NetworkMessage msg){
 		UpdateRot ur = msg.ReadMessage<UpdateRot>();
         GameObject obj = ClientScene.FindLocalObject(ur.netId);
-        Debug.Log("ReceivedRot:" + ur.rot);
         obj.GetComponent<PlayerSyncRotation>().TargetUpdateRot(ur);
 	}
 
 	void UpdateLocalRotTurret(NetworkMessage msg){
 		UpdateRotTurret ur = msg.ReadMessage<UpdateRotTurret>();
         GameObject obj = ClientScene.FindLocalObject(ur.netId);
-        Debug.Log("ReceivedRotTurret:" + ur.rot);
         obj.GetComponent<PlayerSyncRotationTurret>().TargetUpdateRot(ur);
 	}
 

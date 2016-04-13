@@ -44,7 +44,6 @@ public class PlayerSyncPosition : NetworkBehaviour {
 			#else
 			UpdatePos up = new UpdatePos();
 			up.netId = nIdentity.netId;
-			Debug.Log("up.netId: "+ up.netId + "pos: " + pos);
 			up.pos = pos;
 			NetworkServer.SendToClient(nc.connectionId, Msgs.updatePos, up);
 			#endif
