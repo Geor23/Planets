@@ -482,8 +482,8 @@ public class TeamManager {
 		Team teamSuperCorp = new Team() ;
 		teams.Add(teamPirates) ;	
 		teams.Add(teamSuperCorp) ;	
-		teams[0].setSpawnPoint(new Vector3(0,20,0));
-		teams[1].setSpawnPoint(new Vector3(0,-20,0));
+		teams[0].setSpawnPoint(new Vector3(0,40,0));
+		teams[1].setSpawnPoint(new Vector3(0,-40,0));
 
 	}
 
