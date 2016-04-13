@@ -13,7 +13,6 @@ namespace UnityStandardAssets.CrossPlatformInput {
         private const float fireRate = 0.3F;
         private float currentFireRate = fireRate;
         private float nextFire = 0.0F;
-
         private bool hasCollide = false;
 
         //Becomes true upon coming into contact with a double score object. Gives double score for 5 seconds
@@ -255,12 +254,13 @@ namespace UnityStandardAssets.CrossPlatformInput {
                     nm.client.Send(Msgs.clientTeamScore, sc);
 
                     //GetComponent<FixDestroyBug>().dead = true;
-
+                    //if (PlayerConfig.singleton.isKillPlayerObserver){
                     //Send death request to server, to send to Player
                     KillPlayer kp = new KillPlayer();
                     kp.netId = this.netId;
                     kp.obj = this.gameObject;
                     nm.client.Send(Msgs.killPlayer, kp);
+                    //}
                 }
             }else if (col.gameObject.CompareTag("ProjectileSuperCorp") && gameObject.CompareTag("PlayerPirate")){
                 if ((hasCollide == false) && (shielded == false)){
@@ -284,12 +284,13 @@ namespace UnityStandardAssets.CrossPlatformInput {
                     nm.client.Send(Msgs.clientTeamScore, sc);
 
                     //GetComponent<FixDestroyBug>().dead = true;
-
-                    //Send death request to server, to send to Player
-                    KillPlayer kp = new KillPlayer();
-                    kp.netId = this.netId;
-                    kp.obj = this.gameObject;
-                    nm.client.Send(Msgs.killPlayer, kp);
+                    //if (PlayerConfig.singleton.isKillPlayerObserver){
+                        //Send death request to server, to send to Player
+                        KillPlayer kp = new KillPlayer();
+                        kp.netId = this.netId;
+                        kp.obj = this.gameObject;
+                        nm.client.Send(Msgs.killPlayer, kp);
+                  //  }
                 }
             }
            
