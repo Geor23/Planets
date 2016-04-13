@@ -14,6 +14,7 @@ function Start(){
 	}
 }
 
+
 /*function OnDestroy(){
 	if(!nIdentity.isLocalPlayer) return;
 	Debug.LogError("I was killed!!????");

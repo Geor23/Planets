@@ -32,6 +32,7 @@ GameObject:
   - 222: {fileID: 22216122}
   - 114: {fileID: 11437070}
   - 114: {fileID: 11414386}
+  - 114: {fileID: 11495658}
   m_Layer: 0
   m_Name: ObserverExperimental
   m_TagString: Untagged
@@ -282,6 +283,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9f88187fb4704d32a53f6abec43afa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11495658
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 177056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2e3b8686ee94744590658653d1baf60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam1: {fileID: 2073808}
+  cam2: {fileID: 2081110}
 --- !u!124 &12428902
 Behaviour:
   m_ObjectHideFlags: 1
