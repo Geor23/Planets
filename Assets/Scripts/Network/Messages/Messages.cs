@@ -35,7 +35,7 @@ class Msgs : MsgType {
   public const short serverName = 68;
   public const short updatePos = 69;
   public const short updateRot = 70;
-  public const short updateRotTurret = 7;
+  public const short updateRotTurret = 71;
   public const short fireProjectile = 72;
 }
 

@@ -20,26 +20,30 @@ public class UniqueObjectSynchronizer : NetworkBehaviour {
 	}
 
 	void UpdateLocalPos(NetworkMessage msg){
-        GameObject obj = ClientScene.FindLocalObject(msg.ReadMessage<UpdatePos>().netId);
-        Debug.Log(obj);
-        Debug.Log(msg.ReadMessage<UpdatePos>());
-        Debug.Log(msg.ReadMessage<UpdatePos>().netId);
-        obj.GetComponent<PlayerSyncPosition>().TargetUpdatePos(msg);
+		UpdatePos up = msg.ReadMessage<UpdatePos>();
+        GameObject obj = ClientScene.FindLocalObject(up.netId);
+        Debug.Log("ReceivedPos:" + up.pos);
+        obj.GetComponent<PlayerSyncPosition>().TargetUpdatePos(up);
 	}
 
 	void UpdateLocalRot(NetworkMessage msg){
-        GameObject obj = ClientScene.FindLocalObject(msg.ReadMessage<UpdateRot>().netId);
-        obj.GetComponent<PlayerSyncRotation>().TargetUpdateRot(msg);
+		UpdateRot ur = msg.ReadMessage<UpdateRot>();
+        GameObject obj = ClientScene.FindLocalObject(ur.netId);
+        Debug.Log("ReceivedRot:" + ur.rot);
+        obj.GetComponent<PlayerSyncRotation>().TargetUpdateRot(ur);
 	}
 
 	void UpdateLocalRotTurret(NetworkMessage msg){
-        GameObject obj = ClientScene.FindLocalObject(msg.ReadMessage<UpdateRotTurret>().netId);
-        obj.GetComponent<PlayerSyncRotationTurret>().TargetUpdateRot(msg);
+		UpdateRotTurret ur = msg.ReadMessage<UpdateRotTurret>();
+        GameObject obj = ClientScene.FindLocalObject(ur.netId);
+        Debug.Log("ReceivedRotTurret:" + ur.rot);
+        obj.GetComponent<PlayerSyncRotationTurret>().TargetUpdateRot(ur);
 	}
 
 	void FireProjectile(NetworkMessage msg){
-        GameObject obj = ClientScene.FindLocalObject(msg.ReadMessage<UniqueObjectMessage>().netId);
-        obj.GetComponent<UnityStandardAssets.CrossPlatformInput.PlayerControllerMobile>().TargetFireProjectile(msg);
+		UniqueObjectMessage fp = msg.ReadMessage<UniqueObjectMessage>();
+        GameObject obj = ClientScene.FindLocalObject(fp.netId);
+        obj.GetComponent<UnityStandardAssets.CrossPlatformInput.PlayerControllerMobile>().TargetFireProjectile(fp);
 	}
 }
 #endif

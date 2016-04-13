@@ -303,8 +303,8 @@ MonoBehaviour:
     m_MaxPacketSize: 2000
   m_Channels: 0500000000000000
   m_UseWebSockets: 0
-  m_UseSimulator: 1
-  m_SimulatedLatency: 1
+  m_UseSimulator: 0
+  m_SimulatedLatency: 18
   m_PacketLossPercentage: 0
   m_MatchHost: mm.unet.unity3d.com
   m_MatchPort: 443
@@ -321,7 +321,7 @@ MonoBehaviour:
   hasConnected: 0
   inRound: 0
   timerOn: 1
-  onlyUpdateObservers: 1
+  onlyUpdateObservers: 0
 --- !u!4 &231695163
 Transform:
   m_ObjectHideFlags: 0

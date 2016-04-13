@@ -53,8 +53,8 @@ public class PlayerSyncRotation : NetworkBehaviour {
         syncPlayerRotation = playerRot;
     }
     #else
-    public void TargetUpdateRot(NetworkMessage msg){
-        syncPlayerRotation = msg.ReadMessage<UpdateRot>().rot;
+    public void TargetUpdateRot(UpdateRot ur){
+        syncPlayerRotation = ur.rot;
     }
     #endif
 

@@ -356,7 +356,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
         [TargetRpc]
         void TargetFireProjectile(NetworkConnection nc){
         #else
-        public void TargetFireProjectile(NetworkMessage msg){
+        public void TargetFireProjectile(UniqueObjectMessage msg){
         #endif
             SpawnProjectile();
             if (fasterFire){
