@@ -53,6 +53,13 @@ namespace UnityStandardAssets.CrossPlatformInput {
         public GameObject projectileModel;
 
         public GameObject shield;
+
+        /* Variables belonging to split screen controls */
+        public bool invertControls = false;
+        private Matrix4x4 reflectionMatrix;
+        private bool needsReflection = false;
+        private float lastMoveV;
+        private float lastMoveH;
         // NetworkView networkView;
 
         Rigidbody rb;
@@ -63,6 +70,8 @@ namespace UnityStandardAssets.CrossPlatformInput {
             nm = (PlanetsNetworkManager)NetworkManager.singleton;
             rb = GetComponent<Rigidbody>();
             if(!nIdentity.isLocalPlayer) return;
+            reflectionMatrix = genRefMatrix(90*Mathf.Deg2Rad);
+            needsReflection = gameObject.CompareTag("PlayerSuperCorp");
             nm.client.RegisterHandler(Msgs.updateLocalScore, OnClientPickupDeath);
             score = 0;
             scoreText = GameObject.Find("ScoreText").GetComponent<Text>();
@@ -125,22 +134,40 @@ namespace UnityStandardAssets.CrossPlatformInput {
             }
             if (!nIdentity.isLocalPlayer) return;
 
+            rb = GetComponent<Rigidbody>();
             Vector3 forward = transform.forward;
             Vector3 right = transform.right;
+            #if UNITY_ANDROID
+            float aimH = CrossPlatformInputManager.GetAxis ("AimH");
+            float aimV = CrossPlatformInputManager.GetAxis ("AimV");
+            float moveV = CrossPlatformInputManager.GetAxis("MoveV");
+            float moveH = CrossPlatformInputManager.GetAxis("MoveH");
+            #endif
 
-#if UNITY_ANDROID
-			float aimH = CrossPlatformInputManager.GetAxis ("AimH");
-			float aimV = CrossPlatformInputManager.GetAxis ("AimV");
-			float forwardSpeed = speed * CrossPlatformInputManager.GetAxis("MoveV");
-			float strafeSpeed = speed * CrossPlatformInputManager.GetAxis("MoveH");
-#endif
+            #if UNITY_STANDALONE
+            float aimH = (-(Input.GetKey ("left")?1:0) + (Input.GetKey ("right")?1:0));
+            float aimV = ((Input.GetKey ("up")?1:0) - (Input.GetKey ("down")?1:0));
+            float moveV = ((Input.GetKey ("w")?1:0) - (Input.GetKey ("s")?1:0));
+            float moveH = (-(Input.GetKey ("a")?1:0) + (Input.GetKey ("d")?1:0));
+            #endif
 
-#if UNITY_STANDALONE
-            float aimH = (-(Input.GetKey("left") ? 1 : 0) + (Input.GetKey("right") ? 1 : 0));
-            float aimV = ((Input.GetKey("up") ? 1 : 0) - (Input.GetKey("down") ? 1 : 0));
-            float forwardSpeed = speed * ((Input.GetKey("w") ? 1 : 0) - (Input.GetKey("s") ? 1 : 0));
-            float strafeSpeed = speed * (-(Input.GetKey("a") ? 1 : 0) + (Input.GetKey("d") ? 1 : 0));
-#endif
+            lastMoveH = moveH;
+            lastMoveV = moveV;
+            
+            if(needsReflection && invertControls){
+                Debug.Log("aimH, aimV: " + aimH + " " + aimV);
+                Vector3 refMove = reflectPoint(moveH, moveV);
+                Vector3 refAim = reflectPoint(aimH, aimV);
+                Debug.Log("refAim: " + refAim);
+
+                moveH = refMove[0];
+                moveV = refMove[1];
+                aimH = refAim[0];
+                aimV = refAim[1];
+            }
+
+            float forwardSpeed = speed * moveV;
+            float strafeSpeed = speed * moveH;
 
             Vector3 moveDir = forwardSpeed * forward + strafeSpeed * right;
             rotateObject(model, moveDir.normalized);
@@ -311,6 +338,31 @@ namespace UnityStandardAssets.CrossPlatformInput {
                 dr.drID = col.gameObject;
                 nm.client.Send(Msgs.deathResourceCollision, dr);
             }
+        }
+
+        void OnTriggerEnter(Collider col){
+            if(!col.gameObject.CompareTag("InversionPlane")) return;
+            if(needsReflection){
+                reflectionMatrix = reflectionMatrix * genRefMatrix(Mathf.Atan2(lastMoveV, lastMoveH));
+            } else {
+                needsReflection = true;
+                reflectionMatrix = genRefMatrix(Mathf.Atan2(lastMoveV, lastMoveH));
+            }
+        }
+
+        Matrix4x4 genRefMatrix(float theta){
+            Matrix4x4 rm = new Matrix4x4();
+            for(int i = 0; i < 4; i++) for(int j = 0; j < 4; j++) rm[i,j] = 0.0f;
+            rm[0,0] = Mathf.Cos(2 * theta);
+            rm[0,1] = Mathf.Sin(2 * theta);
+            rm[1,0] = Mathf.Sin(2 * theta);
+            rm[1,1] = -Mathf.Cos(2 * theta);
+            return rm;
+        }
+
+        Vector3 reflectPoint(float x, float y){
+            Vector3 rp = new Vector3(reflectionMatrix[0,0] * x + reflectionMatrix[0,1] * y, reflectionMatrix[1,0] * x + reflectionMatrix[1,1] * y, 0);
+            return rp;
         }
 
         //If the player dies before the server updates score, score will not be counted. Potential error?
