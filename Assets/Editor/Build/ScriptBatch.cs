@@ -48,26 +48,29 @@ class ScriptBatch {
 
     }
 
-    [MenuItem("BUILD/Deployment build (Linux Server; Android, iOS clients; Windows Observer client)")]
-    public static void DeploymentServerClients (){
+    [MenuItem("BUILD/Deployment build/Linux Server")]
+    public static void DeploymentLinuxServer (){
+        List<string> serverLevels = MandatoryScenes();
+        serverLevels.Insert(0, "Assets/Scenes/ServerStartScene.unity");
+        string path = EditorUtility.SaveFolderPanel("Choose location to build in", "", "");
+        BuildPipeline.BuildPlayer(serverLevels.ToArray(), path + "/planets-server", BuildTarget.StandaloneLinux, BuildOptions.Development);
+    }
+
+    [MenuItem("BUILD/Deployment build/Android APK")]
+    public static void DeploymentAndroidAPK (){
         //For Android
         List<string> playerLevels = MandatoryScenes();
         playerLevels.Insert(0, "Assets/Scenes/ClientStartScene.unity"); 
-        List<string> observerLevels = MandatoryScenes();
-        observerLevels.Insert(0, "Assets/Scenes/ObserverStartScene.unity"); 
-        List<string> serverLevels = MandatoryScenes();
-        serverLevels.Insert(0, "Assets/Scenes/ServerStartScene.unity"); 
         string path = EditorUtility.SaveFolderPanel("Choose location to build in", "", "");
 
         EditorUserBuildSettings.androidBuildSubtarget = MobileTextureSubtarget.ASTC;
-             // Move assets from Resources
         DirectoryInfo dir = new DirectoryInfo("Assets/Resources/Music/");
         FileInfo[] files = dir.GetFiles("*");
  
         foreach (FileInfo file in files) {
-        string status = AssetDatabase.MoveAsset(
-                         "Assets/Resources/Music/" + file.Name,
-                         "Assets/TempResource/" + file.Name);
+            string status = AssetDatabase.MoveAsset(
+                             "Assets/Resources/Music/" + file.Name,
+                             "Assets/TempResource/" + file.Name);
         }
 
         BuildPipeline.BuildPlayer(playerLevels.ToArray(), path + "/planets-player.apk", BuildTarget.Android, BuildOptions.Development);
@@ -75,14 +78,18 @@ class ScriptBatch {
         files = dir.GetFiles("*");
  
         foreach (FileInfo file in files) {
-        string status = AssetDatabase.MoveAsset(
-                         "Assets/TempResource/" + file.Name,
-                         "Assets/Resources/Music/"  + file.Name);
+            string status = AssetDatabase.MoveAsset(
+                             "Assets/TempResource/" + file.Name,
+                             "Assets/Resources/Music/"  + file.Name);
         }
-
         AssetDatabase.Refresh();
-        //BuildPipeline.BuildPlayer(serverLevels.ToArray(), path + "/planets-server.exe", BuildTarget.StandaloneLinux64, BuildOptions.Development);
-        
-        //BuildPipeline.BuildPlayer(observerLevels.ToArray(), path + "/planets-observer.exe", BuildTarget.StandaloneWindows64, BuildOptions.Development);
     }
+
+    [MenuItem("BUILD/Deployment build/Windows Observer")]
+    public static void DeploymentWindowsObserver (){
+        List<string> observerLevels = MandatoryScenes();
+        observerLevels.Insert(0, "Assets/Scenes/ObserverStartScene.unity");
+        string path = EditorUtility.SaveFolderPanel("Choose location to build in", "", "");
+        BuildPipeline.BuildPlayer(observerLevels.ToArray(), path + "/planets-observer.exe", BuildTarget.StandaloneWindows64, BuildOptions.Development);
+    }   
 }
