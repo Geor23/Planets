@@ -54,7 +54,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
         public GameObject shield;
 
         /* Variables belonging to split screen controls */
-        public bool invertControls = false;
+        private bool invertControls = false;
         private Matrix4x4 reflectionMatrix;
         private bool needsReflection = false;
         private float lastMoveV;
@@ -68,6 +68,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
             nm = (PlanetsNetworkManager)NetworkManager.singleton;
             rb = GetComponent<Rigidbody>();
             if(!nIdentity.isLocalPlayer) return;
+            invertControls = nm.isSplitScreen();
             reflectionMatrix = genRefMatrix(90*Mathf.Deg2Rad);
             needsReflection = gameObject.CompareTag("PlayerSuperCorp");
             nm.client.RegisterHandler(Msgs.updateLocalScore, OnClientPickupDeath);

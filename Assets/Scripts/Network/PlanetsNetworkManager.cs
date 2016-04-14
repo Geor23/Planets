@@ -35,7 +35,8 @@ public class PlanetsNetworkManager : NetworkManager {
 	
 	[SerializeField] GameObject player1;
 	[SerializeField] GameObject player2;
-  	[SerializeField] GameObject observer;
+  	[SerializeField] GameObject observerSingleScreen;
+  	[SerializeField] GameObject observerSplitScreen;
 
   	public int key = 0;
 	GameObject chosenCharacter;
@@ -56,6 +57,7 @@ public class PlanetsNetworkManager : NetworkManager {
   	public HashSet<NetworkConnection> updateListeners;
   	public HashSet<NetworkConnection> observingListeners;
   	public bool onlyUpdateObservers = false;
+  	public bool usingSplitScreen = false;
 
 
   	String killFeed;
@@ -72,6 +74,10 @@ public class PlanetsNetworkManager : NetworkManager {
 
 	public bool observerCollisionsOnly(){
 		return onlyUpdateObservers;
+	}
+
+	public bool isSplitScreen(){
+		return usingSplitScreen;
 	}
 
 
@@ -376,7 +382,8 @@ public class PlanetsNetworkManager : NetworkManager {
 		/* This is where you can register players with teams, and spawn the player at custom points in the team space */
 		//hasConnected = true;
     	int id = IDFromConn(conn);
-		GameObject player = Instantiate (dict[id].team==0?player1:(dict[id].team==1?player2:observer), teamManager.getSpawnP(dict[id].team), Quaternion.identity) as GameObject;
+    	GameObject chosen = dict[id].team==0?player1:(dict[id].team==1?player2:(!usingSplitScreen?observerSingleScreen:observerSplitScreen));
+		GameObject player = Instantiate (chosen, teamManager.getSpawnP(dict[id].team), Quaternion.identity) as GameObject;
         player.GetComponent<Text>().text = dict[id].name;
         updateListeners.Add(conn);
 
