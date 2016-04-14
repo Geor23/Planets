@@ -33,6 +33,7 @@ GameObject:
   - 114: {fileID: 11422160}
   - 114: {fileID: 11491652}
   - 114: {fileID: 11425264}
+  - 114: {fileID: 11427076}
   m_Layer: 0
   m_Name: ObserverSingleScreen
   m_TagString: Untagged
@@ -186,6 +187,19 @@ MonoBehaviour:
   nIdentity: {fileID: 11409324}
   myTransform: {fileID: 475270}
   lerpRate: 15
+--- !u!114 &11427076
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 197474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2e3b8686ee94744590658653d1baf60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam1: {fileID: 2006340}
+  cam2: {fileID: 2006340}
 --- !u!114 &11481930
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -214,7 +228,6 @@ MonoBehaviour:
   playersS: []
   playersP: []
   speed: 0.1
-  initPoint: {x: 0, y: 40, z: 0}
 --- !u!124 &12404896
 Behaviour:
   m_ObjectHideFlags: 1
