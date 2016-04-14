@@ -15,6 +15,7 @@ public class PlayerSyncPosition : NetworkBehaviour {
 
 	private Vector3 lastPost;
 	private float threshold = 0.5f;
+	public bool updateAll = false;
 
 	// Update is called once per frame
 
@@ -38,7 +39,7 @@ public class PlayerSyncPosition : NetworkBehaviour {
 	void CmdProvidePositionToServer(Vector3 pos){
 		Debug.Log("HIIIIII");
 		syncPos = pos;
-		foreach (NetworkConnection nc in ((PlanetsNetworkManager)PlanetsNetworkManager.singleton).getUpdateListeners()){
+		foreach (NetworkConnection nc in ((PlanetsNetworkManager)PlanetsNetworkManager.singleton).getUpdateListeners(updateAll)){
 			#if UNITY_5_4_OR_NEWER
 			TargetUpdatePos(nc, pos);
 			#else

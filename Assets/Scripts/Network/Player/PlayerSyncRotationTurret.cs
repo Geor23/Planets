@@ -11,6 +11,7 @@ public class PlayerSyncRotationTurret : NetworkBehaviour {
     public NetworkIdentity nIdentity;
     public Transform playerTransform;
     public float lerpRate = 15;
+    public bool updateAll = false;
 
 
     private Quaternion lastPlayerRot;
@@ -35,7 +36,7 @@ public class PlayerSyncRotationTurret : NetworkBehaviour {
     [Command]
     void CmdProvideRotationsToServer(Quaternion playerRot){
         syncPlayerRotation = playerRot;
-        foreach (NetworkConnection nc in ((PlanetsNetworkManager)PlanetsNetworkManager.singleton).getUpdateListeners()){
+        foreach (NetworkConnection nc in ((PlanetsNetworkManager)PlanetsNetworkManager.singleton).getUpdateListeners(updateAll)){
             #if UNITY_5_4_OR_NEWER
             TargetUpdateRotation(nc, playerRot);
             #else

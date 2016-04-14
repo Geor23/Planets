@@ -72,6 +72,11 @@ public class PlanetsNetworkManager : NetworkManager {
 		return updateListeners;
 	}
 
+	public HashSet<NetworkConnection> getUpdateListeners(bool all) {
+		if(onlyUpdateObservers && !all) return observingListeners;
+		return updateListeners;
+	}
+
 	public bool observerCollisionsOnly(){
 		return onlyUpdateObservers;
 	}
@@ -371,7 +376,7 @@ public class PlanetsNetworkManager : NetworkManager {
 
 	// called when a client is ready
 	public override void OnServerReady(NetworkConnection conn) {
-		NetworkServer.SetClientReady(conn);
+		NetworkServer.SetClientReady(conn);	
 		ClientScene.RegisterPrefab(player1);
 		ClientScene.RegisterPrefab(player2);
 	}
