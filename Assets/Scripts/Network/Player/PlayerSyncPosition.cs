@@ -37,7 +37,6 @@ public class PlayerSyncPosition : NetworkBehaviour {
 	//Command sent to server from client. Called by client, run on server
 	[Command]
 	void CmdProvidePositionToServer(Vector3 pos){
-		Debug.Log("HIIIIII");
 		syncPos = pos;
 		foreach (NetworkConnection nc in ((PlanetsNetworkManager)PlanetsNetworkManager.singleton).getUpdateListeners(updateAll)){
 			#if UNITY_5_4_OR_NEWER
