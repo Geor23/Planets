@@ -46,6 +46,8 @@ namespace UnityStandardAssets.CrossPlatformInput {
         public GameObject ResourcePickUp;
 
         public Camera mainCamera;
+        public Transform obsCamera ;
+        public Vector3 planetCenter = new Vector3(0,0,0);
 
         public int score;
         public int scoreToRemove;
@@ -169,12 +171,33 @@ namespace UnityStandardAssets.CrossPlatformInput {
             float strafeSpeed = speed * moveH;
 
             Vector3 moveDir = forwardSpeed * forward + strafeSpeed * right;
-            rotateObject(model, moveDir.normalized);
+            //rotateObject(model, moveDir.normalized);
 
             Vector3 turretDirection = ((forward * aimV) + (right * aimH)).normalized;
             rotateObject(turret, turretDirection);
 
-            rb.MovePosition(transform.position + moveDir * Time.deltaTime * 5);
+            //rb.MovePosition(transform.position + moveDir * Time.deltaTime * 5);
+
+
+            Vector3 worldPos = obsCamera.position + obsCamera.parent.transform.position;
+
+            Vector3 newLocation = transform.position + moveDir * Time.deltaTime*5;
+            float distPlanetToCam = Vector3.Distance(planetCenter, worldPos);
+            float distPlayerToCam = Vector3.Distance(newLocation, worldPos);
+            Debug.Log(newLocation);
+            Debug.Log(worldPos);
+
+            Debug.Log("Planet To Cam: " + distPlanetToCam);
+            Debug.Log("Player To Cam: " + distPlayerToCam);
+
+            // if ( distPlayerToCam < distPlanetToCam) {
+                rotateObject(model, moveDir.normalized);
+                rb.MovePosition(newLocation);
+                Debug.Log("moviiiiiin");
+            // } else {
+                //Debug.Log("can't mooooveeee");
+            // }
+            
         }
 
         void rotateObject(Transform obj, Vector3 direction)
