@@ -33,21 +33,19 @@ public class ResourcePowerUpManager : MonoBehaviour
 
     public int maxResource = 5;
     public int minResource = 1;
-    public int currentResource = 0;
+    //public int currentResource = 0;
     public int maxShield = 2;
     public int minShield = 1;
-    public int currentShield = 0;
+    //public int currentShield = 0;
     public int maxDoubleScore = 2;
     public int minDoubleScore = 1;
-    public int currentDoubleScore = 0;
+    //public int currentDoubleScore = 0;
     public int maxFasterFire = 2;
     public int minFasterFire = 1;
-    public int currentFasterFire = 0;
+    //public int currentFasterFire = 0;
 
     public float resourceSpawnTime = 1.5f;
-    public float shieldSpawnTime = 1.5f;
-    public float doubleScoreSpawnTime = 1.5f;
-    public float fasterFireSpawnTime = 1.5f;
+    public float powerUpSpawnTime = 10.5f;
 
 
     // Use this for initialization
@@ -55,15 +53,16 @@ public class ResourcePowerUpManager : MonoBehaviour
     {
 
         //Spawn Resources and Power Ups and initialize lists 
-        initializePlanetResources();
+        InvokeRepeating("spawnPlanetResources",0.0f, resourceSpawnTime);
+        InvokeRepeating("spawnPowerUps", 0.0f, powerUpSpawnTime);
 
-        InvokeRepeating("SpawnResource", resourceSpawnTime, resourceSpawnTime);
+        //InvokeRepeating("SpawnResource", resourceSpawnTime, resourceSpawnTime);
         InvokeRepeating("UpdateValue", 1, 1);
         ResourceRescale();
 
-        InvokeRepeating("SpawnShield", shieldSpawnTime, shieldSpawnTime);
-        InvokeRepeating("SpawnDoubleScore", doubleScoreSpawnTime, doubleScoreSpawnTime);
-        InvokeRepeating("SpawnFasterFire", fasterFireSpawnTime, fasterFireSpawnTime);
+        //InvokeRepeating("SpawnShields", shieldSpawnTime, shieldSpawnTime);
+        //InvokeRepeating("SpawnDoubleScore", doubleScoreSpawnTime, doubleScoreSpawnTime);
+        //InvokeRepeating("SpawnFasterFire", fasterFireSpawnTime, fasterFireSpawnTime);
     }
 
     public int getScore()
@@ -140,91 +139,112 @@ public class ResourcePowerUpManager : MonoBehaviour
                 setScore(1);
             }
         }
-        else if (gameObject.CompareTag("Shield")) { }
+      /*  
+      else if (gameObject.CompareTag("Shield")) { }
 
         else if (gameObject.CompareTag("FasterFire")) { }
 
         else if (gameObject.CompareTag("DoubleScore")) { }
-
+        */
     }
 
 
     // Update is called once per frame
-    void Update() {
+    void Update() {}
 
-    }
+    public void PlanetManager(GameObject gameObject, bool collision) {
 
-    public void PlanetManager(GameObject gameObject) {
         if (gameObject.CompareTag("StaticResource")) {
-            Destroy(gameObject);
-            resources.Remove(gameObject);
+            if (collision == true)
+            {
+                Destroy(gameObject);
+                resources.Remove(gameObject);
+            }
             if (resources.Count <= minResource) {
                 spawnResources();
             }
         }
         else if (gameObject.CompareTag("Shield")) {
-            Destroy(gameObject);
-            shields.Remove(gameObject);
+            if (collision == true)
+            {
+                Destroy(gameObject);
+                shields.Remove(gameObject);
+            }
             if (shields.Count <= minShield) {
-            
+                spawnShields();
             }
         }
         else if (gameObject.CompareTag("DoubleScore")) {
-            Destroy(gameObject);
-            doubleScore.Remove(gameObject);
+            if (collision == true)
+            {
+                Destroy(gameObject);
+                doubleScore.Remove(gameObject);
+            }
             if (doubleScore.Count <= minDoubleScore) {
-
+                spawnDoubleScore();
             }
 
         }
         else if (gameObject.CompareTag("FasterFire")) {
-            Destroy(gameObject);
-            fasterFire.Remove(gameObject);
-            if (fasterFire.Count <= minFasterFire) {
+            if (collision == true)
+            {
+                Destroy(gameObject);
+                fasterFire.Remove(gameObject);
+            }
+            if ((fasterFire.Count <= minFasterFire) || (fasterFire.Count < maxFasterFire))
+            {
                     spawnFasterFire();
             }
-
         }
-
-
-        //	int spawnIndex = Random.Range(0, Resources.Length);
-        //Instantiate(Resources, ResourceSpawnPoints[spawnIndex].position, ResourceSpawnPoints[spawnIndex].rotation);
     }
 
         void spawnFasterFire () {
-            if ((currentFasterFire <= minFasterFire) || (currentFasterFire < maxFasterFire)) {
                 int spawnIndex = Random.Range(0, fasterFireSpawnPoints.Length);
-                
                 //Instantiate(fasterFire, fasterFireSpawnPoints[spawnIndex].transform.position, fasterFireSpawnPoints[spawnIndex].transform.rotation);
-     
-            }
         }
 
     void spawnResources() { 
-        if ((currentFasterFire <= minFasterFire) || (currentFasterFire < maxFasterFire)) {
+        if ((fasterFire.Count <= minFasterFire) || (fasterFire.Count < maxFasterFire)) {
             int spawnIndex = Random.Range(0, fasterFireSpawnPoints.Length);
             //Instantiate(fasterFire, fasterFireSpawnPoints[spawnIndex].transform.position, fasterFireSpawnPoints[spawnIndex].transform.rotation);
 
         }
     }
 
-    void initializePlanetResources() {
-        for (int i = 0; i < maxResource; i++) {
+    void spawnShields()
+    {
+        if ((shields.Count <= minFasterFire) || (shields.Count < maxShield)) {
+            int spawnIndex = Random.Range(0, fasterFireSpawnPoints.Length);
+            //Instantiate(fasterFire, fasterFireSpawnPoints[spawnIndex].transform.position, fasterFireSpawnPoints[spawnIndex].transform.rotation);
+
+        }
+    }
+
+    void spawnDoubleScore() {
+        if ((doubleScore.Count <= minFasterFire) || (doubleScore.Count < maxFasterFire)) {
+            int spawnIndex = Random.Range(0, fasterFireSpawnPoints.Length);
+            //Instantiate(fasterFire, fasterFireSpawnPoints[spawnIndex].transform.position, fasterFireSpawnPoints[spawnIndex].transform.rotation);
+        }
+    }
+
+
+    void spawnPlanetResources() {
+        for (int i = resources.Count; i < maxResource; i++) {
             int spawnIndex = Random.Range(0, maxResource);
             resources.Add((GameObject) Instantiate(resourceObject, resourceSpawnPoints[spawnIndex].transform.position, resourceSpawnPoints[spawnIndex].transform.rotation));
         }
 
-        for (int i = 0; i < maxFasterFire; i++) {
+        for (int i = fasterFire.Count; i < maxFasterFire; i++) {
             int spawnIndex = Random.Range(0, maxFasterFire);
             fasterFire.Add((GameObject)Instantiate(fasterFireObject, fasterFireSpawnPoints[spawnIndex].transform.position, fasterFireSpawnPoints[spawnIndex].transform.rotation));
         }
     
-        for (int i = 0; i < maxDoubleScore; i++) {
+        for (int i = doubleScore.Count; i < maxDoubleScore; i++) {
             int spawnIndex = Random.Range(0, maxDoubleScore);
             doubleScore.Add((GameObject)Instantiate(doubleScoreObject, doubleScoreSpawnPoints[spawnIndex].transform.position, doubleScoreSpawnPoints[spawnIndex].transform.rotation));
         }
 
-        for (int i = 0; i < maxShield; i++) {
+        for (int i = shields.Count; i < maxShield; i++) {
             int spawnIndex = Random.Range(0, maxShield);
             shields.Add((GameObject)Instantiate(shieldObject, shieldSpawnPoints[spawnIndex].transform.position, shieldSpawnPoints[spawnIndex].transform.rotation));
         }

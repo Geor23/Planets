@@ -246,7 +246,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
                 //Destroy(col.gameObject);
 
                 //Call planet manager
-                resourePoweUpManager.PlanetManager(col.gameObject);
+                resourePoweUpManager.PlanetManager(col.gameObject, true);
 
             }
             else if (col.gameObject.CompareTag("Shield")){ //Also need to potentially create an animation here?
@@ -258,7 +258,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
                 //Destroy(col.gameObject);
 
                 //Call planet manager
-                resourePoweUpManager.PlanetManager(col.gameObject);
+                resourePoweUpManager.PlanetManager(col.gameObject, true);
 
             }
             else if (col.gameObject.CompareTag("FasterFire")){ //Turn on faster fire rate. Still needs graphical additions
@@ -267,7 +267,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
                 //Destroy(col.gameObject);
 
                 //Call planet manager
-                resourePoweUpManager.PlanetManager(col.gameObject);
+                resourePoweUpManager.PlanetManager(col.gameObject, true);
                 currentFireRate = fasterFireSpeed;
 
 
@@ -347,7 +347,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
                 score += resourceScore;
 
                 //Call planet manager
-                resourePoweUpManager.PlanetManager(col.gameObject);
+                resourePoweUpManager.PlanetManager(col.gameObject, true);
 
 
 
