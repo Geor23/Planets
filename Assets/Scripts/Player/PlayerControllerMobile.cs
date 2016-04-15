@@ -62,6 +62,8 @@ namespace UnityStandardAssets.CrossPlatformInput {
         private float lastMoveV;
         private float lastMoveH;
 
+        public ResourcePowerUpManager resourePoweUpManager;
+
         Rigidbody rb;
 
         void Start()
@@ -84,6 +86,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
             nm.client.RegisterHandler(Msgs.serverName, OnClientReceiveName);
             nm.client.Send(Msgs.requestName, new EmptyMessage());
             nm.client.RegisterHandler(Msgs.killPlayerRequestClient, OnClientKillPlayer);
+            ResourcePowerUpManager resourePoweUpManager = GameObject.FindGameObjectWithTag("Planet").GetComponent<ResourcePowerUpManager>();
         }
 
         public void OnClientReceiveName(NetworkMessage msg)
@@ -319,7 +322,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
             }
            
             if (col.gameObject.CompareTag("StaticResource")){ //Dealt with on the resource currently
-                
+
                 ResourceController resProp = col.gameObject.GetComponent<ResourceController>();
                 int resourceScore = resProp.getScore(); //May occur after resource score updated
                 if (doubleScore){ //If points are to count for double, double score
@@ -327,6 +330,13 @@ namespace UnityStandardAssets.CrossPlatformInput {
                 }
                 
                 score += resourceScore;
+
+                //Call script in ReosurcePowerUp Manager to create new object
+                //SpawnResource spawnResource = GetComponent<SpawnResource>();
+
+
+
+
                 /*
                 Debug.Log("SCORE IS" + score);
                 Debug.Log("RESOURCE IS" + resourceScore);

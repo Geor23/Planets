@@ -3,72 +3,81 @@ using UnityEngine.Networking;
 using System.Collections;
 using UnityStandardAssets.CrossPlatformInput;
 
-public class ResourcePowerUpManager : MonoBehaviour {
+public class ResourcePowerUpManager : MonoBehaviour
+{
 
-	private int minScore = 1;
+    private int minScore = 1;
     private int maxScore = 11;
     private int score = 1;
     private NetworkManager nm = NetworkManager.singleton;
 
-	public Transform[] ResourceSpawnPoints;
-	public Transform[] ShieldSpawnPoints;
-	public Transform[] DoubleScoreSpawnPoints;
-	public Transform[] FasterFireSpawnPoints;
+    public GameObject[] Resources;
+    public GameObject[] Shields;
+    public GameObject[] DoubleScore;
+    public GameObject[] FasterFire;
 
-	private int maxResource = 5;
-	private int currentResource = 0;
-	private int maxShield = 2;
-	private int currentShield = 0;
-	private int maxDoubleScore = 2;
-	private int currentDoubleScore = 0;
-	private int maxFasterFire = 2;
-	private int currentFasterFire = 0;
+    public GameObject[] SpawnPoints;
 
-	public float resourceSpawnTime = 1.5f;
-	public float shieldSpawnTime = 1.5f;
-	public float doubleScoreSpawnTime = 1.5f;
-	public float fasterFireSpawnTime = 1.5f;
+    public int maxResource = 5;
+    public int currentResource = 0;
+    public int maxShield = 2;
+    public int currentShield = 0;
+    public int maxDoubleScore = 2;
+    public int currentDoubleScore = 0;
+    public int maxFasterFire = 2;
+    public int currentFasterFire = 0;
 
-	public GameObject Resources;
-	public GameObject Shields;
-	public GameObject DoubleScore;
-	public GameObject FasterFire;
+    public float resourceSpawnTime = 1.5f;
+    public float shieldSpawnTime = 1.5f;
+    public float doubleScoreSpawnTime = 1.5f;
+    public float fasterFireSpawnTime = 1.5f;
 
-	// Use this for initialization
-	void Start () {
-		InvokeRepeating("SpawnResource", resourceSpawnTime, resourceSpawnTime);
-		InvokeRepeating("UpdateValue", 1, 1);
-        Rescale();
+
+    // Use this for initialization
+    void Start()
+    {
+
+        //Spawn Resources and Power Ups and initialize lists 
+        initializePlanetResources();
+        InvokeRepeating("SpawnResource", resourceSpawnTime, resourceSpawnTime);
+        InvokeRepeating("UpdateValue", 1, 1);
+        ResourceRescale();
 
         InvokeRepeating("SpawnShield", shieldSpawnTime, shieldSpawnTime);
         InvokeRepeating("SpawnDoubleScore", doubleScoreSpawnTime, doubleScoreSpawnTime);
         InvokeRepeating("SpawnFasterFire", fasterFireSpawnTime, fasterFireSpawnTime);
-	}
-	
-    public int getScore(){
+    }
+
+    public int getScore()
+    {
         return score;
     }
 
-    public void setScore(int scoreToSet){
+    public void setScore(int scoreToSet)
+    {
         score = scoreToSet;
-        Rescale();
+        ResourceRescale();
     }
 
-    void UpdateValue(){
+    void UpdateValue()
+    {
         score += 1;
-       if (score > 2 * maxScore) { score = 2 * maxScore; }
-        Rescale();
+        if (score > 2 * maxScore) { score = 2 * maxScore; }
+        ResourceRescale();
     }
 
-    void Rescale(){
+    void ResourceRescale()
+    {
         float scale;
         float tmp = (maxScore - minScore) / 5;
-        if (score==1) {
+        if (score == 1)
+        {
             scale = 0.2f;
             gameObject.GetComponent<Renderer>().enabled = false;
             gameObject.GetComponent<SphereCollider>().enabled = false;
         }
-        else if (score - minScore < tmp * 2) {
+        else if (score - minScore < tmp * 2)
+        {
             scale = 0.4f;
             gameObject.GetComponent<Renderer>().enabled = true;
             gameObject.GetComponent<SphereCollider>().enabled = true;
@@ -84,53 +93,106 @@ public class ResourcePowerUpManager : MonoBehaviour {
         transform.localScale = new Vector3(scale, scale, scale);
     }
 
-//Modify to recognize collisions for all kinds of pick ups
-    void OnTriggerEnter(Collider col){
-        if (col.gameObject.CompareTag("PlayerPirate")|| col.gameObject.CompareTag("PlayerSuperCorp")){
-            NetworkIdentity nIdentity = col.gameObject.GetComponent<NetworkIdentity>();
-            if (PlayerConfig.singleton.GetObserver()){
-                Debug.Log("Collided with a player");
-                //DoubleScore Powerup
-                if(col.gameObject.GetComponent<PlayerControllerMobile>().doubleScore == true){
-                    Debug.Log("DOUBLED SCORE");
-                    score *= 2;
+    //Modify to recognize collisions for all kinds of pick ups
+    void OnTriggerEnter(Collider col)
+    {
+        if (gameObject.CompareTag("StaticResource"))
+        {
+            if (col.gameObject.CompareTag("PlayerPirate") || col.gameObject.CompareTag("PlayerSuperCorp"))
+            {
+                NetworkIdentity nIdentity = col.gameObject.GetComponent<NetworkIdentity>();
+                if (PlayerConfig.singleton.GetObserver())
+                {
+                    Debug.Log("Collided with a player");
+                    //DoubleScore Powerup
+                    if (col.gameObject.GetComponent<PlayerControllerMobile>().doubleScore == true)
+                    {
+                        Debug.Log("DOUBLED SCORE");
+                        score *= 2;
+                    }
+                    //col.gameObject.GetComponent<PlayerControllerMobile>().SetScoreTextNew(score); //This needs to be done
+                    //int id = col.gameObject.GetComponent<NetworkIdentity>().connectionToClient.connectionId;
+                    AddScore sc = new AddScore();
+                    sc.team = 0;
+                    sc.score = score;
+                    sc.obj = col.gameObject;
+                    nm.client.Send(Msgs.clientTeamScore, sc);
                 }
-                //col.gameObject.GetComponent<PlayerControllerMobile>().SetScoreTextNew(score); //This needs to be done
-                //int id = col.gameObject.GetComponent<NetworkIdentity>().connectionToClient.connectionId;
-                AddScore sc = new AddScore();
-                sc.team = 0;
-                sc.score = score;
-                sc.obj = col.gameObject;
-                nm.client.Send(Msgs.clientTeamScore, sc);
-            }
 
-            setScore(1);
+                setScore(1);
+            }
         }
+        else if (gameObject.CompareTag("Shield")) { }
+
+        else if (gameObject.CompareTag("FasterFire")) { }
+
+        else if (gameObject.CompareTag("DoubleScore")) { }
+
     }
 
 
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    // Update is called once per frame
+    void Update()
+    {
 
-	void SpawnResource () {
-		int spawnIndex = Random.Range(0, ResourceSpawnPoints.Length);
-		Instantiate(Resources, ResourceSpawnPoints[spawnIndex].position, ResourceSpawnPoints[spawnIndex].rotation);
-	}
+    }
 
-	void SpawnShield () {
-		int spawnIndex = Random.Range(0, ShieldSpawnPoints.Length);
-		Instantiate(Shields, ShieldSpawnPoints[spawnIndex].position, ShieldSpawnPoints[spawnIndex].rotation);
-	}
+    void PlanetManager(GameObject gameObject)
+    {
+        if (gameObject.CompareTag("StaticResource"))
+        {
 
-	void SpawnDoubleScore() {
-		int spawnIndex = Random.Range(0, DoubleScoreSpawnPoints.Length);
-		Instantiate(DoubleScore, DoubleScoreSpawnPoints[spawnIndex].position, DoubleScoreSpawnPoints[spawnIndex].rotation);
-	}
+        }
+        else if (gameObject.CompareTag("Shield"))
+        {
 
-	void SpawnFasterFire () {
-		int spawnIndex = Random.Range(0, FasterFireSpawnPoints.Length);
-		Instantiate(FasterFire, FasterFireSpawnPoints[spawnIndex].position, FasterFireSpawnPoints[spawnIndex].rotation);
-	}
+        }
+        else if (gameObject.CompareTag("DoubleScore"))
+        {
+
+        }
+        else if (gameObject.CompareTag("FasterFire"))
+        {
+
+        }
+
+
+        //	int spawnIndex = Random.Range(0, Resources.Length);
+        //Instantiate(Resources, ResourceSpawnPoints[spawnIndex].position, ResourceSpawnPoints[spawnIndex].rotation);
+    }
+
+    /*
+        void SpawnFasterFire () {
+            int spawnIndex = Random.Range(0, FasterFireSpawnPoints.Length);
+            Instantiate(FasterFire, FasterFireSpawnPoints[spawnIndex].position, FasterFireSpawnPoints[spawnIndex].rotation);
+        }
+    */
+
+    void initializePlanetResources()
+    {
+        for (int i = 0; i < maxResource; i++)
+        {
+            Resources[i].AddComponent<Rigidbody>();
+            //Resources[i].transform.position = resourcesSpawnPoints
+        }
+
+        for (int i = 0; i < maxFasterFire; i++)
+        {
+            FasterFire[i].AddComponent<Rigidbody>();
+            //Resources[i].transform.position = resourcesSpawnPoints
+        }
+
+        for (int i = 0; i < maxDoubleScore; i++)
+        {
+            DoubleScore[i].AddComponent<Rigidbody>();
+            //Resources[i].transform.position = resourcesSpawnPoints
+        }
+
+        for (int i = 0; i < maxShield; i++)
+        {
+            Shields[i].AddComponent<Rigidbody>();
+            //Resources[i].transform.position = resourcesSpawnPoints
+        }
+
+    }
 }
