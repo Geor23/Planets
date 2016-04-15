@@ -4893,28 +4893,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e45eef4bd9badf448048755e4456e57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Resources: []
-  Shields: []
-  DoubleScore: []
-  FasterFire: []
-  SpawnPoints:
-  - {fileID: 1738228044}
-  - {fileID: 956381892}
-  - {fileID: 2111364078}
-  - {fileID: 2139588620}
-  - {fileID: 726766290}
-  - {fileID: 883295322}
-  - {fileID: 1204725461}
-  - {fileID: 1683268730}
-  - {fileID: 712973890}
-  - {fileID: 2136054103}
+  resources:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  shields: []
+  doubleScore: []
+  fasterFire: []
+  resourceSpawnPoints: []
+  shieldSpawnPoints: []
+  doubleScoreSpawnPoints: []
+  fasterFireSpawnPoints: []
   maxResource: 5
+  minResource: 1
   currentResource: 0
   maxShield: 2
+  minShield: 1
   currentShield: 0
   maxDoubleScore: 2
+  minDoubleScore: 1
   currentDoubleScore: 0
   maxFasterFire: 2
+  minFasterFire: 1
   currentFasterFire: 0
   resourceSpawnTime: 1.5
   shieldSpawnTime: 1.5

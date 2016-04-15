@@ -243,7 +243,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
 
             if (col.gameObject.CompareTag("DoubleScore")){
                 doubleScore = true;
-                Destroy(col.gameObject);
+                //Destroy(col.gameObject);
 
                 //Call planet manager
                 resourePoweUpManager.PlanetManager(col.gameObject);
@@ -255,7 +255,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
                 shield.transform.parent = this.transform;
                 shield.transform.position = this.transform.position;
                 shield.SetActive(true);
-                Destroy(col.gameObject);
+                //Destroy(col.gameObject);
 
                 //Call planet manager
                 resourePoweUpManager.PlanetManager(col.gameObject);
@@ -264,11 +264,13 @@ namespace UnityStandardAssets.CrossPlatformInput {
             else if (col.gameObject.CompareTag("FasterFire")){ //Turn on faster fire rate. Still needs graphical additions
                 Debug.LogError("Starting faster fire for ");
                 fasterFire = true;
-                Destroy(col.gameObject);
-                currentFireRate = fasterFireSpeed;
+                //Destroy(col.gameObject);
 
                 //Call planet manager
                 resourePoweUpManager.PlanetManager(col.gameObject);
+                currentFireRate = fasterFireSpeed;
+
+
 
             }
 
