@@ -3,19 +3,48 @@ using UnityEngine.Networking;
 using System.Collections;
 using UnityStandardAssets.CrossPlatformInput;
 
-public class ResourceController : MonoBehaviour {
+public class ResourcePowerUpManager : MonoBehaviour {
 
-    private int minScore = 1;
+	private int minScore = 1;
     private int maxScore = 11;
     private int score = 1;
     private NetworkManager nm = NetworkManager.singleton;
-    
-    // Use this for initialization
-    void Start(){
-        InvokeRepeating("UpdateValue", 1, 1);
-        Rescale();
-    }
 
+	public Transform[] ResourceSpawnPoints;
+	public Transform[] ShieldSpawnPoints;
+	public Transform[] DoubleScoreSpawnPoints;
+	public Transform[] FasterFireSpawnPoints;
+
+	private int maxResource = 5;
+	private int currentResource = 0;
+	private int maxShield = 2;
+	private int currentShield = 0;
+	private int maxDoubleScore = 2;
+	private int currentDoubleScore = 0;
+	private int maxFasterFire = 2;
+	private int currentFasterFire = 0;
+
+	public float resourceSpawnTime = 1.5f;
+	public float shieldSpawnTime = 1.5f;
+	public float doubleScoreSpawnTime = 1.5f;
+	public float fasterFireSpawnTime = 1.5f;
+
+	public GameObject Resources;
+	public GameObject Shields;
+	public GameObject DoubleScore;
+	public GameObject FasterFire;
+
+	// Use this for initialization
+	void Start () {
+		InvokeRepeating("SpawnResource", resourceSpawnTime, resourceSpawnTime);
+		InvokeRepeating("UpdateValue", 1, 1);
+        Rescale();
+
+        InvokeRepeating("SpawnShield", shieldSpawnTime, shieldSpawnTime);
+        InvokeRepeating("SpawnDoubleScore", doubleScoreSpawnTime, doubleScoreSpawnTime);
+        InvokeRepeating("SpawnFasterFire", fasterFireSpawnTime, fasterFireSpawnTime);
+	}
+	
     public int getScore(){
         return score;
     }
@@ -55,6 +84,7 @@ public class ResourceController : MonoBehaviour {
         transform.localScale = new Vector3(scale, scale, scale);
     }
 
+//Modify to recognize collisions for all kinds of pick ups
     void OnTriggerEnter(Collider col){
         if (col.gameObject.CompareTag("PlayerPirate")|| col.gameObject.CompareTag("PlayerSuperCorp")){
             NetworkIdentity nIdentity = col.gameObject.GetComponent<NetworkIdentity>();
@@ -77,4 +107,30 @@ public class ResourceController : MonoBehaviour {
             setScore(1);
         }
     }
+
+
+	// Update is called once per frame
+	void Update () {
+		
+	}
+
+	void SpawnResource () {
+		int spawnIndex = Random.Range(0, ResourceSpawnPoints.Length);
+		Instantiate(Resources, ResourceSpawnPoints[spawnIndex].position, ResourceSpawnPoints[spawnIndex].rotation);
+	}
+
+	void SpawnShield () {
+		int spawnIndex = Random.Range(0, ShieldSpawnPoints.Length);
+		Instantiate(Shields, ShieldSpawnPoints[spawnIndex].position, ShieldSpawnPoints[spawnIndex].rotation);
+	}
+
+	void SpawnDoubleScore() {
+		int spawnIndex = Random.Range(0, DoubleScoreSpawnPoints.Length);
+		Instantiate(DoubleScore, DoubleScoreSpawnPoints[spawnIndex].position, DoubleScoreSpawnPoints[spawnIndex].rotation);
+	}
+
+	void SpawnFasterFire () {
+		int spawnIndex = Random.Range(0, FasterFireSpawnPoints.Length);
+		Instantiate(FasterFire, FasterFireSpawnPoints[spawnIndex].position, FasterFireSpawnPoints[spawnIndex].rotation);
+	}
 }
