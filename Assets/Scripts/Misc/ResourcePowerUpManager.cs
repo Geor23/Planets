@@ -17,13 +17,13 @@ public class ResourcePowerUpManager : MonoBehaviour
     private NetworkManager nm = NetworkManager.singleton;
 
     //public GameObject[] resources;
-    public List<GameObject> resources;
+    private List<GameObject> resources;
     //public GameObject[] shields;
-    public List<GameObject> shields;
+    private List<GameObject> shields;
     //public GameObject[] doubleScore;
-    public List<GameObject> doubleScore;
+    private List<GameObject> doubleScore;
     //public GameObject[] fasterFire;
-    public List<GameObject> fasterFire;
+    private List<GameObject> fasterFire;
 
     public GameObject[] resourceSpawnPoints;
     public GameObject[] shieldSpawnPoints;
@@ -172,7 +172,7 @@ public class ResourcePowerUpManager : MonoBehaviour
 
     void spawnResource() {
         for (int i = resources.Count; i < maxResource; i++) {
-            int spawnIndex = Random.Range(0, maxResource);
+            int spawnIndex = Random.Range(0, resourceSpawnPoints.Length);
             resources.Add((GameObject) Instantiate(resourceObject, resourceSpawnPoints[spawnIndex].transform.position, resourceSpawnPoints[spawnIndex].transform.rotation));
         }
     }
@@ -181,7 +181,7 @@ public class ResourcePowerUpManager : MonoBehaviour
     {
         for (int i = fasterFire.Count; i < maxFasterFire; i++)
         {
-            int spawnIndex = Random.Range(0, maxFasterFire);
+            int spawnIndex = Random.Range(0, fasterFireSpawnPoints.Length);
             fasterFire.Add((GameObject)Instantiate(fasterFireObject, fasterFireSpawnPoints[spawnIndex].transform.position, fasterFireSpawnPoints[spawnIndex].transform.rotation));
         }
     }
@@ -190,7 +190,7 @@ public class ResourcePowerUpManager : MonoBehaviour
     {
         for (int i = doubleScore.Count; i < maxDoubleScore; i++)
         {
-            int spawnIndex = Random.Range(0, maxDoubleScore);
+            int spawnIndex = Random.Range(0, doubleScoreSpawnPoints.Length);
             doubleScore.Add((GameObject)Instantiate(doubleScoreObject, doubleScoreSpawnPoints[spawnIndex].transform.position, doubleScoreSpawnPoints[spawnIndex].transform.rotation));
         }
     }
@@ -199,7 +199,7 @@ public class ResourcePowerUpManager : MonoBehaviour
     {
         for (int i = shields.Count; i < maxShield; i++)
         {
-            int spawnIndex = Random.Range(0, maxShield);
+            int spawnIndex = Random.Range(0, shieldSpawnPoints.Length);
             shields.Add((GameObject)Instantiate(shieldObject, shieldSpawnPoints[spawnIndex].transform.position, shieldSpawnPoints[spawnIndex].transform.rotation));
         }
     }
