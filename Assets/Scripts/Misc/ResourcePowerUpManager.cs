@@ -49,20 +49,17 @@ public class ResourcePowerUpManager : MonoBehaviour
 
 
     // Use this for initialization
-    void Start()
-    {
+    void Start() {
 
         //Spawn Resources and Power Ups and initialize lists 
         InvokeRepeating("spawnPlanetResources",0.0f, resourceSpawnTime);
-        InvokeRepeating("spawnPowerUps", 0.0f, powerUpSpawnTime);
+        InvokeRepeating("spawnFasterFire", 0.0f, powerUpSpawnTime);
+        InvokeRepeating("spawnDoubleScore", 0.0f, powerUpSpawnTime);
+        InvokeRepeating("spawnShield", 0.0f, powerUpSpawnTime);
 
         //InvokeRepeating("SpawnResource", resourceSpawnTime, resourceSpawnTime);
         InvokeRepeating("UpdateValue", 1, 1);
         ResourceRescale();
-
-        //InvokeRepeating("SpawnShields", shieldSpawnTime, shieldSpawnTime);
-        //InvokeRepeating("SpawnDoubleScore", doubleScoreSpawnTime, doubleScoreSpawnTime);
-        //InvokeRepeating("SpawnFasterFire", fasterFireSpawnTime, fasterFireSpawnTime);
     }
 
     public int getScore()
@@ -152,102 +149,58 @@ public class ResourcePowerUpManager : MonoBehaviour
     // Update is called once per frame
     void Update() {}
 
-    public void PlanetManager(GameObject gameObject, bool collision) {
-
-        if (gameObject.CompareTag("StaticResource")) {
-            if (collision == true)
-            {
+    public void resourceCollision(GameObject gameObject) {
+        switch (gameObject.tag) {
+            case "StaticResource":
                 Destroy(gameObject);
                 resources.Remove(gameObject);
-            }
-            if (resources.Count <= minResource) {
-                spawnResources();
-            }
-        }
-        else if (gameObject.CompareTag("Shield")) {
-            if (collision == true)
-            {
+                break;
+            case "Shield":
                 Destroy(gameObject);
                 shields.Remove(gameObject);
-            }
-            if (shields.Count <= minShield) {
-                spawnShields();
-            }
-        }
-        else if (gameObject.CompareTag("DoubleScore")) {
-            if (collision == true)
-            {
+                break;
+            case "DoubleScore":
                 Destroy(gameObject);
                 doubleScore.Remove(gameObject);
-            }
-            if (doubleScore.Count <= minDoubleScore) {
-                spawnDoubleScore();
-            }
-
-        }
-        else if (gameObject.CompareTag("FasterFire")) {
-            if (collision == true)
-            {
+                break;
+            case "FasterFire":
                 Destroy(gameObject);
                 fasterFire.Remove(gameObject);
-            }
-            if ((fasterFire.Count <= minFasterFire) || (fasterFire.Count < maxFasterFire))
-            {
-                    spawnFasterFire();
+                break;
             }
         }
-    }
 
-        void spawnFasterFire () {
-                int spawnIndex = Random.Range(0, fasterFireSpawnPoints.Length);
-                //Instantiate(fasterFire, fasterFireSpawnPoints[spawnIndex].transform.position, fasterFireSpawnPoints[spawnIndex].transform.rotation);
-        }
-
-    void spawnResources() { 
-        if ((fasterFire.Count <= minFasterFire) || (fasterFire.Count < maxFasterFire)) {
-            int spawnIndex = Random.Range(0, fasterFireSpawnPoints.Length);
-            //Instantiate(fasterFire, fasterFireSpawnPoints[spawnIndex].transform.position, fasterFireSpawnPoints[spawnIndex].transform.rotation);
-
-        }
-    }
-
-    void spawnShields()
-    {
-        if ((shields.Count <= minFasterFire) || (shields.Count < maxShield)) {
-            int spawnIndex = Random.Range(0, fasterFireSpawnPoints.Length);
-            //Instantiate(fasterFire, fasterFireSpawnPoints[spawnIndex].transform.position, fasterFireSpawnPoints[spawnIndex].transform.rotation);
-
-        }
-    }
-
-    void spawnDoubleScore() {
-        if ((doubleScore.Count <= minFasterFire) || (doubleScore.Count < maxFasterFire)) {
-            int spawnIndex = Random.Range(0, fasterFireSpawnPoints.Length);
-            //Instantiate(fasterFire, fasterFireSpawnPoints[spawnIndex].transform.position, fasterFireSpawnPoints[spawnIndex].transform.rotation);
-        }
-    }
-
-
-    void spawnPlanetResources() {
+    void spawnResource() {
         for (int i = resources.Count; i < maxResource; i++) {
             int spawnIndex = Random.Range(0, maxResource);
             resources.Add((GameObject) Instantiate(resourceObject, resourceSpawnPoints[spawnIndex].transform.position, resourceSpawnPoints[spawnIndex].transform.rotation));
         }
+    }
 
-        for (int i = fasterFire.Count; i < maxFasterFire; i++) {
+    void spawnFasterFire()
+    {
+        for (int i = fasterFire.Count; i < maxFasterFire; i++)
+        {
             int spawnIndex = Random.Range(0, maxFasterFire);
             fasterFire.Add((GameObject)Instantiate(fasterFireObject, fasterFireSpawnPoints[spawnIndex].transform.position, fasterFireSpawnPoints[spawnIndex].transform.rotation));
         }
-    
-        for (int i = doubleScore.Count; i < maxDoubleScore; i++) {
+    }
+
+    void spawnDoubleScore ()
+    {
+        for (int i = doubleScore.Count; i < maxDoubleScore; i++)
+        {
             int spawnIndex = Random.Range(0, maxDoubleScore);
             doubleScore.Add((GameObject)Instantiate(doubleScoreObject, doubleScoreSpawnPoints[spawnIndex].transform.position, doubleScoreSpawnPoints[spawnIndex].transform.rotation));
         }
+    }
 
-        for (int i = shields.Count; i < maxShield; i++) {
+    void spawnShield ()
+    {
+        for (int i = shields.Count; i < maxShield; i++)
+        {
             int spawnIndex = Random.Range(0, maxShield);
             shields.Add((GameObject)Instantiate(shieldObject, shieldSpawnPoints[spawnIndex].transform.position, shieldSpawnPoints[spawnIndex].transform.rotation));
         }
-
     }
 }

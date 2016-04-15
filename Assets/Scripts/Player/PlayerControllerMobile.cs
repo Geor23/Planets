@@ -246,7 +246,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
                 //Destroy(col.gameObject);
 
                 //Call planet manager
-                resourePoweUpManager.PlanetManager(col.gameObject, true);
+                resourePoweUpManager.resourceCollision(col.gameObject, true);
 
             }
             else if (col.gameObject.CompareTag("Shield")){ //Also need to potentially create an animation here?
