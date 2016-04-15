@@ -94,7 +94,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
             return;
             if(!nIdentity.isLocalPlayer) return;
             Name tl = msg.ReadMessage<Name>();
-            Debug.LogError("Text: " + gameObject.GetComponent<Text>());
+            //Debug.LogError("Text: " + gameObject.GetComponent<Text>());
             Text name = gameObject.GetComponent<Text>();
             name.text = tl.name;
             id.text = tl.id.ToString();
@@ -107,12 +107,12 @@ namespace UnityStandardAssets.CrossPlatformInput {
             if (doubleScore == true)
             {
                 doubleScoreTime -= Time.deltaTime;
-                Debug.Log(doubleScoreTime);
+                //Debug.Log(doubleScoreTime);
                 if (doubleScoreTime <= 0)
                 {
                     doubleScore = false;
                     doubleScoreTime = doubleScoreTimeInit;
-                    Debug.Log("End of double Score");
+                    //Debug.Log("End of double Score");
                 }
             }
 
@@ -159,10 +159,8 @@ namespace UnityStandardAssets.CrossPlatformInput {
             lastMoveV = moveV;
             
             if(needsReflection && invertControls){
-                Debug.Log("aimH, aimV: " + aimH + " " + aimV);
                 Vector3 refMove = reflectPoint(moveH, moveV);
                 Vector3 refAim = reflectPoint(aimH, aimV);
-                Debug.Log("refAim: " + refAim);
 
                 moveH = refMove[0];
                 moveV = refMove[1];
@@ -187,19 +185,8 @@ namespace UnityStandardAssets.CrossPlatformInput {
             Vector3 newLocation = transform.position + moveDir * Time.deltaTime*5;
             float distPlanetToCam = Vector3.Distance(planetCenter, worldPos);
             float distPlayerToCam = Vector3.Distance(newLocation, worldPos);
-            Debug.Log(newLocation);
-            Debug.Log(worldPos);
-
-            Debug.Log("Planet To Cam: " + distPlanetToCam);
-            Debug.Log("Player To Cam: " + distPlayerToCam);
-
-            // if ( distPlayerToCam < distPlanetToCam) {
-                rotateObject(model, moveDir.normalized);
-                rb.MovePosition(newLocation);
-                Debug.Log("moviiiiiin");
-            // } else {
-                //Debug.Log("can't mooooveeee");
-            // }
+            rotateObject(model, moveDir.normalized);
+            rb.MovePosition(newLocation);
             
         }
 
@@ -262,7 +249,6 @@ namespace UnityStandardAssets.CrossPlatformInput {
 
             }
             else if (col.gameObject.CompareTag("FasterFire")){ //Turn on faster fire rate. Still needs graphical additions
-                Debug.LogError("Starting faster fire for ");
                 fasterFire = true;
                 //Destroy(col.gameObject);
 
