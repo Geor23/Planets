@@ -502,7 +502,7 @@ public class TeamManager {
 		Team teamSuperCorp = new Team() ;
 		teams.Add(teamPirates) ;	
 		teams.Add(teamSuperCorp) ;	
-		teams[0].setSpawnPoint(new Vector3(0,40,0));
+		teams[0].setSpawnPoint(new Vector3(0,0,120));
 		teams[1].setSpawnPoint(new Vector3(0,-40,0));
 
 	}
@@ -512,7 +512,7 @@ public class TeamManager {
 			return teams[team].getSpawnPoint();
 		} else {
 			Debug.Log("Team is observer");
-			return new Vector3(0,20,0);
+			return new Vector3(0,0,100);
 		}
 	}
 
