@@ -22,7 +22,7 @@ static class Const {
     public const int RUNNING = 1;
     public const int FINISHED = -1;
     public const int NOTSTARTED = 0;
-    public const int INITIALTIMER = 100;
+    public const int INITIALTIMER = 10;
     public const int ROUNDOVERTIMER = 15;
 }
 
@@ -146,11 +146,11 @@ public class PlanetsNetworkManager : NetworkManager {
 	   	NetworkServer.RegisterHandler(Msgs.requestFinalScores, OnServerRecieveFinalScoresRequest);
 	    NetworkServer.RegisterHandler(Msgs.clientTeamScore, OnServerRecieveScore);
 	    NetworkServer.RegisterHandler(Msgs.requestTeamScores, OnServerRecieveTeamScoresRequest);
-     NetworkServer.RegisterHandler(Msgs.requestCurrentTime, OnServerRecieveTimeRequest);
-     NetworkServer.RegisterHandler(Msgs.clientKillFeed, OnServerRecieveKill);
-     NetworkServer.RegisterHandler(Msgs.deathResourceCollision, OnServerRecieveDeathResourceCollision);
-     NetworkServer.RegisterHandler(Msgs.requestName, OnServerSendName);
-     NetworkServer.RegisterHandler(Msgs.killPlayer, OnKillPlayer);
+	    NetworkServer.RegisterHandler(Msgs.requestCurrentTime, OnServerRecieveTimeRequest);
+	    NetworkServer.RegisterHandler(Msgs.clientKillFeed, OnServerRecieveKill);
+	    NetworkServer.RegisterHandler(Msgs.deathResourceCollision, OnServerRecieveDeathResourceCollision);
+	    NetworkServer.RegisterHandler(Msgs.requestName, OnServerSendName);
+	    NetworkServer.RegisterHandler(Msgs.killPlayer, OnKillPlayer);
     }
 
     public void OnServerSendName(NetworkMessage msg){
