@@ -42,34 +42,34 @@ public class AudioManager : MonoBehaviour {
     void Update () {
 
 //Select clip 
-        if (Input.GetKeyDown(KeyCode.Alpha1)) {
+        if (Input.GetKeyDown(KeyCode.Keypad1)) {
         	currentClip = clip1;
             Debug.Log("currentClip " + currentClip.name);
 
         }
   		
-  		if (Input.GetKeyDown(KeyCode.Alpha2)) {   
+  		if (Input.GetKeyDown(KeyCode.Keypad2)) {   
             currentClip = clip2;
             Debug.Log("currentClip " + currentClip.name);
 		
         }
     
-        if (Input.GetKeyDown(KeyCode.Alpha3)) {
+        if (Input.GetKeyDown(KeyCode.Keypad3)) {
         	currentClip = clip3;;        
             Debug.Log("currentClip " + currentClip.name);
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha4)) {
+        if (Input.GetKeyDown(KeyCode.Keypad4)) {
         	currentClip = clip4;           
             Debug.Log("currentClip " + currentClip.name);
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha5)) {
+        if (Input.GetKeyDown(KeyCode.Keypad5)) {
             currentClip = clip5;           
             Debug.Log("currentClip " + currentClip.name);
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha6)) {
+        if (Input.GetKeyDown(KeyCode.Keypad6)) {
             currentClip = clip6;           
             Debug.Log("currentClip " + currentClip.name);
         }
