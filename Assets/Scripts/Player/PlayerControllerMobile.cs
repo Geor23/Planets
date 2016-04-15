@@ -244,7 +244,12 @@ namespace UnityStandardAssets.CrossPlatformInput {
             if (col.gameObject.CompareTag("DoubleScore")){
                 doubleScore = true;
                 Destroy(col.gameObject);
-            }else if (col.gameObject.CompareTag("Shield")){ //Also need to potentially create an animation here?
+
+                //Call planet manager
+                resourePoweUpManager.PlanetManager(col.gameObject);
+
+            }
+            else if (col.gameObject.CompareTag("Shield")){ //Also need to potentially create an animation here?
                 shielded = true;
                 shield = Instantiate(shield);
                 shield.transform.parent = this.transform;
@@ -252,11 +257,19 @@ namespace UnityStandardAssets.CrossPlatformInput {
                 shield.SetActive(true);
                 Destroy(col.gameObject);
 
-            }else if (col.gameObject.CompareTag("FasterFire")){ //Turn on faster fire rate. Still needs graphical additions
+                //Call planet manager
+                resourePoweUpManager.PlanetManager(col.gameObject);
+
+            }
+            else if (col.gameObject.CompareTag("FasterFire")){ //Turn on faster fire rate. Still needs graphical additions
                 Debug.LogError("Starting faster fire for ");
                 fasterFire = true;
                 Destroy(col.gameObject);
                 currentFireRate = fasterFireSpeed;
+
+                //Call planet manager
+                resourePoweUpManager.PlanetManager(col.gameObject);
+
             }
 
             else if (col.gameObject.CompareTag("ProjectilePirate") && gameObject.CompareTag("PlayerSuperCorp")){
@@ -331,9 +344,8 @@ namespace UnityStandardAssets.CrossPlatformInput {
                 
                 score += resourceScore;
 
-                //Call script in ReosurcePowerUp Manager to create new object
-                //SpawnResource spawnResource = GetComponent<SpawnResource>();
-
+                //Call planet manager
+                resourePoweUpManager.PlanetManager(col.gameObject);
 
 
 
@@ -347,7 +359,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
                 sc.obj = col.gameObject;
                 nm.client.Send(Msgs.clientTeamScore, sc);
                 */
-                
+
             }
 
             if (col.gameObject.CompareTag("ResourcePickUpDeath")){

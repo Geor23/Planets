@@ -11,20 +11,28 @@ public class ResourcePowerUpManager : MonoBehaviour
     private int score = 1;
     private NetworkManager nm = NetworkManager.singleton;
 
-    public GameObject[] Resources;
-    public GameObject[] Shields;
-    public GameObject[] DoubleScore;
-    public GameObject[] FasterFire;
+    public GameObject[] resources;
+    public GameObject[] shields;
+    public GameObject[] doubleScore;
+    public GameObject[] fasterFire;
 
-    public GameObject[] SpawnPoints;
+    public GameObject[] resourceSpawnPoints;
+    public GameObject[] shieldSpawnPoints;
+    public GameObject[] doubleScoreSpawnPoints;
+    public GameObject[] fasterFireSpawnPoints;
+
 
     public int maxResource = 5;
+    public int minResource = 1;
     public int currentResource = 0;
     public int maxShield = 2;
+    public int minShield = 1;
     public int currentShield = 0;
     public int maxDoubleScore = 2;
+    public int minDoubleScore = 1;
     public int currentDoubleScore = 0;
     public int maxFasterFire = 2;
+    public int minFasterFire = 1;
     public int currentFasterFire = 0;
 
     public float resourceSpawnTime = 1.5f;
@@ -137,22 +145,17 @@ public class ResourcePowerUpManager : MonoBehaviour
 
     }
 
-    void PlanetManager(GameObject gameObject)
-    {
-        if (gameObject.CompareTag("StaticResource"))
-        {
+    public void PlanetManager(GameObject gameObject) {
+        if (gameObject.CompareTag("StaticResource")) {
 
         }
-        else if (gameObject.CompareTag("Shield"))
-        {
+        else if (gameObject.CompareTag("Shield")) {
 
         }
-        else if (gameObject.CompareTag("DoubleScore"))
-        {
+        else if (gameObject.CompareTag("DoubleScore")) {
 
         }
-        else if (gameObject.CompareTag("FasterFire"))
-        {
+        else if (gameObject.CompareTag("FasterFire")) {
 
         }
 
@@ -168,30 +171,29 @@ public class ResourcePowerUpManager : MonoBehaviour
         }
     */
 
-    void initializePlanetResources()
-    {
-        for (int i = 0; i < maxResource; i++)
-        {
-            Resources[i].AddComponent<Rigidbody>();
-            //Resources[i].transform.position = resourcesSpawnPoints
+    void initializePlanetResources() {
+        for (int i = 0; i < maxResource; i++) {
+            int spawnIndex = Random.Range(0, resources.Length);
+            Instantiate(resources[i], resourceSpawnPoints[spawnIndex].transform.position, resourceSpawnPoints[spawnIndex].transform.rotation);
+            currentResource += 1;
         }
 
-        for (int i = 0; i < maxFasterFire; i++)
-        {
-            FasterFire[i].AddComponent<Rigidbody>();
-            //Resources[i].transform.position = resourcesSpawnPoints
+        for (int i = 0; i < maxFasterFire; i++) {
+            int spawnIndex = Random.Range(0, fasterFire.Length);
+            Instantiate(fasterFire[i], fasterFireSpawnPoints[spawnIndex].transform.position, fasterFireSpawnPoints[spawnIndex].transform.rotation);
+            currentFasterFire += 1;
+        }
+    
+        for (int i = 0; i < maxDoubleScore; i++) {
+            int spawnIndex = Random.Range(0, doubleScore.Length);
+            Instantiate(doubleScore[i], doubleScoreSpawnPoints[spawnIndex].transform.position, doubleScoreSpawnPoints[spawnIndex].transform.rotation);
+            currentDoubleScore += 1;
         }
 
-        for (int i = 0; i < maxDoubleScore; i++)
-        {
-            DoubleScore[i].AddComponent<Rigidbody>();
-            //Resources[i].transform.position = resourcesSpawnPoints
-        }
-
-        for (int i = 0; i < maxShield; i++)
-        {
-            Shields[i].AddComponent<Rigidbody>();
-            //Resources[i].transform.position = resourcesSpawnPoints
+        for (int i = 0; i < maxShield; i++) {
+            int spawnIndex = Random.Range(0, shields.Length);
+            Instantiate(shields[i], shieldSpawnPoints[spawnIndex].transform.position, shieldSpawnPoints[spawnIndex].transform.rotation);
+            currentShield += 1;
         }
 
     }
