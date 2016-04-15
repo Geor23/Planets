@@ -33,16 +33,15 @@ public class ResourcePowerUpManager : MonoBehaviour
 
     public int maxResource = 5;
     public int minResource = 1;
-    //public int currentResource = 0;
+
     public int maxShield = 2;
     public int minShield = 1;
-    //public int currentShield = 0;
+
     public int maxDoubleScore = 2;
     public int minDoubleScore = 1;
-    //public int currentDoubleScore = 0;
+
     public int maxFasterFire = 2;
     public int minFasterFire = 1;
-    //public int currentFasterFire = 0;
 
     public float resourceSpawnTime = 1.5f;
     public float powerUpSpawnTime = 10.5f;
@@ -51,15 +50,21 @@ public class ResourcePowerUpManager : MonoBehaviour
     // Use this for initialization
     void Start() {
 
+        resources = new List<GameObject>();
+        fasterFire = new List<GameObject>();
+        doubleScore = new List<GameObject>();
+        shields = new List<GameObject>();
+
+
         //Spawn Resources and Power Ups and initialize lists 
-        InvokeRepeating("spawnPlanetResources",0.0f, resourceSpawnTime);
+        InvokeRepeating("spawnResource",0.0f, resourceSpawnTime);
         InvokeRepeating("spawnFasterFire", 0.0f, powerUpSpawnTime);
         InvokeRepeating("spawnDoubleScore", 0.0f, powerUpSpawnTime);
         InvokeRepeating("spawnShield", 0.0f, powerUpSpawnTime);
 
         //InvokeRepeating("SpawnResource", resourceSpawnTime, resourceSpawnTime);
         InvokeRepeating("UpdateValue", 1, 1);
-        ResourceRescale();
+        //ResourceRescale();
     }
 
     public int getScore()
@@ -70,14 +75,14 @@ public class ResourcePowerUpManager : MonoBehaviour
     public void setScore(int scoreToSet)
     {
         score = scoreToSet;
-        ResourceRescale();
+        //ResourceRescale();
     }
 
     void UpdateValue()
     {
         score += 1;
         if (score > 2 * maxScore) { score = 2 * maxScore; }
-        ResourceRescale();
+        //ResourceRescale();
     }
 
     void ResourceRescale()
@@ -110,7 +115,7 @@ public class ResourcePowerUpManager : MonoBehaviour
     //Modify to recognize collisions for all kinds of pick ups
     void OnTriggerEnter(Collider col)
     {
-        if (gameObject.CompareTag("StaticResource"))
+        if (gameObject.CompareTag("ResourcePickUp"))
         {
             if (col.gameObject.CompareTag("PlayerPirate") || col.gameObject.CompareTag("PlayerSuperCorp"))
             {
@@ -151,7 +156,7 @@ public class ResourcePowerUpManager : MonoBehaviour
 
     public void resourceCollision(GameObject gameObject) {
         switch (gameObject.tag) {
-            case "StaticResource":
+            case "ResourcePickUp":
                 Destroy(gameObject);
                 resources.Remove(gameObject);
                 break;

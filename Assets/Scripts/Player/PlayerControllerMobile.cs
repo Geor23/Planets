@@ -86,7 +86,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
             nm.client.RegisterHandler(Msgs.serverName, OnClientReceiveName);
             nm.client.Send(Msgs.requestName, new EmptyMessage());
             nm.client.RegisterHandler(Msgs.killPlayerRequestClient, OnClientKillPlayer);
-            ResourcePowerUpManager resourePoweUpManager = GameObject.FindGameObjectWithTag("Planet").GetComponent<ResourcePowerUpManager>();
+            resourcePowerUpManager = GameObject.FindGameObjectWithTag("Planet").GetComponent<ResourcePowerUpManager>();
         }
 
         public void OnClientReceiveName(NetworkMessage msg)
@@ -336,7 +336,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
                 }
             }
            
-            if (col.gameObject.CompareTag("StaticResource")){ //Dealt with on the resource currently
+            if (col.gameObject.CompareTag("ResourcePickUp")){ //Dealt with on the resource currently
 
                 ResourceController resProp = col.gameObject.GetComponent<ResourceController>();
                 int resourceScore = resProp.getScore(); //May occur after resource score updated

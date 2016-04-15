@@ -22,7 +22,7 @@ static class Const {
     public const int RUNNING = 1;
     public const int FINISHED = -1;
     public const int NOTSTARTED = 0;
-    public const int INITIALTIMER = 10;
+    public const int INITIALTIMER = 50;
     public const int ROUNDOVERTIMER = 15;
 }
 
