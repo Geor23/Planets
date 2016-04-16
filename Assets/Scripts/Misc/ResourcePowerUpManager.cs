@@ -10,6 +10,7 @@ public class ResourcePowerUpManager : MonoBehaviour
     public GameObject shieldObject;
     public GameObject fasterFireObject;
     public GameObject doubleScoreObject;
+    public GameObject meteorObject;
 
     private int minScore = 1;
     private int maxScore = 11;
@@ -25,10 +26,13 @@ public class ResourcePowerUpManager : MonoBehaviour
     //public GameObject[] fasterFire;
     private List<GameObject> fasterFire;
 
+    private List<GameObject> meteor;
+
     public GameObject[] resourceSpawnPoints;
     public GameObject[] shieldSpawnPoints;
     public GameObject[] doubleScoreSpawnPoints;
     public GameObject[] fasterFireSpawnPoints;
+    public GameObject[] meteorSpawnPoints;
 
 
     public int maxResource = 5;
@@ -46,6 +50,8 @@ public class ResourcePowerUpManager : MonoBehaviour
     public float resourceSpawnTime = 1.5f;
     public float powerUpSpawnTime = 10.5f;
 
+    public float meteorSpawnTime = 5.5f;
+
 
     // Use this for initialization
     void Start() {
@@ -61,6 +67,8 @@ public class ResourcePowerUpManager : MonoBehaviour
         InvokeRepeating("spawnFasterFire", 0.0f, powerUpSpawnTime);
         InvokeRepeating("spawnDoubleScore", 0.0f, powerUpSpawnTime);
         InvokeRepeating("spawnShield", 0.0f, powerUpSpawnTime);
+
+        InvokeRepeating("spawnMeteor", 0.0f, meteorSpawnTime);
 
         //InvokeRepeating("SpawnResource", resourceSpawnTime, resourceSpawnTime);
         InvokeRepeating("UpdateValue", 1, 1);
@@ -172,6 +180,10 @@ public class ResourcePowerUpManager : MonoBehaviour
                 Destroy(gameObject);
                 fasterFire.Remove(gameObject);
                 break;
+            case "Meteor":
+                Destroy(gameObject);
+                meteor.Remove(gameObject);
+                break;
             }
         }
 
@@ -207,5 +219,11 @@ public class ResourcePowerUpManager : MonoBehaviour
             int spawnIndex = Random.Range(0, shieldSpawnPoints.Length);
             shields.Add((GameObject)Instantiate(shieldObject, shieldSpawnPoints[spawnIndex].transform.position, shieldSpawnPoints[spawnIndex].transform.rotation));
         }
+    }
+
+    void spawnMeteor ()
+    {
+        int spawnIndex = Random.Range(0, meteorSpawnPoints.Length);
+        meteor.Add((GameObject)Instantiate(meteorObject, meteorSpawnPoints[spawnIndex].transform.position, meteorSpawnPoints[spawnIndex].transform.rotation));
     }
 }

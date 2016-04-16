@@ -251,12 +251,40 @@ namespace UnityStandardAssets.CrossPlatformInput {
             else if (col.gameObject.CompareTag("FasterFire")){ //Turn on faster fire rate. Still needs graphical additions
                 fasterFire = true;
                 //Destroy(col.gameObject);
-
                 //Call planet manager
                 resourcePowerUpManager.resourceCollision(col.gameObject);
                 currentFireRate = fasterFireSpeed;
+            }
 
+            else if (col.gameObject.CompareTag("Meteor")) {
+                if ((hasCollide == false) && (shielded == false))
+                {
+                    hasCollide = true;
+                    resourcePowerUpManager.resourceCollision(col.gameObject);
 
+                    //Update kill feed
+                    Text shooter = col.gameObject.GetComponent<Text>();
+                    Text victim = gameObject.GetComponent<Text>();
+                    Kill tc = new Kill();
+                    tc.msg = shooter.text + " killed " + victim.text;
+                    nm.client.Send(Msgs.clientKillFeed, tc);
+
+                    //Remove score from team
+                    GetComponent<PlayerNetworkHandler>().CmdSpawnResource(gameObject.transform.position, score);
+                    scoreToRemove = score;
+                    AddScore sc = new AddScore();
+                    sc.team = 0;
+                    sc.score = -score;
+                    sc.obj = this.gameObject;
+                    nm.client.Send(Msgs.clientTeamScore, sc);
+
+                    //Send death request to server, to send to Player
+                    KillPlayer kp = new KillPlayer();
+                    kp.netId = this.netId;
+                    kp.obj = this.gameObject;
+                    nm.client.Send(Msgs.killPlayer, kp);
+
+                }
 
             }
 
