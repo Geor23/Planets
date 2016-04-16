@@ -23,28 +23,6 @@ public class CameraController : MonoBehaviour {
 
     void Update () {
 
-        if (Input.GetKey(KeyCode.A)) {  //Camera one commands
-            pos -= transform.right.normalized/10;
-        }else if(Input.GetKey(KeyCode.D)){
-            pos += transform.right.normalized / 10;
-        }
-
-        if(Input.GetKey(KeyCode.W)) {
-            pos -= transform.up.normalized / 10;
-        }
-        else if(Input.GetKey(KeyCode.S)){
-            pos += transform.up.normalized / 10;
-        }
-
-        if(Input.GetKey(KeyCode.Q)) {
-            pos += transform.forward.normalized / 10;
-        }else if (Input.GetKey(KeyCode.E)) {
-            pos -= transform.forward.normalized / 10;
-        }
-
-
-        transform.position = pos;
-
         count = 0;
         playersS = GameObject.FindGameObjectsWithTag("PlayerSuperCorp");
         playersP = GameObject.FindGameObjectsWithTag("PlayerPirate");
@@ -67,5 +45,28 @@ public class CameraController : MonoBehaviour {
         point = sum/count;
         avgUp = camUps/count;
         transform.LookAt(point, -avgUp);
+
+        if (Input.GetKey(KeyCode.A)) {  //Camera one commands
+            pos -= transform.right.normalized/10;
+        }else if(Input.GetKey(KeyCode.D)){
+            pos += transform.right.normalized / 10;
+        }
+
+        if(Input.GetKey(KeyCode.W)) {
+            pos -= transform.up.normalized / 10;
+        }
+        else if(Input.GetKey(KeyCode.S)){
+            pos += transform.up.normalized / 10;
+        }
+
+
+        if(Input.GetKey(KeyCode.Q)) {
+            pos += transform.forward.normalized / 10;
+        }else if (Input.GetKey(KeyCode.E)) {
+            pos -= transform.forward.normalized / 10;
+        }
+
+
+        transform.position = pos;
     }
 }
