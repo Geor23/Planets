@@ -342,6 +342,21 @@ MonoBehaviour:
   strengthX: 0.46
   strengthY: 0.46
   fishEyeShader: {fileID: 4800000, guid: 874ceab4425f64bccb1d14032f4452b1, type: 3}
+--- !u!1 &330706980 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 177302, guid: 9c7cbc0f0dff36b4ba4f0624c14dc85b, type: 2}
+  m_PrefabInternal: {fileID: 23054761}
+--- !u!225 &330706981
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 330706980}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &851282142
 GameObject:
   m_ObjectHideFlags: 1
@@ -539,6 +554,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nm: {fileID: 0}
-  ps: {fileID: 0}
   networkAddr: {fileID: 1403726702}
   nameT: {fileID: 1076685483}
