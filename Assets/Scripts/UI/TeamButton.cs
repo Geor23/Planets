@@ -4,20 +4,21 @@ using UnityEngine.UI;
 
 public class TeamButton : MonoBehaviour {
 
-public bool pirate = false;
-public bool superCorp = false;
+public bool pirate;
+public bool superCorp;
 public LobbyGUI lobbyGUI;
 public Text header;
 public Text otherHeader;
+private RectTransform rTransform;
 
 	void Start () {
 		header.color = new Color(1F,0.5F,0.5F,1F);
-		Debug.Log (GetComponent<RectTransform>().rect.size);
+		rTransform = GetComponent<RectTransform>();
 	}
 
 	void OnGUI () {
 		Debug.Log ("OnGUI called");
-		if (Event.current.type == EventType.MouseUp && GetComponent<RectTransform>().rect.Contains(Event.current.mousePosition))
+		if (Event.current.type == EventType.MouseUp && RectTransformUtility.RectangleContainsScreenPoint(rTransform, Event.current.mousePosition))
 		{
 			Debug.Log("Clicked: ");
 			if (pirate) { 
@@ -33,7 +34,7 @@ public Text otherHeader;
 	}
 
 	void Update () {
-		if (Input.GetMouseButtonDown(0) && GetComponent<RectTransform>().rect.Contains(Input.mousePosition)) {
+		if (Input.GetMouseButtonDown(0) && RectTransformUtility.RectangleContainsScreenPoint(rTransform, Input.mousePosition)) {
 			Debug.Log("Clicked: ");
 			if (pirate) { 
 				Debug.Log("Pirate Team");
