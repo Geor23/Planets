@@ -352,8 +352,11 @@ namespace UnityStandardAssets.CrossPlatformInput {
            
             if (col.gameObject.CompareTag("ResourcePickUp")){ //Dealt with on the resource currently
 
-                ResourceController resProp = col.gameObject.GetComponent<ResourceController>();
-                int resourceScore = resProp.getScore(); //May occur after resource score updated
+              //  ResourceController resProp = col.gameObject.GetComponent<ResourceController>();
+              //  int resourceScore = resProp.getScore(); //May occur after resource score updated
+
+                int resourceScore = resourcePowerUpManager.getScore();
+
                 if (doubleScore){ //If points are to count for double, double score
                     resourceScore *= 2;
                 }

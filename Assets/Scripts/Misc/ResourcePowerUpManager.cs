@@ -60,6 +60,7 @@ public class ResourcePowerUpManager : MonoBehaviour
         fasterFire = new List<GameObject>();
         doubleScore = new List<GameObject>();
         shields = new List<GameObject>();
+        meteor = new List<GameObject>();
 
 
         //Spawn Resources and Power Ups and initialize lists 
