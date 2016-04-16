@@ -65,19 +65,17 @@ public class ResourcePowerUpManager : MonoBehaviour
 
         //Spawn Resources and Power Ups and initialize lists 
         InvokeRepeating("spawnResource",0.0f, resourceSpawnTime);
+        InvokeRepeating("UpdateValue", 1, 1);
+        //ResourceRescale();
+
         InvokeRepeating("spawnFasterFire", 0.0f, powerUpSpawnTime);
         InvokeRepeating("spawnDoubleScore", 0.0f, powerUpSpawnTime);
         InvokeRepeating("spawnShield", 0.0f, powerUpSpawnTime);
 
         InvokeRepeating("spawnMeteor", 0.0f, meteorSpawnTime);
-
-        //InvokeRepeating("SpawnResource", resourceSpawnTime, resourceSpawnTime);
-        InvokeRepeating("UpdateValue", 1, 1);
-        //ResourceRescale();
     }
 
-    public int getScore()
-    {
+    public int getScore() {
         return score;
     }
 
@@ -150,18 +148,7 @@ public class ResourcePowerUpManager : MonoBehaviour
                 setScore(1);
             }
         }
-      /*  
-      else if (gameObject.CompareTag("Shield")) { }
-
-        else if (gameObject.CompareTag("FasterFire")) { }
-
-        else if (gameObject.CompareTag("DoubleScore")) { }
-        */
     }
-
-
-    // Update is called once per frame
-    void Update() {}
 
     public void resourceCollision(GameObject gameObject) {
         switch (gameObject.tag) {
@@ -192,6 +179,7 @@ public class ResourcePowerUpManager : MonoBehaviour
         for (int i = resources.Count; i < maxResource; i++) {
             int spawnIndex = Random.Range(0, resourceSpawnPoints.Length);
             resources.Add((GameObject) Instantiate(resourceObject, resourceSpawnPoints[spawnIndex].transform.position, resourceSpawnPoints[spawnIndex].transform.rotation));
+            
         }
     }
 

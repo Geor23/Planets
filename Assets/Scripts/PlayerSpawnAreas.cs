@@ -14,7 +14,8 @@ public class PlayerSpawnAreas : MonoBehaviour {
     public Vector3 generateSpawnPoint(int team)
     {
 
-        Vector3 spawnPoint;
+        Vector3 spawnPoint1;
+        Vector3 spawnPoint2;
         float radius = 5f;
 
         offset.x += Random.Range(-radius, radius);
@@ -22,16 +23,21 @@ public class PlayerSpawnAreas : MonoBehaviour {
         offset.z += Random.Range(-radius, radius);
 
         //spawnPoint = Random.insideUnitCircle * 5;
-        spawnPoint.x = spawnObject1.transform.position.x + Random.Range(-1, 1);
-        spawnPoint.y = spawnObject1.transform.position.x + Random.Range(-1, 1);
-        spawnPoint.z = spawnObject1.transform.position.x + Random.Range(-1, 1);
+        spawnPoint1.x = spawnObject1.transform.position.x + Random.Range(-1, 1);
+        spawnPoint1.y = spawnObject1.transform.position.x + Random.Range(-1, 1);
+        spawnPoint1.z = spawnObject1.transform.position.x + Random.Range(-1, 1);
 
+
+        spawnPoint2.x = spawnObject2.transform.position.x + Random.Range(-1, 1);
+        spawnPoint2.y = spawnObject2.transform.position.x + Random.Range(-1, 1);
+        spawnPoint2.z = spawnObject2.transform.position.x + Random.Range(-1, 1);
 
         if (team == 0) {
-            return spawnPoint;
+            return spawnPoint1;
         }
         else {
-           return spawnPoint += offset;
+            return spawnPoint2;
+           //return spawnPoint += offset;
         }
 
     }
