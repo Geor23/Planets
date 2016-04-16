@@ -9,18 +9,22 @@ public class PlanetariumStereo : MonoBehaviour {
 	
 	public bool stereoEnabled;
 
-	PlanetariumStereo singleton;
+	public static PlanetariumStereo singleton;
 
 	void Start(){
 		singleton = this;
 	}
 
-	bool stereoRunning(){
+	public bool stereoRunning(){
 		return stereoEnabled;
 	}
 
-	bool isMaster(){
+	public bool isMaster(){
+		#if UNITY_STANDALONE
 		return ClusterNetwork.isMasterOfCluster;
+		#else
+		return false;
+		#endif
 	}
 	
 }
