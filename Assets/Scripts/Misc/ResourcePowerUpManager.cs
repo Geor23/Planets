@@ -66,13 +66,13 @@ public class ResourcePowerUpManager : MonoBehaviour
         //Spawn Resources and Power Ups and initialize lists 
         InvokeRepeating("spawnResource",0.0f, resourceSpawnTime);
         InvokeRepeating("UpdateValue", 1, 1);
-        //ResourceRescale();
+        //ResourceRescale(resources[Random.Range(0, resources.Count)]);
 
         InvokeRepeating("spawnFasterFire", 0.0f, powerUpSpawnTime);
         InvokeRepeating("spawnDoubleScore", 0.0f, powerUpSpawnTime);
         InvokeRepeating("spawnShield", 0.0f, powerUpSpawnTime);
 
-        InvokeRepeating("spawnMeteor", 0.0f, meteorSpawnTime);
+       // InvokeRepeating("spawnMeteor", 0.0f, meteorSpawnTime);
     }
 
     public int getScore() {
@@ -82,31 +82,32 @@ public class ResourcePowerUpManager : MonoBehaviour
     public void setScore(int scoreToSet)
     {
         score = scoreToSet;
-        //ResourceRescale();
+        ResourceRescale(resources[Random.Range(0, resources.Count)]);
     }
 
     void UpdateValue()
     {
         score += 1;
         if (score > 2 * maxScore) { score = 2 * maxScore; }
-        //ResourceRescale();
+        ResourceRescale(resources[Random.Range(0, resources.Count)]);
+
     }
 
-    void ResourceRescale()
+    void ResourceRescale(GameObject resourcePickUpGameObject)
     {
         float scale;
         float tmp = (maxScore - minScore) / 5;
         if (score == 1)
         {
             scale = 0.2f;
-            gameObject.GetComponent<Renderer>().enabled = false;
-            gameObject.GetComponent<SphereCollider>().enabled = false;
+            resourcePickUpGameObject.GetComponent<Renderer>().enabled = false;
+            resourcePickUpGameObject.GetComponent<SphereCollider>().enabled = false;
         }
         else if (score - minScore < tmp * 2)
         {
             scale = 0.4f;
-            gameObject.GetComponent<Renderer>().enabled = true;
-            gameObject.GetComponent<SphereCollider>().enabled = true;
+            resourcePickUpGameObject.GetComponent<Renderer>().enabled = true;
+            resourcePickUpGameObject.GetComponent<SphereCollider>().enabled = true;
         }
         else if (score - minScore < tmp * 3) { scale = 0.6f; }
         else if (score - minScore < tmp * 4) { scale = 0.8f; }
