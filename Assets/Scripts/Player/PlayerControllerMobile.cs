@@ -71,6 +71,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
             nIdentity = GetComponent<NetworkIdentity>();
             nm = (PlanetsNetworkManager)NetworkManager.singleton;
             rb = GetComponent<Rigidbody>();
+            resourcePowerUpManager = GameObject.FindGameObjectWithTag("Planet").GetComponent<ResourcePowerUpManager>();
             if(!nIdentity.isLocalPlayer) return;
             invertControls = nm.isSplitScreen();
             reflectionMatrix = genRefMatrix(90*Mathf.Deg2Rad);
@@ -86,7 +87,6 @@ namespace UnityStandardAssets.CrossPlatformInput {
             nm.client.RegisterHandler(Msgs.serverName, OnClientReceiveName);
             nm.client.Send(Msgs.requestName, new EmptyMessage());
             nm.client.RegisterHandler(Msgs.killPlayerRequestClient, OnClientKillPlayer);
-            resourcePowerUpManager = GameObject.FindGameObjectWithTag("Planet").GetComponent<ResourcePowerUpManager>();
         }
 
         public void OnClientReceiveName(NetworkMessage msg)
