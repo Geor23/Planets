@@ -62,7 +62,7 @@ public class PlanetsNetworkManager : NetworkManager {
 
   	String killFeed;
 
-    public PlayerSpawnAreas playerSpawnAreas;
+    //public PlayerSpawnAreas playerSpawnAreas;
 
 
     public void SceneChange() {
@@ -100,7 +100,7 @@ public class PlanetsNetworkManager : NetworkManager {
     	roundList.Add("Round3");
     	roundList.Add("GameOver");
 
-        playerSpawnAreas = GameObject.FindGameObjectWithTag("Planet").GetComponent<PlayerSpawnAreas>();
+        //playerSpawnAreas = GameObject.FindGameObjectWithTag("Planet").GetComponent<PlayerSpawnAreas>();
 
     }
 
@@ -502,8 +502,10 @@ public class Team {
 public class TeamManager {
 	public List<Team> teams;
 
+    public PlayerSpawnAreas playerSpawnAreas;
 
-	public TeamManager() {
+
+    public TeamManager() {
 		teams = new List<Team>() ;
 		Team teamPirates = new Team() ;
 		Team teamSuperCorp = new Team() ;
@@ -516,8 +518,11 @@ public class TeamManager {
 
     //Change to get spawn point from PlayerSpawnArea script
 	public Vector3 getSpawnP(int team){
-		if  ((team == 0) || (team == 1)) {
-			return teams[team].getSpawnPoint();
+        playerSpawnAreas = GameObject.FindGameObjectWithTag("Planet").GetComponent<PlayerSpawnAreas>();
+
+        if ((team == 0) || (team == 1)) {
+            return playerSpawnAreas.generateSpawnPoint(team);
+			//return teams[team].getSpawnPoint();
 		} else {
 			Debug.Log("Team is observer");
 			return new Vector3(0,0,100);

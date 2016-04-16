@@ -8,7 +8,7 @@ public class PlayerSpawnAreas : MonoBehaviour {
     //Generate spawn points for both teams. The spawn point of each team should be
     //relative to the spawn point of the other
 
-    Vector3 generateSpawnPoint(int team)
+    public Vector3 generateSpawnPoint(int team)
     {
 
         Vector3 spawnPoint;
