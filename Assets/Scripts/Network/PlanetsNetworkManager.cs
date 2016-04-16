@@ -62,8 +62,10 @@ public class PlanetsNetworkManager : NetworkManager {
 
   	String killFeed;
 
+    public PlayerSpawnAreas playerSpawnAreas;
 
-	public void SceneChange() {
+
+    public void SceneChange() {
 		//Change scene
 	}
 
@@ -98,8 +100,10 @@ public class PlanetsNetworkManager : NetworkManager {
     	roundList.Add("Round3");
     	roundList.Add("GameOver");
 
-  	}
-	
+        playerSpawnAreas = GameObject.FindGameObjectWithTag("Planet").GetComponent<PlayerSpawnAreas>();
+
+    }
+
     public void Update(){
     	if(!NetworkServer.active) return;
 
@@ -384,6 +388,9 @@ public class PlanetsNetworkManager : NetworkManager {
 
 	// called when a new player is added for a client
 	public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId) {
+
+        //Change so that the spawn area is from a more random general area chosen from the PlayerSpawnArea script
+
 		/* This is where you can register players with teams, and spawn the player at custom points in the team space */
 		//hasConnected = true;
     	int id = IDFromConn(conn);
@@ -507,6 +514,7 @@ public class TeamManager {
 
 	}
 
+    //Change to get spawn point from PlayerSpawnArea script
 	public Vector3 getSpawnP(int team){
 		if  ((team == 0) || (team == 1)) {
 			return teams[team].getSpawnPoint();
