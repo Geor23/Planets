@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Hull
-  m_Shader: {fileID: 4800000, guid: 054a31a99d11e49d110086ba44295342, type: 3}
+  m_Shader: {fileID: 4800000, guid: ba602d9c285df4fbc8ccf5e42daa717d, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
   m_CustomRenderQueue: 2000
@@ -97,11 +97,15 @@ Material:
       data:
         first:
           name: _Cutoff
-        second: 0.5
+        second: .5
+      data:
+        first:
+          name: _Shininess
+        second: 10
       data:
         first:
           name: _Parallax
-        second: 0.02
+        second: .0199999996
       data:
         first:
           name: _ZWrite
@@ -109,7 +113,7 @@ Material:
       data:
         first:
           name: _Glossiness
-        second: 0.5
+        second: .5
       data:
         first:
           name: _BumpScale
@@ -136,8 +140,20 @@ Material:
         second: 0
       data:
         first:
+          name: _DiffuseThreshold
+        second: .100000001
+      data:
+        first:
+          name: _LitOutlineThickness
+        second: .100000001
+      data:
+        first:
+          name: _UnlitOutlineThickness
+        second: .400000006
+      data:
+        first:
           name: _Outline
-        second: 0.005
+        second: .00499999989
     m_Colors:
       data:
         first:
@@ -147,6 +163,14 @@ Material:
         first:
           name: _Color
         second: {r: 0, g: 0, b: 1, a: 1}
+      data:
+        first:
+          name: _SpecColor
+        second: {r: 1, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: _UnlitColor
+        second: {r: .5, g: .5, b: .5, a: 1}
       data:
         first:
           name: _OutlineColor

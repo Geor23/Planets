@@ -204,7 +204,6 @@ GameObject:
   - 223: {fileID: 22334484}
   - 114: {fileID: 11443058}
   - 114: {fileID: 11433854}
-  - 114: {fileID: 11492720}
   m_Layer: 5
   m_Name: ServerLocalClientCanvas
   m_TagString: Untagged
@@ -725,25 +724,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: name
---- !u!114 &11492720
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 191022}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80b4e4bded8dd624494154d612fd1ab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  allMyAudioSources: []
-  clip1: {fileID: 0}
-  clip2: {fileID: 0}
-  clip3: {fileID: 0}
-  clip4: {fileID: 0}
-  clip5: {fileID: 0}
-  clip6: {fileID: 0}
-  currentClip: {fileID: 0}
 --- !u!114 &11493216
 MonoBehaviour:
   m_ObjectHideFlags: 1
