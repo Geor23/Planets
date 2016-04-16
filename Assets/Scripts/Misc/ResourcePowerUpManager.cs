@@ -65,7 +65,7 @@ public class ResourcePowerUpManager : MonoBehaviour
 
         //Spawn Resources and Power Ups and initialize lists 
         InvokeRepeating("spawnResource",0.0f, resourceSpawnTime);
-        InvokeRepeating("UpdateValue", 1, 1);
+        //InvokeRepeating("UpdateValue", 1, 1);
         //ResourceRescale(resources[Random.Range(0, resources.Count)]);
 
         InvokeRepeating("spawnFasterFire", 0.0f, powerUpSpawnTime);
