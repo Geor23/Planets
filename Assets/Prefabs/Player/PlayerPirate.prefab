@@ -434,11 +434,8 @@ MonoBehaviour:
   offset: {x: 0, y: 0, z: 0}
   clampToScreen: 0
   clampBorderSize: 0.05
-  cameraToUse1: {fileID: 2073808, guid: 2d1995fadd0c04b3eab52ed051bc1936, type: 2}
-  cameraToUse2: {fileID: 2081110, guid: 2d1995fadd0c04b3eab52ed051bc1936, type: 2}
-  myLayerMask:
-    serializedVersion: 2
-    m_Bits: 1
+  useMainCamera: 0
+  cameraToUse: {fileID: 2083584, guid: 7dc54a31299ac4abd87316f438f5f103, type: 2}
 --- !u!114 &11473316
 MonoBehaviour:
   m_ObjectHideFlags: 1
