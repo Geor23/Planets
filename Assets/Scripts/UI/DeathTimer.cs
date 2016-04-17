@@ -8,7 +8,6 @@ public class DeathTimer : MonoBehaviour {
 	float timeLeft = 3;
 	Text deathTimerText;
 	public Text deathText;
-	public Camera mainCamera;
 
 	void Start(){
 		deathTimerText = GetComponent<Text>();
@@ -22,7 +21,7 @@ public class DeathTimer : MonoBehaviour {
 				deathTimerText.enabled = false;
 				deathText.enabled = false;
 				ClientScene.AddPlayer(NetworkManager.singleton.client.connection, 0);
-				mainCamera.enabled = false;
+				GameObject.Find("MainCamera").GetComponent<Camera>().enabled = false;
 				timeLeft = 3;
 			}
 		}
