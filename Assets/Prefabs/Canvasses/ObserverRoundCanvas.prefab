@@ -63,7 +63,7 @@ GameObject:
   - 222: {fileID: 22213184}
   - 114: {fileID: 11426106}
   m_Layer: 5
-  m_Name: KillFeed
+  m_Name: observerKillFeed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -148,7 +148,7 @@ GameObject:
   - 222: {fileID: 22298572}
   - 114: {fileID: 11464758}
   m_Layer: 5
-  m_Name: LatestKill
+  m_Name: observerLatestKill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -165,7 +165,6 @@ GameObject:
   - 223: {fileID: 22382960}
   - 114: {fileID: 11419912}
   - 114: {fileID: 11442416}
-  - 114: {fileID: 11484262}
   m_Layer: 5
   m_Name: ObserverRoundCanvas
   m_TagString: Untagged
@@ -330,7 +329,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Before that Tilo popped Andrew
+  m_Text: '
+
+'
 --- !u!114 &11442416
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -486,25 +487,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 'Team Pirates:'
---- !u!114 &11484262
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 198112}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9f2e0644dd64406f8878e61a38ff424, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  teamAScore: {fileID: 11415558}
-  teamBScore: {fileID: 11457888}
-  scoreText: {fileID: 0}
-  piratesWin: {fileID: 11463546}
-  superCorpWin: {fileID: 11401368}
-  idImgPir: {fileID: 0}
-  idImgSup: {fileID: 0}
-  killFeed: {fileID: 11426106}
 --- !u!114 &11486604
 MonoBehaviour:
   m_ObjectHideFlags: 1
