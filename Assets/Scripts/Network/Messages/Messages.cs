@@ -4,14 +4,6 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Networking;
 
-enum TeamID : int {
-  TEAM_NEUTRAL = -2,
-  TEAM_OBSERVER = -1, 
-  TEAM_PIRATES = 0,
-  TEAM_SUPERCORP = 1
-};
-
-
 class Msgs : MsgType {
 
   public const short clientJoinMsg = 50;
