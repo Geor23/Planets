@@ -39,7 +39,7 @@ function Update () {
 	} else {
 
 		// var rayToCameraPos: Ray = new Ray(thisTransform.position, camTransform1.position-thisTransform.position);
-		var dir = target.position - camTransform.position;
+		// var dir = target.position - camTransform.position;
 		// if(Physics.Raycast(camTransform1.position, dir, hitInfo, 1000, myLayerMask)) {
 		    //Debug.Log("on the other side of cam1");
 		    thisTransform.position = cam.WorldToViewportPoint(target.position + offset);
