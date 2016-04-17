@@ -419,9 +419,9 @@ public class PlanetsNetworkManager : NetworkManager {
 		}
 	}
 
-
-	// called when a network error occurs
-	// public override void OnServerError(NetworkConnection conn, int errorCode);
+	public override void OnServerError(NetworkConnection conn, int errorCode){
+		Debug.LogError("OnServerError with connection " + conn + ", error code: " + errorCode);
+	}
 	
 	/*
     Client functions */
@@ -442,7 +442,9 @@ public class PlanetsNetworkManager : NetworkManager {
 
 	
 	// called when a network error occurs
-	//public override void OnClientError(NetworkConnection conn, int errorCode);
+	public override void OnClientError(NetworkConnection conn, int errorCode){
+		Debug.LogError("OnClientError with connection " + conn + ", error code: " + errorCode);
+	}
 	
 	// called when told to be not-ready by a server
 	//public override void OnClientNotReady(NetworkConnection conn);
