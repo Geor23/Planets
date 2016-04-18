@@ -48,6 +48,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
         public Transform planet;
         public Transform model;
         public Transform turret;
+        private Rigidbody rb;
 
 
         public Camera mainCamera;
@@ -61,21 +62,20 @@ namespace UnityStandardAssets.CrossPlatformInput {
         private float lastMoveV;
         private float lastMoveH;
 
-        public ResourcePowerUpManager resourcePowerUpManager;
-        public RoundPlayerObjectManager roundPlayerObjectManager;
+        public PlayerDetails playerDetails;
 
-        Rigidbody rb;
-
+        private ResourcePowerUpManager resourcePowerUpManager;
+        private RoundPlayerObjectManager roundPlayerObjectManager;
         private RoundEvents roundEvents; //Contains reference to RoundEventsManager object
 
         void Start() {
             nIdentity = GetComponent<NetworkIdentity>();
             nm = (PlanetsNetworkManager)NetworkManager.singleton;
             rb = GetComponent<Rigidbody>();
-            roundEvents = GameObject.Find("RoundEvents").GetComponent<RoundEvents>(); //Sets reference to RoundEvents object
-            resourcePowerUpManager = GameObject.FindGameObjectWithTag("Planet").GetComponent<ResourcePowerUpManager>();
             invertControls = nm.isSplitScreen();
             reflectionMatrix = genRefMatrix(90 * Mathf.Deg2Rad);
+            roundEvents = GameObject.Find("RoundEvents").GetComponent<RoundEvents>(); //Sets reference to RoundEvents object
+            resourcePowerUpManager = GameObject.FindGameObjectWithTag("Planet").GetComponent<ResourcePowerUpManager>();
             needsReflection = gameObject.CompareTag("PlayerSuperCorp");
         }
 
@@ -224,15 +224,17 @@ namespace UnityStandardAssets.CrossPlatformInput {
             else if (col.gameObject.CompareTag("ProjectilePirate") && gameObject.CompareTag("PlayerSuperCorp")) {
                 if ((hasCollide == false) && (shielded == false)) {
                     hasCollide = true;
+                    int killerId = col.gameObject.GetComponent<ProjectileData>().ownerId;
                     Destroy(col.gameObject);
-                    //TODO
+                    roundEvents.registerKill(playerDetails.getDictId(), killerId);
                 }
             }
             else if (col.gameObject.CompareTag("ProjectileSuperCorp") && gameObject.CompareTag("PlayerPirate")) {
                 if ((hasCollide == false) && (shielded == false)) {
                     hasCollide = true;
+                    int killerId = col.gameObject.GetComponent<ProjectileData>().ownerId;
                     Destroy(col.gameObject);
-                    //TODO
+                    roundEvents.registerKill(playerDetails.getDictId(), killerId);
                 }
             }
         else if (col.gameObject.CompareTag("ResourcePickUp")) { //Dealt with on the resource currently
@@ -306,6 +308,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
             GameObject projectile = Instantiate(projectileModel) as GameObject;
             projectile.GetComponent<Transform>().position = rb.position + turret.forward;
             projectile.GetComponent<ProjectileMovement>().setDirection(turret.forward);
+            projectile.GetComponent<ProjectileData>().ownerId = playerDetails.getDictId();
             Destroy(projectile, 2);
         }
 

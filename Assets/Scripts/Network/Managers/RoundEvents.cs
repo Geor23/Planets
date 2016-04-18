@@ -43,8 +43,8 @@ public class RoundEvents : MonoBehaviour {
         return sm;
     }
 
-    public void playerDeath(int playerKilledId, int playerKillerId){
-        //TODO
+    public void registerKill(int playerKilledId, int playerKillerId){
+        pom.killPlayerLocal(playerKilledId, playerKillerId);
     }
 
 

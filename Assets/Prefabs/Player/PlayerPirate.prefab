@@ -501,20 +501,16 @@ MonoBehaviour:
   doubleScore: 0
   speed: 1.5
   rotSpeed: 12
+  projectileModel: {fileID: 160548, guid: 823fb5d2b403d4d4cbaf79c62f7342d8, type: 2}
+  shield: {fileID: 126432, guid: a23682b793533f6488eb51aa72925236, type: 2}
+  ResourcePickUp: {fileID: 116834, guid: 976667ad8326a483eaa9c21ec560f8b2, type: 2}
   planet: {fileID: 495726, guid: 45efd7c7e513e4b29a58c3f9dde560bf, type: 2}
   model: {fileID: 453450}
   turret: {fileID: 404412}
-  winText: {fileID: 0}
-  id: {fileID: 0}
-  deathText: {fileID: 0}
-  deathTimerText: {fileID: 0}
-  ResourcePickUp: {fileID: 116834, guid: 976667ad8326a483eaa9c21ec560f8b2, type: 2}
   mainCamera: {fileID: 0}
   obsCamera: {fileID: 475270, guid: 5d633392a34c14108aad562f21512f74, type: 2}
   planetCenter: {x: 0, y: 0, z: 0}
-  projectileModel: {fileID: 160548, guid: 823fb5d2b403d4d4cbaf79c62f7342d8, type: 2}
-  shield: {fileID: 126432, guid: a23682b793533f6488eb51aa72925236, type: 2}
-  resourcePowerUpManager: {fileID: 0}
+  playerDetails: {fileID: 11416008}
 --- !u!114 &11489970
 MonoBehaviour:
   m_ObjectHideFlags: 1
