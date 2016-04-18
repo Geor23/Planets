@@ -47,43 +47,30 @@ public class ResourcePowerUpManager : MonoBehaviour {
 
     public float meteorSpawnTime = 5.5f;
 
-
-    // Use this for initialization
     void Start() {
-
         resources = new List<GameObject>();
         fasterFire = new List<GameObject>();
         doubleScore = new List<GameObject>();
         shields = new List<GameObject>();
         meteor = new List<GameObject>();
 
-
         //Spawn Resources, Power Ups and Meteors and initialize lists 
 
         InvokeRepeating("spawnResource",0.0f, resourceSpawnTime);
-        //InvokeRepeating("UpdateValue", 1, 1);
-        //ResourceRescale(resources[Random.Range(0, resources.Count)]);
+        InvokeRepeating("UpdateRandomResourceScoreValue", 1, 1);
 
         InvokeRepeating("spawnFasterFire", 0.0f, powerUpSpawnTime);
         InvokeRepeating("spawnDoubleScore", 0.0f, powerUpSpawnTime);
         InvokeRepeating("spawnShield", 0.0f, powerUpSpawnTime);
 
-       // InvokeRepeating("spawnMeteor", 0.0f, meteorSpawnTime);
+       //InvokeRepeating("spawnMeteor", 0.0f, meteorSpawnTime);
     }
 
-    public int getScore() {
-        return initialScore;
-    }
-
-    public void setScore(int scoreToSet) {
-        initialScore = scoreToSet;
-        ResourceRescale(resources[Random.Range(0, resources.Count)]);
-    }
-
-    void UpdateValue()  {
-        initialScore += 1;
-        if (initialScore > 2 * maxResourceScore) { initialScore = 2 * maxResourceScore; }
-        ResourceRescale(resources[Random.Range(0, resources.Count)]);
+    void UpdateRandomResourceScoreValue()  {
+        int resourceID = Random.Range(0, resources.Count);
+        resources[resourceID].GetComponent<ResourceScore>().resourceScore += 1;
+        if (resources[resourceID].GetComponent<ResourceScore>().resourceScore > 2 * maxResourceScore) { initialScore = 2 * maxResourceScore; }
+        ResourceRescale(resources[resourceID]);
     }
 
     void ResourceRescale(GameObject resourceGameObject) {
@@ -143,6 +130,7 @@ public class ResourcePowerUpManager : MonoBehaviour {
         meteor.Remove(gameObject);
     }
 
+    //Review way it updates resource score value
     void spawnResource() {
         for (int i = resources.Count; i < maxResourceOnPlanet; i++) {
             int spawnIndex = Random.Range(0, resourceSpawnPoints.Length);
