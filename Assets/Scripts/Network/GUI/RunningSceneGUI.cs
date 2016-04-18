@@ -38,7 +38,7 @@ public class RunningSceneGUI : MonoBehaviour {
         } else if (PlayerConfig.singleton.getTeam()==1){
 			idImgSup.gameObject.SetActive(true);
 			idImgPir.gameObject.SetActive(false);
-        } else { //observers should not see this
+        } else { 
         	idImgSup.gameObject.SetActive(false);
 			idImgPir.gameObject.SetActive(false);
         }
@@ -54,7 +54,7 @@ public class RunningSceneGUI : MonoBehaviour {
 	public void OnClientReceiveScores(NetworkMessage msg) {
 
 		TeamScore tl = msg.ReadMessage<TeamScore>(); 
-		if (tl.team == 0) { // if we received team pirates
+		if (tl.team == TeamID.TEAM_PIRATES) { // if we received team pirates
 
 			teamA = tl.score;
 			if (teamA > teamB ) {
@@ -64,10 +64,9 @@ public class RunningSceneGUI : MonoBehaviour {
 				piratesWin.gameObject.SetActive(false);
 				superCorpWin.gameObject.SetActive(true);
 			}
-      		//update accordingly
 			teamAScore.text = tl.score.ToString();
 
-		} else if (tl.team == 1) {  // if we received team super-corp 
+		} else if (tl.team == TeamID.TEAM_SUPERCORP) {  // if we received team super-corp 
 			teamB = tl.score;
 			if (teamA < teamB ) {
 				piratesWin.gameObject.SetActive(false);

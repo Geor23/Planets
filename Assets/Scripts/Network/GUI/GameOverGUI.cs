@@ -25,22 +25,13 @@ public class GameOverGUI : MonoBehaviour {
 
 	public void OnClientReceiveTeamList(NetworkMessage msg){
 		TeamList tl = msg.ReadMessage<TeamList>(); 
-		if (tl.team == 0) { // if we received team pirates
-
-      //update accordingly
+		if (tl.team == TeamID.TEAM_PIRATES) { // if we received team pirates
 			teamP.text = tl.teamList;
-
-		} else if (tl.team == 1) {  // if we received team super-corp 
-
-      // update accordingly
+		} else if (tl.team == TeamID.TEAM_SUPERCORP) {  // if we received team super-corp 
 			teamS.text = tl.teamList;
-
 		} else {
-
 			Debug.LogError("ERROR[OnClientReceiveTeamList] : Received wrong team ");
-
 		}
-
 	}
 
 

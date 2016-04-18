@@ -38,36 +38,25 @@ public class RoundOverGUI : MonoBehaviour {
         time = tm.time;
         Debug.Log(time);
         timer.text = time.ToString();
-       
     }
 
     void Update(){
         time -= Time.deltaTime;
         if (time > 0){
-            timer.text = time.ToString().Substring(0, 3);
-        } else {
-            //textField.text = "Round ending...";
+            timer.text = ((int)time).ToString();
         }
     }
 
 	public void OnClientReceiveTeamList(NetworkMessage msg){
 		TeamList tl = msg.ReadMessage<TeamList>(); 
-		if (tl.team == 0) { // if we received team pirates
-
-      //update accordingly
+		if (tl.team == TeamID.TEAM_PIRATES) {
 			teamP.text = tl.teamList;
 
-		} else if (tl.team == 1) {  // if we received team super-corp 
-
-      // update accordingly
+		} else if (tl.team == TeamID.TEAM_SUPERCORP) {
 			teamS.text = tl.teamList;
-
 		} else {
-
 			Debug.LogError("ERROR[OnClientReceiveTeamList] : Received wrong team ");
-
 		}
-
 	}
 
 
