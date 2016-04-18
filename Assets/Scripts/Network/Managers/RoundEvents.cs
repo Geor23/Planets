@@ -1,7 +1,11 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
-using System;
+using System.Net;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.Networking;
+using UnityEngine.UI;
+
 
 //All classes are per round
 //We can make other classes for data that needs to persist across rounds like full game stats etc...
@@ -11,7 +15,7 @@ using System;
 public class RoundEvents : MonoBehaviour {
     public RoundPlayerObjectManager pom;
     public RoundScoreManager sm;
-    public PlayerManager pm
+    public PlayerManager pm;
 
     void Start(){
         pm = PlayerManager.singleton;
@@ -39,7 +43,7 @@ public class RoundEvents : MonoBehaviour {
         return sm;
     }
 
-    public void playerDeath(int playerKilledId, int playerKilledId){
+    public void playerDeath(int playerKilledId, int playerKillerId){
         //TODO
     }
 

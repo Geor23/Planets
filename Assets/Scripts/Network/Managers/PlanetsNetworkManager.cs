@@ -98,6 +98,8 @@ public class PlanetsNetworkManager : NetworkManager {
     	dict = new Dictionary<int, PlayerData>();
     	updateListeners = new HashSet<NetworkConnection>();
     	observingListeners = new HashSet<NetworkConnection>();
+
+        //TOCHANGE
     	roundList = new List<string>();
     	roundList.Add("Round1");
         roundList.Add("RoundOver");
@@ -110,6 +112,8 @@ public class PlanetsNetworkManager : NetworkManager {
 
     public void Update(){
     	if(!NetworkServer.active) return;
+
+        // TO CHANGE
 
     	if ( NetworkManager.networkSceneName == "RoundOver" ) {
     		timerRound -= Time.deltaTime;
@@ -143,84 +147,85 @@ public class PlanetsNetworkManager : NetworkManager {
 	// register needed handlers when server starts
   	public override void OnStartServer() {
 
+        // to change
 	    base.OnStartServer();
 	    NetworkServer.RegisterHandler(Msgs.clientJoinMsg, OnServerRecieveName);
 	    NetworkServer.RegisterHandler(Msgs.clientTeamMsg, OnServerRecieveTeamChoice);
 	    NetworkServer.RegisterHandler(Msgs.startGame, OnServerStartGame);
-	    NetworkServer.RegisterHandler(Msgs.requestTeamMsg, OnServerRecieveTeamRequest);
-	   	NetworkServer.RegisterHandler(Msgs.requestFinalScores, OnServerRecieveFinalScoresRequest);
-	    NetworkServer.RegisterHandler(Msgs.clientTeamScore, OnServerRecieveScore);
-	    NetworkServer.RegisterHandler(Msgs.requestTeamScores, OnServerRecieveTeamScoresRequest);
+	    //NetworkServer.RegisterHandler(Msgs.requestTeamMsg, OnServerRecieveTeamRequest);
+	   	//NetworkServer.RegisterHandler(Msgs.requestFinalScores, OnServerRecieveFinalScoresRequest);
+	    //NetworkServer.RegisterHandler(Msgs.clientTeamScore, OnServerRecieveScore);
+	    //etworkServer.RegisterHandler(Msgs.requestTeamScores, OnServerRecieveTeamScoresRequest);
 	    NetworkServer.RegisterHandler(Msgs.requestCurrentTime, OnServerRecieveTimeRequest);
-	    NetworkServer.RegisterHandler(Msgs.clientKillFeed, OnServerRecieveKill);
-	    NetworkServer.RegisterHandler(Msgs.deathResourceCollision, OnServerRecieveDeathResourceCollision);
-	    NetworkServer.RegisterHandler(Msgs.requestName, OnServerSendName);
-	    NetworkServer.RegisterHandler(Msgs.killPlayer, OnKillPlayer);
-     NetworkServer.RegisterHandler(Msgs.updatePlayer, OnPlayerUpdate);
-     NetworkServer.RegisterHandler(Msgs.addNewPlayer, OnNewPlayer);
+	    //NetworkServer.RegisterHandler(Msgs.clientKillFeed, OnServerRecieveKill);
+	    //NetworkServer.RegisterHandler(Msgs.deathResourceCollision, OnServerRecieveDeathResourceCollision);
+	    //NetworkServer.RegisterHandler(Msgs.requestName, OnServerSendName);
+	    //NetworkServer.RegisterHandler(Msgs.killPlayer, OnKillPlayer);
+        NetworkServer.RegisterHandler(Msgs.updatePlayer, OnPlayerUpdate);
+        NetworkServer.RegisterHandler(Msgs.addNewPlayer, OnNewPlayer);
     }
 
-    //Sends the player's name back to them upon request
-    public void OnServerSendName(NetworkMessage msg){
-    	int id = IDFromConn(msg.conn);
-    	Name tl = new Name();
-        tl.name = dict[id].name;
-        tl.id = dict[id].uniqueId;
-        NetworkServer.SendToClient(id, Msgs.serverName, tl);
-    }
+    // //Sends the player's name back to them upon request
+    // public void OnServerSendName(NetworkMessage msg){
+    // 	int id = IDFromConn(msg.conn);
+    // 	Name tl = new Name();
+    //     tl.name = dict[id].name;
+    //     tl.id = dict[id].uniqueId;
+    //     NetworkServer.SendToClient(id, Msgs.serverName, tl);
+    // }
 
-    //Adds deaths to kill feed
-    public void OnServerRecieveKill(NetworkMessage netMsg){
-    	Kill sc = netMsg.ReadMessage<Kill>();
-    	addToKillFeed(sc.msg);
-    }
+    // //Adds deaths to kill feed
+    // public void OnServerRecieveKill(NetworkMessage netMsg){
+    // 	Kill sc = netMsg.ReadMessage<Kill>();
+    // 	addToKillFeed(sc.msg);
+    // }
 
     //Part of above
-    public void addToKillFeed(string killToAdd){
-    	killFeed += "\n" + killToAdd;
-    	sendKillFeed();
-    }
+  //   public void addToKillFeed(string killToAdd){
+  //   	killFeed += "\n" + killToAdd;
+  //   	sendKillFeed();
+  //   }
 
-    //^^
-    public void sendKillFeed() {
-    	Kill tl = new Kill();
-		tl.msg = killFeed;
-		foreach (NetworkConnection conn in NetworkServer.connections) {
-			int id = IDFromConn(conn);
-			if (dict[id].team == TeamID.TEAM_OBSERVER) {
-				NetworkServer.SendToClient(id, Msgs.serverKillFeed, tl);
-			}
-		}
-    }
+  //   //^^
+  //   public void sendKillFeed() {
+  //   	Kill tl = new Kill();
+		// tl.msg = killFeed;
+		// foreach (NetworkConnection conn in NetworkServer.connections) {
+		// 	int id = IDFromConn(conn);
+		// 	if (dict[id].team == TeamID.TEAM_OBSERVER) {
+		// 		NetworkServer.SendToClient(id, Msgs.serverKillFeed, tl);
+		// 	}
+		// }
+  //   }
 
 
-    public void OnServerRecieveFinalScoresRequest(NetworkMessage netMsg){
-    	RoundScores sc = roundManager.getFinalScores();
-		sendFinalScores(sc);	
-    }
+  //   public void OnServerRecieveFinalScoresRequest(NetworkMessage netMsg){
+  //   	RoundScores sc = roundManager.getFinalScores();
+		// sendFinalScores(sc);	
+  //   }
 
-    public void sendFinalScores(RoundScores sc){
-        FinalScores tl = new FinalScores();
-        tl.round1P = sc.pirateScore[0];
-        tl.round1S = sc.superCorpScore[0];
-        if (roundManager.getRoundId() == 3){
-            tl.round2P = sc.pirateScore[1];
-            tl.round2S = sc.superCorpScore[1];
-        } else {
-            tl.round2P = -1;
-            tl.round2S = -1;
-        }
+  //   public void sendFinalScores(RoundScores sc){
+  //       FinalScores tl = new FinalScores();
+  //       tl.round1P = sc.pirateScore[0];
+  //       tl.round1S = sc.superCorpScore[0];
+  //       if (roundManager.getRoundId() == 3){
+  //           tl.round2P = sc.pirateScore[1];
+  //           tl.round2S = sc.superCorpScore[1];
+  //       } else {
+  //           tl.round2P = -1;
+  //           tl.round2S = -1;
+  //       }
 
-        if (roundManager.getFinishedState() == 1){
-            tl.round3P = sc.pirateScore[2];
-            tl.round3S = sc.superCorpScore[2];
-        }else{
-            tl.round3P = -1;
-            tl.round3S = -1;
-        }
-        NetworkServer.SendToAll(Msgs.serverFinalScores, tl);
+  //       if (roundManager.getFinishedState() == 1){
+  //           tl.round3P = sc.pirateScore[2];
+  //           tl.round3S = sc.superCorpScore[2];
+  //       }else{
+  //           tl.round3P = -1;
+  //           tl.round3S = -1;
+  //       }
+  //       NetworkServer.SendToAll(Msgs.serverFinalScores, tl);
 
-    }
+  //   }
 
     //REPLACE
     //This function sends the current in-game time to the client requesting time.
@@ -244,58 +249,58 @@ public class PlanetsNetworkManager : NetworkManager {
     }
 
     // when the client requests teams lists, send
-	public void OnServerRecieveTeamScoresRequest(NetworkMessage msg) {
-        TeamScore tl = new TeamScore();
-        tl.team = TeamID.TEAM_PIRATES;
-        tl.score = (int)teamManager.getScore(0);
-        NetworkServer.SendToClient(IDFromConn(msg.conn), Msgs.serverTeamScore, tl);
-        tl.team = 1;
-        tl.score = (int)teamManager.getScore(1);
-        NetworkServer.SendToClient(IDFromConn(msg.conn), Msgs.serverTeamScore, tl);
+	// public void OnServerRecieveTeamScoresRequest(NetworkMessage msg) {
+ //        TeamScore tl = new TeamScore();
+ //        tl.team = TeamID.TEAM_PIRATES;
+ //        tl.score = (int)teamManager.getScore(0);
+ //        NetworkServer.SendToClient(IDFromConn(msg.conn), Msgs.serverTeamScore, tl);
+ //        tl.team = 1;
+ //        tl.score = (int)teamManager.getScore(1);
+ //        NetworkServer.SendToClient(IDFromConn(msg.conn), Msgs.serverTeamScore, tl);
 
-    }
+ //    }
 
-  	public void OnServerRecieveScore(NetworkMessage msg) {
-  		// read the message
-	  	AddScore sc = msg.ReadMessage<AddScore>();
-    int id = sc.obj.GetComponent<NetworkIdentity>().connectionToClient.connectionId;
-    Debug.Log("team: " + dict[id].team);
-	  	teamManager.addScore(sc.score, dict[id].team);
+  	// public void OnServerRecieveScore(NetworkMessage msg) {
+  	// 	// read the message
+	  // 	AddScore sc = msg.ReadMessage<AddScore>();
+   //  int id = sc.obj.GetComponent<NetworkIdentity>().connectionToClient.connectionId;
+   //  Debug.Log("team: " + dict[id].team);
+	  // 	teamManager.addScore(sc.score, dict[id].team);
 
-	  	// send to everyone the updated team score
-	  	sendScore(dict[id].team);
-        if (sc.score > 0){ //If scoring not dying...
-            UpdateLocalScore ls = new UpdateLocalScore();
-            ls.score = sc.score;
-            NetworkServer.SendToClient(id, Msgs.updateLocalScore, ls);
-        }
-    }
+	  // 	// send to everyone the updated team score
+	  // 	sendScore(dict[id].team);
+   //      if (sc.score > 0){ //If scoring not dying...
+   //          UpdateLocalScore ls = new UpdateLocalScore();
+   //          ls.score = sc.score;
+   //          NetworkServer.SendToClient(id, Msgs.updateLocalScore, ls);
+   //      }
+   //  }
 
 
-    public void OnServerRecieveDeathResourceCollision(NetworkMessage msg){
-        // read the message
-        DeathResource dr = msg.ReadMessage<DeathResource>();
-        int id = IDFromConn(msg.conn);
-        GameObject resource = dr.drID;
-        Debug.Log("team: " + dict[id].team);
-        // add the score to the correct team
-        int score = int.Parse(resource.GetComponent<Text>().text);
-        teamManager.addScore(score, dict[id].team);
-        Destroy(resource);
-        // send to everyone the updated team score
-        sendScore(dict[id].team);
-        UpdateLocalScore sc = new UpdateLocalScore();
-        sc.score = score;
-        NetworkServer.SendToClient(IDFromConn(msg.conn), Msgs.updateLocalScore, sc);
-    }
+    // public void OnServerRecieveDeathResourceCollision(NetworkMessage msg){
+    //     // read the message
+    //     DeathResource dr = msg.ReadMessage<DeathResource>();
+    //     int id = IDFromConn(msg.conn);
+    //     GameObject resource = dr.drID;
+    //     Debug.Log("team: " + dict[id].team);
+    //     // add the score to the correct team
+    //     int score = int.Parse(resource.GetComponent<Text>().text);
+    //     teamManager.addScore(score, dict[id].team);
+    //     Destroy(resource);
+    //     // send to everyone the updated team score
+    //     sendScore(dict[id].team);
+    //     UpdateLocalScore sc = new UpdateLocalScore();
+    //     sc.score = score;
+    //     NetworkServer.SendToClient(IDFromConn(msg.conn), Msgs.updateLocalScore, sc);
+    // }
 
     // send the team list of players to all clients
-    public void sendScore(int team) {
-		TeamScore tl = new TeamScore();
-		tl.team = (int) team;
-		tl.score = (int) teamManager.getScore(team);
-		NetworkServer.SendToAll(Msgs.serverTeamScore, tl);
-	}
+ //    public void sendScore(int team) {
+	// 	TeamScore tl = new TeamScore();
+	// 	tl.team = (int) team;
+	// 	tl.score = (int) teamManager.getScore(team);
+	// 	NetworkServer.SendToAll(Msgs.serverTeamScore, tl);
+	// }
 
 	public void OnServerRecieveName(NetworkMessage msg) {  
 	    JoinMessage joinMsg = msg.ReadMessage<JoinMessage>();
@@ -388,11 +393,11 @@ public class PlanetsNetworkManager : NetworkManager {
 	}
 
  //Send message to the Player to request the player object to be deleted
- public void OnKillPlayer(NetworkMessage msg) {
-        KillPlayer kp = msg.ReadMessage<KillPlayer>();
-        int id = kp.obj.GetComponent<NetworkIdentity>().connectionToClient.connectionId;
-        NetworkServer.SendToClient(id, Msgs.killPlayerRequestClient, kp);
-    }
+ // public void OnKillPlayer(NetworkMessage msg) {
+ //        KillPlayer kp = msg.ReadMessage<KillPlayer>();
+ //        int id = kp.obj.GetComponent<NetworkIdentity>().connectionToClient.connectionId;
+ //        NetworkServer.SendToClient(id, Msgs.killPlayerRequestClient, kp);
+ //    }
 
 
 	// called when a client disconnects
@@ -471,7 +476,7 @@ public class PlanetsNetworkManager : NetworkManager {
 		GameObject player = playerController.gameObject;
 		if (player != null){
 			int id = IDFromConn(conn);
-			sendScore(dict[id].team);
+			//sendScore(dict[id].team);
 			if (playerController.unetView != null){
 				NetworkServer.Destroy(player);
 				Debug.LogError("OnServerRemovePlayer: Destroying player"); // We shall finish our business on slack plz :)
