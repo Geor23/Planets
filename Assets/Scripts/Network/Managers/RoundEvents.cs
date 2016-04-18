@@ -3,11 +3,37 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
+//All classes are per round
+//We can make other classes for data that needs to persist across rounds like full game stats etc...
+
 public class RoundEvents : MonoBehaviour {
+
+    public RoundPlayerObjectManager pom;
+    public RoundScoreManager sm;
+
     void Start(){
-        //Register handlers
+        pom = new RoundPlayerObjectManager();
+        sm = new RoundScoreManager();
     }
 
+    //These can be called inside the playercontroller mobile so that we can tap int othe object manager functionality
+
+    public RoundPlayerObjectManager getRoundPlayerObjectManager(){
+        return pom;
+    }
+
+
+    //Same as above, except for scores
+    public RoundScoreManager getRoundScoreManager(){
+        return sm;
+    }
+
+    public void relayDataToServer(){
+        //Call functons inside ObjectManager/ScoreManager respectively to sync them together
+        //Possibly called at the end of the round
+        pom.relayDataToServer();
+        sm.relayDataToServer();
+    }
     
 }
 
@@ -18,11 +44,25 @@ public class RoundEvents : MonoBehaviour {
 //CHANGE means adjustements are made even if the function works as implemented
 /// </summary>
 
+public class KillHistory {
+    public int playerKiller;
+    public int playerKilled;
+    public int time;
+}
 
 
 //Spawn+Death manager maybe?
-public class SpawnsDeathsManager
+//Use to manage player objects on the local side, with functionality to request server to 
+public class RoundPlayerObjectManager
 { //WIP
+
+    private List<int> deadPlayers;
+    private List<KillHistory> killHistory;
+
+    public RoundPlayerObjectManager(){
+        deadPlayers = new List<int>();
+        killHistory = new List<KillHistory>();
+    }
 
     //Spawns player with the supplied Id. Currently done on server, maybe do on Observer if we remove networked objects
     public void spawnPlayerServer(int playerId)
@@ -31,28 +71,45 @@ public class SpawnsDeathsManager
     }
 
     //Kills player, potentially starts timer for respawn too
-    public void killPlayerLocal(int playerId)
+    public void killPlayerLocal(int playerIdKilled, int playerIdKiller)
     { //WIP
         //Remove game object locally
         //Remove score (call below stuff)
     }
 
     //Kills player, potentially starts timer for respawn too
-    public void killPlayerServer(int playerId)
+    public void killPlayerServer(int playerId, int playerIdKiller)
     { //WIP
         //Remove game object locally
         //Remove score (call below stuff)
+    }
+
+    public void relayDataToServer(){
+            //ToDO
     }
 }
 
 //Deals with scores of players. Scoring/loss of score by death (overlap with above). Potentially stores individual scores as they'll pass through anyway.
 //Deals with both Observers sending scores, and the Server passing scores to clients/recieving and storing them.
-public class ScoreManager
+public class RoundScoreManager
 { //WIP
     int pirateScore;
     int superScore;
     //List of players/their scores potentially
+    private Dictionary<int, int> playerScores;
 
+    public RoundScoreManager(){
+        playerScores = new Dictionary<int, int>();
+    }
+
+
+    public void increasePlayerScore(int playerId, int score) {
+        //ToDO
+    }
+
+    public void decreasePlayerScore(int playerId, int score){
+        //ToDO
+    }
 
     //Request to add/remove score
     public void ChangeScoreServer(int playerId, int scoreChange)
@@ -64,6 +121,10 @@ public class ScoreManager
     public int sendScoreClient()
     { //WIP
         return 0; //Will return score
+    }
+
+    public void relayDataToServer(){
+        //ToDO
     }
 }
 
