@@ -12,8 +12,14 @@ public class Player {
     private int playerTeam;
     private bool isConnected;
 
-    public Player (){
-
+    public Player (int dictVal, int conn, string playIP, string playName){
+        playerDictVal = dictVal;
+        connVal = conn;
+        playerIP = playIP;
+        playerName = playName;
+        playerScore = 0;
+        playerTeam = TeamID.TEAM_NEUTRAL; //Unassigned team, not an observer
+        isConnected = true;
     }
 
     public int getPlayerId() {
@@ -50,6 +56,10 @@ public class Player {
 
     public void setConnValue(int conn) {
         connVal = conn;
+    }
+
+    public void setPlayerName(string name) {
+        playerName = name;
     }
 
 }
