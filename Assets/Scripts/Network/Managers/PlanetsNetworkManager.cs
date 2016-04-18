@@ -46,19 +46,18 @@ public class PlanetsNetworkManager : NetworkManager {
     [SerializeField] GameObject observerSplitScreen;
     TeamManager teamManager = new TeamManager();
 	RoundManager roundManager = new RoundManager();
+  	
+    private List<string> roundList;
+  	private Dictionary<int, PlayerData> dict;
+  	public HashSet<NetworkConnection> updateListeners;
+  	public HashSet<NetworkConnection> observingListeners;
 
+  	public bool onlyUpdateObservers = false;
+  	public bool usingSplitScreen = false;
     public int key = 0;
     public string round1Scene; //Round 1 name
     private float timerRound = Const.INITIALTIMER; //This is the time communicated to clients
     public bool timerOn = true;
-  	private List<string> roundList;
-
-  	/* Server Data */
-  	private Dictionary<int, PlayerData> dict;
-  	public HashSet<NetworkConnection> updateListeners;
-  	public HashSet<NetworkConnection> observingListeners;
-  	public bool onlyUpdateObservers = false;
-  	public bool usingSplitScreen = false;
 
     public PlayerManager pm;
 
