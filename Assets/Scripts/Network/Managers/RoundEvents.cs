@@ -19,6 +19,14 @@ public class RoundEvents : MonoBehaviour {
         Dictionary<int, Player> playerDict = pm.getPlayerDict();
         sm = new RoundScoreManager(playerDict);
         //Handle messages from server such as end of round signal etc. act upon them
+
+        if(NetworkClient.active){
+            //Enable client callbacks
+        }
+
+        if(NetworkServer.active){
+            //Enable server callbacks
+        }
     }
 
     //These can be called inside the playercontroller mobile so that we can tap int othe object manager functionality
