@@ -62,6 +62,10 @@ public class Player {
         connVal = conn;
     }
 
+    public int getConnValue(){
+        return connVal;
+    }
+
     public void setPlayerName(string name) {
         playerName = name;
     }

@@ -15,6 +15,10 @@ public class PlayerDetails : MonoBehaviour {
         return dictId;
     }
 
+    public int getObsId(){
+        return playerDetails.getConnValue();
+    }
+
     public string getPlayerName() {
         return playerDetails.getPlayerName();
     }

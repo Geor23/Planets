@@ -48,6 +48,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
         public Transform planet;
         public Transform model;
         public Transform turret;
+        public TextMesh tearDropId;
         private Rigidbody rb;
 
 
@@ -77,6 +78,9 @@ namespace UnityStandardAssets.CrossPlatformInput {
             roundEvents = GameObject.Find("RoundEvents").GetComponent<RoundEvents>(); //Sets reference to RoundEvents object
             resourcePowerUpManager = GameObject.FindGameObjectWithTag("Planet").GetComponent<ResourcePowerUpManager>();
             needsReflection = gameObject.CompareTag("PlayerSuperCorp");
+            Debug.Log("td" + tearDropId);
+            Debug.Log("pd" + playerDetails);
+            tearDropId.text = playerDetails.getObsId().ToString();
         }
 
         void Update() {
@@ -223,7 +227,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
             //TOFIX
             else if (col.gameObject.CompareTag("ProjectilePirate") && gameObject.CompareTag("PlayerSuperCorp")) {
                 if ((hasCollide == false) && (shielded == false)) {
-                    hasCollide = true;
+                    //hasCollide = true;
                     int killerId = col.gameObject.GetComponent<ProjectileData>().ownerId;
                     Destroy(col.gameObject);
                     roundEvents.registerKill(playerDetails.getDictId(), killerId);
@@ -231,7 +235,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
             }
             else if (col.gameObject.CompareTag("ProjectileSuperCorp") && gameObject.CompareTag("PlayerPirate")) {
                 if ((hasCollide == false) && (shielded == false)) {
-                    hasCollide = true;
+                    //hasCollide = true;
                     int killerId = col.gameObject.GetComponent<ProjectileData>().ownerId;
                     Destroy(col.gameObject);
                     roundEvents.registerKill(playerDetails.getDictId(), killerId);
