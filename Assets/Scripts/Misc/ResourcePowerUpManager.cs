@@ -103,7 +103,7 @@ public class ResourcePowerUpManager : MonoBehaviour {
     //Change function to run with the new Resource Class
     public int resourcePickUpCollision(GameObject collidedResourcePickUp) {
         //Pass score, destroy object and remove it from list 
-        int resourceScore = collidedResourcePickUp.GetComponent<ResourceScore>().resourceScore;
+        int resourceScore = collidedResourcePickUp.GetComponent<CurrentResourceScore>().resourceScore;
         Destroy(gameObject);
         resources.Remove(gameObject);
         return resourceScore;
