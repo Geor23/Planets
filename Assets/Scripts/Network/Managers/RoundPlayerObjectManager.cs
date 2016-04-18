@@ -17,12 +17,21 @@ public class RoundPlayerObjectManager { //TODO
     //Spawns player with the supplied Id. Currently done on server, maybe do on Observer if we remove networked objects
     public void spawnPlayerServer(int playerId){
 
+
     }
 
     //Kills player, potentially starts timer for respawn too
-    public void killPlayerLocal(int playerIdKilled, int playerIdKiller){ //TODO
+    //public void killPlayerLocal(int playerIdKilled, int playerIdKiller){ //TODO
+
+      public void killPlayerLocal(GameObject playerKilled,int playerIdKilled) {
         //Remove game object locally
         //Remove score (call below stuff)
+        //Called from player controller - collisions
+
+        KillPlayer kp = new KillPlayer();
+       // kp.netId = playerIdKilled;
+        kp.obj = playerKilled;
+
     }
 
     //Kills player, potentially starts timer for respawn too

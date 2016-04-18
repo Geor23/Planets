@@ -64,6 +64,8 @@ namespace UnityStandardAssets.CrossPlatformInput {
 
         public ResourcePowerUpManager resourcePowerUpManager;
 
+        public RoundPlayerObjectManager roundPlayerObjectManager;
+
         Rigidbody rb;
 
         void Start()
@@ -190,10 +192,8 @@ namespace UnityStandardAssets.CrossPlatformInput {
             
         }
 
-        void rotateObject(Transform obj, Vector3 direction)
-        {
-            if (direction.magnitude == 0)
-            {
+        void rotateObject(Transform obj, Vector3 direction) {
+            if (direction.magnitude == 0) {
                 direction = model.forward;
             }
             Vector3 upDir = (model.position - planet.position).normalized;
@@ -221,19 +221,18 @@ namespace UnityStandardAssets.CrossPlatformInput {
             }
         }
 
-        void OnCollisionEnter(Collision col){
-            if(nm.observerCollisionsOnly()){
+        void OnCollisionEnter(Collision col) {
+            if(nm.observerCollisionsOnly()) {
                 if(!PlayerConfig.singleton.GetObserver()) return;
             } else {
                 if (!nIdentity.isLocalPlayer) return;
             }
 
-            if (col.gameObject.CompareTag("DoubleScore")){
+            if (col.gameObject.CompareTag("DoubleScore")) {
                 doubleScore = true;
-                //Destroy(col.gameObject);
 
                 //Call planet manager
-                resourcePowerUpManager.resourceCollision(col.gameObject);
+                resourcePowerUpManager.powerUpCollision(col.gameObject);
 
             }
             else if (col.gameObject.CompareTag("Shield")){ //Also need to potentially create an animation here?
@@ -242,29 +241,30 @@ namespace UnityStandardAssets.CrossPlatformInput {
                 shield.transform.parent = this.transform;
                 shield.transform.position = this.transform.position;
                 shield.SetActive(true);
-                //Destroy(col.gameObject);
 
-                //Call planet manager
-                resourcePowerUpManager.resourceCollision(col.gameObject);
+                //Call planet resource  manager
+                resourcePowerUpManager.powerUpCollision(col.gameObject);
 
             }
             else if (col.gameObject.CompareTag("FasterFire")){ //Turn on faster fire rate. Still needs graphical additions
                 fasterFire = true;
-                //Destroy(col.gameObject);
+
                 //Call planet manager
-                resourcePowerUpManager.resourceCollision(col.gameObject);
+                resourcePowerUpManager.powerUpCollision(col.gameObject);
                 currentFireRate = fasterFireSpeed;
             }
 
             else if (col.gameObject.CompareTag("Meteor")) {
-                if ((hasCollide == false) && (shielded == false))
-                {
+                if ((hasCollide == false) && (shielded == false)) {
                     hasCollide = true;
-                    resourcePowerUpManager.resourceCollision(col.gameObject);
+                    resourcePowerUpManager.meteorCollision(col.gameObject);
+
+                    //Change code so that it uses Round Player Object Manager script instead
 
                     //Update kill feed
                     Text shooter = col.gameObject.GetComponent<Text>();
                     Text victim = gameObject.GetComponent<Text>();
+
                     Kill tc = new Kill();
                     tc.msg = shooter.text + " killed " + victim.text;
                     nm.client.Send(Msgs.clientKillFeed, tc);
@@ -279,13 +279,17 @@ namespace UnityStandardAssets.CrossPlatformInput {
                     nm.client.Send(Msgs.clientTeamScore, sc);
 
                     //Send death request to server, to send to Player
+                    //Call killPlayerLocal function in the round player object manager script
                     KillPlayer kp = new KillPlayer();
                     kp.netId = this.netId;
                     kp.obj = this.gameObject;
+                   
+                    //Client sends msg to server 
                     nm.client.Send(Msgs.killPlayer, kp);
+                    
+                    //roundPlayerObjectManager.killPlayerLocal(this.gameObject,this.netId);
 
                 }
-
             }
 
             else if (col.gameObject.CompareTag("ProjectilePirate") && gameObject.CompareTag("PlayerSuperCorp")){
@@ -352,21 +356,18 @@ namespace UnityStandardAssets.CrossPlatformInput {
            
             if (col.gameObject.CompareTag("ResourcePickUp")){ //Dealt with on the resource currently
 
-              //  ResourceController resProp = col.gameObject.GetComponent<ResourceController>();
-              //  int resourceScore = resProp.getScore(); //May occur after resource score updated
+                //  ResourceController resProp = col.gameObject.GetComponent<ResourceController>();
+                //  int resourceScore = resProp.getScore(); //May occur after resource score updated
 
-                int resourceScore = resourcePowerUpManager.getScore();
+                //Call planet manager
+                //Combine getting score and removing object
+                //int resourceScore = resourcePowerUpManager.getScore();
+                int resourceScore = resourcePowerUpManager.resourcePickUpCollision(col.gameObject);
 
                 if (doubleScore){ //If points are to count for double, double score
                     resourceScore *= 2;
                 }
-                
                 score += resourceScore;
-
-                //Call planet manager
-                resourcePowerUpManager.resourceCollision(col.gameObject);
-
-
 
                 /*
                 Debug.Log("SCORE IS" + score);
@@ -378,7 +379,6 @@ namespace UnityStandardAssets.CrossPlatformInput {
                 sc.obj = col.gameObject;
                 nm.client.Send(Msgs.clientTeamScore, sc);
                 */
-
             }
 
             if (col.gameObject.CompareTag("ResourcePickUpDeath")){

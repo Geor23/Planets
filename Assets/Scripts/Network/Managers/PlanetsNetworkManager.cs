@@ -102,14 +102,11 @@ public class PlanetsNetworkManager : NetworkManager {
     	observingListeners = new HashSet<NetworkConnection>();
     	roundList = new List<string>();
     	roundList.Add("Round1");
-      roundList.Add("RoundOver");
+        roundList.Add("RoundOver");
     	roundList.Add("Round2");
     	roundList.Add("RoundOver");
     	roundList.Add("Round3");
     	roundList.Add("GameOver");
-
-        //playerSpawnAreas = GameObject.FindGameObjectWithTag("Planet").GetComponent<PlayerSpawnAreas>();
-
     }
 
     public void Update(){
@@ -140,10 +137,8 @@ public class PlanetsNetworkManager : NetworkManager {
             		timerRound = Const.ROUNDOVERTIMER;
             	}
         	}
-
         } else {
           	timerRound = Const.INITIALTIMER;
-
         }
     }
 
