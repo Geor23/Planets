@@ -352,20 +352,12 @@ namespace UnityStandardAssets.CrossPlatformInput {
                 int dictId = this.GetComponent<PlayerDetails>().getDictId();
                 roundManager.GetComponent<RoundEvents>().getRoundScoreManager().increasePlayerScore(dictId, resourceScore);
 
-                    }else if (col.gameObject.CompareTag("ResourcePickUpDeath")) {
-                        DeathResourceProperties resProp = col.gameObject.GetComponent<DeathResourceProperties>();
-                        //score = score + resProp.getScore();
-                        //score = score + int.Parse(col.gameObject.GetComponent<Text>().text);
-                        Debug.Log("picked up death with score " + col.gameObject.GetComponent<Text>().text);
-                        //GetComponent<PlayerNetworkHandler>().CmdDestroyDeathResource(col.gameObject);
-                        SetScoreText();
-
-                        DeathResource dr = new DeathResource();
-                        dr.team = 0;
-                        dr.score = (int)resProp.getScore();
-                        dr.drID = col.gameObject;
-                        nm.client.Send(Msgs.deathResourceCollision, dr);
-                    }
+                }else if (col.gameObject.CompareTag("ResourcePickUpDeath")) {
+                    //int resourceScore = resourcePowerUpManager.collided(col.gameObject);
+                    int resourceScore = 1; //TODO: Make resourcePowerManager work
+                    int dictId = this.GetComponent<PlayerDetails>().getDictId();
+                    roundManager.GetComponent<RoundEvents>().getRoundScoreManager().increasePlayerScore(dictId, resourceScore);
+            }
             }
 
         void OnTriggerEnter(Collider col){
