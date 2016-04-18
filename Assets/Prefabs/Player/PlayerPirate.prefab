@@ -71,7 +71,7 @@ GameObject:
   - 222: {fileID: 22284502}
   - 132: {fileID: 13263420}
   - 114: {fileID: 11463260}
-  - 114: {fileID: 11481146}
+  - 131: {fileID: 13169670}
   m_Layer: 13
   m_Name: unId
   m_TagString: Untagged
@@ -388,10 +388,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 453450}
-  offset: {x: 0, y: 0, z: 0}
+  offset: {x: 0, y: 2, z: 0}
   clampToScreen: 1
   clampBorderSize: 0.05
-  cameraToUse: {fileID: 2006340, guid: 5d633392a34c14108aad562f21512f74, type: 2}
 --- !u!114 &11473316
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -417,33 +416,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11ca26c994b954608aeba06d7eeb4447, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &11481146
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 181750}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: ebb9a8a094de743149506f64883e89b2, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
 --- !u!114 &11486382
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -514,6 +486,25 @@ Behaviour:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 176450}
   m_Enabled: 1
+--- !u!131 &13169670
+GUITexture:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 181750}
+  m_Enabled: 1
+  m_Texture: {fileID: 2800000, guid: ebb9a8a094de743149506f64883e89b2, type: 3}
+  m_Color: {r: 0.5, g: 0.5, b: 0.5, a: 0.5}
+  m_PixelInset:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
+  m_LeftBorder: 0
+  m_RightBorder: 0
+  m_TopBorder: 0
+  m_BottomBorder: 0
 --- !u!132 &13263420
 GUIText:
   m_ObjectHideFlags: 1
@@ -573,10 +564,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 22445154}
   m_RootOrder: 1
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.49887544, y: 0.503}
+  m_AnchorMax: {x: 0.5001814, y: 0.505}
+  m_AnchoredPosition: {x: 0.015, y: 0.0057965815}
+  m_SizeDelta: {x: 0.029, y: 0.01}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22445154
 RectTransform:
