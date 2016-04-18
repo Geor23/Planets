@@ -173,14 +173,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
 #endif
                 if (Time.time < nextFire)
                     return;
-
-                string name = GetComponent<Text>().text;
-                if (!nm.observerCollisionsOnly()) {
-                    GetComponent<PlayerNetworkHandler>().CmdSpawnProjectile(rb.position + turret.forward, turret.forward, projectileModel, name);
-                } else {
-                    CmdFireProjectile();
-                }
-
+                CmdFireProjectile();
                 nextFire = Time.time + currentFireRate;
             }
         }
@@ -232,34 +225,14 @@ namespace UnityStandardAssets.CrossPlatformInput {
                 if ((hasCollide == false) && (shielded == false)) {
                     hasCollide = true;
                     Destroy(col.gameObject);
-
-                    //Update kill feed
-                    Text shooter = col.gameObject.GetComponent<Text>();
-                    Text victim = gameObject.GetComponent<Text>();
-                    Kill tc = new Kill();
-                    tc.msg = shooter.text + " killed " + victim.text;
-                    nm.client.Send(Msgs.clientKillFeed, tc);
-                    KillPlayer kp = new KillPlayer();
-                    kp.netId = this.netId;
-                    kp.obj = this.gameObject;
-                    nm.client.Send(Msgs.killPlayer, kp);
-                    //}
+                    //TODO
                 }
             }
             else if (col.gameObject.CompareTag("ProjectileSuperCorp") && gameObject.CompareTag("PlayerPirate")) {
                 if ((hasCollide == false) && (shielded == false)) {
                     hasCollide = true;
                     Destroy(col.gameObject);
-                    Text shooter = col.gameObject.GetComponent<Text>();
-                    Text victim = gameObject.GetComponent<Text>();
-                    Kill tc = new Kill();
-                    tc.msg = shooter.text + " killed " + victim.text;
-                    nm.client.Send(Msgs.clientKillFeed, tc);
-                    KillPlayer kp = new KillPlayer();
-                    kp.netId = this.netId;
-                    kp.obj = this.gameObject;
-                    nm.client.Send(Msgs.killPlayer, kp);
-                    //  }
+                    //TODO
                 }
             }
         else if (col.gameObject.CompareTag("ResourcePickUp")) { //Dealt with on the resource currently
