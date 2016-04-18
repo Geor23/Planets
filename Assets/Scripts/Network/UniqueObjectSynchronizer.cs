@@ -23,24 +23,40 @@ public class UniqueObjectSynchronizer : NetworkBehaviour {
 	void UpdateLocalPos(NetworkMessage msg){
 		UpdatePos up = msg.ReadMessage<UpdatePos>();
         GameObject obj = ClientScene.FindLocalObject(up.netId);
+        if(obj == null) {
+        	Debug.LogError("UpdateLocalPos: GameObject with netId " + up.netId + " could not be found");
+        	return;
+        }
         obj.GetComponent<PlayerSyncPosition>().TargetUpdatePos(up);
 	}
 
 	void UpdateLocalRot(NetworkMessage msg){
 		UpdateRot ur = msg.ReadMessage<UpdateRot>();
         GameObject obj = ClientScene.FindLocalObject(ur.netId);
+        if(obj == null) {
+        	Debug.LogError("UpdateLocalRot: GameObject with netId " + ur.netId + " could not be found");
+       		return;
+        }
         obj.GetComponent<PlayerSyncRotation>().TargetUpdateRot(ur);
 	}
 
 	void UpdateLocalRotTurret(NetworkMessage msg){
 		UpdateRotTurret ur = msg.ReadMessage<UpdateRotTurret>();
         GameObject obj = ClientScene.FindLocalObject(ur.netId);
+        if(obj == null) {
+        	Debug.LogError("UpdateLocalRotTurret: GameObject with netId " + ur.netId + " could not be found");
+       		return;
+        }
         obj.GetComponent<PlayerSyncRotationTurret>().TargetUpdateRot(ur);
 	}
 
 	void FireProjectile(NetworkMessage msg){
 		UniqueObjectMessage fp = msg.ReadMessage<UniqueObjectMessage>();
         GameObject obj = ClientScene.FindLocalObject(fp.netId);
+        if(obj == null) {
+        	Debug.LogError("FireProjectile: GameObject with netId " + fp.netId + " could not be found");
+        	return;
+        }
         obj.GetComponent<UnityStandardAssets.CrossPlatformInput.PlayerControllerMobile>().TargetFireProjectile(fp);
 	}
 }

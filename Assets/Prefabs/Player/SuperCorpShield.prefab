@@ -13,7 +13,7 @@ GameObject:
   - 23: {fileID: 2306872}
   - 122: {fileID: 12217062}
   - 114: {fileID: 11439438}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: SuperCorpShield
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,16 +73,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 168808}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1347817507220a4384f3ff6f7c24546, type: 3}
+  m_Script: {fileID: 11500000, guid: b66e61ebd0dd58f4897ea0e25d28d670, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveUnitsPerSecond:
-    value: {x: 0, y: 0, z: 0}
-    space: 1
-  rotateDegreesPerSecond:
-    value: {x: 2, y: 30, z: 2}
-    space: 1
-  ignoreTimescale: 0
+  speed: 20
 --- !u!122 &12217062
 Halo:
   m_ObjectHideFlags: 1

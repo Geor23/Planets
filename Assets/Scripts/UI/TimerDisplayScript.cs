@@ -36,7 +36,7 @@ public class TimerDisplayScript : MonoBehaviour {
               // source.PlayOneShot(endRoundSound, 1.0F);
         } 
         if (time > 0){
-            textField.text = time.ToString();
+            textField.text = ((int)time).ToString();
             
         }else{
             textField.text = "Round ending...";
