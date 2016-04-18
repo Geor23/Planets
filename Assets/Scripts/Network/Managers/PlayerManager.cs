@@ -58,7 +58,7 @@ public class PlayerManager : MonoBehaviour {
         playerDict[id].setConnValue(conn);
     }
 
-    public void getName(int id) {
-        playerDict[id].getPlayerName();
+    public string getName(int id) {
+        return playerDict[id].getPlayerName();
     }
 }

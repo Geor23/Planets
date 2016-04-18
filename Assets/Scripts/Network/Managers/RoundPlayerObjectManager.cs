@@ -10,10 +10,10 @@ static class KillType {
 };
 
 public class KillInfo {
-    int killerId;
-    int killedId;
-    int killType;
-    int time;
+    public int killerId;
+    public int killedId;
+    public int killType;
+    public int time;
 
     public KillInfo(int killerId, int killedId, int killType){
         this.killerId = killerId;
@@ -27,6 +27,7 @@ public class KillInfo {
 //Use to manage player objects on the local side, with functionality to request server to 
 public class RoundPlayerObjectManager { //TODO
 
+    private int roundNum;
     private List<int> deadPlayers;
     private List<KillInfo> killHistory;
     private PlayerManager pm;
@@ -46,7 +47,8 @@ public class RoundPlayerObjectManager { //TODO
     public string getKillString(int i){
         KillInfo ki = killHistory[i];
         if(i < killHistory.Count)
-            return pm.getName(playerIdKiller) + " " + getKillTypeString(ki.killType) + " "  + pm.getName(playerIdKilled);
+            return pm.getName(ki.killerId) + " " + getKillTypeString(ki.killType) + " "  + pm.getName(ki.killedId);
+        return "";
     }
 
     public string getKillsAsList(int howMany){
@@ -54,6 +56,7 @@ public class RoundPlayerObjectManager { //TODO
         for (int i = killHistory.Count - 1; i >= 0 ; i--) {
             kills += getKillString(i);
         }
+        return kills;
     }
 
     public string getLatestKill(){
@@ -66,6 +69,7 @@ public class RoundPlayerObjectManager { //TODO
             case KillType.METEOR: return "meteored";
             case KillType.ELE:    return "eleftheriosized";
         }
+        return "noobed";
     }
 
 }
