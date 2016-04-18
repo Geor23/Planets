@@ -16,7 +16,7 @@ GameObject:
   - 114: {fileID: 11413754}
   - 198: {fileID: 19877088}
   - 199: {fileID: 19930628}
-  - 114: {fileID: 11446476}
+  - 114: {fileID: 11435270}
   m_Layer: 8
   m_Name: ResourcePickUp
   m_TagString: ResourcePickUp
@@ -116,7 +116,7 @@ MonoBehaviour:
     i15: 1
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
---- !u!114 &11446476
+--- !u!114 &11435270
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -124,7 +124,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 116834}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81dfb131d3504554aa46fc20921c4a2a, type: 3}
+  m_Script: {fileID: 11500000, guid: 5758e11a74035284786ee2d428dde00e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   resourceScore: 0

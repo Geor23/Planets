@@ -69,8 +69,8 @@ public class ResourcePowerUpManager : MonoBehaviour {
 
     void UpdateRandomResourceScoreValue()  {
         int resourceID = Random.Range(0, resources.Count);
-        resources[resourceID].GetComponent<ResourceScore>().resourceScore += 1;
-        if (resources[resourceID].GetComponent<ResourceScore>().resourceScore > 2 * maxResourceScore) { initialScore = 2 * maxResourceScore; }
+        resources[resourceID].GetComponent<CurrentResourceScore>().resourceScore += 1;
+        if (resources[resourceID].GetComponent<CurrentResourceScore>().resourceScore > 2 * maxResourceScore) { initialScore = 2 * maxResourceScore; }
         ResourceRescale(resources[resourceID]);
     }
 
@@ -136,7 +136,7 @@ public class ResourcePowerUpManager : MonoBehaviour {
         for (int i = resources.Count; i < maxResourceOnPlanet; i++) {
             int spawnIndex = Random.Range(0, resourceSpawnPoints.Length);
             resources.Add((GameObject) Instantiate(resourceObject, resourceSpawnPoints[spawnIndex].transform.position, resourceSpawnPoints[spawnIndex].transform.rotation));
-            resources[i].GetComponent<ResourceScore>().resourceScore = initialScore;
+            resources[i].GetComponent<CurrentResourceScore>().resourceScore = initialScore;
         }
     }
 
