@@ -326,7 +326,6 @@ public class PlanetsNetworkManager : NetworkManager {
                 NetworkServer.SendToClient(nc.connectionId, Msgs.updatePlayer, pv);
             }
         } else {
-        	return; // Needs to be handled for observer ... 
             Player newPlayer = new Player(idValue, msg.conn.connectionId, address, name);
             pm.addPlayer(idValue, newPlayer);
             PlayerValues pv = new PlayerValues();
