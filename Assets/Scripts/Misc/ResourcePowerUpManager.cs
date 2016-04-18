@@ -97,7 +97,7 @@ public class ResourcePowerUpManager : MonoBehaviour {
         else if (currentResourceScore - minResourceScore < tmp * 8) { scale = 1.6f; }
         else if (currentResourceScore - minResourceScore < tmp * 9) { scale = 1.8f; }
         else { scale = 1.8f; }
-        resourceGameObject.transform.localScale = new Vector3(scale, scale, scale);
+        transform.localScale = new Vector3(scale, scale, scale);
     }
 
     //Change function to run with the new Resource Class
