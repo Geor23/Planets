@@ -13,7 +13,7 @@ public class GameStatsManager {
 
 	public GameStatsManager(){
 		//Do Something
-		roundPlayerRound = new List<RoundPlayerObjectManager>();
+		roundPlayerData = new List<RoundPlayerObjectManager>();
 		roundScoreData = new List<RoundScoreManager>();
 	}
 
