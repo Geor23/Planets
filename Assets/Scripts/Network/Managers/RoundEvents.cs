@@ -27,7 +27,6 @@ public class RoundEvents : MonoBehaviour {
         return pom;
     }
 
-
     //Same as above, except for scores
     public RoundScoreManager getRoundScoreManager(){
         return sm;
@@ -45,7 +44,7 @@ public class RoundEvents : MonoBehaviour {
 /// <summary>
 //All code in here should have either Server/Client suffixed to it. Client indicates the code is called on a Client.
 //Server indicates the code is called on a server.
-//WIP means the function still needs doing.
+//TODO means the function still needs doing.
 //CHANGE means adjustements are made even if the function works as implemented
 /// </summary>
 
@@ -59,7 +58,7 @@ public class KillHistory {
 //Spawn+Death manager maybe?
 //Use to manage player objects on the local side, with functionality to request server to 
 public class RoundPlayerObjectManager
-{ //WIP
+{ //TODO
 
     private List<int> deadPlayers;
     private List<KillHistory> killHistory;
@@ -70,21 +69,19 @@ public class RoundPlayerObjectManager
     }
 
     //Spawns player with the supplied Id. Currently done on server, maybe do on Observer if we remove networked objects
-    public void spawnPlayerServer(int playerId)
-    {
+    public void spawnPlayerServer(int playerId){
 
     }
 
     //Kills player, potentially starts timer for respawn too
-    public void killPlayerLocal(int playerIdKilled, int playerIdKiller)
-    { //WIP
+    public void killPlayerLocal(int playerIdKilled, int playerIdKiller){ //TODO
         //Remove game object locally
         //Remove score (call below stuff)
     }
 
     //Kills player, potentially starts timer for respawn too
     public void killPlayerServer(int playerId, int playerIdKiller)
-    { //WIP
+    { //TODO
         //Remove game object locally
         //Remove score (call below stuff)
     }
@@ -97,7 +94,7 @@ public class RoundPlayerObjectManager
 //Deals with scores of players. Scoring/loss of score by death (overlap with above). Potentially stores individual scores as they'll pass through anyway.
 //Deals with both Observers sending scores, and the Server passing scores to clients/recieving and storing them.
 public class RoundScoreManager
-{ //WIP
+{ //TODO
     int pirateScore;
     int superScore;
     //List of players/their scores potentially
@@ -118,13 +115,13 @@ public class RoundScoreManager
 
     //Request to add/remove score
     public void ChangeScoreServer(int playerId, int scoreChange)
-    { //WIP
+    { //WTODO
 
     }
 
     //Returns score when requested
     public int sendScoreClient()
-    { //WIP
+    { //TODO
         return 0; //Will return score
     }
 
