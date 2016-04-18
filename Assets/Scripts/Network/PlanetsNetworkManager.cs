@@ -39,16 +39,14 @@ public class PlanetsNetworkManager : NetworkManager {
   	[SerializeField] GameObject observerSplitScreen;
 
   	public int key = 0;
-	GameObject chosenCharacter;
     public string round1Scene; //Round 1 name
     TeamManager teamManager = new TeamManager();
     private float timerRound = Const.INITIALTIMER; //This is the time communicated to clients
 	RoundManager roundManager = new RoundManager();
 
   	/* Client Data */
-  	public bool hasPickedTeam = false; 
-	public bool hasConnected = false;
-  	public bool inRound = false;
+ // 	public bool hasPickedTeam = false; 
+//  	public bool inRound = false;
     public bool timerOn = true;
   	private List<string> roundList;
 
@@ -108,7 +106,6 @@ public class PlanetsNetworkManager : NetworkManager {
     	if(!NetworkServer.active) return;
 
     	if ( NetworkManager.networkSceneName == "RoundOver" ) {
-
     		timerRound -= Time.deltaTime;
     		if (timerRound < 0) {
             	ServerChangeScene( roundList[ 2 * ( roundManager.getRoundId() - 1 ) ] );
@@ -157,6 +154,7 @@ public class PlanetsNetworkManager : NetworkManager {
 	    NetworkServer.RegisterHandler(Msgs.killPlayer, OnKillPlayer);
     }
 
+    //Sends the player's name back to them upon request
     public void OnServerSendName(NetworkMessage msg){
     	int id = IDFromConn(msg.conn);
     	Name tl = new Name();
@@ -165,16 +163,19 @@ public class PlanetsNetworkManager : NetworkManager {
         NetworkServer.SendToClient(id, Msgs.serverName, tl);
     }
 
+    //Adds deaths to kill feed
     public void OnServerRecieveKill(NetworkMessage netMsg){
     	Kill sc = netMsg.ReadMessage<Kill>();
     	addToKillFeed(sc.msg);
     }
 
+    //Part of above
     public void addToKillFeed(string killToAdd){
     	killFeed += "\n" + killToAdd;
     	sendKillFeed();
     }
 
+    //^^
     public void sendKillFeed() {
     	Kill tl = new Kill();
 		tl.msg = killFeed;
@@ -186,11 +187,36 @@ public class PlanetsNetworkManager : NetworkManager {
 		}
     }
 
+
     public void OnServerRecieveFinalScoresRequest(NetworkMessage netMsg){
     	RoundScores sc = roundManager.getFinalScores();
 		sendFinalScores(sc);	
     }
 
+    public void sendFinalScores(RoundScores sc){
+        FinalScores tl = new FinalScores();
+        tl.round1P = sc.pirateScore[0];
+        tl.round1S = sc.superCorpScore[0];
+        if (roundManager.getRoundId() == 3){
+            tl.round2P = sc.pirateScore[1];
+            tl.round2S = sc.superCorpScore[1];
+        } else {
+            tl.round2P = -1;
+            tl.round2S = -1;
+        }
+
+        if (roundManager.getFinishedState() == 1){
+            tl.round3P = sc.pirateScore[2];
+            tl.round3S = sc.superCorpScore[2];
+        }else{
+            tl.round3P = -1;
+            tl.round3S = -1;
+        }
+        NetworkServer.SendToAll(Msgs.serverFinalScores, tl);
+
+    }
+
+    //REPLACE
     //This function sends the current in-game time to the client requesting time.
     private void OnServerRecieveTimeRequest(NetworkMessage netMsg){
         TimeMessage timeMessage = new TimeMessage();
@@ -203,13 +229,6 @@ public class PlanetsNetworkManager : NetworkManager {
     	//return NetworkServer.connections.IndexOf(nc);
   	}
 
- 	// when the client requests teams lists, send
-	public void OnServerRecieveTeamRequest(NetworkMessage msg) {
-
-    	sendTeam(0);
-    	sendTeam(1);
-
-    }
 
     // when the client requests teams lists, send
 	public void OnServerRecieveTeamScoresRequest(NetworkMessage msg) {
@@ -226,7 +245,6 @@ public class PlanetsNetworkManager : NetworkManager {
   	public void OnServerRecieveScore(NetworkMessage msg) {
   		// read the message
 	  	AddScore sc = msg.ReadMessage<AddScore>();
-    Debug.LogError("IM DOING SCOREZ HAHAHA");
     int id = sc.obj.GetComponent<NetworkIdentity>().connectionToClient.connectionId;
     Debug.Log("team: " + dict[id].team);
 	  	teamManager.addScore(sc.score, dict[id].team);
@@ -260,43 +278,13 @@ public class PlanetsNetworkManager : NetworkManager {
 
     // send the team list of players to all clients
     public void sendScore(int team) {
-
 		TeamScore tl = new TeamScore();
 		tl.team = (int) team;
 		tl.score = (int) teamManager.getScore(team);
 		NetworkServer.SendToAll(Msgs.serverTeamScore, tl);
-
 	}
 
-	public void sendFinalScores(RoundScores sc) {
-
-		FinalScores tl = new FinalScores();
-
-		tl.round1P = sc.pirateScore[0];
-		tl.round1S = sc.superCorpScore[0];
-
-		if (roundManager.getRoundId() == 3) {
-			tl.round2P = sc.pirateScore[1];
-			tl.round2S = sc.superCorpScore[1];
-		} else {
-			tl.round2P = -1;
-			tl.round2S = -1;
-		}
-		
-		if (roundManager.getFinishedState() == 1) {
-			tl.round3P = sc.pirateScore[2];
-			tl.round3S = sc.superCorpScore[2];
-		} else {
-			tl.round3P = -1;
-			tl.round3S = -1;
-		}
-		
-		NetworkServer.SendToAll(Msgs.serverFinalScores, tl);
-
-	}
-
-	public void OnServerRecieveName(NetworkMessage msg) {
-	    
+	public void OnServerRecieveName(NetworkMessage msg) {    
 	    JoinMessage joinMsg = msg.ReadMessage<JoinMessage>();
 	    string name = joinMsg.name;
 	    int id = IDFromConn(msg.conn);
@@ -311,7 +299,6 @@ public class PlanetsNetworkManager : NetworkManager {
 
 
   	public void OnServerRecieveTeamChoice(NetworkMessage msg) {
-
 	    TeamChoice teamChoice = msg.ReadMessage<TeamChoice>();
 	    int choice = teamChoice.teamChoice;
 	    int id = IDFromConn(msg.conn);
@@ -339,8 +326,14 @@ public class PlanetsNetworkManager : NetworkManager {
 	    Debug.Log(dict[id].name + " chose team " + choice.ToString());
 	  }
 
-  	// send the team list of players to all clients
-	public void sendTeam(int team) {
+    // when the client requests teams lists, send
+    public void OnServerRecieveTeamRequest(NetworkMessage msg){
+        sendTeam(0);
+        sendTeam(1);
+    }
+
+    // send the team list of players to all clients
+    public void sendTeam(int team) {
 		string display = "";
 		TeamList tl = new TeamList();
 
@@ -370,8 +363,13 @@ public class PlanetsNetworkManager : NetworkManager {
 
 	// called when a client disconnects
 	public override void OnServerDisconnect(NetworkConnection conn) {
-		int id = IDFromConn(conn);
-		dict.Remove(id);
+        int id = IDFromConn(conn);
+        if (networkSceneName == "LobbyScene"){
+            // delete player from old list and send updated list to all clients
+            teamManager.deletePlayer(dict[id].name, dict[id].team);
+            sendTeam(dict[id].team);
+        }
+        dict.Remove(id);
 		Debug.LogError("OnServerDisconnect: Destroying players");
 		NetworkServer.DestroyPlayersForConnection(conn);
 
@@ -392,7 +390,6 @@ public class PlanetsNetworkManager : NetworkManager {
         //Change so that the spawn area is from a more random general area chosen from the PlayerSpawnArea script
 
 		/* This is where you can register players with teams, and spawn the player at custom points in the team space */
-		//hasConnected = true;
     	int id = IDFromConn(conn);
     	GameObject chosen = dict[id].team==0?player1:(dict[id].team==1?player2:(!usingSplitScreen?observerSingleScreen:observerSplitScreen));
 		GameObject player = Instantiate (chosen, teamManager.getSpawnP(dict[id].team), Quaternion.identity) as GameObject;
@@ -427,12 +424,12 @@ public class PlanetsNetworkManager : NetworkManager {
     Client functions */
 	// called when connected to a server
 	public override void OnClientConnect(NetworkConnection conn) {
-		hasConnected = true;
 		Debug.Log("Client connected!");
 	}
 	
 	// called when disconnected from a server
 	public override void OnClientDisconnect(NetworkConnection conn){
+        Debug.Log("Client disconnected");
 		StopClient();
 	}
 	
