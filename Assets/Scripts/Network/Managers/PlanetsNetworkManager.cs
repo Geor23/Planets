@@ -10,6 +10,14 @@ using UnityEngine.UI;
     http://docs.unity3d.com/ScriptReference/Networking.NetworkManager.html
 */
 
+static class TeamID {
+  public const int TEAM_NEUTRAL = -2;
+  public const int TEAM_OBSERVER = -1; 
+  public const int TEAM_PIRATES = 0;
+  public const int TEAM_SUPERCORP = 1;
+};
+
+
 class PlayerData {
 
   	public int team;
@@ -180,7 +188,7 @@ public class PlanetsNetworkManager : NetworkManager {
 		tl.msg = killFeed;
 		foreach (NetworkConnection conn in NetworkServer.connections) {
 			int id = IDFromConn(conn);
-			if (dict[id].team == -1) {
+			if (dict[id].team == TeamID.TEAM_OBSERVER) {
 				NetworkServer.SendToClient(id, Msgs.serverKillFeed, tl);
 			}
 		}
@@ -206,15 +214,15 @@ public class PlanetsNetworkManager : NetworkManager {
  	// when the client requests teams lists, send
 	public void OnServerRecieveTeamRequest(NetworkMessage msg) {
 
-    	sendTeam(0);
-    	sendTeam(1);
+    	sendTeam(TeamID.TEAM_PIRATES);
+    	sendTeam(TeamID.TEAM_SUPERCORP);
 
     }
 
     // when the client requests teams lists, send
 	public void OnServerRecieveTeamScoresRequest(NetworkMessage msg) {
         TeamScore tl = new TeamScore();
-        tl.team = 0;
+        tl.team = TeamID.TEAM_PIRATES;
         tl.score = (int)teamManager.getScore(0);
         NetworkServer.SendToClient(IDFromConn(msg.conn), Msgs.serverTeamScore, tl);
         tl.team = 1;
@@ -302,7 +310,7 @@ public class PlanetsNetworkManager : NetworkManager {
 	    int id = IDFromConn(msg.conn);
 	    dict.Add(id, new PlayerData());
 	    dict[id].name = name;
-		dict[id].team = -1;
+		dict[id].team = TeamID.TEAM_OBSERVER;
 		dict[id].uniqueId = key;
 		key++ ;
 
@@ -317,7 +325,7 @@ public class PlanetsNetworkManager : NetworkManager {
 	    int id = IDFromConn(msg.conn);
 
 	    // if the player is choosing the team for the first time
-		if (dict[id].team == -1) {
+		if (dict[id].team == TeamID.TEAM_OBSERVER) {
 			// update the team and send updated list to all clients
 			
 			dict[id].team = choice;	
@@ -394,13 +402,22 @@ public class PlanetsNetworkManager : NetworkManager {
 		/* This is where you can register players with teams, and spawn the player at custom points in the team space */
 		//hasConnected = true;
     	int id = IDFromConn(conn);
-    	GameObject chosen = dict[id].team==0?player1:(dict[id].team==1?player2:(!usingSplitScreen?observerSingleScreen:observerSplitScreen));
+    	GameObject chosen = dict[id].team==TeamID.TEAM_PIRATES?
+    							player1
+    						:
+    							(dict[id].team==TeamID.TEAM_SUPERCORP?
+    								player2
+    							:
+									(!usingSplitScreen?
+										observerSingleScreen
+									:
+										observerSplitScreen));
 		GameObject player = Instantiate (chosen, teamManager.getSpawnP(dict[id].team), Quaternion.identity) as GameObject;
         player.GetComponent<Text>().text = dict[id].name;
         updateListeners.Add(conn);
 
         //Add to observing listeners if not a player
-        if(dict[id].team!=0 && dict[id].team!=1) observingListeners.Add(conn);
+        if(dict[id].team!=TeamID.TEAM_PIRATES && dict[id].team!=TeamID.TEAM_SUPERCORP) observingListeners.Add(conn);
         NetworkServer.AddPlayerForConnection (conn, player, playerControllerId);
 	}
 	
@@ -419,9 +436,9 @@ public class PlanetsNetworkManager : NetworkManager {
 		}
 	}
 
-
-	// called when a network error occurs
-	// public override void OnServerError(NetworkConnection conn, int errorCode);
+	public override void OnServerError(NetworkConnection conn, int errorCode){
+		Debug.LogError("OnServerError with connection " + conn + ", error code: " + errorCode);
+	}
 	
 	/*
     Client functions */
@@ -442,7 +459,9 @@ public class PlanetsNetworkManager : NetworkManager {
 
 	
 	// called when a network error occurs
-	//public override void OnClientError(NetworkConnection conn, int errorCode);
+	public override void OnClientError(NetworkConnection conn, int errorCode){
+		Debug.LogError("OnClientError with connection " + conn + ", error code: " + errorCode);
+	}
 	
 	// called when told to be not-ready by a server
 	//public override void OnClientNotReady(NetworkConnection conn);
