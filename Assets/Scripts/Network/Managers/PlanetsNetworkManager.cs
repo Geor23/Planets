@@ -42,18 +42,14 @@ public class PlanetsNetworkManager : NetworkManager {
 	
 	[SerializeField] GameObject player1;
 	[SerializeField] GameObject player2;
- [SerializeField] GameObject observerSingleScreen;
- [SerializeField] GameObject observerSplitScreen;
-
-  	public int key = 0;
-    public string round1Scene; //Round 1 name
+    [SerializeField] GameObject observerSingleScreen;
+    [SerializeField] GameObject observerSplitScreen;
     TeamManager teamManager = new TeamManager();
-    private float timerRound = Const.INITIALTIMER; //This is the time communicated to clients
 	RoundManager roundManager = new RoundManager();
 
-  	/* Client Data */
- // 	public bool hasPickedTeam = false; 
-//  	public bool inRound = false;
+    public int key = 0;
+    public string round1Scene; //Round 1 name
+    private float timerRound = Const.INITIALTIMER; //This is the time communicated to clients
     public bool timerOn = true;
   	private List<string> roundList;
 
@@ -64,35 +60,7 @@ public class PlanetsNetworkManager : NetworkManager {
   	public bool onlyUpdateObservers = false;
   	public bool usingSplitScreen = false;
 
-   public PlayerManager pm;
-
-  	String killFeed;
-
-    //public PlayerSpawnAreas playerSpawnAreas;
-
-
-    public void SceneChange() {
-		//Change scene
-	}
-
-	public HashSet<NetworkConnection> getUpdateListeners() {
-		if(onlyUpdateObservers) return observingListeners;
-		return updateListeners;
-	}
-
-	public HashSet<NetworkConnection> getUpdateListeners(bool all) {
-		if(onlyUpdateObservers && !all) return observingListeners;
-		return updateListeners;
-	}
-
-	public bool observerCollisionsOnly(){
-		return onlyUpdateObservers;
-	}
-
-	public bool isSplitScreen(){
-		return usingSplitScreen;
-	}
-
+    public PlayerManager pm;
 
   	public void Start() {
     	dict = new Dictionary<int, PlayerData>();
@@ -108,6 +76,28 @@ public class PlanetsNetworkManager : NetworkManager {
     	roundList.Add("Round3");
     	roundList.Add("GameOver");
         pm = new PlayerManager();
+    }
+
+    public void SceneChange() {
+        //Change scene
+    }
+
+    public HashSet<NetworkConnection> getUpdateListeners() {
+        if(onlyUpdateObservers) return observingListeners;
+        return updateListeners;
+    }
+
+    public HashSet<NetworkConnection> getUpdateListeners(bool all) {
+        if(onlyUpdateObservers && !all) return observingListeners;
+        return updateListeners;
+    }
+
+    public bool observerCollisionsOnly(){
+        return onlyUpdateObservers;
+    }
+
+    public bool isSplitScreen(){
+        return usingSplitScreen;
     }
 
     public void Update(){
@@ -144,173 +134,65 @@ public class PlanetsNetworkManager : NetworkManager {
         }
     }
 
-	// register needed handlers when server starts
   	public override void OnStartServer() {
-
-        // to change
 	    base.OnStartServer();
 	    NetworkServer.RegisterHandler(Msgs.clientJoinMsg, OnServerRecieveName);
 	    NetworkServer.RegisterHandler(Msgs.clientTeamMsg, OnServerRecieveTeamChoice);
+        NetworkServer.RegisterHandler(Msgs.requestTeamMsg, OnServerRecieveTeamRequest);
 	    NetworkServer.RegisterHandler(Msgs.startGame, OnServerStartGame);
-	    //NetworkServer.RegisterHandler(Msgs.requestTeamMsg, OnServerRecieveTeamRequest);
-	   	//NetworkServer.RegisterHandler(Msgs.requestFinalScores, OnServerRecieveFinalScoresRequest);
-	    //NetworkServer.RegisterHandler(Msgs.clientTeamScore, OnServerRecieveScore);
-	    //etworkServer.RegisterHandler(Msgs.requestTeamScores, OnServerRecieveTeamScoresRequest);
 	    NetworkServer.RegisterHandler(Msgs.requestCurrentTime, OnServerRecieveTimeRequest);
-	    //NetworkServer.RegisterHandler(Msgs.clientKillFeed, OnServerRecieveKill);
-	    //NetworkServer.RegisterHandler(Msgs.deathResourceCollision, OnServerRecieveDeathResourceCollision);
-	    //NetworkServer.RegisterHandler(Msgs.requestName, OnServerSendName);
-	    //NetworkServer.RegisterHandler(Msgs.killPlayer, OnKillPlayer);
         NetworkServer.RegisterHandler(Msgs.updatePlayer, OnPlayerUpdate);
         NetworkServer.RegisterHandler(Msgs.addNewPlayer, OnNewPlayer);
     }
+    
+    // called when a new player is added for a client
+    // next two functions are important
+    public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId) {
 
-    // //Sends the player's name back to them upon request
-    // public void OnServerSendName(NetworkMessage msg){
-    // 	int id = IDFromConn(msg.conn);
-    // 	Name tl = new Name();
-    //     tl.name = dict[id].name;
-    //     tl.id = dict[id].uniqueId;
-    //     NetworkServer.SendToClient(id, Msgs.serverName, tl);
-    // }
+        //Change so that the spawn area is from a more random general area chosen from the PlayerSpawnArea script
 
-    // //Adds deaths to kill feed
-    // public void OnServerRecieveKill(NetworkMessage netMsg){
-    // 	Kill sc = netMsg.ReadMessage<Kill>();
-    // 	addToKillFeed(sc.msg);
-    // }
+        /* This is where you can register players with teams, and spawn the player at custom points in the team space */
+        int id = IDFromConn(conn);
+        GameObject chosen = dict[id].team==TeamID.TEAM_PIRATES?
+                                player1
+                            :
+                                (dict[id].team==TeamID.TEAM_SUPERCORP?
+                                    player2
+                                :
+                                    (!usingSplitScreen?
+                                        observerSingleScreen
+                                    :
+                                        observerSplitScreen));
+        string address = conn.address;
+        int idValue;
+        if (address != "localClient"){
+            idValue = BitConverter.ToInt32(IPAddress.Parse(address).GetAddressBytes(), 0);
+        } else { //If local then make -1
+            idValue = -1;
+        }
+        GameObject player = Instantiate (chosen, teamManager.getSpawnP(dict[id].team), Quaternion.identity) as GameObject;
+        if(dict[id].team != TeamID.TEAM_OBSERVER){
+            Debug.LogError(pm);
+            Player playa = pm.getPlayer(idValue);
+            chosen.GetComponent<PlayerDetails>().setPlayerDetails(id,playa);
+            player.GetComponent<Text>().text = dict[id].name;
+        }
+        updateListeners.Add(conn);
 
-    //Part of above
-  //   public void addToKillFeed(string killToAdd){
-  //   	killFeed += "\n" + killToAdd;
-  //   	sendKillFeed();
-  //   }
-
-  //   //^^
-  //   public void sendKillFeed() {
-  //   	Kill tl = new Kill();
-		// tl.msg = killFeed;
-		// foreach (NetworkConnection conn in NetworkServer.connections) {
-		// 	int id = IDFromConn(conn);
-		// 	if (dict[id].team == TeamID.TEAM_OBSERVER) {
-		// 		NetworkServer.SendToClient(id, Msgs.serverKillFeed, tl);
-		// 	}
-		// }
-  //   }
-
-
-  //   public void OnServerRecieveFinalScoresRequest(NetworkMessage netMsg){
-  //   	RoundScores sc = roundManager.getFinalScores();
-		// sendFinalScores(sc);	
-  //   }
-
-  //   public void sendFinalScores(RoundScores sc){
-  //       FinalScores tl = new FinalScores();
-  //       tl.round1P = sc.pirateScore[0];
-  //       tl.round1S = sc.superCorpScore[0];
-  //       if (roundManager.getRoundId() == 3){
-  //           tl.round2P = sc.pirateScore[1];
-  //           tl.round2S = sc.superCorpScore[1];
-  //       } else {
-  //           tl.round2P = -1;
-  //           tl.round2S = -1;
-  //       }
-
-  //       if (roundManager.getFinishedState() == 1){
-  //           tl.round3P = sc.pirateScore[2];
-  //           tl.round3S = sc.superCorpScore[2];
-  //       }else{
-  //           tl.round3P = -1;
-  //           tl.round3S = -1;
-  //       }
-  //       NetworkServer.SendToAll(Msgs.serverFinalScores, tl);
-
-  //   }
-
-    //REPLACE
-    //This function sends the current in-game time to the client requesting time.
-    private void OnServerRecieveTimeRequest(NetworkMessage netMsg){
-        TimeMessage timeMessage = new TimeMessage();
-        timeMessage.time = timerRound;
-        NetworkServer.SendToClient(IDFromConn(netMsg.conn), Msgs.sendCurrentTime, timeMessage);
+        //Add to observing listeners if not a player
+        if(dict[id].team!=TeamID.TEAM_PIRATES && dict[id].team!=TeamID.TEAM_SUPERCORP) observingListeners.Add(conn);
+        NetworkServer.AddPlayerForConnection (conn, player, playerControllerId);
     }
 
-    private int IDFromConn(NetworkConnection nc) {
- 		return nc.connectionId;
-    	//return NetworkServer.connections.IndexOf(nc);
-  	}
-
- 	// when the client requests teams lists, send
-	public void OnServerRecieveTeamRequest(NetworkMessage msg) {
-
-    	sendTeam(TeamID.TEAM_PIRATES);
-    	sendTeam(TeamID.TEAM_SUPERCORP);
-
-    }
-
-    // when the client requests teams lists, send
-	// public void OnServerRecieveTeamScoresRequest(NetworkMessage msg) {
- //        TeamScore tl = new TeamScore();
- //        tl.team = TeamID.TEAM_PIRATES;
- //        tl.score = (int)teamManager.getScore(0);
- //        NetworkServer.SendToClient(IDFromConn(msg.conn), Msgs.serverTeamScore, tl);
- //        tl.team = 1;
- //        tl.score = (int)teamManager.getScore(1);
- //        NetworkServer.SendToClient(IDFromConn(msg.conn), Msgs.serverTeamScore, tl);
-
- //    }
-
-  	// public void OnServerRecieveScore(NetworkMessage msg) {
-  	// 	// read the message
-	  // 	AddScore sc = msg.ReadMessage<AddScore>();
-   //  int id = sc.obj.GetComponent<NetworkIdentity>().connectionToClient.connectionId;
-   //  Debug.Log("team: " + dict[id].team);
-	  // 	teamManager.addScore(sc.score, dict[id].team);
-
-	  // 	// send to everyone the updated team score
-	  // 	sendScore(dict[id].team);
-   //      if (sc.score > 0){ //If scoring not dying...
-   //          UpdateLocalScore ls = new UpdateLocalScore();
-   //          ls.score = sc.score;
-   //          NetworkServer.SendToClient(id, Msgs.updateLocalScore, ls);
-   //      }
-   //  }
-
-
-    // public void OnServerRecieveDeathResourceCollision(NetworkMessage msg){
-    //     // read the message
-    //     DeathResource dr = msg.ReadMessage<DeathResource>();
-    //     int id = IDFromConn(msg.conn);
-    //     GameObject resource = dr.drID;
-    //     Debug.Log("team: " + dict[id].team);
-    //     // add the score to the correct team
-    //     int score = int.Parse(resource.GetComponent<Text>().text);
-    //     teamManager.addScore(score, dict[id].team);
-    //     Destroy(resource);
-    //     // send to everyone the updated team score
-    //     sendScore(dict[id].team);
-    //     UpdateLocalScore sc = new UpdateLocalScore();
-    //     sc.score = score;
-    //     NetworkServer.SendToClient(IDFromConn(msg.conn), Msgs.updateLocalScore, sc);
-    // }
-
-    // send the team list of players to all clients
- //    public void sendScore(int team) {
-	// 	TeamScore tl = new TeamScore();
-	// 	tl.team = (int) team;
-	// 	tl.score = (int) teamManager.getScore(team);
-	// 	NetworkServer.SendToAll(Msgs.serverTeamScore, tl);
-	// }
-
-	public void OnServerRecieveName(NetworkMessage msg) {  
-	    JoinMessage joinMsg = msg.ReadMessage<JoinMessage>();
-	    string name = joinMsg.name;
-	    int id = IDFromConn(msg.conn);
-	    dict.Add(id, new PlayerData());
-	    dict[id].name = name;
-		   dict[id].team = TeamID.TEAM_OBSERVER;
-		   dict[id].uniqueId = key;
-		   key++ ;
+    public void OnServerRecieveName(NetworkMessage msg) {  
+        JoinMessage joinMsg = msg.ReadMessage<JoinMessage>();
+        string name = joinMsg.name;
+        int id = IDFromConn(msg.conn);
+        dict.Add(id, new PlayerData());
+        dict[id].name = name;
+           dict[id].team = TeamID.TEAM_OBSERVER;
+           dict[id].uniqueId = key;
+           key++ ;
 
         //NEW CODE TODO, add player name to player. Make sure this occurs after connecting
         string address = msg.conn.address;
@@ -343,6 +225,39 @@ public class PlanetsNetworkManager : NetworkManager {
         }
     }
 
+    //called when a player is removed for a client
+    public override void OnServerRemovePlayer(NetworkConnection conn, PlayerController playerController) {
+        GameObject player = playerController.gameObject;
+        if (player != null){
+            int id = IDFromConn(conn);
+            //sendScore(dict[id].team);
+            if (playerController.unetView != null){
+                NetworkServer.Destroy(player);
+                Debug.LogError("OnServerRemovePlayer: Destroying player"); // We shall finish our business on slack plz :)
+            }
+            updateListeners.Remove(conn);
+        }
+    }
+
+
+    //REPLACE
+    //This function sends the current in-game time to the client requesting time.
+    private void OnServerRecieveTimeRequest(NetworkMessage netMsg){
+        TimeMessage timeMessage = new TimeMessage();
+        timeMessage.time = timerRound;
+        NetworkServer.SendToClient(IDFromConn(netMsg.conn), Msgs.sendCurrentTime, timeMessage);
+    }
+
+    private int IDFromConn(NetworkConnection nc) {
+ 		return nc.connectionId;
+  	}
+
+	public void OnServerRecieveTeamRequest(NetworkMessage msg) {
+
+    	sendTeam(TeamID.TEAM_PIRATES);
+    	sendTeam(TeamID.TEAM_SUPERCORP);
+
+    }
 
   	public void OnServerRecieveTeamChoice(NetworkMessage msg) {
 	    TeamChoice teamChoice = msg.ReadMessage<TeamChoice>();
@@ -392,14 +307,6 @@ public class PlanetsNetworkManager : NetworkManager {
     	roundManager.changeRound();
 	}
 
- //Send message to the Player to request the player object to be deleted
- // public void OnKillPlayer(NetworkMessage msg) {
- //        KillPlayer kp = msg.ReadMessage<KillPlayer>();
- //        int id = kp.obj.GetComponent<NetworkIdentity>().connectionToClient.connectionId;
- //        NetworkServer.SendToClient(id, Msgs.killPlayerRequestClient, kp);
- //    }
-
-
 	// called when a client disconnects
 	public override void OnServerDisconnect(NetworkConnection conn) {
         int id = IDFromConn(conn);
@@ -430,68 +337,15 @@ public class PlanetsNetworkManager : NetworkManager {
 		ClientScene.RegisterPrefab(player1);
 		ClientScene.RegisterPrefab(player2);
 	}
-	
 
-	// called when a new player is added for a client
-	public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId) {
-
-        //Change so that the spawn area is from a more random general area chosen from the PlayerSpawnArea script
-
-		/* This is where you can register players with teams, and spawn the player at custom points in the team space */
-    	int id = IDFromConn(conn);
-    	GameObject chosen = dict[id].team==TeamID.TEAM_PIRATES?
-    							player1
-    						:
-    							(dict[id].team==TeamID.TEAM_SUPERCORP?
-    								player2
-    							:
-									(!usingSplitScreen?
-										observerSingleScreen
-									:
-										observerSplitScreen));
-        string address = conn.address;
-        int idValue;
-        if (address != "localClient"){
-            idValue = BitConverter.ToInt32(IPAddress.Parse(address).GetAddressBytes(), 0);
-        } else { //If local then make -1
-            idValue = -1;
-        }
-        GameObject player = Instantiate (chosen, teamManager.getSpawnP(dict[id].team), Quaternion.identity) as GameObject;
-        if(dict[id].team != TeamID.TEAM_OBSERVER){
-            Debug.LogError(pm);
-	        Player playa = pm.getPlayer(idValue);
-	        chosen.GetComponent<PlayerDetails>().setPlayerDetails(id,playa);
-	        player.GetComponent<Text>().text = dict[id].name;
-	    }
-        updateListeners.Add(conn);
-
-        //Add to observing listeners if not a player
-        if(dict[id].team!=TeamID.TEAM_PIRATES && dict[id].team!=TeamID.TEAM_SUPERCORP) observingListeners.Add(conn);
-        NetworkServer.AddPlayerForConnection (conn, player, playerControllerId);
-	}
-	
-
-	//called when a player is removed for a client
-	public override void OnServerRemovePlayer(NetworkConnection conn, PlayerController playerController) {
-		GameObject player = playerController.gameObject;
-		if (player != null){
-			int id = IDFromConn(conn);
-			//sendScore(dict[id].team);
-			if (playerController.unetView != null){
-				NetworkServer.Destroy(player);
-				Debug.LogError("OnServerRemovePlayer: Destroying player"); // We shall finish our business on slack plz :)
-			}
-			updateListeners.Remove(conn);
-		}
-	}
 
 	public override void OnServerError(NetworkConnection conn, int errorCode){
 		Debug.LogError("OnServerError with connection " + conn + ", error code: " + errorCode);
 	}
 	
-	/*
-    Client functions */
-	// called when connected to a server
+	/* ------------------  Client functions ---------------- */
+	
+    // called when connected to a server
 	public override void OnClientConnect(NetworkConnection conn) {
 		Debug.Log("Client connected!");
 	}
