@@ -6,6 +6,8 @@ using System;
 //All classes are per round
 //We can make other classes for data that needs to persist across rounds like full game stats etc...
 
+
+
 public class RoundEvents : MonoBehaviour {
 
     public RoundPlayerObjectManager pom;
@@ -14,6 +16,9 @@ public class RoundEvents : MonoBehaviour {
     void Start(){
         pom = new RoundPlayerObjectManager();
         sm = new RoundScoreManager();
+
+
+        //Handle messages from server such as end of round signal etc. act upon them
     }
 
     //These can be called inside the playercontroller mobile so that we can tap int othe object manager functionality
