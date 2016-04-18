@@ -93,14 +93,15 @@ namespace UnityStandardAssets.CrossPlatformInput {
             nm.client.RegisterHandler(Msgs.killPlayerRequestClient, OnClientKillPlayer);
         }
 
-        public void OnClientReceiveName(NetworkMessage msg) {
-            return;
-            if (!nIdentity.isLocalPlayer) return;
+        public void OnClientReceiveName(NetworkMessage msg)
+        {
+            if(!nIdentity.isLocalPlayer) return;
             Name tl = msg.ReadMessage<Name>();
             //Debug.LogError("Text: " + gameObject.GetComponent<Text>());
             Text name = gameObject.GetComponent<Text>();
             name.text = tl.name;
             id.text = tl.id.ToString();
+            Debug.Log(id.text);
             GetComponent<PlayerNetworkHandler>().CmdSetId(id.text);
         }
 
