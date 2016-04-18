@@ -11,10 +11,12 @@ using System;
 public class RoundEvents : MonoBehaviour {
     public RoundPlayerObjectManager pom;
     public RoundScoreManager sm;
+    public PlayerManager pm
 
     void Start(){
+        pm = PlayerManager.singleton;
         pom = new RoundPlayerObjectManager();
-        Dictionary<int, Player> playerDict = GameObject.Find("PlayerManager").GetComponent<PlayerManager>().getPlayerDict();
+        Dictionary<int, Player> playerDict = pm.getPlayerDict();
         sm = new RoundScoreManager(playerDict);
         //Handle messages from server such as end of round signal etc. act upon them
     }
@@ -28,6 +30,12 @@ public class RoundEvents : MonoBehaviour {
     public RoundScoreManager getRoundScoreManager(){
         return sm;
     }
+
+    public void playerDeath(int playerKilledId, int playerKilledId){
+        //TODO
+    }
+
+
 
     public void relayDataToServer(){
         //Call functons inside ObjectManager/ScoreManager respectively to sync them together
