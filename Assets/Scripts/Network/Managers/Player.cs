@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 //Player data
-public class Player : MonoBehaviour {
+public class Player {
     private int playerDictVal;
     private int connVal;
     private string playerIP;
@@ -11,6 +11,10 @@ public class Player : MonoBehaviour {
     private int playerScore;
     private int playerTeam;
     private bool isConnected;
+
+    public Player (){
+
+    }
 
     public int getPlayerId() {
         return playerDictVal;
@@ -44,5 +48,8 @@ public class Player : MonoBehaviour {
         isConnected = connBool;
     }
 
+    public void setConnValue(int conn) {
+        connVal = conn;
+    }
 
 }

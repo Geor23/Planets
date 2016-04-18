@@ -3,39 +3,37 @@ using System.Collections;
 using System.Collections.Generic;
 
 //Deals with player details.
-public class PlayerManager : MonoBehaviour
-{
+public class PlayerManager : MonoBehaviour {
     //Int is connection ID, player contains name, game ID, team, etc.
+    public static PlayerManager singleton;
     private Dictionary<int, Player> playerDict;
-    public PlayerManager()
-    {
+    public void Start(){
         DontDestroyOnLoad(this);
+        singleton = this;
         playerDict = new Dictionary<int, Player>();
     }
 
-    public void addPlayer(int id, Player player)
-    {
+    public void addPlayer(int id, Player player){
         playerDict.Add(id, player);
     }
 
-    public void removePlayer(int id)
-    {
+    public void updatePlayer(int id, Player player){
+        playerDict[id] = player; //Updates player to new values
+    }
+
+    public void removePlayer(int id){
         playerDict.Remove(id);
     }
 
-    public Player getPlayer(int id)
-    {
-        if (playerDict.ContainsKey(id))
-        {
+    public Player getPlayer(int id){
+        if (playerDict.ContainsKey(id)){
             return playerDict[id];
-        }
-        else
-        {
+        } else {
             return null;
         }
     }
-    public Dictionary<int, Player> getPlayerDict()
-    {
+
+    public Dictionary<int, Player> getPlayerDict(){
         return playerDict;
     }
 
@@ -54,5 +52,13 @@ public class PlayerManager : MonoBehaviour
 
     public void setDisconnected(int id){
         playerDict[id].setIsConnected(false);
+    }
+    
+    public void setConnValue(int id, int conn) {
+        playerDict[id].setConnValue(conn);
+    }
+
+    public void getName(int id) {
+        playerDict[id].getPlayerName();
     }
 }

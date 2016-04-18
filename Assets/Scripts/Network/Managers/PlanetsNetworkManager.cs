@@ -164,6 +164,7 @@ public class PlanetsNetworkManager : NetworkManager {
 	    NetworkServer.RegisterHandler(Msgs.deathResourceCollision, OnServerRecieveDeathResourceCollision);
 	    NetworkServer.RegisterHandler(Msgs.requestName, OnServerSendName);
 	    NetworkServer.RegisterHandler(Msgs.killPlayer, OnKillPlayer);
+     NetworkServer.RegisterHandler(Msgs.updatePlayer, OnPlayerUpdate);
     }
 
     public void OnServerSendName(NetworkMessage msg){
@@ -456,12 +457,28 @@ public class PlanetsNetworkManager : NetworkManager {
         //If the player has already connected, set connected to true and update conn value
         if(GameObject.Find("PlayerManager").GetComponent<PlayerManager>().checkIfExists(idValue)) {
             GameObject.Find("PlayerManager").GetComponent<PlayerManager>().setConnected(idValue);
-            //TODO
+            GameObject.Find("PlayerManager").GetComponent<PlayerManager>().setConnValue(idValue, conn.connectionId);
+
+            PlayerValues pv = new PlayerValues();
+            pv.dictId = idValue;
+            pv.player = GameObject.Find("PlayerManager").GetComponent<PlayerManager>().getPlayer(idValue);
+            foreach (NetworkConnection nc in getUpdateListeners()){
+                NetworkServer.SendToClient(nc.connectionId, Msgs.updatePlayer, pv);
+            }
+                //TODO
         } else {
-            
+            Player newPlayer = new Player();
+
         }
         //string ipAddress = new IPAddress(BitConverter.GetBytes(intAddress)).ToString();
     }
+
+    //Updates Observer player
+    public void OnPlayerUpdate(NetworkMessage msg) {
+        PlayerValues pv = msg.ReadMessage<PlayerValues>();
+        GameObject.Find("PlayerManager").GetComponent<PlayerManager>().updatePlayer(pv.dictId, pv.player);
+    }
+
 
     // called when disconnected from a server
     public override void OnClientDisconnect(NetworkConnection conn){

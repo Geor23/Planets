@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class RoundScoreManager : MonoBehaviour {
+public class RoundScoreManager {
     //Deals with scores of players. Scoring/loss of score by death (overlap with above). Potentially stores individual scores as they'll pass through anyway.
     //Deals with both Observers sending scores, and the Server passing scores to clients/recieving and storing them.
     private int pirateScore;
