@@ -3,12 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 
 //Deals with player details.
-public class PlayerManager : MonoBehaviour {
+public class PlayerManager {
     //Int is connection ID, player contains name, game ID, team, etc.
     public static PlayerManager singleton;
     private Dictionary<int, Player> playerDict;
-    public void Start(){
-        DontDestroyOnLoad(this);
+    public PlayerManager(){
+        //DontDestroyOnLoad(this);
         singleton = this;
         playerDict = new Dictionary<int, Player>();
     }

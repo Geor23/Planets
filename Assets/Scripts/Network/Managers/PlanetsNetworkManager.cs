@@ -64,7 +64,7 @@ public class PlanetsNetworkManager : NetworkManager {
   	public bool onlyUpdateObservers = false;
   	public bool usingSplitScreen = false;
 
-   public PlayerManager pm = PlayerManager.singleton;
+   public PlayerManager pm;
 
   	String killFeed;
 
@@ -105,6 +105,7 @@ public class PlanetsNetworkManager : NetworkManager {
     	roundList.Add("RoundOver");
     	roundList.Add("Round3");
     	roundList.Add("GameOver");
+        pm = new PlayerManager();
     }
 
     public void Update(){
@@ -452,6 +453,7 @@ public class PlanetsNetworkManager : NetworkManager {
         }
         GameObject player = Instantiate (chosen, teamManager.getSpawnP(dict[id].team), Quaternion.identity) as GameObject;
         if(dict[id].team != TeamID.TEAM_OBSERVER){
+            Debug.LogError(pm);
 	        Player playa = pm.getPlayer(idValue);
 	        chosen.GetComponent<PlayerDetails>().setPlayerDetails(id,playa);
 	        player.GetComponent<Text>().text = dict[id].name;
@@ -497,12 +499,12 @@ public class PlanetsNetworkManager : NetworkManager {
     //Updates Observer player
     public void OnPlayerUpdate(NetworkMessage msg) {
         PlayerValues pv = msg.ReadMessage<PlayerValues>();
-        GameObject.Find("PlayerManager").GetComponent<PlayerManager>().updatePlayer(pv.dictId, pv.player);
+        pm.updatePlayer(pv.dictId, pv.player);
     }
 
     public void OnNewPlayer(NetworkMessage msg) {
         PlayerValues pv = msg.ReadMessage<PlayerValues>();
-        GameObject.Find("PlayerManager").GetComponent<PlayerManager>().addPlayer(pv.dictId, pv.player);
+        pm.addPlayer(pv.dictId, pv.player);
     }
 
     // called when disconnected from a server
