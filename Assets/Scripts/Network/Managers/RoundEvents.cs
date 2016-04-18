@@ -34,7 +34,6 @@ public class RoundEvents : MonoBehaviour {
     public void relayDataToServer(){
         //Call functons inside ObjectManager/ScoreManager respectively to sync them together
         //Possibly called at the end of the round
-        sm.relayDataToServer();
     }
 
 //Called by Observer upon collecting a resource. Calls score addition in RoundScoreManager
