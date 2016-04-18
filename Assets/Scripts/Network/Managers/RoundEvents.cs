@@ -9,7 +9,6 @@ using System;
 
 
 public class RoundEvents : MonoBehaviour {
-
     public RoundPlayerObjectManager pom;
     public RoundScoreManager sm;
 

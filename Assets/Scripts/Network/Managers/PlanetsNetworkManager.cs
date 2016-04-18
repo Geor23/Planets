@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Net;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Networking;
@@ -447,9 +448,23 @@ public class PlanetsNetworkManager : NetworkManager {
 		hasConnected = true;
 		Debug.Log("Client connected!");
 	}
-	
-	// called when disconnected from a server
-	public override void OnClientDisconnect(NetworkConnection conn){
+
+    public override void OnServerConnect(NetworkConnection conn){
+        base.OnServerConnect(conn);
+        string address = conn.address;
+        int idValue = BitConverter.ToInt32(IPAddress.Parse(address).GetAddressBytes(), 0);
+        //If the player has already connected, set connected to true and update conn value
+        if(GameObject.Find("PlayerManager").GetComponent<PlayerManager>().checkIfExists(idValue)) {
+            GameObject.Find("PlayerManager").GetComponent<PlayerManager>().setConnected(idValue);
+            //TODO
+        } else {
+            
+        }
+        //string ipAddress = new IPAddress(BitConverter.GetBytes(intAddress)).ToString();
+    }
+
+    // called when disconnected from a server
+    public override void OnClientDisconnect(NetworkConnection conn){
 		StopClient();
 	}
 	

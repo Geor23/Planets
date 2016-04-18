@@ -343,22 +343,21 @@ namespace UnityStandardAssets.CrossPlatformInput {
                                       */
                                     }
                                     
-                  }else if (col.gameObject.CompareTag("ResourcePickUp")) { //Dealt with on the resource currently
-                        //int resourceScore = resourcePowerUpManager.collided(col.gameObject);
-                        int resourceScore = 1; //TODO: Make resourcePowerManager work
-                        if (doubleScore) { //If points are to count for double, double score
-                            resourceScore *= 2;
-                        }
-                int dictId = this.GetComponent<PlayerDetails>().getDictId();
+            }else if (col.gameObject.CompareTag("ResourcePickUp")) { //Dealt with on the resource currently
+                //int resourceScore = resourcePowerUpManager.collided(col.gameObject);
+                int resourceScore = 1; //TODO: Make resourcePowerManager work
+                if (doubleScore) { //If points are to count for double, double score
+                    resourceScore *= 2;
+                }
+                int dictId = GetComponent<PlayerDetails>().getDictId();
                 roundManager.GetComponent<RoundEvents>().getRoundScoreManager().increasePlayerScore(dictId, resourceScore);
-
-                }else if (col.gameObject.CompareTag("ResourcePickUpDeath")) {
-                    //int resourceScore = resourcePowerUpManager.collided(col.gameObject);
-                    int resourceScore = 1; //TODO: Make resourcePowerManager work
-                    int dictId = this.GetComponent<PlayerDetails>().getDictId();
-                    roundManager.GetComponent<RoundEvents>().getRoundScoreManager().increasePlayerScore(dictId, resourceScore);
+            }else if (col.gameObject.CompareTag("ResourcePickUpDeath")) {
+                //int resourceScore = resourcePowerUpManager.collided(col.gameObject);
+                int resourceScore = 1; //TODO: Make resourcePowerManager work
+                int dictId = GetComponent<PlayerDetails>().getDictId();
+                roundManager.GetComponent<RoundEvents>().getRoundScoreManager().increasePlayerScore(dictId, resourceScore);
             }
-            }
+        }
 
         void OnTriggerEnter(Collider col){
             if(!col.gameObject.CompareTag("InversionPlane")) return;

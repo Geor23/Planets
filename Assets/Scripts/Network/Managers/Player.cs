@@ -4,14 +4,16 @@ using System.Collections.Generic;
 
 //Player data
 public class Player : MonoBehaviour {
-    private int playerId;
+    private int playerDictVal;
+    private int connVal;
     private string playerIP;
     private string playerName;
     private int playerScore;
     private int playerTeam;
+    private bool isConnected;
 
     public int getPlayerId() {
-        return playerId;
+        return playerDictVal;
     }
 
     public string getPlayerIP() {
@@ -30,7 +32,17 @@ public class Player : MonoBehaviour {
         return playerTeam;
     }
 
+    public bool getIsConnected(){
+        return isConnected;
+    }
+
     public void incrementPlayerScore(int score){
         playerScore += score;
     }
+
+    public void setIsConnected(bool connBool) {
+        isConnected = connBool;
+    }
+
+
 }
