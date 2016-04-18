@@ -34,7 +34,6 @@ public class RoundEvents : MonoBehaviour {
     public void relayDataToServer(){
         //Call functons inside ObjectManager/ScoreManager respectively to sync them together
         //Possibly called at the end of the round
-        pom.relayDataToServer();
         sm.relayDataToServer();
     }
 
@@ -48,9 +47,3 @@ public class RoundEvents : MonoBehaviour {
 //TODO means the function still needs doing.
 //CHANGE means adjustements are made even if the function works as implemented
 /// </summary>
-
-public class KillHistory {
-    public int playerKiller;
-    public int playerKilled;
-    public int time;
-}
