@@ -20,11 +20,9 @@ static class TeamID {
 
 
 class PlayerData {
-
   	public int team;
   	public string name;
   	public int uniqueId;
-
 }
 
 static class Const {
@@ -44,15 +42,15 @@ public class PlanetsNetworkManager : NetworkManager {
 	
 	[SerializeField] GameObject player1;
 	[SerializeField] GameObject player2;
-  	[SerializeField] GameObject observerSingleScreen;
-  	[SerializeField] GameObject observerSplitScreen;
+ [SerializeField] GameObject observerSingleScreen;
+ [SerializeField] GameObject observerSplitScreen;
 
   	public int key = 0;
-	GameObject chosenCharacter;
-    public string round1Scene; //Round 1 name
-    TeamManager teamManager = new TeamManager();
-    private float timerRound = Const.INITIALTIMER; //This is the time communicated to clients
-	RoundManager roundManager = new RoundManager();
+	  GameObject chosenCharacter;
+   public string round1Scene; //Round 1 name
+   TeamManager teamManager = new TeamManager();
+   private float timerRound = Const.INITIALTIMER; //This is the time communicated to clients
+	  RoundManager roundManager = new RoundManager();
 
   	/* Client Data */
   	public bool hasPickedTeam = false; 
@@ -68,6 +66,7 @@ public class PlanetsNetworkManager : NetworkManager {
   	public bool onlyUpdateObservers = false;
   	public bool usingSplitScreen = false;
 
+   public PlayerManager pm = PlayerManager.singleton;
 
   	String killFeed;
 
@@ -313,23 +312,26 @@ public class PlanetsNetworkManager : NetworkManager {
 
         //NEW CODE TODO, add player name to player. Make sure this occurs after connecting
         string address = msg.conn.address;
-        int idValue = BitConverter.ToInt32(IPAddress.Parse(address).GetAddressBytes(), 0);
+        int idValue;
+        if (address != "localClient") {
+            idValue = BitConverter.ToInt32(IPAddress.Parse(address).GetAddressBytes(), 0);
+        } else { //If local then make -1
+            idValue = -1;
+        }
         //If the player has already connected, set connected to true and update conn value
-        if (GameObject.Find("PlayerManager").GetComponent<PlayerManager>().checkIfExists(idValue)){
-            GameObject.Find("PlayerManager").GetComponent<PlayerManager>().setConnected(idValue); //Indicate player is again connected
-            GameObject.Find("PlayerManager").GetComponent<PlayerManager>().setConnValue(idValue, msg.conn.connectionId); //Updates old conn value
+        if (pm.checkIfExists(idValue)){
+            pm.setConnected(idValue); //Indicate player is again connected
+            pm.setConnValue(idValue, msg.conn.connectionId); //Updates old conn value
 
             PlayerValues pv = new PlayerValues();
             pv.dictId = idValue;
-            pv.player = GameObject.Find("PlayerManager").GetComponent<PlayerManager>().getPlayer(idValue);
-            foreach (NetworkConnection nc in getUpdateListeners())
-            {
+            pv.player = pm.getPlayer(idValue);
+            foreach (NetworkConnection nc in getUpdateListeners()){
                 NetworkServer.SendToClient(nc.connectionId, Msgs.updatePlayer, pv);
             }
         } else {
             Player newPlayer = new Player(idValue, msg.conn.connectionId, address, name);
-            GameObject.Find("PlayerManager").GetComponent<PlayerManager>().addPlayer(idValue, newPlayer);
-
+            pm.addPlayer(idValue, newPlayer);
             PlayerValues pv = new PlayerValues();
             pv.dictId = idValue;
             pv.player = newPlayer;
@@ -407,8 +409,13 @@ public class PlanetsNetworkManager : NetworkManager {
 
         //NEW: USING PLAYER STRUCTURES + MEMORY
         string address = conn.address;
-        int idValue = BitConverter.ToInt32(IPAddress.Parse(address).GetAddressBytes(), 0); //Identifier based on ip
-        GameObject.Find("PlayerManager").GetComponent<PlayerManager>().setDisconnected(idValue); //Indicates player disconnected
+        int idValue;
+        if (address != "localServer"){
+            idValue = BitConverter.ToInt32(IPAddress.Parse(address).GetAddressBytes(), 0);
+        } else { //If local then make -1
+            idValue = -1;
+        }
+        pm.setDisconnected(idValue); //Indicates player disconnected
  }
 	
 
@@ -438,7 +445,16 @@ public class PlanetsNetworkManager : NetworkManager {
 										observerSingleScreen
 									:
 										observerSplitScreen));
-		GameObject player = Instantiate (chosen, teamManager.getSpawnP(dict[id].team), Quaternion.identity) as GameObject;
+        string address = conn.address;
+        int idValue;
+        if (address != "localClient"){
+            idValue = BitConverter.ToInt32(IPAddress.Parse(address).GetAddressBytes(), 0);
+        } else { //If local then make -1
+            idValue = -1;
+        }
+        Player playa = pm.getPlayer(idValue);
+        chosen.GetComponent<PlayerDetails>().setPlayerDetails(id,playa);
+		      GameObject player = Instantiate (chosen, teamManager.getSpawnP(dict[id].team), Quaternion.identity) as GameObject;
         player.GetComponent<Text>().text = dict[id].name;
         updateListeners.Add(conn);
 
@@ -456,7 +472,7 @@ public class PlanetsNetworkManager : NetworkManager {
 			sendScore(dict[id].team);
 			if (playerController.unetView != null){
 				NetworkServer.Destroy(player);
-				Debug.LogError("OnServerRemovePlayer: Destroying player");
+				Debug.LogError("OnServerRemovePlayer: Destroying player"); // We shall finish our business on slack plz :)
 			}
 			updateListeners.Remove(conn);
 		}

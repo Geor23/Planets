@@ -23,7 +23,6 @@ public class PlayerDetails : MonoBehaviour {
         return playerDetails.getPlayerIP();
     }
 
-
     public int getPlayerScore(){
         return playerDetails.getPlayerScore();
     }
