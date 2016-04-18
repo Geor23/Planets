@@ -3,7 +3,7 @@ var offset = Vector3.up;	// Units in world space to offset; 1 unit above object 
 var clampToScreen = false;	// If true, label will be visible even if object is off screen
 var clampBorderSize = .05;	// How much viewport space to leave at the borders when a label is being clamped
 // var useMainCamera = false;	// Use the camera tagged MainCamera
-var cameraToUse : Camera;	// Only use this if useMainCamera is false
+private var cameraToUse : Camera;	// Only use this if useMainCamera is false
 // var cameraToUse2 : Camera;	// Only use this if useMainCamera is false
 // private var cam : Camera;
 // private var cam2 : Camera;
@@ -21,12 +21,13 @@ function Start () {
 		// cam = cameraToUse;
 	// 	// cam2 = cameraToUse2;
 	// }
-	camTransform = cameraToUse.transform;
+	
 	// camTransform2 = cam2.transform;
 }
  
 function Update () {
-
+	cameraToUse = GameObject.Find("ObserverCamera").GetComponent(Camera);
+	camTransform = GameObject.Find("ObserverCamera").GetComponent(Transform);
 	// if (clampToScreen) {
 
 	// 	var relativePosition = camTransform.InverseTransformPoint(target.position);
@@ -46,9 +47,9 @@ function Update () {
 		// if(Physics.Raycast(camTransform1.position, dir, hitInfo, 1000, myLayerMask)) {
 		    //Debug.Log("on the other side of cam1");
 		    thisTransform.position = cameraToUse.WorldToViewportPoint(target.position + offset);
-		    Debug.Log("x: " + thisTransform.position.x + " : " + target.position.x);
-		    Debug.Log("y: " + thisTransform.position.y + " : " + target.position.y);
-		    Debug.Log("z: " + thisTransform.position.z + " : " + target.position.z);
+		    // Debug.Log("x: " + thisTransform.position.x + " : " + target.position.x);
+		    // Debug.Log("y: " + thisTransform.position.y + " : " + target.position.y);
+		    // Debug.Log("z: " + thisTransform.position.z + " : " + target.position.z);
 
 		// } else {
 		// 	//Debug.Log("on the side of cam1");
