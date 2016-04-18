@@ -242,14 +242,14 @@ namespace UnityStandardAssets.CrossPlatformInput {
                 if (doubleScore) { //If points are to count for double, double score
                     resourceScore *= 2;
                 }
-                int dictId = GetComponent<PlayerDetails>().getDictId();
+                int dictId = playerDetails.getDictId();
                 roundEvents.getRoundScoreManager().increasePlayerScore(dictId, resourceScore);
             }
 
             else if (col.gameObject.CompareTag("ResourcePickUpDeath")) {
                 //int resourceScore = resourcePowerUpManager.collided(col.gameObject);
                 int resourceScore = 1; //TODO: Make resourcePowerManager work
-                int dictId = GetComponent<PlayerDetails>().getDictId();
+                int dictId = playerDetails.getDictId();
                 roundEvents.GetComponent<RoundEvents>().getRoundScoreManager().increasePlayerScore(dictId, resourceScore);
             }
         }
