@@ -50,6 +50,10 @@ public class Player {
         playerScore += score;
     }
 
+    public void decrementPlayerScore(int score){
+        playerScore -= score;
+    }
+
     public void setIsConnected(bool connBool) {
         isConnected = connBool;
     }

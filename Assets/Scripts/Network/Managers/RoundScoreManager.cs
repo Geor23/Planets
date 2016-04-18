@@ -17,16 +17,16 @@ public class RoundScoreManager {
 
     public void increasePlayerScore(int playerId, int score){
         playerDict[playerId].incrementPlayerScore(score);
-        if(pm.getTeam(playerid) == TeamID.TEAM_PIRATES){
+        if(pm.getTeam(playerId) == TeamID.TEAM_PIRATES){
             pirateScore += score;
         } else {
             superCorpScore += score;
         }
     }
 
-    public void decreasePlayerScore(int playerId, int score){
-        playerDict[playerId].decreasePlayerScore(score);
-        if(pm.getTeam(playerid) == TeamID.TEAM_PIRATES){
+    public void decrementPlayerScore(int playerId, int score){
+        playerDict[playerId].decrementPlayerScore(score);
+        if(pm.getTeam(playerId) == TeamID.TEAM_PIRATES){
             pirateScore -= score;
         } else {
             superCorpScore -= score;
