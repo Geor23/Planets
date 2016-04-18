@@ -77,7 +77,7 @@ public class ResourcePowerUpManager : MonoBehaviour {
     void ResourceRescale(GameObject resourceGameObject) {
         float scale;
         float tmp = (maxResourceScore - minResourceScore) / 5;
-        int currentResourceScore = resourceGameObject.GetComponent<ResourceScore>().resourceScore;
+        int currentResourceScore = resourceGameObject.GetComponent<CurrentResourceScore>().resourceScore;
 
         if (currentResourceScore == initialScore) {
             scale = 0.2f;
