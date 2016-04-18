@@ -17,6 +17,11 @@ public class GameStatsManager {
 		roundScoreData = new List<RoundScoreManager>();
 	}
 
+	public void addNewRoundDatas(RoundPlayerObjectManager rpom, RoundScoreManager rsm){
+		roundPlayerData.Add(rpom);
+		roundScoreData.Add(rsm);
+	}
+
 	public void churnDataIntoStats(){
 
 
