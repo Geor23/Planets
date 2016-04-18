@@ -62,7 +62,6 @@ public class ResourceController : MonoBehaviour {
                 Debug.Log("Collided with a player");
                 //DoubleScore Powerup
                 if(col.gameObject.GetComponent<PlayerControllerMobile>().doubleScore == true){
-                    Debug.Log("DOUBLED SCORE");
                     score *= 2;
                 }
                 //col.gameObject.GetComponent<PlayerControllerMobile>().SetScoreTextNew(score); //This needs to be done

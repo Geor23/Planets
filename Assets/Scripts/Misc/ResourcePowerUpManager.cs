@@ -4,8 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityStandardAssets.CrossPlatformInput;
 
-public class ResourcePowerUpManager : MonoBehaviour
-{
+public class ResourcePowerUpManager : MonoBehaviour {
     public GameObject resourceObject;
     public GameObject shieldObject;
     public GameObject fasterFireObject;
@@ -75,18 +74,16 @@ public class ResourcePowerUpManager : MonoBehaviour
        // InvokeRepeating("spawnMeteor", 0.0f, meteorSpawnTime);
     }
 
-    public int getScore() {
+    public int getScore(GameObject obj) {      
         return score;
     }
 
-    public void setScore(int scoreToSet)
-    {
+    public void setScore(int scoreToSet){
         score = scoreToSet;
         ResourceRescale(resources[Random.Range(0, resources.Count)]);
     }
 
-    void UpdateValue()
-    {
+    void UpdateValue(){
         score += 1;
         if (score > 2 * maxScore) { score = 2 * maxScore; }
         ResourceRescale(resources[Random.Range(0, resources.Count)]);

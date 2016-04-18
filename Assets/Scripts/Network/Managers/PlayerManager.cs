@@ -22,8 +22,7 @@ public class PlayerManager : MonoBehaviour {
     public Player getPlayer(int id) {
         if (playerDict.ContainsKey(id)){
             return playerDict[id];
-        }
-        else {
+        } else {
             return null;
         }
     }

@@ -16,8 +16,9 @@ public class RoundEvents : MonoBehaviour {
     void Start(){
         pom = new RoundPlayerObjectManager();
         sm = new RoundScoreManager();
+        Dictionary<int, Player> playerDict = GameObject.Find("PlayerManager").GetComponent<PlayerManager>().getPlayerDict();
 
-
+        sm.setPlayerDict(playerDict);
         //Handle messages from server such as end of round signal etc. act upon them
     }
 
@@ -37,6 +38,8 @@ public class RoundEvents : MonoBehaviour {
         pom.relayDataToServer();
         sm.relayDataToServer();
     }
+
+//Called by Observer upon collecting a resource. Calls score addition in RoundScoreManager
     
 }
 
