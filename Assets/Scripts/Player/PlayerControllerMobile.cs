@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.Networking.NetworkSystem;
 
 namespace UnityStandardAssets.CrossPlatformInput {
-    [NetworkSettings(channel=1)]
+    [NetworkSettings(channel = 1)]
     public class PlayerControllerMobile : NetworkBehaviour {
         private NetworkIdentity nIdentity;
         private PlanetsNetworkManager nm;
@@ -37,7 +37,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
         public Transform model;
         public Transform turret;
 
-        public Text scoreText;
+        //  public Text scoreText;
         public Text winText;
         public Text id;
         // public GUIText idForObsScreen;
@@ -46,11 +46,11 @@ namespace UnityStandardAssets.CrossPlatformInput {
         public GameObject ResourcePickUp;
 
         public Camera mainCamera;
-        public Transform obsCamera ;
-        public Vector3 planetCenter = new Vector3(0,0,0);
+        public Transform obsCamera;
+        public Vector3 planetCenter = new Vector3(0, 0, 0);
 
-        public int score;
-        public int scoreToRemove;
+        //  public int score;
+        //   public int scoreToRemove;
         public GameObject projectileModel;
 
         public GameObject shield;
@@ -68,19 +68,21 @@ namespace UnityStandardAssets.CrossPlatformInput {
 
         Rigidbody rb;
 
-        void Start()
-        {
+        private GameObject roundManager; //Contains reference to RoundEventsManager object
+
+        void Start() {
             nIdentity = GetComponent<NetworkIdentity>();
             nm = (PlanetsNetworkManager)NetworkManager.singleton;
+            roundManager = GameObject.Find("RoundEventsManager"); //Sets reference to RoundEvents object
             rb = GetComponent<Rigidbody>();
             resourcePowerUpManager = GameObject.FindGameObjectWithTag("Planet").GetComponent<ResourcePowerUpManager>();
-            if(!nIdentity.isLocalPlayer) return;
+            if (!nIdentity.isLocalPlayer) return;
             invertControls = nm.isSplitScreen();
-            reflectionMatrix = genRefMatrix(90*Mathf.Deg2Rad);
+            reflectionMatrix = genRefMatrix(90 * Mathf.Deg2Rad);
             needsReflection = gameObject.CompareTag("PlayerSuperCorp");
             nm.client.RegisterHandler(Msgs.updateLocalScore, OnClientPickupDeath);
-            score = 0;
-            scoreText = GameObject.Find("ScoreText").GetComponent<Text>();
+            //     score = 0;
+            //      scoreText = GameObject.Find("ScoreText").GetComponent<Text>();
             winText = GameObject.Find("WinText").GetComponent<Text>();
             deathText = GameObject.Find("DeathText").GetComponent<Text>();
             deathTimerText = GameObject.Find("DeathTimerText").GetComponent<Text>();
@@ -91,10 +93,9 @@ namespace UnityStandardAssets.CrossPlatformInput {
             nm.client.RegisterHandler(Msgs.killPlayerRequestClient, OnClientKillPlayer);
         }
 
-        public void OnClientReceiveName(NetworkMessage msg)
-        {
+        public void OnClientReceiveName(NetworkMessage msg) {
             return;
-            if(!nIdentity.isLocalPlayer) return;
+            if (!nIdentity.isLocalPlayer) return;
             Name tl = msg.ReadMessage<Name>();
             //Debug.LogError("Text: " + gameObject.GetComponent<Text>());
             Text name = gameObject.GetComponent<Text>();
@@ -104,10 +105,9 @@ namespace UnityStandardAssets.CrossPlatformInput {
         }
 
 
-        void Update(){
+        void Update() {
 
-            if (doubleScore == true)
-            {
+            if (doubleScore == true) {
                 doubleScoreTime -= Time.deltaTime;
                 //Debug.Log(doubleScoreTime);
                 if (doubleScoreTime <= 0)
@@ -118,7 +118,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
                 }
             }
 
-            if (fasterFire == true){
+            if (fasterFire == true) {
                 //Debug.LogError("Starting faster fire for " + nIdentity);
                 fasterFireTime -= Time.deltaTime;
                 if (fasterFireTime <= 0)
@@ -129,9 +129,9 @@ namespace UnityStandardAssets.CrossPlatformInput {
                 }
             }
 
-            if (shielded == true){
+            if (shielded == true) {
                 shieldedTime -= Time.deltaTime;
-                if (shieldedTime <= 0){
+                if (shieldedTime <= 0) {
                     shielded = false;
                     shield.SetActive(false);
                     Destroy(shield);
@@ -143,24 +143,24 @@ namespace UnityStandardAssets.CrossPlatformInput {
             rb = GetComponent<Rigidbody>();
             Vector3 forward = transform.forward;
             Vector3 right = transform.right;
-            #if UNITY_ANDROID
+#if UNITY_ANDROID
             float aimH = CrossPlatformInputManager.GetAxis ("AimH");
             float aimV = CrossPlatformInputManager.GetAxis ("AimV");
             float moveV = CrossPlatformInputManager.GetAxis("MoveV");
             float moveH = CrossPlatformInputManager.GetAxis("MoveH");
-            #endif
+#endif
 
-            #if UNITY_STANDALONE
-            float aimH = (-(Input.GetKey ("left")?1:0) + (Input.GetKey ("right")?1:0));
-            float aimV = ((Input.GetKey ("up")?1:0) - (Input.GetKey ("down")?1:0));
-            float moveV = ((Input.GetKey ("w")?1:0) - (Input.GetKey ("s")?1:0));
-            float moveH = (-(Input.GetKey ("a")?1:0) + (Input.GetKey ("d")?1:0));
-            #endif
+#if UNITY_STANDALONE
+            float aimH = (-(Input.GetKey("left") ? 1 : 0) + (Input.GetKey("right") ? 1 : 0));
+            float aimV = ((Input.GetKey("up") ? 1 : 0) - (Input.GetKey("down") ? 1 : 0));
+            float moveV = ((Input.GetKey("w") ? 1 : 0) - (Input.GetKey("s") ? 1 : 0));
+            float moveH = (-(Input.GetKey("a") ? 1 : 0) + (Input.GetKey("d") ? 1 : 0));
+#endif
 
             lastMoveH = moveH;
             lastMoveV = moveV;
-            
-            if(needsReflection && invertControls){
+
+            if (needsReflection && invertControls) {
                 Vector3 refMove = reflectPoint(moveH, moveV);
                 Vector3 refAim = reflectPoint(aimH, aimV);
 
@@ -184,12 +184,12 @@ namespace UnityStandardAssets.CrossPlatformInput {
 
             Vector3 worldPos = obsCamera.position + obsCamera.parent.transform.position;
 
-            Vector3 newLocation = transform.position + moveDir * Time.deltaTime*5;
+            Vector3 newLocation = transform.position + moveDir * Time.deltaTime * 5;
             float distPlanetToCam = Vector3.Distance(planetCenter, worldPos);
             float distPlayerToCam = Vector3.Distance(newLocation, worldPos);
             rotateObject(model, moveDir.normalized);
             rb.MovePosition(newLocation);
-            
+
         }
 
         void rotateObject(Transform obj, Vector3 direction) {
@@ -211,8 +211,8 @@ namespace UnityStandardAssets.CrossPlatformInput {
                     return;
 
                 string name = GetComponent<Text>().text;
-                if(!nm.observerCollisionsOnly()){
-                        GetComponent<PlayerNetworkHandler>().CmdSpawnProjectile(rb.position + turret.forward, turret.forward, projectileModel, name);
+                if (!nm.observerCollisionsOnly()) {
+                    GetComponent<PlayerNetworkHandler>().CmdSpawnProjectile(rb.position + turret.forward, turret.forward, projectileModel, name);
                 } else {
                     CmdFireProjectile();
                 }
@@ -221,21 +221,26 @@ namespace UnityStandardAssets.CrossPlatformInput {
             }
         }
 
-        void OnCollisionEnter(Collision col) {
-            if(nm.observerCollisionsOnly()) {
-                if(!PlayerConfig.singleton.GetObserver()) return;
-            } else {
+        void OnCollisionEnter(Collision col)
+        {
+            if (nm.observerCollisionsOnly())
+            {
+                if (!PlayerConfig.singleton.GetObserver()) return;
+            }
+            else
+            {
                 if (!nIdentity.isLocalPlayer) return;
             }
 
-            if (col.gameObject.CompareTag("DoubleScore")) {
+            if (col.gameObject.CompareTag("DoubleScore"))
+            {
                 doubleScore = true;
 
                 //Call planet manager
                 resourcePowerUpManager.powerUpCollision(col.gameObject);
-
             }
-            else if (col.gameObject.CompareTag("Shield")){ //Also need to potentially create an animation here?
+            else if (col.gameObject.CompareTag("Shield"))
+            { //Also need to potentially create an animation here?
                 shielded = true;
                 shield = Instantiate(shield);
                 shield.transform.parent = this.transform;
@@ -246,54 +251,50 @@ namespace UnityStandardAssets.CrossPlatformInput {
                 resourcePowerUpManager.powerUpCollision(col.gameObject);
 
             }
-            else if (col.gameObject.CompareTag("FasterFire")){ //Turn on faster fire rate. Still needs graphical additions
+            else if (col.gameObject.CompareTag("FasterFire"))
+            { //Turn on faster fire rate. Still needs graphical additions
                 fasterFire = true;
 
                 //Call planet manager
                 resourcePowerUpManager.powerUpCollision(col.gameObject);
                 currentFireRate = fasterFireSpeed;
             }
+            else if (col.gameObject.CompareTag("Meteor"))
+            {
+                /*
+                    if ((hasCollide == false) && (shielded == false))
+                    {
+                        hasCollide = true;
+                        resourcePowerUpManager.resourceCollision(col.gameObject);
 
-            else if (col.gameObject.CompareTag("Meteor")) {
-                if ((hasCollide == false) && (shielded == false)) {
-                    hasCollide = true;
-                    resourcePowerUpManager.meteorCollision(col.gameObject);
+                        //Update kill feed
+                        Text shooter = col.gameObject.GetComponent<Text>();
+                        Text victim = gameObject.GetComponent<Text>();
+                        Kill tc = new Kill();
+                        tc.msg = shooter.text + " killed " + victim.text;
+                        nm.client.Send(Msgs.clientKillFeed, tc);
 
-                    //Change code so that it uses Round Player Object Manager script instead
+                        //Remove score from team
+                        GetComponent<PlayerNetworkHandler>().CmdSpawnResource(gameObject.transform.position, score);
+                        scoreToRemove = score;
+                        AddScore sc = new AddScore();
+                        sc.team = 0;
+                        sc.score = -score;
+                        sc.obj = this.gameObject;
+                        nm.client.Send(Msgs.clientTeamScore, sc);
 
-                    //Update kill feed
-                    Text shooter = col.gameObject.GetComponent<Text>();
-                    Text victim = gameObject.GetComponent<Text>();
+                        //Send death request to server, to send to Player
+                        KillPlayer kp = new KillPlayer();
+                        kp.netId = this.netId;
+                        kp.obj = this.gameObject;
+                        nm.client.Send(Msgs.killPlayer, kp);
+>>>>>>> b0b54034d2005e4b05ba4c032c58c7d0287ae002
 
-                    Kill tc = new Kill();
-                    tc.msg = shooter.text + " killed " + victim.text;
-                    nm.client.Send(Msgs.clientKillFeed, tc);
-
-                    //Remove score from team
-                    GetComponent<PlayerNetworkHandler>().CmdSpawnResource(gameObject.transform.position, score);
-                    scoreToRemove = score;
-                    AddScore sc = new AddScore();
-                    sc.team = 0;
-                    sc.score = -score;
-                    sc.obj = this.gameObject;
-                    nm.client.Send(Msgs.clientTeamScore, sc);
-
-                    //Send death request to server, to send to Player
-                    //Call killPlayerLocal function in the round player object manager script
-                    KillPlayer kp = new KillPlayer();
-                    kp.netId = this.netId;
-                    kp.obj = this.gameObject;
-                   
-                    //Client sends msg to server 
-                    nm.client.Send(Msgs.killPlayer, kp);
-                    
-                    //roundPlayerObjectManager.killPlayerLocal(this.gameObject,this.netId);
-
-                }
+                    }
+    */
             }
-
-            else if (col.gameObject.CompareTag("ProjectilePirate") && gameObject.CompareTag("PlayerSuperCorp")){
-                if ((hasCollide == false)&&(shielded==false)){
+            else if (col.gameObject.CompareTag("ProjectilePirate") && gameObject.CompareTag("PlayerSuperCorp")) {
+                if ((hasCollide == false) && (shielded == false)) {
                     hasCollide = true;
                     Destroy(col.gameObject);
 
@@ -304,6 +305,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
                     tc.msg = shooter.text + " killed " + victim.text;
                     nm.client.Send(Msgs.clientKillFeed, tc);
 
+                    /*
                     //Remove score from team
                     GetComponent<PlayerNetworkHandler>().CmdSpawnResource(gameObject.transform.position, score);
                     scoreToRemove = score;
@@ -312,6 +314,8 @@ namespace UnityStandardAssets.CrossPlatformInput {
                     sc.score = -score;
                     sc.obj = this.gameObject;
                     nm.client.Send(Msgs.clientTeamScore, sc);
+
+          */
 
                     //GetComponent<FixDestroyBug>().dead = true;
                     //if (PlayerConfig.singleton.isKillPlayerObserver){
@@ -322,8 +326,9 @@ namespace UnityStandardAssets.CrossPlatformInput {
                     nm.client.Send(Msgs.killPlayer, kp);
                     //}
                 }
-            }else if (col.gameObject.CompareTag("ProjectileSuperCorp") && gameObject.CompareTag("PlayerPirate")){
-                if ((hasCollide == false) && (shielded == false)){
+            }
+            else if (col.gameObject.CompareTag("ProjectileSuperCorp") && gameObject.CompareTag("PlayerPirate")) {
+                if ((hasCollide == false) && (shielded == false)) {
                     hasCollide = true;
                     Destroy(col.gameObject);
 
@@ -333,7 +338,8 @@ namespace UnityStandardAssets.CrossPlatformInput {
                     Kill tc = new Kill();
                     tc.msg = shooter.text + " killed " + victim.text;
                     nm.client.Send(Msgs.clientKillFeed, tc);
-
+                   
+                    /*
                     //Remove score from team
                     GetComponent<PlayerNetworkHandler>().CmdSpawnResource(gameObject.transform.position, score);
                     scoreToRemove = score;
@@ -342,59 +348,33 @@ namespace UnityStandardAssets.CrossPlatformInput {
                     sc.score = -score;
                     sc.obj = this.gameObject;
                     nm.client.Send(Msgs.clientTeamScore, sc);
+                    */
 
                     //GetComponent<FixDestroyBug>().dead = true;
                     //if (PlayerConfig.singleton.isKillPlayerObserver){
-                        //Send death request to server, to send to Player
-                        KillPlayer kp = new KillPlayer();
-                        kp.netId = this.netId;
-                        kp.obj = this.gameObject;
-                        nm.client.Send(Msgs.killPlayer, kp);
-                  //  }
+                    //Send death request to server, to send to Player
+                    KillPlayer kp = new KillPlayer();
+                    kp.netId = this.netId;
+                    kp.obj = this.gameObject;
+                    nm.client.Send(Msgs.killPlayer, kp);
+                    //  }
                 }
             }
-           
-            if (col.gameObject.CompareTag("ResourcePickUp")){ //Dealt with on the resource currently
-
-                //  ResourceController resProp = col.gameObject.GetComponent<ResourceController>();
-                //  int resourceScore = resProp.getScore(); //May occur after resource score updated
-
-                //Call planet manager
-                //Combine getting score and removing object
-                //int resourceScore = resourcePowerUpManager.getScore();
+        else if (col.gameObject.CompareTag("ResourcePickUp")) { //Dealt with on the resource currently
                 int resourceScore = resourcePowerUpManager.resourcePickUpCollision(col.gameObject);
-
-                if (doubleScore){ //If points are to count for double, double score
+              //  int resourceScore = 1; //TODO: Make resourcePowerManager work
+                if (doubleScore) { //If points are to count for double, double score
                     resourceScore *= 2;
                 }
-                score += resourceScore;
-
-                /*
-                Debug.Log("SCORE IS" + score);
-                Debug.Log("RESOURCE IS" + resourceScore);
-                SetScoreText();
-                AddScore sc = new AddScore();
-                sc.team = 0;
-                sc.score = resourceScore;
-                sc.obj = col.gameObject;
-                nm.client.Send(Msgs.clientTeamScore, sc);
-                */
+                int dictId = GetComponent<PlayerDetails>().getDictId();
+                roundManager.GetComponent<RoundEvents>().getRoundScoreManager().increasePlayerScore(dictId, resourceScore);
             }
 
-            if (col.gameObject.CompareTag("ResourcePickUpDeath")){
-
-                DeathResourceProperties resProp = col.gameObject.GetComponent<DeathResourceProperties>();
-                //score = score + resProp.getScore();
-                //score = score + int.Parse(col.gameObject.GetComponent<Text>().text);
-                Debug.Log("picked up death with score " + col.gameObject.GetComponent<Text>().text);
-                //GetComponent<PlayerNetworkHandler>().CmdDestroyDeathResource(col.gameObject);
-                SetScoreText();
-
-                DeathResource dr = new DeathResource();
-                dr.team = 0;
-                dr.score = (int)resProp.getScore();
-                dr.drID = col.gameObject;
-                nm.client.Send(Msgs.deathResourceCollision, dr);
+            else if (col.gameObject.CompareTag("ResourcePickUpDeath")) {
+                //int resourceScore = resourcePowerUpManager.collided(col.gameObject);
+                int resourceScore = 1; //TODO: Make resourcePowerManager work
+                int dictId = GetComponent<PlayerDetails>().getDictId();
+                roundManager.GetComponent<RoundEvents>().getRoundScoreManager().increasePlayerScore(dictId, resourceScore);
             }
         }
 
@@ -428,23 +408,23 @@ namespace UnityStandardAssets.CrossPlatformInput {
         {
             UpdateLocalScore uls = msg.ReadMessage<UpdateLocalScore>(); //Recieve death resource score from server
             int scoreAdd = uls.score;
-            score += scoreAdd; //Add to existing score
+     //       score += scoreAdd; //Add to existing score
             SetScoreText();
         }
 
         // function only called after the player dies to get the score that the team manager has to substract
         // hence the score has to be reset to 0 after that
-        public int getScore(){
-            return scoreToRemove;
-        }   
+   //     public int getScore(){
+  //          return scoreToRemove;
+  //      }   
 
         public void SetScoreText(){
-            scoreText.text = score.ToString();
+    //        scoreText.text = score.ToString();
         }
 
         public void SetScoreTextNew(int scoreVal){
-            score += scoreVal;
-            scoreText.text = score.ToString();
+    //        score += scoreVal;
+    //        scoreText.text = score.ToString();
         }
 
         [Command]
@@ -464,7 +444,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
             deathText.enabled = true; //Causes timer for next spawn to occur
             deathTimerText.enabled = true;
             mainCamera.enabled = true;
-            score = 0;
+        //    score = 0;
             SetScoreText();
             ClientScene.RemovePlayer(0);
         }

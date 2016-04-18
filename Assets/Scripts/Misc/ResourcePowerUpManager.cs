@@ -5,7 +5,8 @@ using System.Collections.Generic;
 using UnityStandardAssets.CrossPlatformInput;
 
 public class ResourcePowerUpManager : MonoBehaviour {
-    public GameObject resource;
+
+    public GameObject resourceObject;
     public GameObject shieldObject;
     public GameObject fasterFireObject;
     public GameObject doubleScoreObject;
@@ -134,7 +135,7 @@ public class ResourcePowerUpManager : MonoBehaviour {
     void spawnResource() {
         for (int i = resources.Count; i < maxResourceOnPlanet; i++) {
             int spawnIndex = Random.Range(0, resourceSpawnPoints.Length);
-            resources.Add((GameObject) Instantiate(resource, resourceSpawnPoints[spawnIndex].transform.position, resourceSpawnPoints[spawnIndex].transform.rotation));
+            resources.Add((GameObject) Instantiate(resourceObject, resourceSpawnPoints[spawnIndex].transform.position, resourceSpawnPoints[spawnIndex].transform.rotation));
             resources[i].GetComponent<ResourceScore>().resourceScore = initialScore;
         }
     }

@@ -9,15 +9,15 @@ using System;
 
 
 public class RoundEvents : MonoBehaviour {
-
     public RoundPlayerObjectManager pom;
     public RoundScoreManager sm;
 
     void Start(){
         pom = new RoundPlayerObjectManager();
         sm = new RoundScoreManager();
+        Dictionary<int, Player> playerDict = GameObject.Find("PlayerManager").GetComponent<PlayerManager>().getPlayerDict();
 
-
+        sm.setPlayerDict(playerDict);
         //Handle messages from server such as end of round signal etc. act upon them
     }
 
@@ -34,9 +34,10 @@ public class RoundEvents : MonoBehaviour {
     public void relayDataToServer(){
         //Call functons inside ObjectManager/ScoreManager respectively to sync them together
         //Possibly called at the end of the round
-        pom.relayDataToServer();
         sm.relayDataToServer();
     }
+
+//Called by Observer upon collecting a resource. Calls score addition in RoundScoreManager
     
 }
 
@@ -46,9 +47,3 @@ public class RoundEvents : MonoBehaviour {
 //TODO means the function still needs doing.
 //CHANGE means adjustements are made even if the function works as implemented
 /// </summary>
-
-public class KillHistory {
-    public int playerKiller;
-    public int playerKilled;
-    public int time;
-}

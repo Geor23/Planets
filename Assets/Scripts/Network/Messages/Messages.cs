@@ -31,6 +31,7 @@ class Msgs : MsgType {
   public const short fireProjectile = 72;
   public const short killPlayer = 73;
   public const short killPlayerRequestClient = 74;
+  public const short updatePlayer = 75;
 }
 
 public class JoinMessage : MessageBase {
@@ -114,4 +115,9 @@ public class UpdateRotTurret : MessageBase {
 public class KillPlayer : MessageBase {
     public NetworkInstanceId netId;
     public GameObject obj;
+}
+
+public class PlayerValues : MessageBase {
+    public int dictId;
+    public Player player;
 }
