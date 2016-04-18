@@ -32,6 +32,7 @@ class Msgs : MsgType {
   public const short killPlayer = 73;
   public const short killPlayerRequestClient = 74;
   public const short updatePlayer = 75;
+  public const short addNewPlayer = 76;
 }
 
 public class JoinMessage : MessageBase {

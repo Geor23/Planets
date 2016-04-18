@@ -61,4 +61,13 @@ public class PlayerManager : MonoBehaviour {
     public string getName(int id) {
         return playerDict[id].getPlayerName();
     }
+
+    public void setName(int id, string name){
+        playerDict[id].setPlayerName(name);
+    }
+
+    public int getTeam(int id) {
+       return playerDict[id].getPlayerTeam();
+    }
+
 }
