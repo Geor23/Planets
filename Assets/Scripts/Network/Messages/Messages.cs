@@ -33,6 +33,7 @@ class Msgs : MsgType {
   public const short killPlayerRequestClient = 74;
   public const short updatePlayer = 75;
   public const short addNewPlayer = 76;
+  public const short spawnPlayer = 77;
 }
 
 public class JoinMessage : MessageBase {
@@ -122,4 +123,9 @@ public class KillPlayer : MessageBase {
 public class PlayerValues : MessageBase {
     public int dictId;
     public Player player;
+}
+
+public class PlayerSpawnMsg : MessageBase {
+    public int playerId;
+    public Vector3 pos;
 }

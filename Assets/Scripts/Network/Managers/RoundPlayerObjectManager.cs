@@ -28,12 +28,12 @@ public class KillInfo {
 public class RoundPlayerObjectManager { //TODO
 
     private int roundNum;
-    private List<int> deadPlayers;
+    private Queue<int> deadPlayers;
     private List<KillInfo> killHistory;
     private PlayerManager pm;
 
     public RoundPlayerObjectManager(){
-        deadPlayers = new List<int>();
+        deadPlayers = new Queue<int>();
         killHistory = new List<KillInfo>();
         pm = PlayerManager.singleton;
     }
@@ -42,6 +42,13 @@ public class RoundPlayerObjectManager { //TODO
     public void killPlayerLocal(int playerIdKilled, int playerIdKiller){ //TODO
         KillInfo ki = new KillInfo(playerIdKiller, playerIdKilled, KillType.ELE);
         killHistory.Add(ki);
+        deadPlayers.Enqueue(playerIdKilled);
+    }
+
+    public int mostRecentDeath(){
+        if(deadPlayers.Count != 0)
+            return deadPlayers.Dequeue();
+        return -25;
     }
 
     public string getKillString(int i){

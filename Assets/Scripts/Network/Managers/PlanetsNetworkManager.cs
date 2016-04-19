@@ -165,16 +165,7 @@ public class PlanetsNetworkManager : NetworkManager {
         Debug.LogError("The address in AddPlayer is " + conn.address);
         int idVal = ipToId(conn.address, conn.connectionId);
         if (pm.getTeam(idVal) != TeamID.TEAM_NEUTRAL){
-            GameObject chosen = pm.getTeam(idVal) == TeamID.TEAM_PIRATES ?
-                                    player1
-                                :
-                                    (pm.getTeam(idVal) == TeamID.TEAM_SUPERCORP ?
-                                        player2
-                                    :
-                                        (!usingSplitScreen ?
-                                            observerSingleScreen
-                                        :
-                                            observerSplitScreen));
+            GameObject chosen = playerObjectType(idVal);
             GameObject player = Instantiate(chosen, teamManager.getSpawnP(pm.getTeam(idVal)), Quaternion.identity) as GameObject;
             if (pm.getTeam(idVal) != TeamID.TEAM_OBSERVER)
             {
@@ -191,6 +182,19 @@ public class PlanetsNetworkManager : NetworkManager {
         }
     }
 
+    public GameObject playerObjectType(int idVal){
+        return pm.getTeam(idVal) == TeamID.TEAM_PIRATES ?
+                    player1
+                :
+                    (pm.getTeam(idVal) == TeamID.TEAM_SUPERCORP ?
+                        player2
+                    :
+                        (!usingSplitScreen ?
+                            observerSingleScreen
+                        :
+                            observerSplitScreen));
+    }
+
     public void OnServerRecieveName(NetworkMessage msg) {  
         JoinMessage joinMsg = msg.ReadMessage<JoinMessage>();
         string name = joinMsg.name;
@@ -205,6 +209,7 @@ public class PlanetsNetworkManager : NetworkManager {
             Debug.Log("Player " + idValue + " exists, setting connected once more");
             pm.setConnected(idValue); //Indicate player is again connected
             pm.setConnValue(idValue, msg.conn.connectionId); //Updates old conn value
+            pm.setNetworkConnection(idValue, msg.conn);
 
             PlayerValues pv = new PlayerValues();
             pv.dictId = idValue;
@@ -215,7 +220,12 @@ public class PlanetsNetworkManager : NetworkManager {
         } else { //If is entirely new player
             Debug.Log("New player "+ address + ", given id" + idValue + ", offering team " + teamChoice);
             Player newPlayer = new Player(idValue, msg.conn.connectionId, address, name, teamChoice);
+            
             pm.addPlayer(idValue, newPlayer);
+            pm.setConnected(idValue); //Indicate player is again connected
+            pm.setConnValue(idValue, msg.conn.connectionId); //Updates old conn value
+            pm.setNetworkConnection(idValue, msg.conn);
+
             PlayerValues pv = new PlayerValues();
             pv.dictId = idValue;
             pv.player = newPlayer;

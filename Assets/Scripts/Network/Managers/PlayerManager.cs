@@ -1,16 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-
+using UnityEngine.Networking;
 //Deals with player details.
 public class PlayerManager {
     //Int is connection ID, player contains name, game ID, team, etc.
     public static PlayerManager singleton;
     private Dictionary<int, Player> playerDict;
+    private Dictionary<int, NetworkConnection> connectionDict;
     public PlayerManager(){
         //DontDestroyOnLoad(this);
         singleton = this;
         playerDict = new Dictionary<int, Player>();
+        connectionDict = new Dictionary<int, NetworkConnection>();
     }
 
     public void addPlayer(int id, Player player){
@@ -23,6 +25,7 @@ public class PlayerManager {
 
     public void removePlayer(int id){
         playerDict.Remove(id);
+        connectionDict.Remove(id);
     }
 
     public Player getPlayer(int id){
@@ -58,6 +61,12 @@ public class PlayerManager {
         playerDict[id].setConnValue(conn);
     }
 
+    public void setNetworkConnection(int id, NetworkConnection conn){
+        connectionDict[id] = conn;
+    }
+
+
+
     public string getName(int id) {
         return playerDict[id].getPlayerName();
     }
@@ -74,4 +83,11 @@ public class PlayerManager {
         playerDict[id].setPlayerTeam(teamChoice);
     }
 
+    public NetworkConnection getNetworkConnection(int id){
+        if (connectionDict.ContainsKey(id)){
+            return connectionDict[id];
+        } else {
+            return null;
+        }
+    }
 }

@@ -16,14 +16,14 @@ public class RoundEvents : MonoBehaviour {
     public RoundPlayerObjectManager pom;
     public RoundScoreManager sm;
     public PlayerManager pm;
-    public NetworkManager nm;
+    public PlanetsNetworkManager nm;
 
     void Start(){
         pm = PlayerManager.singleton;
         pom = new RoundPlayerObjectManager();
         Dictionary<int, Player> playerDict = pm.getPlayerDict();
         sm = new RoundScoreManager(playerDict);
-        nm = NetworkManager.singleton;
+        nm = (PlanetsNetworkManager)PlanetsNetworkManager.singleton;
         //Handle messages from server such as end of round signal etc. act upon them
 
         if(NetworkClient.active) enableClientCallbacks();
@@ -32,10 +32,16 @@ public class RoundEvents : MonoBehaviour {
 
     void enableClientCallbacks(){
         nm.client.RegisterHandler(Msgs.killPlayer, OnClientDeath);
+
+        // If observer, invoke repeating respawn players
+        if(PlayerConfig.singleton.GetObserver()){
+            InvokeRepeating("respawnPlayer", 0, 1); // Respawn 1 player per second
+        }
     }
 
     void enableServerCallbacks(){
         NetworkServer.RegisterHandler(Msgs.killPlayer, OnServerRegisterDeath);
+        NetworkServer.RegisterHandler(Msgs.spawnPlayer, OnServerSpawnPlayer);
     }
 
     //These can be called inside the playercontroller mobile so that we can tap int othe object manager functionality
@@ -50,11 +56,21 @@ public class RoundEvents : MonoBehaviour {
 
     /* CLIENT FUNCS PLZ */
 
+    public void respawnPlayer(){
+        int playerId = pom.mostRecentDeath();
+        if(playerId == -25) return;
+        PlayerSpawnMsg ps = new PlayerSpawnMsg();
+        ps.playerId = playerId;
+        ps.pos = new Vector3(60,60,60); //Observer cam;
+        nm.client.Send(Msgs.spawnPlayer, ps);
+    }
+
     public void registerKill(NetworkInstanceId netId, int playerKilledId, int playerKillerId){
         KillPlayer kp = new KillPlayer();
         kp.netId = netId;
         nm.client.Send(Msgs.killPlayer, kp);
         pom.killPlayerLocal(playerKilledId, playerKillerId);
+        Debug.Log("Player " + playerKilledId + " died");
     }
 
     public void OnClientDeath(NetworkMessage msg){
@@ -72,6 +88,14 @@ public class RoundEvents : MonoBehaviour {
         GameObject obj = NetworkServer.FindLocalObject(kp.netId); // Relay msg to player
         if(obj == null) return;
         NetworkServer.SendToClientOfPlayer(obj, Msgs.killPlayer, kp);
+    }
+
+    public void OnServerSpawnPlayer(NetworkMessage msg){
+        PlayerSpawnMsg ps = msg.ReadMessage<PlayerSpawnMsg>();
+        GameObject player = Instantiate(nm.playerObjectType(ps.playerId), ps.pos, Quaternion.identity) as GameObject;
+        player.GetComponent<UnityStandardAssets.CrossPlatformInput.PlayerControllerMobile>().dictId = ps.playerId;
+        Debug.Log("Player " + ps.playerId + "being respawned");
+        NetworkServer.AddPlayerForConnection(pm.getNetworkConnection(ps.playerId), player, 0);
     }
 
 
