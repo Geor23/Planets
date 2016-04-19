@@ -164,8 +164,7 @@ public class PlanetsNetworkManager : NetworkManager {
         /* This is where you can register players with teams, and spawn the player at custom points in the team space */
         Debug.LogError("The address in AddPlayer is " + conn.address);
         int idVal = ipToId(conn.address, conn.connectionId);
-        if (pm.getTeam(idVal) != TeamID.TEAM_NEUTRAL)
-        {
+        if (pm.getTeam(idVal) != TeamID.TEAM_NEUTRAL){
             GameObject chosen = pm.getTeam(idVal) == TeamID.TEAM_PIRATES ?
                                     player1
                                 :
@@ -188,7 +187,7 @@ public class PlanetsNetworkManager : NetworkManager {
             updateListeners.Add(conn);
 
             //Add to observing listeners if not a player
-            if (pm.getTeam(idVal) != TeamID.TEAM_PIRATES && pm.getTeam(idVal) != TeamID.TEAM_SUPERCORP) observingListeners.Add(conn);
+            if (pm.getTeam(idVal) == TeamID.TEAM_OBSERVER) observingListeners.Add(conn);
             NetworkServer.AddPlayerForConnection(conn, player, playerControllerId);
         }
     }
