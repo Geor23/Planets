@@ -16,21 +16,26 @@ public class RoundEvents : MonoBehaviour {
     public RoundPlayerObjectManager pom;
     public RoundScoreManager sm;
     public PlayerManager pm;
+    public NetworkManager nm;
 
     void Start(){
         pm = PlayerManager.singleton;
         pom = new RoundPlayerObjectManager();
         Dictionary<int, Player> playerDict = pm.getPlayerDict();
         sm = new RoundScoreManager(playerDict);
+        nm = NetworkManager.singleton;
         //Handle messages from server such as end of round signal etc. act upon them
 
-        if(NetworkClient.active){
-            //Enable client callbacks
-        }
+        if(NetworkClient.active) enableClientCallbacks();
+        if(NetworkServer.active) enableServerCallbacks();
+    }
 
-        if(NetworkServer.active){
-            //Enable server callbacks
-        }
+    void enableClientCallbacks(){
+        nm.client.RegisterHandler(Msgs.killPlayer, OnClientDeath);
+    }
+
+    void enableServerCallbacks(){
+        NetworkServer.RegisterHandler(Msgs.killPlayer, OnServerRegisterDeath);
     }
 
     //These can be called inside the playercontroller mobile so that we can tap int othe object manager functionality
@@ -43,17 +48,39 @@ public class RoundEvents : MonoBehaviour {
         return sm;
     }
 
-    public void registerKill(int playerKilledId, int playerKillerId){
+    /* CLIENT FUNCS PLZ */
+
+    public void registerKill(NetworkInstanceId netId, int playerKilledId, int playerKillerId){
+        KillPlayer kp = new KillPlayer();
+        kp.netId = netId;
+        nm.client.Send(Msgs.killPlayer, kp);
         pom.killPlayerLocal(playerKilledId, playerKillerId);
     }
 
+    public void OnClientDeath(NetworkMessage msg){
+        //Find player object, and call function
+        // deathText.enabled = true; //Causes timer for next spawn to occur
+        // deathTimerText.enabled = true;
+        // mainCamera.enabled = true;
+        ClientScene.RemovePlayer(0);
+    }
 
+    /* SERVER FUNCS PLZ */
+
+    public void OnServerRegisterDeath(NetworkMessage msg){
+        KillPlayer kp = msg.ReadMessage<KillPlayer>();
+        GameObject obj = NetworkServer.FindLocalObject(kp.netId); // Relay msg to player
+        if(obj == null) return;
+        NetworkServer.SendToClientOfPlayer(obj, Msgs.killPlayer, kp);
+    }
+
+
+    //Extras junk
 
     public void relayDataToServer(){
         //Call functons inside ObjectManager/ScoreManager respectively to sync them together
         //Possibly called at the end of the round
     }
-
 //Called by Observer upon collecting a resource. Calls score addition in RoundScoreManager
     
 }

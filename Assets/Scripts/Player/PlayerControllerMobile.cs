@@ -236,7 +236,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
                     //hasCollide = true;
                     int killerId = col.gameObject.GetComponent<ProjectileData>().ownerId;
                     Destroy(col.gameObject);
-                    roundEvents.registerKill(playerDetails.getDictId(), killerId);
+                    roundEvents.registerKill(netId, playerDetails.getDictId(), killerId);
                 }
             }
             else if (col.gameObject.CompareTag("ProjectileSuperCorp") && gameObject.CompareTag("PlayerPirate")) {
@@ -244,7 +244,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
                     //hasCollide = true;
                     int killerId = col.gameObject.GetComponent<ProjectileData>().ownerId;
                     Destroy(col.gameObject);
-                    roundEvents.registerKill(playerDetails.getDictId(), killerId);
+                    roundEvents.registerKill(netId, playerDetails.getDictId(), killerId);
                 }
             }
         else if (col.gameObject.CompareTag("ResourcePickUp")) { //Dealt with on the resource currently
@@ -313,6 +313,7 @@ namespace UnityStandardAssets.CrossPlatformInput {
                 Invoke("SpawnProjectile", fireRate / 2);
             }
         }
+
 
         void SpawnProjectile(){
             GameObject projectile = Instantiate(projectileModel) as GameObject;
