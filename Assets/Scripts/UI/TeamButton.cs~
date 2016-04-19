@@ -17,6 +17,7 @@ private RectTransform rTransform;
 	}
 
 	void OnGUI () {
+		Debug.Log ("OnGUI called");
 		if (Event.current.type == EventType.MouseUp && RectTransformUtility.RectangleContainsScreenPoint(rTransform, Event.current.mousePosition))
 		{
 			Debug.Log("Clicked: ");
