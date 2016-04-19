@@ -321,12 +321,12 @@ public class PlanetsNetworkManager : NetworkManager {
             sendTeam(pm.getTeam(idVal));
         }
 		Debug.LogError("OnServerDisconnect: Destroying players");
-		NetworkServer.DestroyPlayersForConnection(conn);
-
-        //NEW: USING PLAYER STRUCTURES + MEMORY
         string address = conn.address;
         int idValue = ipToId(address, conn.connectionId);
         pm.setDisconnected(idValue); //Indicates player disconnected
+		NetworkServer.DestroyPlayersForConnection(conn);
+
+        //NEW: USING PLAYER STRUCTURES + MEMORY
  }
 	
 
