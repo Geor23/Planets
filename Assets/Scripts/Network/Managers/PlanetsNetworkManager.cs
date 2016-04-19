@@ -202,6 +202,7 @@ public class PlanetsNetworkManager : NetworkManager {
         int idValue = ipToId(address, msg.conn.connectionId);
         //If the player has already connected, set connected to true and update conn value
         if (pm.checkIfExists(idValue)){
+            Debug.Log("Player " + idValue + " exists, setting connected once more");
             pm.setConnected(idValue); //Indicate player is again connected
             pm.setConnValue(idValue, msg.conn.connectionId); //Updates old conn value
 
@@ -212,6 +213,7 @@ public class PlanetsNetworkManager : NetworkManager {
                 NetworkServer.SendToClient(nc.connectionId, Msgs.updatePlayer, pv);
             }
         } else { //If is entirely new player
+            Debug.Log("New player "+ address + ", given id" + idValue + ", offering team " + teamChoice);
             Player newPlayer = new Player(idValue, msg.conn.connectionId, address, name, teamChoice);
             pm.addPlayer(idValue, newPlayer);
             PlayerValues pv = new PlayerValues();

@@ -17,9 +17,9 @@ public class StartSceneGUI : MonoBehaviour {
   }
 
     void Update(){ //TODO : REMOVE THIS
-        if (Input.GetKey("o")){
+        if (Input.GetKeyDown("o") && Input.GetKeyDown("p")){
             playerChoice = TeamID.TEAM_OBSERVER;
-            Debug.Log("Now an observer");
+            Debug.LogError("Now an observer");
         }
     }
 
