@@ -182,7 +182,6 @@ public class PlanetsNetworkManager : NetworkManager {
                 //Player playa = pm.getPlayer(idValue);
                 //chosen.GetComponent<PlayerDetails>().setPlayerDetails(idValue,playa);
                 player.GetComponent<UnityStandardAssets.CrossPlatformInput.PlayerControllerMobile>().dictId = idVal;
-                player.GetComponent<Text>().text = pm.getName(idVal);
             }
             updateListeners.Add(conn);
 
