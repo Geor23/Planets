@@ -180,9 +180,9 @@ public class PlanetsNetworkManager : NetworkManager {
         GameObject player = Instantiate (chosen, teamManager.getSpawnP(dict[id].team), Quaternion.identity) as GameObject;
         if(dict[id].team != TeamID.TEAM_OBSERVER){
             Debug.LogError(pm.checkIfExists(idValue) + " is exists, " + idValue + " is the id");
-            Player playa = pm.getPlayer(idValue);
+            //Player playa = pm.getPlayer(idValue);
             //chosen.GetComponent<PlayerDetails>().setPlayerDetails(idValue,playa);
-            chosen.GetComponent<UnityStandardAssets.CrossPlatformInput.PlayerControllerMobile>().dictId = idValue;
+            player.GetComponent<UnityStandardAssets.CrossPlatformInput.PlayerControllerMobile>().dictId = idValue;
             player.GetComponent<Text>().text = dict[id].name;
         }
         updateListeners.Add(conn);
