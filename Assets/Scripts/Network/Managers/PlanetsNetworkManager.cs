@@ -173,7 +173,8 @@ public class PlanetsNetworkManager : NetworkManager {
         if(dict[id].team != TeamID.TEAM_OBSERVER){
             Debug.LogError(pm);
             Player playa = pm.getPlayer(idValue);
-            chosen.GetComponent<PlayerDetails>().setPlayerDetails(id,playa);
+            //chosen.GetComponent<PlayerDetails>().setPlayerDetails(idValue,playa);
+            chosen.GetComponent<UnityStandardAssets.CrossPlatformInput.PlayerControllerMobile>().dictId = idValue;
             player.GetComponent<Text>().text = dict[id].name;
         }
         updateListeners.Add(conn);
@@ -209,7 +210,7 @@ public class PlanetsNetworkManager : NetworkManager {
             PlayerValues pv = new PlayerValues();
             pv.dictId = idValue;
             pv.player = pm.getPlayer(idValue);
-            foreach (NetworkConnection nc in getUpdateListeners()){
+            foreach (NetworkConnection nc in NetworkServer.connections){
                 NetworkServer.SendToClient(nc.connectionId, Msgs.updatePlayer, pv);
             }
         } else {
@@ -218,7 +219,7 @@ public class PlanetsNetworkManager : NetworkManager {
             PlayerValues pv = new PlayerValues();
             pv.dictId = idValue;
             pv.player = newPlayer;
-            foreach (NetworkConnection nc in getUpdateListeners()){
+            foreach (NetworkConnection nc in NetworkServer.connections){
                 NetworkServer.SendToClient(nc.connectionId, Msgs.addNewPlayer, pv);
             }
         }

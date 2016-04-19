@@ -69,17 +69,27 @@ namespace UnityStandardAssets.CrossPlatformInput {
         private RoundPlayerObjectManager roundPlayerObjectManager;
         private RoundEvents roundEvents; //Contains reference to RoundEventsManager object
 
-        void Start() {
+        [SyncVar]
+        public int dictId;
+
+        public void Start() {
             nIdentity = GetComponent<NetworkIdentity>();
             nm = (PlanetsNetworkManager)NetworkManager.singleton;
             rb = GetComponent<Rigidbody>();
             invertControls = nm.isSplitScreen();
             reflectionMatrix = genRefMatrix(90 * Mathf.Deg2Rad);
+        }
+
+
+        public override void OnStartClient(){
+            Debug.Log("DictID is " + dictId);
+            base.OnStartClient();
             roundEvents = GameObject.Find("RoundEvents").GetComponent<RoundEvents>(); //Sets reference to RoundEvents object
             resourcePowerUpManager = GameObject.FindGameObjectWithTag("Planet").GetComponent<ResourcePowerUpManager>();
             needsReflection = gameObject.CompareTag("PlayerSuperCorp");
-            Debug.Log("td" + tearDropId);
-            Debug.Log("pd" + playerDetails);
+            Debug.Log("Player + " + PlayerManager.singleton.getPlayer(dictId));
+            playerDetails.setPlayerDetails(dictId, PlayerManager.singleton.getPlayer(dictId));
+            Debug.Log("Setting teaerdrop id to " +playerDetails.getObsId().ToString() );
             tearDropId.text = playerDetails.getObsId().ToString();
         }
 
