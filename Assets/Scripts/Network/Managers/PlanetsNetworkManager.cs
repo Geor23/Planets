@@ -145,6 +145,7 @@ public class PlanetsNetworkManager : NetworkManager {
     public int ipToId(string address, int connId){
         if (address != "localClient") {
             int idValue;
+            Debug.LogError("conn is " + address);
             idValue = connId*(IPAddress.Parse(address).GetAddressBytes()[15] + 1);
             return idValue;
             //Debug.Log("Special id " + idValue);
@@ -161,32 +162,35 @@ public class PlanetsNetworkManager : NetworkManager {
         //Change so that the spawn area is from a more random general area chosen from the PlayerSpawnArea script
 
         /* This is where you can register players with teams, and spawn the player at custom points in the team space */
+        Debug.LogError("The address in AddPlayer is " + conn.address);
         int idVal = ipToId(conn.address, conn.connectionId);
-        GameObject chosen = pm.getTeam(idVal)==TeamID.TEAM_PIRATES?
-                                player1
-                            :
-                                (pm.getTeam(idVal) == TeamID.TEAM_SUPERCORP?
-                                    player2
+        if (pm.getTeam(idVal) != TeamID.TEAM_NEUTRAL)
+        {
+            GameObject chosen = pm.getTeam(idVal) == TeamID.TEAM_PIRATES ?
+                                    player1
                                 :
-                                    (!usingSplitScreen?
-                                        observerSingleScreen
+                                    (pm.getTeam(idVal) == TeamID.TEAM_SUPERCORP ?
+                                        player2
                                     :
-                                        observerSplitScreen));
-        string address = conn.address;
-        int idValue = ipToId(address, conn.connectionId);
-        GameObject player = Instantiate (chosen, teamManager.getSpawnP(pm.getTeam(idVal)), Quaternion.identity) as GameObject;
-        if(pm.getTeam(idVal) != TeamID.TEAM_OBSERVER){
-            Debug.LogError(pm.checkIfExists(idValue) + " is exists, " + idValue + " is the id");
-            //Player playa = pm.getPlayer(idValue);
-            //chosen.GetComponent<PlayerDetails>().setPlayerDetails(idValue,playa);
-            player.GetComponent<UnityStandardAssets.CrossPlatformInput.PlayerControllerMobile>().dictId = idValue;
-            player.GetComponent<Text>().text = pm.getName(idVal);
-        }
-        updateListeners.Add(conn);
+                                        (!usingSplitScreen ?
+                                            observerSingleScreen
+                                        :
+                                            observerSplitScreen));
+            GameObject player = Instantiate(chosen, teamManager.getSpawnP(pm.getTeam(idVal)), Quaternion.identity) as GameObject;
+            if (pm.getTeam(idVal) != TeamID.TEAM_OBSERVER)
+            {
+                Debug.LogError(pm.checkIfExists(idVal) + " is exists, " + idVal + " is the id");
+                //Player playa = pm.getPlayer(idValue);
+                //chosen.GetComponent<PlayerDetails>().setPlayerDetails(idValue,playa);
+                player.GetComponent<UnityStandardAssets.CrossPlatformInput.PlayerControllerMobile>().dictId = idVal;
+                player.GetComponent<Text>().text = pm.getName(idVal);
+            }
+            updateListeners.Add(conn);
 
-        //Add to observing listeners if not a player
-        if(pm.getTeam(idVal)!=TeamID.TEAM_PIRATES && pm.getTeam(idVal) != TeamID.TEAM_SUPERCORP) observingListeners.Add(conn);
-        NetworkServer.AddPlayerForConnection (conn, player, playerControllerId);
+            //Add to observing listeners if not a player
+            if (pm.getTeam(idVal) != TeamID.TEAM_PIRATES && pm.getTeam(idVal) != TeamID.TEAM_SUPERCORP) observingListeners.Add(conn);
+            NetworkServer.AddPlayerForConnection(conn, player, playerControllerId);
+        }
     }
 
     public void OnServerRecieveName(NetworkMessage msg) {  
