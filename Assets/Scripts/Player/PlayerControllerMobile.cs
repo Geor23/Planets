@@ -72,18 +72,14 @@ namespace UnityStandardAssets.CrossPlatformInput {
         [SyncVar]
         public int dictId;
 
-        public void Start() {
+        public override void OnStartClient(){
+            base.OnStartClient();
+            Debug.Log("DictID is " + dictId);
             nIdentity = GetComponent<NetworkIdentity>();
             nm = (PlanetsNetworkManager)NetworkManager.singleton;
             rb = GetComponent<Rigidbody>();
             invertControls = nm.isSplitScreen();
             reflectionMatrix = genRefMatrix(90 * Mathf.Deg2Rad);
-        }
-
-
-        public override void OnStartClient(){
-            Debug.Log("DictID is " + dictId);
-            base.OnStartClient();
             roundEvents = GameObject.Find("RoundEvents").GetComponent<RoundEvents>(); //Sets reference to RoundEvents object
             resourcePowerUpManager = GameObject.FindGameObjectWithTag("Planet").GetComponent<ResourcePowerUpManager>();
             needsReflection = gameObject.CompareTag("PlayerSuperCorp");
