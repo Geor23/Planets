@@ -148,7 +148,7 @@ public class PlanetsNetworkManager : NetworkManager {
         if (address != "localClient") {
             int idValue;
             idValue = IPAddress.Parse(address).GetAddressBytes()[15];
-            // Debug.Log("Special id " + idValue);
+            //Debug.Log("Special id " + idValue);
             // for(int i = 0; i < IPAddress.Parse(address).GetAddressBytes().Length; i++){
             //     Debug.Log(IPAddress.Parse(address).GetAddressBytes()[i]);
             // }

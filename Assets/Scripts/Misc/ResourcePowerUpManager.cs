@@ -104,31 +104,31 @@ public class ResourcePowerUpManager : MonoBehaviour {
     public int resourcePickUpCollision(GameObject collidedResourcePickUp) {
         //Pass score, destroy object and remove it from list 
         int resourceScore = collidedResourcePickUp.GetComponent<CurrentResourceScore>().resourceScore;
-        Destroy(gameObject);
-        resources.Remove(gameObject);
+        Destroy(collidedResourcePickUp);
+        resources.Remove(collidedResourcePickUp);
         return resourceScore;
         }
 
     public void powerUpCollision (GameObject collidedPowerUpgameObject) {
-        switch (gameObject.tag) {
+        switch (collidedPowerUpgameObject.tag) {
             case "Shield":
-                Destroy(gameObject);
-                shields.Remove(gameObject);
+                Destroy(collidedPowerUpgameObject);
+                shields.Remove(collidedPowerUpgameObject);
                 break;
             case "DoubleScore":
-                Destroy(gameObject);
-                doubleScore.Remove(gameObject);
+                Destroy(collidedPowerUpgameObject);
+                doubleScore.Remove(collidedPowerUpgameObject);
                 break;
             case "FasterFire":
-                Destroy(gameObject);
-                fasterFire.Remove(gameObject);
+                Destroy(collidedPowerUpgameObject);
+                fasterFire.Remove(collidedPowerUpgameObject);
                 break;
         }
     }
 
     public void meteorCollision (GameObject collidedMeteorObject) {
-        Destroy(gameObject);
-        meteor.Remove(gameObject);
+        Destroy(collidedMeteorObject);
+        meteor.Remove(collidedMeteorObject);
     }
 
     //Review way it updates resource score value
