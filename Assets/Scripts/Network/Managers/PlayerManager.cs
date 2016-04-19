@@ -70,4 +70,8 @@ public class PlayerManager {
        return playerDict[id].getPlayerTeam();
     }
 
+    public void setTeam(int id, int teamChoice) {
+        playerDict[id].setPlayerTeam(teamChoice);
+    }
+
 }

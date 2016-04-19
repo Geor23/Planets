@@ -48,7 +48,6 @@ public class PlanetsNetworkManager : NetworkManager {
 	RoundManager roundManager = new RoundManager();
   	
     private List<string> roundList;
-  	private Dictionary<int, PlayerData> dict;
   	public HashSet<NetworkConnection> updateListeners;
   	public HashSet<NetworkConnection> observingListeners;
 
@@ -62,7 +61,6 @@ public class PlanetsNetworkManager : NetworkManager {
     public PlayerManager pm;
 
   	public void Start() {
-    	dict = new Dictionary<int, PlayerData>();
     	updateListeners = new HashSet<NetworkConnection>();
     	observingListeners = new HashSet<NetworkConnection>();
 
@@ -154,7 +152,7 @@ public class PlanetsNetworkManager : NetworkManager {
             //     Debug.Log(IPAddress.Parse(address).GetAddressBytes()[i]);
             // }
         } 
-        return -10;
+        return -1;
     }   
     
     // called when a new player is added for a client
@@ -164,11 +162,11 @@ public class PlanetsNetworkManager : NetworkManager {
         //Change so that the spawn area is from a more random general area chosen from the PlayerSpawnArea script
 
         /* This is where you can register players with teams, and spawn the player at custom points in the team space */
-        int id = IDFromConn(conn);
-        GameObject chosen = dict[id].team==TeamID.TEAM_PIRATES?
+        int idVal = ipToId(conn.address, conn.connectionId);
+        GameObject chosen = pm.getTeam(idVal)==TeamID.TEAM_PIRATES?
                                 player1
                             :
-                                (dict[id].team==TeamID.TEAM_SUPERCORP?
+                                (pm.getTeam(idVal) == TeamID.TEAM_SUPERCORP?
                                     player2
                                 :
                                     (!usingSplitScreen?
@@ -177,18 +175,18 @@ public class PlanetsNetworkManager : NetworkManager {
                                         observerSplitScreen));
         string address = conn.address;
         int idValue = ipToId(address, conn.connectionId);
-        GameObject player = Instantiate (chosen, teamManager.getSpawnP(dict[id].team), Quaternion.identity) as GameObject;
-        if(dict[id].team != TeamID.TEAM_OBSERVER){
+        GameObject player = Instantiate (chosen, teamManager.getSpawnP(pm.getTeam(idVal)), Quaternion.identity) as GameObject;
+        if(pm.getTeam(idVal) != TeamID.TEAM_OBSERVER){
             Debug.LogError(pm.checkIfExists(idValue) + " is exists, " + idValue + " is the id");
             //Player playa = pm.getPlayer(idValue);
             //chosen.GetComponent<PlayerDetails>().setPlayerDetails(idValue,playa);
             player.GetComponent<UnityStandardAssets.CrossPlatformInput.PlayerControllerMobile>().dictId = idValue;
-            player.GetComponent<Text>().text = dict[id].name;
+            player.GetComponent<Text>().text = pm.getName(idVal);
         }
         updateListeners.Add(conn);
 
         //Add to observing listeners if not a player
-        if(dict[id].team!=TeamID.TEAM_PIRATES && dict[id].team!=TeamID.TEAM_SUPERCORP) observingListeners.Add(conn);
+        if(pm.getTeam(idVal)!=TeamID.TEAM_PIRATES && pm.getTeam(idVal) != TeamID.TEAM_SUPERCORP) observingListeners.Add(conn);
         NetworkServer.AddPlayerForConnection (conn, player, playerControllerId);
     }
 
@@ -196,11 +194,6 @@ public class PlanetsNetworkManager : NetworkManager {
         JoinMessage joinMsg = msg.ReadMessage<JoinMessage>();
         string name = joinMsg.name;
         int id = IDFromConn(msg.conn);
-        dict.Add(id, new PlayerData());
-        dict[id].name = name;
-           dict[id].team = TeamID.TEAM_OBSERVER;
-           dict[id].uniqueId = key;
-           key++ ;
 
         //NEW CODE TODO, add player name to player. Make sure this occurs after connecting
         string address = msg.conn.address;
@@ -233,7 +226,7 @@ public class PlanetsNetworkManager : NetworkManager {
         GameObject player = playerController.gameObject;
         if (player != null){
             int id = IDFromConn(conn);
-            //sendScore(dict[id].team);
+           // sendScore(pm.getTeam(idVal));
             if (playerController.unetView != null){
                 NetworkServer.Destroy(player);
                 Debug.LogError("OnServerRemovePlayer: Destroying player"); // We shall finish our business on slack plz :)
@@ -257,37 +250,39 @@ public class PlanetsNetworkManager : NetworkManager {
 
 	public void OnServerRecieveTeamRequest(NetworkMessage msg) {
 
+ //TODO : MAKE ONLY SEND TO OBSERVERS
     	sendTeam(TeamID.TEAM_PIRATES);
     	sendTeam(TeamID.TEAM_SUPERCORP);
-
     }
 
   	public void OnServerRecieveTeamChoice(NetworkMessage msg) {
 	    TeamChoice teamChoice = msg.ReadMessage<TeamChoice>();
 	    int choice = teamChoice.teamChoice;
-	    int id = IDFromConn(msg.conn);
+     int idVal = ipToId(msg.conn.address, msg.conn.connectionId);
+
+     int team = pm.getTeam(idVal);
 
 	    // if the player is choosing the team for the first time
-		if (dict[id].team == TeamID.TEAM_OBSERVER) {
+		if (team == TeamID.TEAM_NEUTRAL){
 			// update the team and send updated list to all clients
 			
-			dict[id].team = choice;	
-			teamManager.addPlayerToTeam(dict[id].name, dict[id].team);
+			pm.setTeam(idVal, choice);	
+			teamManager.addPlayerToTeam(pm.getName(idVal), choice);
 
-			sendTeam (dict[id].team);
+			sendTeam (choice);
 
-		} else if (dict[id].team != choice) {	// if the player has switched teams
+		} else if (pm.getTeam(idVal) != choice) {	// if the player has switched teams
 			// delete player from old list and send updated list to all clients
-			teamManager.deletePlayer(dict[id].name, dict[id].team);
-			sendTeam (dict[id].team);
+			teamManager.deletePlayer(pm.getName(idVal), pm.getTeam(idVal));
+			sendTeam (pm.getTeam(idVal));
 
 			// add player to new team and send updated list to clients
-			dict[id].team = choice;
-			teamManager.addPlayerToTeam(dict[id].name, dict[id].team);
-			sendTeam (dict[id].team);
+			pm.setTeam(idVal, choice);
+			teamManager.addPlayerToTeam(pm.getName(idVal), choice);
+			sendTeam (choice);
 		}
 
-	    Debug.Log(dict[id].name + " chose team " + choice.ToString());
+	    Debug.Log(pm.getName(idVal)  + " chose team " + choice.ToString());
 	  }
     // send the team list of players to all clients
     public void sendTeam(int team) {
@@ -312,13 +307,12 @@ public class PlanetsNetworkManager : NetworkManager {
 
 	// called when a client disconnects
 	public override void OnServerDisconnect(NetworkConnection conn) {
-        int id = IDFromConn(conn);
+        int idVal = ipToId(conn.address, conn.connectionId);
         if (networkSceneName == "LobbyScene"){
             // delete player from old list and send updated list to all clients
-            teamManager.deletePlayer(dict[id].name, dict[id].team);
-            sendTeam(dict[id].team);
+            teamManager.deletePlayer(pm.getName(idVal), pm.getTeam(idVal));
+            sendTeam(pm.getTeam(idVal));
         }
-        dict.Remove(id);
 		Debug.LogError("OnServerDisconnect: Destroying players");
 		NetworkServer.DestroyPlayersForConnection(conn);
 

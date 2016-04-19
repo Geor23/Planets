@@ -70,4 +70,8 @@ public class Player {
         playerName = name;
     }
 
+    public void setPlayerTeam(int pTeam) {
+        playerTeam = pTeam;
+    }
+
 }
