@@ -154,7 +154,7 @@ public class PlanetsNetworkManager : NetworkManager {
             //     Debug.Log(IPAddress.Parse(address).GetAddressBytes()[i]);
             // }
         } 
-        return -1;
+        return -10;
     }   
     
     // called when a new player is added for a client
@@ -179,7 +179,7 @@ public class PlanetsNetworkManager : NetworkManager {
         int idValue = ipToId(address);
         GameObject player = Instantiate (chosen, teamManager.getSpawnP(dict[id].team), Quaternion.identity) as GameObject;
         if(dict[id].team != TeamID.TEAM_OBSERVER){
-            Debug.LogError(pm);
+            Debug.LogError(pm.checkIfExists(idValue) + " is exists, " + idValue + " is the id");
             Player playa = pm.getPlayer(idValue);
             //chosen.GetComponent<PlayerDetails>().setPlayerDetails(idValue,playa);
             chosen.GetComponent<UnityStandardAssets.CrossPlatformInput.PlayerControllerMobile>().dictId = idValue;
@@ -324,12 +324,7 @@ public class PlanetsNetworkManager : NetworkManager {
 
         //NEW: USING PLAYER STRUCTURES + MEMORY
         string address = conn.address;
-        int idValue;
-        if (address != "localServer"){
-            idValue = BitConverter.ToInt32(IPAddress.Parse(address).GetAddressBytes(), 0);
-        } else { //If local then make -1
-            idValue = -1;
-        }
+        int idValue = ipToId(address);
         pm.setDisconnected(idValue); //Indicates player disconnected
  }
 	
