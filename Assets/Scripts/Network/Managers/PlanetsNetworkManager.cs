@@ -144,10 +144,10 @@ public class PlanetsNetworkManager : NetworkManager {
         NetworkServer.RegisterHandler(Msgs.addNewPlayer, OnNewPlayer);
     }
 
-    public int ipToId(string address){
+    public int ipToId(string address, int connId){
         if (address != "localClient") {
             int idValue;
-            idValue = IPAddress.Parse(address).GetAddressBytes()[15];
+            idValue = connId*(IPAddress.Parse(address).GetAddressBytes()[15] + 1);
             return idValue;
             //Debug.Log("Special id " + idValue);
             // for(int i = 0; i < IPAddress.Parse(address).GetAddressBytes().Length; i++){
@@ -176,7 +176,7 @@ public class PlanetsNetworkManager : NetworkManager {
                                     :
                                         observerSplitScreen));
         string address = conn.address;
-        int idValue = ipToId(address);
+        int idValue = ipToId(address, conn.connectionId);
         GameObject player = Instantiate (chosen, teamManager.getSpawnP(dict[id].team), Quaternion.identity) as GameObject;
         if(dict[id].team != TeamID.TEAM_OBSERVER){
             Debug.LogError(pm.checkIfExists(idValue) + " is exists, " + idValue + " is the id");
@@ -204,7 +204,7 @@ public class PlanetsNetworkManager : NetworkManager {
 
         //NEW CODE TODO, add player name to player. Make sure this occurs after connecting
         string address = msg.conn.address;
-        int idValue = ipToId(address);
+        int idValue = ipToId(address, msg.conn.connectionId);
         //If the player has already connected, set connected to true and update conn value
         if (pm.checkIfExists(idValue)){
             pm.setConnected(idValue); //Indicate player is again connected
@@ -324,7 +324,7 @@ public class PlanetsNetworkManager : NetworkManager {
 
         //NEW: USING PLAYER STRUCTURES + MEMORY
         string address = conn.address;
-        int idValue = ipToId(address);
+        int idValue = ipToId(address, conn.connectionId);
         pm.setDisconnected(idValue); //Indicates player disconnected
  }
 	
