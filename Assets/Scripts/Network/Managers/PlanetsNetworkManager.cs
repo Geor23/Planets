@@ -147,8 +147,11 @@ public class PlanetsNetworkManager : NetworkManager {
     public int ipToId(string address){
         if (address != "localClient") {
             int idValue;
-            idValue = BitConverter.ToInt32(IPAddress.Parse(address).GetAddressBytes(), 0);
-            Debug.Log("Address" + address+" given id " + idValue);
+            idValue = IPAddress.Parse(address).GetAddressBytes()[15];
+            // Debug.Log("Special id " + idValue);
+            // for(int i = 0; i < IPAddress.Parse(address).GetAddressBytes().Length; i++){
+            //     Debug.Log(IPAddress.Parse(address).GetAddressBytes()[i]);
+            // }
         } 
         return -1;
     }   
