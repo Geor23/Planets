@@ -60,6 +60,7 @@ public class RoundPlayerObjectManager { //TODO
     }
 
     public string getLatestKill(){
+        if(killHistory.Count == 0) return "";
         return getKillString(killHistory.Count - 1);
     }
 
