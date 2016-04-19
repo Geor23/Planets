@@ -54,7 +54,7 @@ public class RoundPlayerObjectManager { //TODO
     public string getKillsAsList(int howMany){
         string kills = "";
         for (int i = killHistory.Count - 1; i >= 0 ; i--) {
-            kills += getKillString(i);
+            kills += getKillString(i) + '\n';
         }
         return kills;
     }
