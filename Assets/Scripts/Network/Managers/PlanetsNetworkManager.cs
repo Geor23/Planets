@@ -193,7 +193,7 @@ public class PlanetsNetworkManager : NetworkManager {
         JoinMessage joinMsg = msg.ReadMessage<JoinMessage>();
         string name = joinMsg.name;
         int teamChoice = joinMsg.team;
-        int id = IDFromConn(msg.conn);
+       // int id = IDFromConn(msg.conn);
 
         //NEW CODE TODO, add player name to player. Make sure this occurs after connecting
         string address = msg.conn.address;
@@ -259,7 +259,10 @@ public class PlanetsNetworkManager : NetworkManager {
 	    TeamChoice teamChoice = msg.ReadMessage<TeamChoice>();
 	    int choice = teamChoice.teamChoice;
      int idVal = ipToId(msg.conn.address, msg.conn.connectionId);
-
+        if (!pm.checkIfExists(idVal)) {
+            Debug.LogError("ID DOES NOT EXISTS");
+            return;
+        }
      int team = pm.getTeam(idVal);
 
 	    // if the player is choosing the team for the first time

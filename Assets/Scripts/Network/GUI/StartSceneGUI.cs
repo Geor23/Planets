@@ -9,31 +9,17 @@ public class StartSceneGUI : MonoBehaviour {
   public NetworkManager nm;
   public Text networkAddr;
   public Text nameT;
-  public int playerChoice;
+  public int playerChoice = TeamID.TEAM_NEUTRAL;
   public bool keyPressed = false;
   void Start(){
     nm = NetworkManager.singleton;
-    playerChoice = TeamID.TEAM_NEUTRAL; //Initialises as a neutral team
     DontDestroyOnLoad(transform.gameObject);
   }
 
-  void Update() { //TODO : REMOVE THIS
-    if(Input.GetKey("o")) {
-        playerChoice = TeamID.TEAM_OBSERVER;
+    void Update(){ //TODO : REMOVE THIS
+        if (Input.GetKey("o")){
+            playerChoice = TeamID.TEAM_OBSERVER;
             Debug.Log("Now an observer");
-    }
-        if (Input.GetKey("s")){
-            if (!keyPressed){
-                keyPressed = true;
-                StartHost();
-            }
-        }
-
-        if(Input.GetKey("c")) {
-            if (!keyPressed){
-                keyPressed = true;
-                StartClient();
-            }
         }
     }
 

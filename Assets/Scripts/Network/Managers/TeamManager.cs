@@ -26,7 +26,6 @@ public class TeamManager {
     //Change to get spawn point from PlayerSpawnArea script
 	public Vector3 getSpawnP(int team){
         playerSpawnAreas = GameObject.FindGameObjectWithTag("Planet").GetComponent<PlayerSpawnAreas>();
-
         if ((team == 0) || (team == 1)) {
             return playerSpawnAreas.generateSpawnPoint(team);
 			//return teams[team].getSpawnPoint();
