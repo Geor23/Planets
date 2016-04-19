@@ -16,6 +16,9 @@ public class FauxGravityBody : MonoBehaviour{
   }
 
   void Update(){
+        if (gameObject == null || attractor == null){
+            Debug.LogError("item is" + gameObject + "and attractor is" + attractor);
+        }
     attractor.Attract(gameObject);
   }
 

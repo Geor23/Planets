@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: SandPlanet
-  m_Shader: {fileID: 4800000, guid: 9ce107479d11178d11005b9844295342, type: 3}
+  m_Shader: {fileID: 10703, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
   m_CustomRenderQueue: 2000
@@ -26,7 +26,7 @@ Material:
         first:
           name: _BumpMap
         second:
-          m_Texture: {fileID: 0}
+          m_Texture: {fileID: 2800000, guid: f1dca9fe11e314b4dadeed8e28405d4b, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -143,13 +143,6 @@ Material:
           m_Offset: {x: 0, y: 0}
       data:
         first:
-          name: _DetailTex
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
           name: _Ramp
         second:
           m_Texture: {fileID: 0}
@@ -158,6 +151,13 @@ Material:
       data:
         first:
           name: _ToonShade
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _DetailTex
         second:
           m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
@@ -225,10 +225,6 @@ Material:
         second: 0
       data:
         first:
-          name: _InvFade
-        second: 1.93
-      data:
-        first:
           name: _DiffuseThreshold
         second: 0.698
       data:
@@ -241,12 +237,16 @@ Material:
         second: 0.1
       data:
         first:
-          name: _Cull
-        second: 2
+          name: _InvFade
+        second: 1.5
       data:
         first:
           name: _Outline
         second: 0.005
+      data:
+        first:
+          name: _Cull
+        second: 2
     m_Colors:
       data:
         first:

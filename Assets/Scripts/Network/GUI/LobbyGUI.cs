@@ -12,7 +12,7 @@ public class LobbyGUI : MonoBehaviour {
 	public Text teamB;
 
   public void Start() {
-    
+    if(NetworkServer.active && !NetworkClient.active) return;
     nm = NetworkManager.singleton;
 	  nm.client.RegisterHandler (Msgs.serverTeamMsg, OnClientReceiveTeamList);
     nm.client.Send(Msgs.requestTeamMsg, new EmptyMessage());
@@ -24,7 +24,7 @@ public class LobbyGUI : MonoBehaviour {
     TeamChoice tc = new TeamChoice();
     tc.teamChoice = (int) TeamID.TEAM_PIRATES;
     nm.client.Send(Msgs.clientTeamMsg, tc);
-    PlayerConfig.singleton.SetObserver(false);
+    PlayerConfig.singleton.SetTeam(0);
 
   }
 
@@ -33,8 +33,8 @@ public class LobbyGUI : MonoBehaviour {
     TeamChoice tc = new TeamChoice();
     tc.teamChoice =(int) TeamID.TEAM_SUPERCORP;
     nm.client.Send(Msgs.clientTeamMsg, tc);
-    PlayerConfig.singleton.SetObserver(false);
-    }
+    PlayerConfig.singleton.SetTeam(1);
+  }
 
 
   public void StartGame() {

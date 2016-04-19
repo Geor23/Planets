@@ -9,6 +9,7 @@ public class ResourceController : MonoBehaviour {
     private int maxScore = 11;
     private int score = 1;
     private NetworkManager nm = NetworkManager.singleton;
+    
     // Use this for initialization
     void Start(){
         InvokeRepeating("UpdateValue", 1, 1);
@@ -57,13 +58,19 @@ public class ResourceController : MonoBehaviour {
     void OnTriggerEnter(Collider col){
         if (col.gameObject.CompareTag("PlayerPirate")|| col.gameObject.CompareTag("PlayerSuperCorp")){
             NetworkIdentity nIdentity = col.gameObject.GetComponent<NetworkIdentity>();
-            if (nIdentity.isLocalPlayer){
+            if (PlayerConfig.singleton.GetObserver()){
                 Debug.Log("Collided with a player");
-                col.gameObject.GetComponent<PlayerControllerMobile>().SetScoreTextNew(score);
+                //DoubleScore Powerup
+                if(col.gameObject.GetComponent<PlayerControllerMobile>().doubleScore == true){
+                    Debug.Log("DOUBLED SCORE");
+                    score *= 2;
+                }
+                //col.gameObject.GetComponent<PlayerControllerMobile>().SetScoreTextNew(score); //This needs to be done
+                //int id = col.gameObject.GetComponent<NetworkIdentity>().connectionToClient.connectionId;
                 AddScore sc = new AddScore();
                 sc.team = 0;
                 sc.score = score;
-                sc.obj = gameObject;
+                sc.obj = col.gameObject;
                 nm.client.Send(Msgs.clientTeamScore, sc);
             }
 

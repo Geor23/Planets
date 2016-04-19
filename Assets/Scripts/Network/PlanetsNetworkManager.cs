@@ -22,7 +22,7 @@ static class Const {
     public const int RUNNING = 1;
     public const int FINISHED = -1;
     public const int NOTSTARTED = 0;
-    public const int INITIALTIMER = 20;
+    public const int INITIALTIMER = 50;
     public const int ROUNDOVERTIMER = 15;
 }
 
@@ -35,29 +35,31 @@ public class PlanetsNetworkManager : NetworkManager {
 	
 	[SerializeField] GameObject player1;
 	[SerializeField] GameObject player2;
-  	[SerializeField] GameObject observer;
+  	[SerializeField] GameObject observerSingleScreen;
+  	[SerializeField] GameObject observerSplitScreen;
 
   	public int key = 0;
 	GameObject chosenCharacter;
     public string round1Scene; //Round 1 name
-    public string round2Scene;
     TeamManager teamManager = new TeamManager();
     private float timerRound = Const.INITIALTIMER; //This is the time communicated to clients
 	RoundManager roundManager = new RoundManager();
-	/*
-    Override the virtual default functions to build on existing behaviour 
-    
-	public override void OnServerConnect(NetworkConnection conn) {
 
-  	}
-  	*/
-
-  	private Dictionary<int, PlayerData> dict;
+  	/* Client Data */
   	public bool hasPickedTeam = false; 
 	public bool hasConnected = false;
   	public bool inRound = false;
     public bool timerOn = true;
   	private List<string> roundList;
+
+  	/* Server Data */
+  	private Dictionary<int, PlayerData> dict;
+  	public HashSet<NetworkConnection> updateListeners;
+  	public HashSet<NetworkConnection> observingListeners;
+  	public bool onlyUpdateObservers = false;
+  	public bool usingSplitScreen = false;
+
+
   	String killFeed;
 
 
@@ -65,12 +67,32 @@ public class PlanetsNetworkManager : NetworkManager {
 		//Change scene
 	}
 
+	public HashSet<NetworkConnection> getUpdateListeners() {
+		if(onlyUpdateObservers) return observingListeners;
+		return updateListeners;
+	}
+
+	public HashSet<NetworkConnection> getUpdateListeners(bool all) {
+		if(onlyUpdateObservers && !all) return observingListeners;
+		return updateListeners;
+	}
+
+	public bool observerCollisionsOnly(){
+		return onlyUpdateObservers;
+	}
+
+	public bool isSplitScreen(){
+		return usingSplitScreen;
+	}
+
 
   	public void Start() {
     	dict = new Dictionary<int, PlayerData>();
+    	updateListeners = new HashSet<NetworkConnection>();
+    	observingListeners = new HashSet<NetworkConnection>();
     	roundList = new List<string>();
     	roundList.Add("Round1");
-    	roundList.Add("RoundOver");
+      roundList.Add("RoundOver");
     	roundList.Add("Round2");
     	roundList.Add("RoundOver");
     	roundList.Add("Round3");
@@ -79,6 +101,7 @@ public class PlanetsNetworkManager : NetworkManager {
   	}
 	
     public void Update(){
+    	if(!NetworkServer.active) return;
 
     	if ( NetworkManager.networkSceneName == "RoundOver" ) {
 
@@ -100,15 +123,14 @@ public class PlanetsNetworkManager : NetworkManager {
             	if (roundManager.getFinishedState() == 1) {
             		ServerChangeScene( roundList[ 2 * ( roundManager.getRoundId() - 1 ) + 1 ] );
             		timerRound = Const.INITIALTIMER;
-            	} else {
+            	} else {	
             		ServerChangeScene( roundList[ 2 * ( roundManager.getRoundId() - 1 ) - 1 ] );
             		timerRound = Const.ROUNDOVERTIMER;
             	}
         	}
 
         } else {
-
-        	timerRound = Const.INITIALTIMER;
+          	timerRound = Const.INITIALTIMER;
 
         }
     }
@@ -124,10 +146,11 @@ public class PlanetsNetworkManager : NetworkManager {
 	   	NetworkServer.RegisterHandler(Msgs.requestFinalScores, OnServerRecieveFinalScoresRequest);
 	    NetworkServer.RegisterHandler(Msgs.clientTeamScore, OnServerRecieveScore);
 	    NetworkServer.RegisterHandler(Msgs.requestTeamScores, OnServerRecieveTeamScoresRequest);
-        NetworkServer.RegisterHandler(Msgs.requestCurrentTime, OnServerRecieveTimeRequest);
-        NetworkServer.RegisterHandler(Msgs.clientKillFeed, OnServerRecieveKill);
-        NetworkServer.RegisterHandler(Msgs.deathResourceCollision, OnServerRecieveDeathResourceCollision);
-        NetworkServer.RegisterHandler(Msgs.requestName, OnServerSendName);
+	    NetworkServer.RegisterHandler(Msgs.requestCurrentTime, OnServerRecieveTimeRequest);
+	    NetworkServer.RegisterHandler(Msgs.clientKillFeed, OnServerRecieveKill);
+	    NetworkServer.RegisterHandler(Msgs.deathResourceCollision, OnServerRecieveDeathResourceCollision);
+	    NetworkServer.RegisterHandler(Msgs.requestName, OnServerSendName);
+	    NetworkServer.RegisterHandler(Msgs.killPlayer, OnKillPlayer);
     }
 
     public void OnServerSendName(NetworkMessage msg){
@@ -172,7 +195,7 @@ public class PlanetsNetworkManager : NetworkManager {
     }
 
     private int IDFromConn(NetworkConnection nc) {
- 			return nc.connectionId;
+ 		return nc.connectionId;
     	//return NetworkServer.connections.IndexOf(nc);
   	}
 
@@ -199,17 +222,19 @@ public class PlanetsNetworkManager : NetworkManager {
   	public void OnServerRecieveScore(NetworkMessage msg) {
   		// read the message
 	  	AddScore sc = msg.ReadMessage<AddScore>();
-	  	//Debug.Log("got scoooooreeee");
-	  	int id = IDFromConn(msg.conn);
-	  	Debug.Log("team: " + dict[id].team);
-        // add the score to the correct team
-        //GameObject obj = sc.obj; //Object interacted with for score
-        //obj.GetComponent<ResourceController>().setScore(1);
+    Debug.LogError("IM DOING SCOREZ HAHAHA");
+    int id = sc.obj.GetComponent<NetworkIdentity>().connectionToClient.connectionId;
+    Debug.Log("team: " + dict[id].team);
 	  	teamManager.addScore(sc.score, dict[id].team);
 
 	  	// send to everyone the updated team score
 	  	sendScore(dict[id].team);
-	}
+        if (sc.score > 0){ //If scoring not dying...
+            UpdateLocalScore ls = new UpdateLocalScore();
+            ls.score = sc.score;
+            NetworkServer.SendToClient(id, Msgs.updateLocalScore, ls);
+        }
+    }
 
 
     public void OnServerRecieveDeathResourceCollision(NetworkMessage msg){
@@ -327,17 +352,23 @@ public class PlanetsNetworkManager : NetworkManager {
 
 
 	public void OnServerStartGame(NetworkMessage msg) {
-
     	ServerChangeScene(round1Scene);
     	roundManager.changeRound();
-
 	}
+
+ //Send message to the Player to request the player object to be deleted
+ public void OnKillPlayer(NetworkMessage msg) {
+        KillPlayer kp = msg.ReadMessage<KillPlayer>();
+        int id = kp.obj.GetComponent<NetworkIdentity>().connectionToClient.connectionId;
+        NetworkServer.SendToClient(id, Msgs.killPlayerRequestClient, kp);
+    }
 
 
 	// called when a client disconnects
 	public override void OnServerDisconnect(NetworkConnection conn) {
 		int id = IDFromConn(conn);
 		dict.Remove(id);
+		Debug.LogError("OnServerDisconnect: Destroying players");
 		NetworkServer.DestroyPlayersForConnection(conn);
 
 	}
@@ -345,7 +376,7 @@ public class PlanetsNetworkManager : NetworkManager {
 
 	// called when a client is ready
 	public override void OnServerReady(NetworkConnection conn) {
-		NetworkServer.SetClientReady(conn);
+		NetworkServer.SetClientReady(conn);	
 		ClientScene.RegisterPrefab(player1);
 		ClientScene.RegisterPrefab(player2);
 	}
@@ -356,10 +387,14 @@ public class PlanetsNetworkManager : NetworkManager {
 		/* This is where you can register players with teams, and spawn the player at custom points in the team space */
 		//hasConnected = true;
     	int id = IDFromConn(conn);
-		GameObject player = Instantiate (dict[id].team==0?player1:(dict[id].team==1?player2:observer), teamManager.getSpawnP(dict[id].team), Quaternion.identity) as GameObject;
+    	GameObject chosen = dict[id].team==0?player1:(dict[id].team==1?player2:(!usingSplitScreen?observerSingleScreen:observerSplitScreen));
+		GameObject player = Instantiate (chosen, teamManager.getSpawnP(dict[id].team), Quaternion.identity) as GameObject;
         player.GetComponent<Text>().text = dict[id].name;
+        updateListeners.Add(conn);
+
+        //Add to observing listeners if not a player
+        if(dict[id].team!=0 && dict[id].team!=1) observingListeners.Add(conn);
         NetworkServer.AddPlayerForConnection (conn, player, playerControllerId);
-		
 	}
 	
 
@@ -369,8 +404,11 @@ public class PlanetsNetworkManager : NetworkManager {
 		if (player != null){
 			int id = IDFromConn(conn);
 			sendScore(dict[id].team);
-			if (playerController.unetView != null)
+			if (playerController.unetView != null){
 				NetworkServer.Destroy(player);
+				Debug.LogError("OnServerRemovePlayer: Destroying player");
+			}
+			updateListeners.Remove(conn);
 		}
 	}
 
@@ -464,8 +502,8 @@ public class TeamManager {
 		Team teamSuperCorp = new Team() ;
 		teams.Add(teamPirates) ;	
 		teams.Add(teamSuperCorp) ;	
-		teams[0].setSpawnPoint(new Vector3(0,20,0));
-		teams[1].setSpawnPoint(new Vector3(0,-20,0));
+		teams[0].setSpawnPoint(new Vector3(0,0,120));
+		teams[1].setSpawnPoint(new Vector3(0,-40,0));
 
 	}
 
@@ -474,7 +512,7 @@ public class TeamManager {
 			return teams[team].getSpawnPoint();
 		} else {
 			Debug.Log("Team is observer");
-			return new Vector3(0,20,0);
+			return new Vector3(0,0,100);
 		}
 	}
 
@@ -482,7 +520,7 @@ public class TeamManager {
 		if ( team == 0 || team == 1 ) {
 			teams[team].addScore(score);
 		} else {
-			Debug.Log("ERROR[addScore]: You are trying to access a non-existant team ! ");
+			Debug.LogError("ERROR[addScore]: You are trying to access a non-existant team ! ");
 		}
 
 	}
@@ -635,9 +673,7 @@ public class RoundManager {
 				roundId ++;
 
 				if (rounds[roundId-1].getState() != Const.NOTSTARTED) {
-
 					Debug.LogError("ERROR[RoundManager-ChangeRound]: Cannot start round " + roundId);
-
 				} else {
 					rounds[roundId-1].changeState(Const.RUNNING); // update state of new round to running
 				}
@@ -711,9 +747,7 @@ public class Round {
 	} 
 
 	public int getState() {
-
 		return state;
-
 	}
 
 
