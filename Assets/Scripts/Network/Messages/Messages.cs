@@ -37,7 +37,8 @@ class Msgs : MsgType {
 
 public class JoinMessage : MessageBase {
   public string name;
-  public short playerControllerID = 0;
+  //public short playerControllerID = 0;
+  public int team;
 }
 
 public class TeamChoice : MessageBase {

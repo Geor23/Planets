@@ -158,7 +158,6 @@ public class PlanetsNetworkManager : NetworkManager {
     // called when a new player is added for a client
     // next two functions are important
     public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId) {
-
         //Change so that the spawn area is from a more random general area chosen from the PlayerSpawnArea script
 
         /* This is where you can register players with teams, and spawn the player at custom points in the team space */
@@ -193,6 +192,7 @@ public class PlanetsNetworkManager : NetworkManager {
     public void OnServerRecieveName(NetworkMessage msg) {  
         JoinMessage joinMsg = msg.ReadMessage<JoinMessage>();
         string name = joinMsg.name;
+        int teamChoice = joinMsg.team;
         int id = IDFromConn(msg.conn);
 
         //NEW CODE TODO, add player name to player. Make sure this occurs after connecting
@@ -205,12 +205,12 @@ public class PlanetsNetworkManager : NetworkManager {
 
             PlayerValues pv = new PlayerValues();
             pv.dictId = idValue;
-            pv.player = pm.getPlayer(idValue);
+            pv.player = pm.getPlayer(idValue); //Update all clients with new player
             foreach (NetworkConnection nc in NetworkServer.connections){
                 NetworkServer.SendToClient(nc.connectionId, Msgs.updatePlayer, pv);
             }
-        } else {
-            Player newPlayer = new Player(idValue, msg.conn.connectionId, address, name);
+        } else { //If is entirely new player
+            Player newPlayer = new Player(idValue, msg.conn.connectionId, address, name, teamChoice);
             pm.addPlayer(idValue, newPlayer);
             PlayerValues pv = new PlayerValues();
             pv.dictId = idValue;
