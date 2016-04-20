@@ -238,14 +238,15 @@ public class PlanetsNetworkManager : NetworkManager {
         JoinMessage joinMsg = msg.ReadMessage<JoinMessage>();
         string name = joinMsg.name;
         int teamChoice = joinMsg.team;
-
         string address = msg.conn.address;
         int idValue = ipToId(address, msg.conn.connectionId);
         Debug.Log("idValue is " + idValue + " inside AddPlayer");
+        Debug.LogError("CONN VALUE IS " + msg.conn.connectionId);
         //If the player has already connected, set connected to true and update conn value
         int idValOld = pm.findPlayerWithIP(address); //Finds a player with the IP. Will return the latest player made and their identity if multiple exist
-        if (((idValOld != -10)&&(!allowSharedIPs)) || (pm.checkIfExists(idValue))){ //-10 means not found. If it was found, adjust old player
-            Debug.Log("Player " + idValOld + " exists, setting connected once more");
+        if (((idValOld != -10)&&(!allowSharedIPs)) || ((pm.checkIfExists(idValue))&&(allowSharedIPs))){ //-10 means not found. If it was found, adjust old player
+            Debug.LogError("Player " + idValOld + " exists, setting connected once more");
+            Debug.LogError("connected state is " + pm.isConnected(idValOld));
             pm.setNewID(idValOld, idValue); //Makes new id connection based off new conn id
             pm.setConnected(idValue); //Indicate player is again connected
             pm.setConnValue(idValue, msg.conn.connectionId); //Updates old conn value
@@ -333,7 +334,7 @@ public class PlanetsNetworkManager : NetworkManager {
 	    int choice = teamChoice.teamChoice;
      int idVal = ipToId(msg.conn.address, msg.conn.connectionId);
         if (!pm.checkIfExists(idVal)) {
-            Debug.LogError("ID DOES NOT EXISTS");
+            Debug.LogError("ID DOES NOT EXISTS, CONN IS "+msg.conn.connectionId);
             return;
         }
      int team = pm.getTeam(idVal);
@@ -423,7 +424,7 @@ public class PlanetsNetworkManager : NetworkManager {
     public void OnPlayerUpdateObserver(NetworkMessage msg){
         PlayerValues pv = msg.ReadMessage<PlayerValues>();
         Player updatedPlayer = new Player(pv.dictId, pv.connVal, pv.playerIP, pv.playerName, pv.playerTeam);
-        pm.updatePlayerIncludingID(pv.oldId, updatedPlayer);
+     //   pm.updatePlayerIncludingID(pv.oldId, updatedPlayer);
         Debug.Log("attempting to update player");
     }
 
@@ -441,7 +442,7 @@ public class PlanetsNetworkManager : NetworkManager {
     public void OnNewPlayerObserver(NetworkMessage msg){
         PlayerValues pv = msg.ReadMessage<PlayerValues>();
         Player newPlayer = new Player(pv.dictId, pv.connVal, pv.playerIP, pv.playerName, pv.playerTeam);
-        pm.addPlayer(pv.dictId, newPlayer);
+     //   pm.addPlayer(pv.dictId, newPlayer);
     }
 
     // called when disconnected from a server

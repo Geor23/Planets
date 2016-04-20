@@ -32,11 +32,15 @@ public class PlayerManager {
     public int findPlayerWithIP(string ip){
         foreach (var i in playerDict) {
             string val = playerDict[i.Key].getPlayerIP();
-            if ((ip == val)&&(playerDict[i.Key].getIsConnected())){ //If the IPS match up and the person was disconnected...
+            if ((ip == val)&&(!playerDict[i.Key].getIsConnected())){ //If the IPS match up and the person was disconnected...
                 return playerDict[i.Key].getPlayerId();
             }
         }
         return -10; //Indicates failure to find IP specified
+    }
+
+    public bool isConnected(int id){
+        return playerDict[id].getIsConnected();
     }
 
     public string findPlayerWithConnID(int id){
