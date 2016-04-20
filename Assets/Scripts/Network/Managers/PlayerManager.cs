@@ -23,6 +23,12 @@ public class PlayerManager {
         playerDict.Add(newID, player);
     }
 
+    //Removes old version of player and adds again
+    public void updatePlayerIncludingID(int oldID, Player player){
+        playerDict.Remove(oldID);
+        playerDict.Add(player.getPlayerId(), player);
+    }
+
     public int findPlayerWithIP(string ip){
         foreach (var i in playerDict) {
             string val = playerDict[i.Key].getPlayerIP();
