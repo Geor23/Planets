@@ -89,6 +89,7 @@ public class PlayerControllerMobile : NetworkBehaviour {
     }
 
     void Update() {
+        if(nIdentity == null) return;
 
         if (doubleScore == true) {
             doubleScoreTime -= Time.deltaTime;
