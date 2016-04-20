@@ -17,6 +17,7 @@ public class CameraController : MonoBehaviour {
     private Vector3 pos;
 
     void Start(){
+        Debug.LogError("AM ALIVE HAHAHA");
         transform.position = new Vector3(0,0,0);
         pos = new Vector3(0, 0, 0);
     }
