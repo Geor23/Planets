@@ -15,6 +15,35 @@ public class PlayerManager {
         connectionDict = new Dictionary<int, NetworkConnection>();
     }
 
+    //Replaces old version of player with new one
+    public void setNewID(int oldID, int newID){
+        Player player = playerDict[oldID];
+        playerDict.Remove(oldID);
+        player.setPlayerDictVal(newID);
+        playerDict.Add(newID, player);
+    }
+
+    public int findPlayerWithIP(string ip){
+        foreach (var i in playerDict) {
+            string val = playerDict[i.Key].getPlayerIP();
+            if (ip == val){
+                return playerDict[i.Key].getPlayerId();
+            }
+        }
+        return -10; //Indicates failure
+    }
+
+    public string findPlayerWithConnID(int id){
+        foreach (var i in playerDict){
+            int val = playerDict[i.Key].getConnValue();
+            if(id == val){
+                return playerDict[i.Key].getPlayerIP();
+            }
+        }
+
+        return null; //Indicates nothing found
+
+    }
     public void addPlayer(int id, Player player){
         playerDict.Add(id, player);
     }

@@ -12,6 +12,7 @@ class PlayerConfig : MonoBehaviour {
   void OnGUI(){
   }
 
+    //Each person has their own PlayerConfig, remains through game
   private void Start(){
     DontDestroyOnLoad(transform.gameObject);
     singleton = this;

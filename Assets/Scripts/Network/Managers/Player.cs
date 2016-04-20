@@ -74,4 +74,7 @@ public class Player {
         playerTeam = pTeam;
     }
 
+   public void setPlayerDictVal(int id){
+        playerDictVal = id;
+    }
 }

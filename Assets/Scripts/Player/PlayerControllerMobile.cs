@@ -84,7 +84,7 @@ public class PlayerControllerMobile : NetworkBehaviour {
         needsReflection = gameObject.CompareTag("PlayerSuperCorp");
         Debug.Log("Player + " + PlayerManager.singleton.getPlayer(dictId));
         playerDetails.setPlayerDetails(dictId, PlayerManager.singleton.getPlayer(dictId));
-        Debug.Log("Setting teaerdrop id to " +playerDetails.getObsId().ToString() );
+        //Debug.Log("Setting teaerdrop id to " +playerDetails.getObsId().ToString() ); //BUG
         tearDropId.text = playerDetails.getObsId().ToString();
     }
 

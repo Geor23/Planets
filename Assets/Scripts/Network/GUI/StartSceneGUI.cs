@@ -16,7 +16,7 @@ public class StartSceneGUI : MonoBehaviour {
     DontDestroyOnLoad(transform.gameObject);
   }
 
-    void Update(){ //TODO : REMOVE THIS
+    void Update(){ //TODO : REMOVE THIS, REPLACE WITH OBSERVER SCENE
         if (Input.GetKeyDown("o") && Input.GetKeyDown("p")){
             playerChoice = TeamID.TEAM_OBSERVER;
             PlayerConfig.singleton.SetTeam(TeamID.TEAM_OBSERVER);
@@ -24,6 +24,7 @@ public class StartSceneGUI : MonoBehaviour {
         }
     }
 
+    //Gives the local Network Manager the network address. Request a start client, also adds a handler for the SendJoinMessageCallback
   public void StartClient(){
     nm.networkAddress = networkAddr.text;
     nm.StartClient().RegisterHandler(MsgType.Connect, SendJoinMessageCallback);

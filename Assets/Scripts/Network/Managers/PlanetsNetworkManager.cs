@@ -39,7 +39,6 @@ public class RoundScores {
 }
 
 public class PlanetsNetworkManager : NetworkManager {
-	
 	[SerializeField] GameObject player1;
 	[SerializeField] GameObject player2;
     [SerializeField] GameObject observerSingleScreen;
@@ -74,6 +73,44 @@ public class PlanetsNetworkManager : NetworkManager {
     	roundList.Add("GameOver");
         pm = new PlayerManager();
     }
+
+
+    public override void OnServerConnect(NetworkConnection conn){
+        base.OnServerConnect(conn);
+    }
+
+    // called when a client disconnects
+    public override void OnServerDisconnect(NetworkConnection conn){
+
+        string address = pm.findPlayerWithConnID(conn.connectionId);
+        int idVal = ipToId(address, conn.connectionId);
+        if (networkSceneName == "LobbyScene"){
+            if (pm.getTeam(idVal) != TeamID.TEAM_NEUTRAL && pm.getTeam(idVal) != TeamID.TEAM_OBSERVER){
+                // delete player from old list and send updated list to all clients
+                teamManager.deletePlayer(pm.getName(idVal), pm.getTeam(idVal));
+                sendTeam(pm.getTeam(idVal));
+            }
+        }
+        Debug.LogError("OnServerDisconnect: Destroying players");
+        pm.setDisconnected(idVal); //Indicates player disconnected
+        //KEEP ADDRESS SAME. THE IDENTIFICATION WILL CHANGE THOUGH
+        NetworkServer.DestroyPlayersForConnection(conn);
+        //NEW: USING PLAYER STRUCTURES + MEMORY
+    }
+
+
+    // called when a client is ready
+    public override void OnServerReady(NetworkConnection conn){
+        NetworkServer.SetClientReady(conn);
+        ClientScene.RegisterPrefab(player1);
+        ClientScene.RegisterPrefab(player2);
+    }
+
+
+    public override void OnServerError(NetworkConnection conn, int errorCode){
+        Debug.LogError("OnServerError with connection " + conn + ", error code: " + errorCode);
+    }
+
 
     public void SceneChange() {
         //Change scene
@@ -199,14 +236,15 @@ public class PlanetsNetworkManager : NetworkManager {
         JoinMessage joinMsg = msg.ReadMessage<JoinMessage>();
         string name = joinMsg.name;
         int teamChoice = joinMsg.team;
-       // int id = IDFromConn(msg.conn);
 
-        //NEW CODE TODO, add player name to player. Make sure this occurs after connecting
         string address = msg.conn.address;
         int idValue = ipToId(address, msg.conn.connectionId);
+        Debug.Log("idValue is " + idValue + " inside AddPlayer");
         //If the player has already connected, set connected to true and update conn value
-        if (pm.checkIfExists(idValue)){
-            Debug.Log("Player " + idValue + " exists, setting connected once more");
+        int idValOld = pm.findPlayerWithIP(address); //Finds a player with the IP. Will return the latest player made and their identity if multiple exist
+        if (idValOld != -10){ //-10 means not found. If it was found, adjust old player
+            Debug.Log("Player " + idValOld + " exists, setting connected once more");
+            pm.setNewID(idValOld, idValue); //Makes new id connection based off new conn id
             pm.setConnected(idValue); //Indicate player is again connected
             pm.setConnValue(idValue, msg.conn.connectionId); //Updates old conn value
             pm.setNetworkConnection(idValue, msg.conn);
@@ -322,35 +360,6 @@ public class PlanetsNetworkManager : NetworkManager {
     	roundManager.changeRound();
 	}
 
-	// called when a client disconnects
-	public override void OnServerDisconnect(NetworkConnection conn) {
-        int idVal = ipToId(conn.address, conn.connectionId);
-        if (networkSceneName == "LobbyScene"){
-            // delete player from old list and send updated list to all clients
-            teamManager.deletePlayer(pm.getName(idVal), pm.getTeam(idVal));
-            sendTeam(pm.getTeam(idVal));
-        }
-		Debug.LogError("OnServerDisconnect: Destroying players");
-        string address = conn.address;
-        int idValue = ipToId(address, conn.connectionId);
-        pm.setDisconnected(idValue); //Indicates player disconnected
-		NetworkServer.DestroyPlayersForConnection(conn);
-
-        //NEW: USING PLAYER STRUCTURES + MEMORY
- }
-	
-
-	// called when a client is ready
-	public override void OnServerReady(NetworkConnection conn) {
-		NetworkServer.SetClientReady(conn);	
-		ClientScene.RegisterPrefab(player1);
-		ClientScene.RegisterPrefab(player2);
-	}
-
-
-	public override void OnServerError(NetworkConnection conn, int errorCode){
-		Debug.LogError("OnServerError with connection " + conn + ", error code: " + errorCode);
-	}
 	
 	/* ------------------  Client functions ---------------- */
 	
@@ -358,11 +367,6 @@ public class PlanetsNetworkManager : NetworkManager {
 	public override void OnClientConnect(NetworkConnection conn) {
 		Debug.Log("Client connected!");
 	}
-
-    public override void OnServerConnect(NetworkConnection conn){
-        base.OnServerConnect(conn);
-        
-    }
 
     //Updates Observer player
     public void OnPlayerUpdate(NetworkMessage msg) {
