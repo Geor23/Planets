@@ -258,6 +258,10 @@ Prefab:
       propertyPath: onlyUpdateObservers
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11489486, guid: af28d3f0fb326294fb32a70529d06809, type: 2}
+      propertyPath: allowSharedIPs
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: af28d3f0fb326294fb32a70529d06809, type: 2}
   m_IsPrefabParent: 0
@@ -531,6 +535,7 @@ GameObject:
   - 4: {fileID: 1632251267}
   - 114: {fileID: 1632251266}
   - 114: {fileID: 1632251268}
+  - 114: {fileID: 1632251269}
   m_Layer: 0
   m_Name: PlayerConfig
   m_TagString: Untagged
@@ -549,7 +554,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 309b4348beda94ba39eb180f1a0c5e6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  team: -1
+  team: -2
 --- !u!4 &1632251267
 Transform:
   m_ObjectHideFlags: 0
@@ -576,3 +581,16 @@ MonoBehaviour:
   nm: {fileID: 0}
   networkAddr: {fileID: 1403726702}
   nameT: {fileID: 1076685483}
+  playerChoice: -2
+  keyPressed: 0
+--- !u!114 &1632251269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1632251265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8be75a3a0a978534388a1527a846529d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

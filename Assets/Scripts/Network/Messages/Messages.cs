@@ -4,14 +4,6 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Networking;
 
-enum TeamID : int {
-  TEAM_NEUTRAL = -2,
-  TEAM_OBSERVER = -1, 
-  TEAM_PIRATES = 0,
-  TEAM_SUPERCORP = 1
-};
-
-
 class Msgs : MsgType {
 
   public const short clientJoinMsg = 50;
@@ -39,11 +31,17 @@ class Msgs : MsgType {
   public const short fireProjectile = 72;
   public const short killPlayer = 73;
   public const short killPlayerRequestClient = 74;
+  public const short updatePlayer = 75;
+  public const short addNewPlayer = 76;
+  public const short spawnPlayer = 77;
+  public const short addNewPlayerToObserver = 78;
+  public const short updatePlayerToObserver = 79;
 }
 
 public class JoinMessage : MessageBase {
   public string name;
-  public short playerControllerID = 0;
+  //public short playerControllerID = 0;
+  public int team;
 }
 
 public class TeamChoice : MessageBase {
@@ -122,4 +120,18 @@ public class UpdateRotTurret : MessageBase {
 public class KillPlayer : MessageBase {
     public NetworkInstanceId netId;
     public GameObject obj;
+}
+
+public class PlayerValues : MessageBase {
+    public int dictId;
+    public int oldId;
+    public int connVal;
+    public string playerIP;
+    public string playerName;
+    public int playerTeam;
+}
+
+public class PlayerSpawnMsg : MessageBase {
+    public int playerId;
+    public Vector3 pos;
 }

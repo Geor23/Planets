@@ -7,11 +7,12 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Networking;
 
-public class UniqueObjectSynchronizer : NetworkBehaviour {
+public class UniqueObjectSynchronizer : MonoBehaviour {
 	NetworkManager nm;
 
-	[Client]
 	void Start(){
+        if(!NetworkClient.active) return;
+        Debug.LogError("Initialising UniqueObject handlers");
 		nm = NetworkManager.singleton;
 		nm.client.RegisterHandler(Msgs.updatePos, UpdateLocalPos);
 		nm.client.RegisterHandler(Msgs.updateRot, UpdateLocalRot);
@@ -57,7 +58,7 @@ public class UniqueObjectSynchronizer : NetworkBehaviour {
         	Debug.LogError("FireProjectile: GameObject with netId " + fp.netId + " could not be found");
         	return;
         }
-        obj.GetComponent<UnityStandardAssets.CrossPlatformInput.PlayerControllerMobile>().TargetFireProjectile(fp);
+        obj.GetComponent<PlayerControllerMobile>().TargetFireProjectile(fp);
 	}
 }
 #endif

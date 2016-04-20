@@ -14,12 +14,12 @@ GameObject:
   - 114: {fileID: 11408848}
   - 135: {fileID: 13539184}
   - 222: {fileID: 22279366}
-  - 114: {fileID: 11468992}
   - 114: {fileID: 11441726}
   - 114: {fileID: 11480724}
   - 114: {fileID: 11454022}
   - 114: {fileID: 11418092}
   - 114: {fileID: 11496354}
+  - 114: {fileID: 11474980}
   m_Layer: 12
   m_Name: PlayerSuperCorp
   m_TagString: PlayerSuperCorp
@@ -37,7 +37,7 @@ GameObject:
   - 224: {fileID: 22449034}
   - 222: {fileID: 22236694}
   - 212: {fileID: 21230212}
-  m_Layer: 13
+  m_Layer: 17
   m_Name: unId
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54,7 +54,7 @@ GameObject:
   - 4: {fileID: 490780}
   - 23: {fileID: 2361052}
   - 102: {fileID: 10243388}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: pin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -438,24 +438,19 @@ MonoBehaviour:
   doubleScore: 0
   speed: 1.5
   rotSpeed: 12
+  projectileModel: {fileID: 179210, guid: 19f9269165dbbbb4c93878885a6dcd42, type: 2}
+  shield: {fileID: 168808, guid: 1017c537ed26849498a30c5d880710e1, type: 2}
+  ResourcePickUp: {fileID: 116834, guid: 976667ad8326a483eaa9c21ec560f8b2, type: 2}
   planet: {fileID: 495726, guid: 45efd7c7e513e4b29a58c3f9dde560bf, type: 2}
   model: {fileID: 22443142}
   turret: {fileID: 479182}
-  scoreText: {fileID: 0}
-  winText: {fileID: 0}
-  id: {fileID: 0}
-  deathText: {fileID: 0}
-  deathTimerText: {fileID: 0}
-  ResourcePickUp: {fileID: 116834, guid: 976667ad8326a483eaa9c21ec560f8b2, type: 2}
+  tearDropId: {fileID: 10243388}
   mainCamera: {fileID: 0}
   obsCamera: {fileID: 475270, guid: 5d633392a34c14108aad562f21512f74, type: 2}
   planetCenter: {x: 0, y: 0, z: 0}
-  score: 0
-  scoreToRemove: 0
-  projectileModel: {fileID: 179210, guid: 19f9269165dbbbb4c93878885a6dcd42, type: 2}
-  shield: {fileID: 168808, guid: 1017c537ed26849498a30c5d880710e1, type: 2}
-  resourcePowerUpManager: {fileID: 0}
---- !u!114 &11468992
+  playerDetails: {fileID: 11474980}
+  dictId: 0
+--- !u!114 &11474980
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -463,31 +458,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 135240}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Script: {fileID: 11500000, guid: 49cf321d17f38f148900662fac087371, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 10
-    m_MaxSize: 40
-    m_Alignment: 0
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: SuperCorp
 --- !u!114 &11480724
 MonoBehaviour:
   m_ObjectHideFlags: 1
