@@ -12,7 +12,7 @@ public class PlayerControllerMobile : NetworkBehaviour {
     private NetworkIdentity nIdentity;
     private PlanetsNetworkManager nm;
     public PersonalPlayerInfo ppi;
-
+    public PlayerManager pm;
 
     private const float fireRate = 0.3F;
     private float currentFireRate = fireRate;
@@ -78,6 +78,7 @@ public class PlayerControllerMobile : NetworkBehaviour {
         nIdentity = GetComponent<NetworkIdentity>();
         nm = (PlanetsNetworkManager)NetworkManager.singleton;
         ppi = PersonalPlayerInfo.singleton;
+        pm = PlayerManager.singleton;
         rb = GetComponent<Rigidbody>();
         invertControls = nm.isSplitScreen();
         reflectionMatrix = genRefMatrix(90 * Mathf.Deg2Rad);
@@ -85,8 +86,13 @@ public class PlayerControllerMobile : NetworkBehaviour {
         resourcePowerUpManager = GameObject.FindGameObjectWithTag("Planet").GetComponent<ResourcePowerUpManager>();
         needsReflection = gameObject.CompareTag("PlayerSuperCorp");
         //Debug.Log("Player + " + PlayerManager.singleton.getPlayer(dictId));
-        playerDetails.setPlayerDetails(dictId, ppi.getPlayer());
-        Debug.Log("Setting teardrop id to " +playerDetails.getObsId().ToString() ); //BUG
+
+            if (pm.checkIfExists(dictId)) {
+            playerDetails.setPlayerDetails(dictId, pm.getPlayer(dictId));
+        } else {
+            playerDetails.setPlayerDetails(dictId, ppi.getPlayer());
+        }
+        Debug.Log("Setting teardrop id to " + playerDetails.getObsId().ToString()); //BUG
         tearDropId.text = playerDetails.getObsId().ToString();
     }
 
@@ -190,10 +196,8 @@ public class PlayerControllerMobile : NetworkBehaviour {
         }
     }
 
-    void OnCollisionEnter(Collision col)
-    {
-        if (nm.observerCollisionsOnly())
-        {
+    void OnCollisionEnter(Collision col){
+        if (nm.observerCollisionsOnly()){
             if (!PlayerConfig.singleton.GetObserver()) return;
         }
         else
