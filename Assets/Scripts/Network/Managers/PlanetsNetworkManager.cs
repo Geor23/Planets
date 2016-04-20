@@ -207,9 +207,7 @@ public class PlanetsNetworkManager : NetworkManager {
         if (pm.getTeam(idVal) != TeamID.TEAM_NEUTRAL){
             GameObject chosen = playerObjectType(idVal);
             GameObject player = Instantiate(chosen, teamManager.getSpawnP(pm.getTeam(idVal)), Quaternion.identity) as GameObject;
-            Debug.LogError("TEAM IS " + pm.getTeam(idVal));
-            if (pm.getTeam(idVal) != TeamID.TEAM_OBSERVER)
-            {
+            if (pm.getTeam(idVal) != TeamID.TEAM_OBSERVER){
                 Debug.LogError(pm.checkIfExists(idVal) + " is exists, " + idVal + " is the id");
                 //Player playa = pm.getPlayer(idValue);
                 //chosen.GetComponent<PlayerDetails>().setPlayerDetails(idValue,playa);
@@ -430,11 +428,12 @@ public class PlanetsNetworkManager : NetworkManager {
         Debug.Log("attempting to update player");
     }
 
+    /*
     //TODO: THIS IS CALLED WHEN PLAYER DISCONNECTS, SETS CONNECTED INDICATOR TO FALSE ON OBSERVERS
     public void OnPlayerDisconnected(NetworkMessage msg){
 
     }
-
+    */
     public void OnNewPlayer(NetworkMessage msg) {
         PlayerValues pv = msg.ReadMessage<PlayerValues>();
         Player newPlayer = new Player(pv.dictId, pv.connVal, pv.playerIP, pv.playerName, pv.playerTeam);
