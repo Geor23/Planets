@@ -11,7 +11,8 @@ public class UniqueObjectSynchronizer : NetworkBehaviour {
 	NetworkManager nm;
 
 	[Client]
-	void Start(){
+	public override void OnStartClient(){
+        Debug.LogError("Initialising UniqueObject handlers");
 		nm = NetworkManager.singleton;
 		nm.client.RegisterHandler(Msgs.updatePos, UpdateLocalPos);
 		nm.client.RegisterHandler(Msgs.updateRot, UpdateLocalRot);
