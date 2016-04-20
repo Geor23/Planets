@@ -93,7 +93,7 @@ public class RoundEvents : MonoBehaviour {
     public void OnServerSpawnPlayer(NetworkMessage msg){
         PlayerSpawnMsg ps = msg.ReadMessage<PlayerSpawnMsg>();
         GameObject player = Instantiate(nm.playerObjectType(ps.playerId), ps.pos, Quaternion.identity) as GameObject;
-        player.GetComponent<UnityStandardAssets.CrossPlatformInput.PlayerControllerMobile>().dictId = ps.playerId;
+        player.GetComponent<PlayerControllerMobile>().dictId = ps.playerId;
         Debug.Log("Player " + ps.playerId + "being respawned");
         NetworkServer.AddPlayerForConnection(pm.getNetworkConnection(ps.playerId), player, 0);
     }

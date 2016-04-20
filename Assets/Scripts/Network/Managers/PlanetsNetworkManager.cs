@@ -172,7 +172,7 @@ public class PlanetsNetworkManager : NetworkManager {
                 Debug.LogError(pm.checkIfExists(idVal) + " is exists, " + idVal + " is the id");
                 //Player playa = pm.getPlayer(idValue);
                 //chosen.GetComponent<PlayerDetails>().setPlayerDetails(idValue,playa);
-                player.GetComponent<UnityStandardAssets.CrossPlatformInput.PlayerControllerMobile>().dictId = idVal;
+                player.GetComponent<PlayerControllerMobile>().dictId = idVal;
             }
             updateListeners.Add(conn);
 

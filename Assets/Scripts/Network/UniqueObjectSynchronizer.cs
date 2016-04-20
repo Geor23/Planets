@@ -57,7 +57,7 @@ public class UniqueObjectSynchronizer : NetworkBehaviour {
         	Debug.LogError("FireProjectile: GameObject with netId " + fp.netId + " could not be found");
         	return;
         }
-        obj.GetComponent<UnityStandardAssets.CrossPlatformInput.PlayerControllerMobile>().TargetFireProjectile(fp);
+        obj.GetComponent<PlayerControllerMobile>().TargetFireProjectile(fp);
 	}
 }
 #endif
