@@ -59,10 +59,12 @@ public class PlanetsNetworkManager : NetworkManager {
     public bool timerOn = true;
 
     public PlayerManager pm;
+    public PersonalPlayerInfo ppi; //Singleton
 
   	public void Start() {
     	updateListeners = new HashSet<NetworkConnection>();
     	observingListeners = new HashSet<NetworkConnection>();
+        ppi = PersonalPlayerInfo.singleton;
 
         //TOCHANGE
     	roundList = new List<string>();
@@ -252,10 +254,14 @@ public class PlanetsNetworkManager : NetworkManager {
 
             PlayerValues pv = new PlayerValues();
             pv.dictId = idValue;
-            pv.player = pm.getPlayer(idValue); //Update all clients with new player
-            foreach (NetworkConnection nc in NetworkServer.connections){
-          //      NetworkServer.SendToClient(nc.connectionId, Msgs.updatePlayer, pv);
-            }
+            pv.connVal = msg.conn.connectionId;
+            pv.playerIP = address;
+            pv.playerName = pm.getName(idValue);
+            pv.playerTeam = pm.getTeam(idValue);
+            NetworkServer.SendToClient(msg.conn.connectionId, Msgs.addNewPlayer, pv); //Sends player info to the client that re-connected
+
+            //NEED TO UPDATE OBSERVER'S INFORMATION AS WELL, AS THIS MAY OCCUR MID-GAME
+
         } else { //If is entirely new player
             Debug.Log("New player "+ address + ", given id" + idValue + ", offering team " + teamChoice);
             Player newPlayer = new Player(idValue, msg.conn.connectionId, address, name, teamChoice);
@@ -267,10 +273,13 @@ public class PlanetsNetworkManager : NetworkManager {
 
             PlayerValues pv = new PlayerValues();
             pv.dictId = idValue;
-            pv.player = newPlayer;
-            foreach (NetworkConnection nc in NetworkServer.connections){
-         //       NetworkServer.SendToClient(nc.connectionId, Msgs.addNewPlayer, pv);
-            }
+            pv.connVal = msg.conn.connectionId;
+            pv.playerIP = address;
+            pv.playerName = name;
+            pv.playerTeam = teamChoice;
+            NetworkServer.SendToClient(msg.conn.connectionId, Msgs.addNewPlayer, pv);
+
+            //NEED TO UPDATE OBSERVER'S INFORMATION AS WELL, AS THIS MAY OCCUR MID-GAME
         }
     }
 
@@ -369,15 +378,24 @@ public class PlanetsNetworkManager : NetworkManager {
 		Debug.Log("Client connected!");
 	}
 
+    public override void OnStartClient(NetworkClient client){
+        base.OnStartClient(client);
+        ppi = PersonalPlayerInfo.singleton;
+        client.RegisterHandler(Msgs.updatePlayer, OnPlayerUpdate);
+          client.RegisterHandler(Msgs.addNewPlayer, OnNewPlayer);
+    }
+
     //Updates Observer player
     public void OnPlayerUpdate(NetworkMessage msg) {
         PlayerValues pv = msg.ReadMessage<PlayerValues>();
-        pm.updatePlayer(pv.dictId, pv.player);
+      //  pm.updatePlayer(pv.dictId, pv.player);
+      Debug.Log("attempting to update player");
     }
 
     public void OnNewPlayer(NetworkMessage msg) {
         PlayerValues pv = msg.ReadMessage<PlayerValues>();
-        pm.addPlayer(pv.dictId, pv.player);
+        Player newPlayer = new Player(pv.dictId, pv.connVal, pv.playerIP, pv.playerName, pv.playerTeam);
+        ppi.setPlayerDetails(pv.dictId, newPlayer); //Sets details of player to non-destroyable space
     }
 
     // called when disconnected from a server

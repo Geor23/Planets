@@ -26,7 +26,7 @@ public class PlayerManager {
     public int findPlayerWithIP(string ip){
         foreach (var i in playerDict) {
             string val = playerDict[i.Key].getPlayerIP();
-            if (ip == val){
+            if ((ip == val)&&(playerDict[i.Key].getIsConnected())){ //If the IPS match up and the person was disconnected...
                 return playerDict[i.Key].getPlayerId();
             }
         }

@@ -11,6 +11,7 @@ public class PlayerControllerMobile : NetworkBehaviour {
 
     private NetworkIdentity nIdentity;
     private PlanetsNetworkManager nm;
+    public PersonalPlayerInfo ppi;
 
 
     private const float fireRate = 0.3F;
@@ -76,15 +77,16 @@ public class PlayerControllerMobile : NetworkBehaviour {
         Debug.Log("DictID is " + dictId);
         nIdentity = GetComponent<NetworkIdentity>();
         nm = (PlanetsNetworkManager)NetworkManager.singleton;
+        ppi = PersonalPlayerInfo.singleton;
         rb = GetComponent<Rigidbody>();
         invertControls = nm.isSplitScreen();
         reflectionMatrix = genRefMatrix(90 * Mathf.Deg2Rad);
         roundEvents = GameObject.Find("RoundEvents").GetComponent<RoundEvents>(); //Sets reference to RoundEvents object
         resourcePowerUpManager = GameObject.FindGameObjectWithTag("Planet").GetComponent<ResourcePowerUpManager>();
         needsReflection = gameObject.CompareTag("PlayerSuperCorp");
-        Debug.Log("Player + " + PlayerManager.singleton.getPlayer(dictId));
-        playerDetails.setPlayerDetails(dictId, PlayerManager.singleton.getPlayer(dictId));
-        //Debug.Log("Setting teaerdrop id to " +playerDetails.getObsId().ToString() ); //BUG
+        //Debug.Log("Player + " + PlayerManager.singleton.getPlayer(dictId));
+        playerDetails.setPlayerDetails(dictId, ppi.getPlayer());
+        Debug.Log("Setting teardrop id to " +playerDetails.getObsId().ToString() ); //BUG
         tearDropId.text = playerDetails.getObsId().ToString();
     }
 

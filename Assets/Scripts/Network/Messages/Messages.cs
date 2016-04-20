@@ -122,7 +122,11 @@ public class KillPlayer : MessageBase {
 
 public class PlayerValues : MessageBase {
     public int dictId;
-    public Player player;
+    public int oldId;
+    public int connVal;
+    public string playerIP;
+    public string playerName;
+    public int playerTeam;
 }
 
 public class PlayerSpawnMsg : MessageBase {
