@@ -50,6 +50,7 @@ public class PlanetsNetworkManager : NetworkManager {
   	public HashSet<NetworkConnection> updateListeners;
   	public HashSet<NetworkConnection> observingListeners;
 
+    public bool allowSharedIPs = false;
   	public bool onlyUpdateObservers = false;
   	public bool usingSplitScreen = false;
     public int key = 0;
@@ -175,8 +176,8 @@ public class PlanetsNetworkManager : NetworkManager {
         NetworkServer.RegisterHandler(Msgs.requestTeamMsg, OnServerRecieveTeamRequest);
 	    NetworkServer.RegisterHandler(Msgs.startGame, OnServerStartGame);
 	    NetworkServer.RegisterHandler(Msgs.requestCurrentTime, OnServerRecieveTimeRequest);
-        NetworkServer.RegisterHandler(Msgs.updatePlayer, OnPlayerUpdate);
-        NetworkServer.RegisterHandler(Msgs.addNewPlayer, OnNewPlayer);
+      //  NetworkServer.RegisterHandler(Msgs.updatePlayer, OnPlayerUpdate);
+     //   NetworkServer.RegisterHandler(Msgs.addNewPlayer, OnNewPlayer);
     }
 
     public int ipToId(string address, int connId){
@@ -242,7 +243,7 @@ public class PlanetsNetworkManager : NetworkManager {
         Debug.Log("idValue is " + idValue + " inside AddPlayer");
         //If the player has already connected, set connected to true and update conn value
         int idValOld = pm.findPlayerWithIP(address); //Finds a player with the IP. Will return the latest player made and their identity if multiple exist
-        if (idValOld != -10){ //-10 means not found. If it was found, adjust old player
+        if (((idValOld != -10)&&(!allowSharedIPs)) || (pm.checkIfExists(idValue))){ //-10 means not found. If it was found, adjust old player
             Debug.Log("Player " + idValOld + " exists, setting connected once more");
             pm.setNewID(idValOld, idValue); //Makes new id connection based off new conn id
             pm.setConnected(idValue); //Indicate player is again connected
@@ -253,7 +254,7 @@ public class PlanetsNetworkManager : NetworkManager {
             pv.dictId = idValue;
             pv.player = pm.getPlayer(idValue); //Update all clients with new player
             foreach (NetworkConnection nc in NetworkServer.connections){
-                NetworkServer.SendToClient(nc.connectionId, Msgs.updatePlayer, pv);
+          //      NetworkServer.SendToClient(nc.connectionId, Msgs.updatePlayer, pv);
             }
         } else { //If is entirely new player
             Debug.Log("New player "+ address + ", given id" + idValue + ", offering team " + teamChoice);
@@ -268,7 +269,7 @@ public class PlanetsNetworkManager : NetworkManager {
             pv.dictId = idValue;
             pv.player = newPlayer;
             foreach (NetworkConnection nc in NetworkServer.connections){
-                NetworkServer.SendToClient(nc.connectionId, Msgs.addNewPlayer, pv);
+         //       NetworkServer.SendToClient(nc.connectionId, Msgs.addNewPlayer, pv);
             }
         }
     }
