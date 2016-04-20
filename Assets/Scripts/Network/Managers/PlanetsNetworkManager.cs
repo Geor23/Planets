@@ -217,7 +217,7 @@ public class PlanetsNetworkManager : NetworkManager {
             updateListeners.Add(conn);
 
             //Add to observing listeners if not a player
-            if (pm.getTeam(idVal) == TeamID.TEAM_OBSERVER) observingListeners.Add(conn);
+            //if (pm.getTeam(idVal) == TeamID.TEAM_OBSERVER) observingListeners.Add(conn);
             NetworkServer.AddPlayerForConnection(conn, player, playerControllerId);
         }
     }
@@ -259,7 +259,7 @@ public class PlanetsNetworkManager : NetworkManager {
             pv.playerName = pm.getName(idValue);
             pv.playerTeam = pm.getTeam(idValue);
             NetworkServer.SendToClient(msg.conn.connectionId, Msgs.addNewPlayer, pv); //Sends player info to the client that re-connected
-
+            if (teamChoice == TeamID.TEAM_OBSERVER) observingListeners.Add(msg.conn); //Checks if player is indicated as an observer. If so adds to observers list
             //NEED TO UPDATE OBSERVER'S INFORMATION AS WELL, AS THIS MAY OCCUR MID-GAME
 
         } else { //If is entirely new player

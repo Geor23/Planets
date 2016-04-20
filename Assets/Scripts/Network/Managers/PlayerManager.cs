@@ -30,7 +30,7 @@ public class PlayerManager {
                 return playerDict[i.Key].getPlayerId();
             }
         }
-        return -10; //Indicates failure
+        return -10; //Indicates failure to find IP specified
     }
 
     public string findPlayerWithConnID(int id){
