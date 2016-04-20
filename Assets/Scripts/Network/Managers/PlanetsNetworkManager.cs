@@ -406,7 +406,6 @@ public class PlanetsNetworkManager : NetworkManager {
     public override void OnStartClient(NetworkClient client){
         base.OnStartClient(client);
         ppi = PersonalPlayerInfo.singleton;
-        pm = new PlayerManager(); //POTENTIALLY WRONG?
         client.RegisterHandler(Msgs.updatePlayer, OnPlayerUpdate);
         client.RegisterHandler(Msgs.addNewPlayer, OnNewPlayer);
         client.RegisterHandler(Msgs.addNewPlayerToObserver, OnNewPlayerObserver);
@@ -424,7 +423,7 @@ public class PlanetsNetworkManager : NetworkManager {
     public void OnPlayerUpdateObserver(NetworkMessage msg){
         PlayerValues pv = msg.ReadMessage<PlayerValues>();
         Player updatedPlayer = new Player(pv.dictId, pv.connVal, pv.playerIP, pv.playerName, pv.playerTeam);
-     //   pm.updatePlayerIncludingID(pv.oldId, updatedPlayer);
+        pm.updatePlayerIncludingID(pv.oldId, updatedPlayer);
         Debug.Log("attempting to update player");
     }
 
@@ -443,7 +442,7 @@ public class PlanetsNetworkManager : NetworkManager {
     public void OnNewPlayerObserver(NetworkMessage msg){
         PlayerValues pv = msg.ReadMessage<PlayerValues>();
         Player newPlayer = new Player(pv.dictId, pv.connVal, pv.playerIP, pv.playerName, pv.playerTeam);
-     //   pm.addPlayer(pv.dictId, newPlayer);
+        pm.addPlayer(pv.dictId, newPlayer);
     }
 
     // called when disconnected from a server

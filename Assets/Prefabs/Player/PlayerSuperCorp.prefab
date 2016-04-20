@@ -16,10 +16,10 @@ GameObject:
   - 222: {fileID: 22279366}
   - 114: {fileID: 11441726}
   - 114: {fileID: 11480724}
-  - 114: {fileID: 11454022}
-  - 114: {fileID: 11418092}
   - 114: {fileID: 11496354}
   - 114: {fileID: 11474980}
+  - 114: {fileID: 11454240}
+  - 114: {fileID: 11441938}
   m_Layer: 12
   m_Name: PlayerSuperCorp
   m_TagString: PlayerSuperCorp
@@ -380,21 +380,6 @@ MonoBehaviour:
     i15: 116
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
---- !u!114 &11418092
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 135240}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b49ee848ad1e14082aee0c6d03badeb1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nIdentity: {fileID: 11408848}
-  playerTransform: {fileID: 479182}
-  lerpRate: 15
-  updateAll: 0
 --- !u!114 &11441726
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -409,7 +394,22 @@ MonoBehaviour:
   ResourcePickUp: {fileID: 116834, guid: 976667ad8326a483eaa9c21ec560f8b2, type: 2}
   projectileLifetime: 2
   idForObsScreen: {fileID: 0}
---- !u!114 &11454022
+--- !u!114 &11441938
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 135240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b49ee848ad1e14082aee0c6d03badeb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nIdentity: {fileID: 11408848}
+  playerTransform: {fileID: 479182}
+  lerpRate: 15
+  updateAll: 0
+--- !u!114 &11454240
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -422,7 +422,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nIdentity: {fileID: 11408848}
   playerTransform: {fileID: 22443142}
-  lerpRate: 3
+  lerpRate: 15
   updateAll: 0
 --- !u!114 &11467222
 MonoBehaviour:
@@ -435,6 +435,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41c8ac6a7c8f2474ab522a7cc873c200, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ppi: {fileID: 0}
   doubleScore: 0
   speed: 1.5
   rotSpeed: 12
