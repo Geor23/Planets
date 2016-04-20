@@ -13,10 +13,11 @@ public class CameraController : MonoBehaviour {
 
     public GameObject[] playersS;
     public GameObject[] playersP;
-    public float speed = 0.1F;
+    public float lerpRate = 1f;
     private Vector3 pos;
 
     void Start(){
+        Debug.LogError("AM ALIVE HAHAHA");
         transform.position = new Vector3(0,0,0);
         pos = new Vector3(0, 0, 0);
     }
@@ -44,7 +45,7 @@ public class CameraController : MonoBehaviour {
 
         point = sum/count;
         avgUp = camUps/count;
-        transform.LookAt(point, -avgUp);
+        Quaternion newRot = Quaternion.LookRotation(point, -avgUp);
 
         if (Input.GetKey(KeyCode.A)) {  //Camera one commands
             pos -= transform.right.normalized/10;
@@ -66,7 +67,7 @@ public class CameraController : MonoBehaviour {
             pos -= transform.forward.normalized / 10;
         }
 
-
-        transform.position = Vector3.Lerp(transform.position, pos, Time.deltaTime*0.01f);
+        transform.rotation = Quaternion.Lerp(transform.rotation, newRot, Time.deltaTime * lerpRate);
+        transform.position = pos;
     }
 }

@@ -8,11 +8,11 @@ public class DisableIfNotObserver : MonoBehaviour {
     void Start () {
         nm = (PlanetsNetworkManager)NetworkManager.singleton;
         if (nm.observerCollisionsOnly()){
-            Debug.Log("Is observer?" + PlayerConfig.singleton.GetObserver());
+           // Debug.Log("Is observer?" + PlayerConfig.singleton.GetObserver());
             if (!PlayerConfig.singleton.GetObserver()){
                 gameObject.SetActive(false);
             }else{
-                Debug.Log("I am an observer");
+    //            Debug.Log("I am an observer");
             }
         }
     }

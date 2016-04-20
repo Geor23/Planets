@@ -8,7 +8,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 472026}
-  - 114: {fileID: 11491384}
   - 114: {fileID: 11445726}
   m_Layer: 0
   m_Name: UniqueSyncronizer
@@ -40,38 +39,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff75a6c84ce6244388748d04c978db55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &11491384
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 178086}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SceneId:
-    m_Value: 0
-  m_AssetId:
-    i0: 64
-    i1: 61
-    i2: 87
-    i3: 99
-    i4: 254
-    i5: 52
-    i6: 191
-    i7: 68
-    i8: 187
-    i9: 0
-    i10: 218
-    i11: 159
-    i12: 133
-    i13: 32
-    i14: 213
-    i15: 80
-  m_ServerOnly: 0
-  m_LocalPlayerAuthority: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

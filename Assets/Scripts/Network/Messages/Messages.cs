@@ -34,6 +34,8 @@ class Msgs : MsgType {
   public const short updatePlayer = 75;
   public const short addNewPlayer = 76;
   public const short spawnPlayer = 77;
+  public const short addNewPlayerToObserver = 78;
+  public const short updatePlayerToObserver = 79;
 }
 
 public class JoinMessage : MessageBase {

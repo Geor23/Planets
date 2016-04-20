@@ -23,14 +23,24 @@ public class PlayerManager {
         playerDict.Add(newID, player);
     }
 
+    //Removes old version of player and adds again
+    public void updatePlayerIncludingID(int oldID, Player player){
+        playerDict.Remove(oldID);
+        playerDict.Add(player.getPlayerId(), player);
+    }
+
     public int findPlayerWithIP(string ip){
         foreach (var i in playerDict) {
             string val = playerDict[i.Key].getPlayerIP();
-            if ((ip == val)&&(playerDict[i.Key].getIsConnected())){ //If the IPS match up and the person was disconnected...
+            if ((ip == val)&&(!playerDict[i.Key].getIsConnected())){ //If the IPS match up and the person was disconnected...
                 return playerDict[i.Key].getPlayerId();
             }
         }
-        return -10; //Indicates failure
+        return -10; //Indicates failure to find IP specified
+    }
+
+    public bool isConnected(int id){
+        return playerDict[id].getIsConnected();
     }
 
     public string findPlayerWithConnID(int id){

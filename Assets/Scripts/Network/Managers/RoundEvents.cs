@@ -61,7 +61,10 @@ public class RoundEvents : MonoBehaviour {
         if(playerId == -25) return;
         PlayerSpawnMsg ps = new PlayerSpawnMsg();
         ps.playerId = playerId;
-        ps.pos = GameObject.FindGameObjectsWithTag("Observer")[0].transform.position; //Observer cam;
+        Transform obsCamTrans = GameObject.FindGameObjectsWithTag("Observer")[0].transform.GetChild(0);
+        ps.pos = obsCamTrans.transform.position; //Observer cam;
+        if(pm.getTeam(playerId) == TeamID.TEAM_PIRATES) ps.pos += -obsCamTrans.right*5;
+        else ps.pos += obsCamTrans.right*5;
         nm.client.Send(Msgs.spawnPlayer, ps);
     }
 

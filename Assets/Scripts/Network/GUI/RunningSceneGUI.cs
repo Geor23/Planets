@@ -32,16 +32,17 @@ public class RunningSceneGUI : MonoBehaviour {
 		nm.client.RegisterHandler (Msgs.serverTeamScore, OnClientReceiveScores);
 		nm.client.RegisterHandler (Msgs.serverKillFeed, OnClientReceiveKillFeed);
 		nm.client.Send(Msgs.requestTeamScores, new EmptyMessage());
-		if (PlayerConfig.singleton.getTeam()==0){
+		if (PersonalPlayerInfo.singleton.getPlayerTeam()==0){
 			idImgPir.gameObject.SetActive(true);
 			idImgSup.gameObject.SetActive(false);
-        } else if (PlayerConfig.singleton.getTeam()==1){
+        } else if (PersonalPlayerInfo.singleton.getPlayerTeam() == 1){
 			idImgSup.gameObject.SetActive(true);
 			idImgPir.gameObject.SetActive(false);
         } else { 
         	idImgSup.gameObject.SetActive(false);
 			idImgPir.gameObject.SetActive(false);
         }
+
 
     }
 	
