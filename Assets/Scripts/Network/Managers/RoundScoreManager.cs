@@ -33,4 +33,19 @@ public class RoundScoreManager {
             superCorpScore -= score;
         }
     }
+
+
+    public int getPirateScore(){
+        return pirateScore;
+    }
+
+    public int getSuperCorpScore(){
+        return superCorpScore;
+    }
+
+    public int getPlayerScore(int playerId){
+        Player p = pm.getPlayer(playerId);
+        if(p == null) return 0;
+        else return p.getPlayerScore();
+    }
 }
