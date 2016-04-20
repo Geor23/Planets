@@ -203,9 +203,11 @@ public class PlanetsNetworkManager : NetworkManager {
 
         /* This is where you can register players with teams, and spawn the player at custom points in the team space */
         int idVal = ipToId(conn.address, conn.connectionId);
+        Debug.LogError("SPAWNING PLAYER "+idVal);
         if (pm.getTeam(idVal) != TeamID.TEAM_NEUTRAL){
             GameObject chosen = playerObjectType(idVal);
             GameObject player = Instantiate(chosen, teamManager.getSpawnP(pm.getTeam(idVal)), Quaternion.identity) as GameObject;
+            Debug.LogError("TEAM IS " + pm.getTeam(idVal));
             if (pm.getTeam(idVal) != TeamID.TEAM_OBSERVER)
             {
                 Debug.LogError(pm.checkIfExists(idVal) + " is exists, " + idVal + " is the id");
