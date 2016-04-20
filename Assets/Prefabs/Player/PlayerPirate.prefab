@@ -33,10 +33,10 @@ GameObject:
   - 222: {fileID: 22230050}
   - 114: {fileID: 11473316}
   - 114: {fileID: 11441538}
-  - 114: {fileID: 11417794}
-  - 114: {fileID: 11407448}
   - 114: {fileID: 11451542}
   - 114: {fileID: 11416008}
+  - 114: {fileID: 11433326}
+  - 114: {fileID: 11488444}
   m_Layer: 10
   m_Name: PlayerPirate
   m_TagString: PlayerPirate
@@ -358,21 +358,6 @@ TextMesh:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
---- !u!114 &11407448
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 158602}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b49ee848ad1e14082aee0c6d03badeb1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nIdentity: {fileID: 11489970}
-  playerTransform: {fileID: 404412}
-  lerpRate: 15
-  updateAll: 0
 --- !u!114 &11416008
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -384,7 +369,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49cf321d17f38f148900662fac087371, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &11417794
+--- !u!114 &11433326
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -464,6 +449,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41c8ac6a7c8f2474ab522a7cc873c200, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ppi: {fileID: 0}
   doubleScore: 0
   speed: 1.5
   rotSpeed: 12
@@ -479,6 +465,21 @@ MonoBehaviour:
   planetCenter: {x: 0, y: 0, z: 0}
   playerDetails: {fileID: 11416008}
   dictId: 0
+--- !u!114 &11488444
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 158602}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b49ee848ad1e14082aee0c6d03badeb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nIdentity: {fileID: 11489970}
+  playerTransform: {fileID: 404412}
+  lerpRate: 15
+  updateAll: 0
 --- !u!114 &11489970
 MonoBehaviour:
   m_ObjectHideFlags: 1
