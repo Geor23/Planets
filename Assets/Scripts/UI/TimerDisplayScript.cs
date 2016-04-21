@@ -25,7 +25,6 @@ public class TimerDisplayScript : MonoBehaviour {
     void OnClientReceiveTime(NetworkMessage msg){
        TimeMessage tm = msg.ReadMessage<TimeMessage>();
        time = tm.time;
-        Debug.Log(time);
        textField.text = time.ToString();
        
     }

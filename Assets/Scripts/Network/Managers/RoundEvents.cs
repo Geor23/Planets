@@ -22,9 +22,10 @@ public class RoundEvents : MonoBehaviour {
     void Start(){
         pm = PlayerManager.singleton;
         pom = new RoundPlayerObjectManager();
-        Dictionary<int, Player> playerDict = pm.getPlayerDict();
-        sm = new RoundScoreManager(playerDict);
+        sm = new RoundScoreManager(pm.getPlayerDict());
         nm = (PlanetsNetworkManager)PlanetsNetworkManager.singleton;
+        GameStatsManager.singleton.addNewRoundDatas(pom, sm);
+
         //Handle messages from server such as end of round signal etc. act upon them
 
         if(NetworkClient.active) clientInit();

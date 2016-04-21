@@ -12,7 +12,6 @@ public class UniqueObjectSynchronizer : MonoBehaviour {
 
 	void Start(){
         if(!NetworkClient.active) return;
-        Debug.LogError("Initialising UniqueObject handlers");
 		nm = NetworkManager.singleton;
 		nm.client.RegisterHandler(Msgs.updatePos, UpdateLocalPos);
 		nm.client.RegisterHandler(Msgs.updateRot, UpdateLocalRot);

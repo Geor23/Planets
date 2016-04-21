@@ -10,6 +10,8 @@ GameObject:
   - 4: {fileID: 447324}
   - 114: {fileID: 11489486}
   - 114: {fileID: 11488618}
+  - 114: {fileID: 11451714}
+  - 114: {fileID: 11433314}
   m_Layer: 0
   m_Name: PlanetsNetworkManager
   m_TagString: Untagged
@@ -29,6 +31,29 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!114 &11433314
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 132604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8be75a3a0a978534388a1527a846529d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &11451714
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 132604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5205306c04466324d800d3290cbee99a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  numRounds: 0
 --- !u!114 &11488618
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -75,7 +100,7 @@ MonoBehaviour:
   - {fileID: 177056, guid: 2d1995fadd0c04b3eab52ed051bc1936, type: 2}
   - {fileID: 197474, guid: 5d633392a34c14108aad562f21512f74, type: 2}
   m_CustomConfig: 1
-  m_MaxConnections: 4
+  m_MaxConnections: 100
   m_ConnectionConfig:
     m_PacketSize: 1500
     m_FragmentSize: 500
@@ -117,11 +142,13 @@ MonoBehaviour:
   player2: {fileID: 135240, guid: 5d90277e2d19d41e092696113922c674, type: 2}
   observerSingleScreen: {fileID: 197474, guid: 5d633392a34c14108aad562f21512f74, type: 2}
   observerSplitScreen: {fileID: 177056, guid: 2d1995fadd0c04b3eab52ed051bc1936, type: 2}
+  allowSharedIPs: 1
   onlyUpdateObservers: 1
   usingSplitScreen: 0
   key: 0
   round1Scene: Round1
-  timerOn: 1
+  timerOn: 0
+  ppi: {fileID: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

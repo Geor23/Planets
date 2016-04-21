@@ -178,20 +178,13 @@ public class PlanetsNetworkManager : NetworkManager {
         NetworkServer.RegisterHandler(Msgs.requestTeamMsg, OnServerRecieveTeamRequest);
 	    NetworkServer.RegisterHandler(Msgs.startGame, OnServerStartGame);
 	    NetworkServer.RegisterHandler(Msgs.requestCurrentTime, OnServerRecieveTimeRequest);
-      //  NetworkServer.RegisterHandler(Msgs.updatePlayer, OnPlayerUpdate);
-     //   NetworkServer.RegisterHandler(Msgs.addNewPlayer, OnNewPlayer);
     }
 
     public int ipToId(string address, int connId){
         if (address != "localClient") {
             int idValue;
-            Debug.LogError("conn is " + address);
             idValue = connId*(IPAddress.Parse(address).GetAddressBytes()[15] + 1);
             return idValue;
-            //Debug.Log("Special id " + idValue);
-            // for(int i = 0; i < IPAddress.Parse(address).GetAddressBytes().Length; i++){
-            //     Debug.Log(IPAddress.Parse(address).GetAddressBytes()[i]);
-            // }
         } 
         return -1;
     }   
@@ -202,13 +195,11 @@ public class PlanetsNetworkManager : NetworkManager {
         //Change so that the spawn area is from a more random general area chosen from the PlayerSpawnArea script
 
         /* This is where you can register players with teams, and spawn the player at custom points in the team space */
-        int idVal = ipToId(conn.address, conn.connectionId);
-        Debug.LogError("SPAWNING PLAYER "+idVal);
+        int idVal = ipToId(conn.address, conn.connectionId);;
         if (pm.getTeam(idVal) != TeamID.TEAM_NEUTRAL){
             GameObject chosen = playerObjectType(idVal);
             GameObject player = Instantiate(chosen, teamManager.getSpawnP(pm.getTeam(idVal)), Quaternion.identity) as GameObject;
             if (pm.getTeam(idVal) != TeamID.TEAM_OBSERVER){
-                Debug.LogError(pm.checkIfExists(idVal) + " is exists, " + idVal + " is the id");
                 //Player playa = pm.getPlayer(idValue);
                 //chosen.GetComponent<PlayerDetails>().setPlayerDetails(idValue,playa);
                 player.GetComponent<PlayerControllerMobile>().dictId = idVal;
@@ -240,8 +231,6 @@ public class PlanetsNetworkManager : NetworkManager {
         int teamChoice = joinMsg.team;
         string address = msg.conn.address;
         int idValue = ipToId(address, msg.conn.connectionId);
-        Debug.Log("idValue is " + idValue + " inside AddPlayer");
-        Debug.LogError("CONN VALUE IS " + msg.conn.connectionId);
         //If the player has already connected, set connected to true and update conn value
         int idValOld = pm.findPlayerWithIP(address); //Finds a player with the IP. Will return the latest player made and their identity if multiple exist
         if (((idValOld != -10)&&(!allowSharedIPs)) || ((pm.checkIfExists(idValue))&&(allowSharedIPs))){ //-10 means not found. If it was found, adjust old player
@@ -379,9 +368,6 @@ public class PlanetsNetworkManager : NetworkManager {
         foreach (NetworkConnection nc in getUpdateListeners()){
             NetworkServer.SendToClient(nc.connectionId, Msgs.updatePlayerToObserver, pv); //Sends player info to the client that re-connected
         }
-
-
-        Debug.Log(pm.getName(idVal)  + " chose team " + choice.ToString());
 	  }
     // send the team list of players to all clients
     public void sendTeam(int team) {
@@ -389,7 +375,6 @@ public class PlanetsNetworkManager : NetworkManager {
 		TeamList tl = new TeamList();
 
 		foreach(string player in teamManager.getListTeam(team) ) {
-            Debug.Log(player.ToString());
 			display = display.ToString () + player.ToString() + "\n";
 		}
 		
