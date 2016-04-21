@@ -4,6 +4,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 using UnityEngine.Networking.NetworkSystem;
+using UnityStandardAssets.CrossPlatformInput;
 
 [NetworkSettings(channel = 1)]
 public class PlayerControllerMobile : NetworkBehaviour {

@@ -289,7 +289,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 447324, guid: af28d3f0fb326294fb32a70529d06809, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -8.80924988
+      value: -8.80925
       objectReference: {fileID: 0}
     - target: {fileID: 447324, guid: af28d3f0fb326294fb32a70529d06809, type: 2}
       propertyPath: m_LocalRotation.x
@@ -297,7 +297,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 447324, guid: af28d3f0fb326294fb32a70529d06809, type: 2}
       propertyPath: m_LocalRotation.y
-      value: 1.82481017e-05
+      value: 0.000018248102
       objectReference: {fileID: 0}
     - target: {fileID: 447324, guid: af28d3f0fb326294fb32a70529d06809, type: 2}
       propertyPath: m_LocalRotation.z
@@ -310,22 +310,6 @@ Prefab:
     - target: {fileID: 447324, guid: af28d3f0fb326294fb32a70529d06809, type: 2}
       propertyPath: m_RootOrder
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 11489486, guid: af28d3f0fb326294fb32a70529d06809, type: 2}
-      propertyPath: timerOn
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 11489486, guid: af28d3f0fb326294fb32a70529d06809, type: 2}
-      propertyPath: onlyUpdateObservers
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 11489486, guid: af28d3f0fb326294fb32a70529d06809, type: 2}
-      propertyPath: allowSharedIPs
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 11489486, guid: af28d3f0fb326294fb32a70529d06809, type: 2}
-      propertyPath: m_MaxConnections
-      value: 100
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: af28d3f0fb326294fb32a70529d06809, type: 2}

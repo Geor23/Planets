@@ -19,12 +19,9 @@ private RectTransform rTransform;
 	void OnGUI () {
 		if (Event.current.type == EventType.MouseUp && RectTransformUtility.RectangleContainsScreenPoint(rTransform, Event.current.mousePosition))
 		{
-			Debug.Log("Clicked: ");
 			if (pirate) { 
-				Debug.Log("Pirate Team");
 				lobbyGUI.ChooseTeamPirates();
 			} else { 
-				Debug.Log("SuperCorp Team");
 				lobbyGUI.ChooseTeamSuperCorp();
 			}
 			header.color = new Color (1F,1F,1F,1F);
@@ -34,12 +31,9 @@ private RectTransform rTransform;
 
 	void Update () {
 		if (Input.GetMouseButtonDown(0) && RectTransformUtility.RectangleContainsScreenPoint(rTransform, Input.mousePosition)) {
-			Debug.Log("Clicked: ");
 			if (pirate) { 
-				Debug.Log("Pirate Team");
 				lobbyGUI.ChooseTeamPirates();
 			} else { 
-				Debug.Log("SuperCorp Team");
 				lobbyGUI.ChooseTeamSuperCorp();
 			}
 			header.color = new Color (1F,1F,1F,1F);
@@ -48,12 +42,9 @@ private RectTransform rTransform;
 	}
 
 	public void buttonEffect () {
-		Debug.Log("Clicked: ");
 		if (pirate) { 
-			Debug.Log("Pirate Team");
 			lobbyGUI.ChooseTeamPirates();
 		} else { 
-			Debug.Log("SuperCorp Team");
 			lobbyGUI.ChooseTeamSuperCorp();
 		}
 		header.color = new Color (1F,1F,1F,1F);
