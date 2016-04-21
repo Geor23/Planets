@@ -19,7 +19,7 @@ public class PlayerSyncRotation : NetworkBehaviour {
 	
 	// Update is called once per frame
 	void Update(){
-	    if((!nIdentity.isLocalPlayer)||(isServer)) LerpRotations ();
+	    if((!nIdentity.isLocalPlayer)) LerpRotations ();
 	}
 
 

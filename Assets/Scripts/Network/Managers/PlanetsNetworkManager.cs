@@ -254,16 +254,21 @@ public class PlanetsNetworkManager : NetworkManager {
 
             PlayerValues pv = new PlayerValues();
             pv.dictId = idValue;
+            pv.oldId = idValOld;
             pv.connVal = msg.conn.connectionId;
             pv.playerIP = address;
-            pv.playerName = pm.getName(idValue);
-            pv.playerTeam = pm.getTeam(idValue);
-            NetworkServer.SendToClient(msg.conn.connectionId, Msgs.addNewPlayer, pv); //Sends player info to the client that re-connected
-            if (teamChoice == TeamID.TEAM_OBSERVER) { //Checks if player is indicated as an observer. If so adds to observers list
+            pv.playerName = name;
+            pv.playerTeam = teamChoice;
+            NetworkServer.SendToClient(msg.conn.connectionId, Msgs.addNewPlayer, pv);
+            if (teamChoice == TeamID.TEAM_OBSERVER)
+            { //Checks if player is indicated as an observer. If so adds to observers list
                 observingListeners.Add(msg.conn);
-            } else {//If it's not an observer, inform observers
-                foreach (NetworkConnection nc in getUpdateListeners()) {
-                    NetworkServer.SendToClient(nc.connectionId, Msgs.addNewPlayerToObserver, pv); //Sends player info to the client that re-connected
+            }
+            else
+            {//If it's not an observer, inform observers
+                foreach (NetworkConnection nc in getUpdateListeners())
+                {
+                    NetworkServer.SendToClient(nc.connectionId, Msgs.updatePlayerToObserver, pv); //Sends player info to the client that re-connected
                 }
             }
 
@@ -276,19 +281,23 @@ public class PlanetsNetworkManager : NetworkManager {
             pm.setConnValue(idValue, msg.conn.connectionId); //Updates old conn value
             pm.setNetworkConnection(idValue, msg.conn);
 
+
             PlayerValues pv = new PlayerValues();
             pv.dictId = idValue;
-            pv.oldId = idValOld;
             pv.connVal = msg.conn.connectionId;
             pv.playerIP = address;
-            pv.playerName = name;
-            pv.playerTeam = teamChoice;
-            NetworkServer.SendToClient(msg.conn.connectionId, Msgs.addNewPlayer, pv);
-            if (teamChoice == TeamID.TEAM_OBSERVER){ //Checks if player is indicated as an observer. If so adds to observers list
+            pv.playerName = pm.getName(idValue);
+            pv.playerTeam = pm.getTeam(idValue);
+            NetworkServer.SendToClient(msg.conn.connectionId, Msgs.addNewPlayer, pv); //Sends player info to the client that re-connected
+            if (teamChoice == TeamID.TEAM_OBSERVER)
+            { //Checks if player is indicated as an observer. If so adds to observers list
                 observingListeners.Add(msg.conn);
-            } else {//If it's not an observer, inform observers
-                foreach (NetworkConnection nc in getUpdateListeners()){
-                    NetworkServer.SendToClient(nc.connectionId, Msgs.updatePlayerToObserver, pv); //Sends player info to the client that re-connected
+            }
+            else
+            {//If it's not an observer, inform observers
+                foreach (NetworkConnection nc in getUpdateListeners())
+                {
+                    NetworkServer.SendToClient(nc.connectionId, Msgs.addNewPlayerToObserver, pv); //Sends player info to the client that re-connected
                 }
             }
             //NEED TO UPDATE OBSERVER'S INFORMATION AS WELL, AS THIS MAY OCCUR MID-GAME
@@ -423,8 +432,8 @@ public class PlanetsNetworkManager : NetworkManager {
     public void OnPlayerUpdateObserver(NetworkMessage msg){
         PlayerValues pv = msg.ReadMessage<PlayerValues>();
         Player updatedPlayer = new Player(pv.dictId, pv.connVal, pv.playerIP, pv.playerName, pv.playerTeam);
-        pm.updatePlayerIncludingID(pv.oldId, updatedPlayer);
-        Debug.Log("attempting to update player");
+            pm.updatePlayerIncludingID(pv.oldId, updatedPlayer);
+            Debug.Log("attempting to update player");
     }
 
     /*
@@ -442,7 +451,7 @@ public class PlanetsNetworkManager : NetworkManager {
     public void OnNewPlayerObserver(NetworkMessage msg){
         PlayerValues pv = msg.ReadMessage<PlayerValues>();
         Player newPlayer = new Player(pv.dictId, pv.connVal, pv.playerIP, pv.playerName, pv.playerTeam);
-        pm.addPlayer(pv.dictId, newPlayer);
+            pm.addPlayer(pv.dictId, newPlayer);
     }
 
     // called when disconnected from a server

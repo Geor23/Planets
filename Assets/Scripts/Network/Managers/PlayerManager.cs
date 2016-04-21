@@ -26,7 +26,11 @@ public class PlayerManager {
     //Removes old version of player and adds again
     public void updatePlayerIncludingID(int oldID, Player player){
         playerDict.Remove(oldID);
-        playerDict.Add(player.getPlayerId(), player);
+        if (getPlayer(player.getPlayerId())==null){ //If the connection doesn't exist...
+            playerDict.Add(player.getPlayerId(), player);
+        } else { //Else if it exists just override it
+            playerDict[player.getPlayerId()] = player;
+        }
     }
 
     public int findPlayerWithIP(string ip){
@@ -55,7 +59,11 @@ public class PlayerManager {
 
     }
     public void addPlayer(int id, Player player){
-        playerDict.Add(id, player);
+        if (getPlayer(player.getPlayerId()) == null) { //If the connection doesn't exist...
+            playerDict.Add(id, player);
+        } else { //Else if it exists just override it
+            playerDict[id] = player;
+        }
     }
 
     public void updatePlayer(int id, Player player){
