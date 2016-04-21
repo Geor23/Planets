@@ -432,8 +432,8 @@ public class PlanetsNetworkManager : NetworkManager {
     public void OnPlayerUpdateObserver(NetworkMessage msg){
         PlayerValues pv = msg.ReadMessage<PlayerValues>();
         Player updatedPlayer = new Player(pv.dictId, pv.connVal, pv.playerIP, pv.playerName, pv.playerTeam);
-            pm.updatePlayerIncludingID(pv.oldId, updatedPlayer);
-            Debug.Log("attempting to update player");
+        pm.updatePlayerIncludingID(pv.oldId, updatedPlayer);
+        Debug.Log("attempting to update player");
     }
 
     /*

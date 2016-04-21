@@ -26,9 +26,9 @@ public class PlayerSyncRotation : NetworkBehaviour {
     void FixedUpdate () {
         TransmitRotations ();
     }
-
+    
     void LerpRotations (){
-        if (!float.IsNaN(playerTransform.rotation.x) && !float.IsNaN(playerTransform.rotation.y) && !float.IsNaN(playerTransform.rotation.z) && !float.IsNaN(syncPlayerRotation.x)&& !float.IsNaN(syncPlayerRotation.y)&& !float.IsNaN(syncPlayerRotation.z)){
+        if (!(Time.deltaTime * lerpRate > 1)){
             playerTransform.rotation = Quaternion.Lerp (playerTransform.rotation, syncPlayerRotation, Time.deltaTime * lerpRate);
         }
     }
