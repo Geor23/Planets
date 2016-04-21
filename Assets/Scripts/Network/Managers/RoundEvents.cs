@@ -100,10 +100,11 @@ public class RoundEvents : MonoBehaviour {
                 NetworkServer.SendToClient(p.getConnValue(), Msgs.spawnSelf,  new UniqueObjectMessage());
             }
         }
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
         foreach(KeyValuePair<int, Player> kp in pm.getPlayerDict()){
             Player p = kp.Value;
             NetworkServer.SendToClient(p.getConnValue(), Msgs.spawnSelf, new UniqueObjectMessage());
+            yield return new WaitForSeconds(0.5f);
         }
     }
 
