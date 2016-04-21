@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 using UnityEngine;
+using System.Collections;
 using UnityEngine.EventSystems;
 using UnityEngine.Networking;
 using UnityEngine.UI;
@@ -26,22 +27,8 @@ public class RoundEvents : MonoBehaviour {
         nm = (PlanetsNetworkManager)PlanetsNetworkManager.singleton;
         //Handle messages from server such as end of round signal etc. act upon them
 
-        if(NetworkClient.active) enableClientCallbacks();
-        if(NetworkServer.active) enableServerCallbacks();
-    }
-
-    void enableClientCallbacks(){
-        nm.client.RegisterHandler(Msgs.killPlayer, OnClientDeath);
-
-        // If observer, invoke repeating respawn players
-        if(PlayerConfig.singleton.GetObserver()){
-            InvokeRepeating("respawnPlayer", 0, 1); // Respawn 1 player per second
-        }
-    }
-
-    void enableServerCallbacks(){
-        NetworkServer.RegisterHandler(Msgs.killPlayer, OnServerRegisterDeath);
-        NetworkServer.RegisterHandler(Msgs.spawnPlayer, OnServerSpawnPlayer);
+        if(NetworkClient.active) clientInit();
+        if(NetworkServer.active) StartCoroutine(serverInit());
     }
 
     //These can be called inside the playercontroller mobile so that we can tap int othe object manager functionality
@@ -55,6 +42,17 @@ public class RoundEvents : MonoBehaviour {
     }
 
     /* CLIENT FUNCS PLZ */
+
+
+    void clientInit(){
+        nm.client.RegisterHandler(Msgs.killPlayer, OnClientDeath);
+        nm.client.RegisterHandler(Msgs.spawnSelf, OnClientSpawnSelf);
+
+        // If observer, invoke repeating respawn players
+        if(PlayerConfig.singleton.GetObserver()){
+            InvokeRepeating("respawnPlayer", 0, 1); // Respawn 1 player per second
+        }
+    }
 
     public void respawnPlayer(){
         int playerId = pom.mostRecentDeath();
@@ -84,7 +82,30 @@ public class RoundEvents : MonoBehaviour {
         ClientScene.RemovePlayer(0);
     }
 
+    public void OnClientSpawnSelf(NetworkMessage msg){
+        ClientScene.AddPlayer(nm.client.connection, 0);
+    }
+
     /* SERVER FUNCS PLZ */
+
+
+    IEnumerator serverInit(){
+        NetworkServer.RegisterHandler(Msgs.killPlayer, OnServerRegisterDeath);
+        NetworkServer.RegisterHandler(Msgs.spawnPlayer, OnServerSpawnPlayer);
+
+        foreach(KeyValuePair<int, Player> kp in pm.getPlayerDict()){
+            Player p = kp.Value;
+
+            if(p.getPlayerTeam() == TeamID.TEAM_OBSERVER){
+                NetworkServer.SendToClient(p.getConnValue(), Msgs.spawnSelf,  new UniqueObjectMessage());
+            }
+        }
+        yield return new WaitForSeconds(2);
+        foreach(KeyValuePair<int, Player> kp in pm.getPlayerDict()){
+            Player p = kp.Value;
+            NetworkServer.SendToClient(p.getConnValue(), Msgs.spawnSelf, new UniqueObjectMessage());
+        }
+    }
 
     public void OnServerRegisterDeath(NetworkMessage msg){
         KillPlayer kp = msg.ReadMessage<KillPlayer>();
