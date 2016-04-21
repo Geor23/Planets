@@ -9,12 +9,13 @@ class PlayerSpawn : MonoBehaviour {
 
     public Camera viewCamera;
     public void Start(){
+              //viewCamera.enabled = true;
+              return;
   	  if(!NetworkClient.active) {
   		this.enabled = false;
   		return;
   	}
   		Invoke("SpawnPlayer", 5);
-        viewCamera.enabled = true;
     }
 
     public void SpawnPlayer(){
