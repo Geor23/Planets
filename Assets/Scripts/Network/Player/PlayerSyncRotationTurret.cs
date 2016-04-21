@@ -27,9 +27,10 @@ public class PlayerSyncRotationTurret : NetworkBehaviour {
         TransmitRotations ();
     }
 
+
     void LerpRotations (){
         if(playerTransform.rotation.w == float.NaN)Debug.LogError("LERPZING QUATERNIONS ON NETID " + netId);
-        if ((!float.IsNaN(playerTransform.rotation.w)) && !float.IsNaN(playerTransform.rotation.x) && !float.IsNaN(playerTransform.rotation.y) && !float.IsNaN(playerTransform.rotation.z) && !float.IsNaN(syncPlayerRotation.x)&& !float.IsNaN(syncPlayerRotation.y)&& !float.IsNaN(syncPlayerRotation.z) && (!float.IsNaN(syncPlayerRotation.w))){
+        if (!(Time.deltaTime * lerpRate > 1)){
             playerTransform.rotation = Quaternion.Lerp (playerTransform.rotation, syncPlayerRotation, Time.deltaTime * lerpRate);
         }
     }
