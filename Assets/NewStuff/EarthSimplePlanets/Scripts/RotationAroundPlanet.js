@@ -59,7 +59,7 @@ function LateUpdate () {
         posSmooth = target.position; // no follow smoothing
 
         transform.rotation = rotation;
-        transform.position = rotation * Vector3(0.0, 0.0, -distance) + posSmooth;
+        //transform.position = rotation * Vector3(0.0, 0.0, -distance) + posSmooth;
     }
     
 	if (Input.GetAxis("Mouse ScrollWheel") != 0) {
@@ -75,7 +75,7 @@ function LateUpdate () {
    
     rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(y, x, 0), Time.deltaTime * 3);
    
-    position = rotation * Vector3(0.0, 0.0, -distance) + target.position;
+    //position = rotation * Vector3(0.0, 0.0, -distance) + target.position;
 	
    transform.rotation = rotation;
    transform.position = position;   

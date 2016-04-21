@@ -50,7 +50,7 @@ function LateUpdate () {
 
         ySmooth = ClampAngle(ySmooth, yMinLimit, yMaxLimit);
 
-        rotation = Quaternion.Euler(ySmooth, xSmooth, 0);
+        //rotation = Quaternion.Euler(ySmooth, xSmooth, 0);
 
        // posSmooth = Vector3.SmoothDamp(posSmooth,target.position,posVelocity,smoothTime);
 
