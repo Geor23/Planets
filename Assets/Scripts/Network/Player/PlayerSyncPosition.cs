@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Networking;
 
-[NetworkSettings(channel=1)]
+[NetworkSettings(channel=0)]
 public class PlayerSyncPosition : NetworkBehaviour {
 	private Vector3 syncPos;
 		

@@ -12,13 +12,11 @@ GameObject:
   - 136: {fileID: 13659136}
   - 23: {fileID: 2307868}
   - 54: {fileID: 5487542}
-  - 114: {fileID: 11405700}
-  - 114: {fileID: 11484034}
   - 114: {fileID: 11461510}
   - 114: {fileID: 11439866}
   - 222: {fileID: 22273778}
-  - 114: {fileID: 11449786}
   - 96: {fileID: 9653736}
+  - 114: {fileID: 11489940}
   m_Layer: 9
   m_Name: ProjectilePirate
   m_TagString: ProjectilePirate
@@ -121,38 +119,6 @@ TrailRenderer:
       rgba: 16777215
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
---- !u!114 &11405700
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 160548}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SceneId:
-    m_Value: 0
-  m_AssetId:
-    i0: 130
-    i1: 63
-    i2: 181
-    i3: 210
-    i4: 180
-    i5: 3
-    i6: 212
-    i7: 212
-    i8: 203
-    i9: 175
-    i10: 121
-    i11: 198
-    i12: 47
-    i13: 115
-    i14: 66
-    i15: 216
-  m_ServerOnly: 0
-  m_LocalPlayerAuthority: 0
 --- !u!114 &11439866
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -165,39 +131,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speedFactor: 10
---- !u!114 &11449786
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 160548}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 10
-    m_MaxSize: 40
-    m_Alignment: 0
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: 
 --- !u!114 &11461510
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -209,7 +142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11ca26c994b954608aeba06d7eeb4447, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &11484034
+--- !u!114 &11489940
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -217,9 +150,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 160548}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38533037f80944ff1947f9df9717e2b1, type: 3}
+  m_Script: {fileID: 11500000, guid: 8757e8d56dbff464ea45e5083ff7d650, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ownerId: 0
 --- !u!136 &13659136
 CapsuleCollider:
   m_ObjectHideFlags: 1

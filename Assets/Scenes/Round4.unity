@@ -2070,78 +2070,48 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 425172488}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &452144637
-GameObject:
+--- !u!1001 &451183444
+Prefab:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 452144640}
-  - 114: {fileID: 452144639}
-  - 114: {fileID: 452144638}
-  m_Layer: 0
-  m_Name: UniqueSyncronizer
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &452144638
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 452144637}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff75a6c84ce6244388748d04c978db55, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &452144639
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 452144637}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SceneId:
-    m_Value: 0
-  m_AssetId:
-    i0: 0
-    i1: 0
-    i2: 0
-    i3: 0
-    i4: 0
-    i5: 0
-    i6: 0
-    i7: 0
-    i8: 0
-    i9: 0
-    i10: 0
-    i11: 0
-    i12: 0
-    i13: 0
-    i14: 0
-    i15: 0
-  m_ServerOnly: 0
-  m_LocalPlayerAuthority: 0
---- !u!4 &452144640
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 452144637}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.9929051, y: -27.216002, z: 0.0703125}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 9
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 472026, guid: 403d5763fe34bf44bb00da9f8520d550, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -1.9929051
+      objectReference: {fileID: 0}
+    - target: {fileID: 472026, guid: 403d5763fe34bf44bb00da9f8520d550, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -27.216002
+      objectReference: {fileID: 0}
+    - target: {fileID: 472026, guid: 403d5763fe34bf44bb00da9f8520d550, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0.0703125
+      objectReference: {fileID: 0}
+    - target: {fileID: 472026, guid: 403d5763fe34bf44bb00da9f8520d550, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 472026, guid: 403d5763fe34bf44bb00da9f8520d550, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 472026, guid: 403d5763fe34bf44bb00da9f8520d550, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 472026, guid: 403d5763fe34bf44bb00da9f8520d550, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 472026, guid: 403d5763fe34bf44bb00da9f8520d550, type: 2}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 403d5763fe34bf44bb00da9f8520d550, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &456109981
 GameObject:
   m_ObjectHideFlags: 0
@@ -4121,14 +4091,14 @@ MonoBehaviour:
   - {fileID: 1150123669}
   - {fileID: 400763082}
   - {fileID: 374986959}
-  maxResource: 5
-  minResource: 1
-  maxShield: 2
-  minShield: 1
-  maxDoubleScore: 2
-  minDoubleScore: 1
-  maxFasterFire: 2
-  minFasterFire: 1
+  maxResourceOnPlanet: 5
+  minResourceOnPlanet: 1
+  maxShieldOnPlanet: 2
+  minShieldOnPlanet: 1
+  maxDoubleScoreOnPlanet: 2
+  minDoubleScoreOnPlanet: 1
+  maxFasterFireOnPlanet: 2
+  minFasterFireOnPlanet: 1
   resourceSpawnTime: 1.5
   powerUpSpawnTime: 10.5
   meteorSpawnTime: 10.5
@@ -4214,7 +4184,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 812213487}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c904a89b0514ec7438f2a5e1e9930f42, type: 3}
+  m_Script: {fileID: 11500000, guid: fd423950000a61948921910c9a6e1399, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   spawnObject1: {fileID: 1191207559}

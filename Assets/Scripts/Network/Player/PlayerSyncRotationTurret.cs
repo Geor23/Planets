@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Networking;
 
-[NetworkSettings(channel=1)]
+[NetworkSettings(channel=0)]
 public class PlayerSyncRotationTurret : NetworkBehaviour {
     private Quaternion syncPlayerRotation;
 
@@ -19,7 +19,7 @@ public class PlayerSyncRotationTurret : NetworkBehaviour {
     
     // Update is called once per frame
     void Update(){
-        if((!nIdentity.isLocalPlayer)||(isServer)) LerpRotations ();
+        if((!nIdentity.isLocalPlayer)) LerpRotations ();
     }
 
 
@@ -28,7 +28,8 @@ public class PlayerSyncRotationTurret : NetworkBehaviour {
     }
 
     void LerpRotations (){
-        if (!float.IsNaN(playerTransform.rotation.x) && !float.IsNaN(playerTransform.rotation.y) && !float.IsNaN(playerTransform.rotation.z) && !float.IsNaN(syncPlayerRotation.x)&& !float.IsNaN(syncPlayerRotation.y)&& !float.IsNaN(syncPlayerRotation.z)){
+        if(playerTransform.rotation.w == float.NaN)Debug.LogError("LERPZING QUATERNIONS ON NETID " + netId);
+        if ((!float.IsNaN(playerTransform.rotation.w)) && !float.IsNaN(playerTransform.rotation.x) && !float.IsNaN(playerTransform.rotation.y) && !float.IsNaN(playerTransform.rotation.z) && !float.IsNaN(syncPlayerRotation.x)&& !float.IsNaN(syncPlayerRotation.y)&& !float.IsNaN(syncPlayerRotation.z) && (!float.IsNaN(syncPlayerRotation.w))){
             playerTransform.rotation = Quaternion.Lerp (playerTransform.rotation, syncPlayerRotation, Time.deltaTime * lerpRate);
         }
     }

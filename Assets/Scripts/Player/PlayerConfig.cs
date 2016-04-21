@@ -6,12 +6,13 @@ using UnityEngine.Networking;
 
 class PlayerConfig : MonoBehaviour {
 
-  public int team = -1; //Initialised as observer - -1: obs, 0: pirate, 1:supercorp, -2 = neutral (unpicked)
+  public int team = -2; //Initialised as observer - -1: obs, 0: pirate, 1:supercorp, -2 = neutral (unpicked)
   public static PlayerConfig singleton;
 
   void OnGUI(){
   }
 
+    //Each person has their own PlayerConfig, remains through game
   private void Start(){
     DontDestroyOnLoad(transform.gameObject);
     singleton = this;

@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 420658}
   - 23: {fileID: 2386306}
   - 102: {fileID: 10237434}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: pin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31,12 +31,12 @@ GameObject:
   - 114: {fileID: 11489970}
   - 135: {fileID: 13543422}
   - 222: {fileID: 22230050}
-  - 114: {fileID: 11438494}
   - 114: {fileID: 11473316}
   - 114: {fileID: 11441538}
-  - 114: {fileID: 11417794}
-  - 114: {fileID: 11407448}
   - 114: {fileID: 11451542}
+  - 114: {fileID: 11416008}
+  - 114: {fileID: 11433326}
+  - 114: {fileID: 11488444}
   m_Layer: 10
   m_Name: PlayerPirate
   m_TagString: PlayerPirate
@@ -87,7 +87,7 @@ GameObject:
   - 224: {fileID: 22410974}
   - 222: {fileID: 22284502}
   - 212: {fileID: 21210732}
-  m_Layer: 13
+  m_Layer: 17
   m_Name: unId
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -358,7 +358,7 @@ TextMesh:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
---- !u!114 &11407448
+--- !u!114 &11416008
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -366,14 +366,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 158602}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b49ee848ad1e14082aee0c6d03badeb1, type: 3}
+  m_Script: {fileID: 11500000, guid: 49cf321d17f38f148900662fac087371, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nIdentity: {fileID: 11489970}
-  playerTransform: {fileID: 404412}
-  lerpRate: 15
-  updateAll: 0
---- !u!114 &11417794
+--- !u!114 &11433326
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -388,39 +384,6 @@ MonoBehaviour:
   playerTransform: {fileID: 453450}
   lerpRate: 3
   updateAll: 0
---- !u!114 &11438494
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 158602}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 10
-    m_MaxSize: 40
-    m_Alignment: 0
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: Pirate
 --- !u!114 &11441538
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -486,26 +449,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41c8ac6a7c8f2474ab522a7cc873c200, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ppi: {fileID: 0}
   doubleScore: 0
   speed: 1.5
   rotSpeed: 12
+  projectileModel: {fileID: 160548, guid: 823fb5d2b403d4d4cbaf79c62f7342d8, type: 2}
+  shield: {fileID: 126432, guid: a23682b793533f6488eb51aa72925236, type: 2}
+  ResourcePickUp: {fileID: 116834, guid: 976667ad8326a483eaa9c21ec560f8b2, type: 2}
   planet: {fileID: 495726, guid: 45efd7c7e513e4b29a58c3f9dde560bf, type: 2}
   model: {fileID: 453450}
   turret: {fileID: 404412}
-  scoreText: {fileID: 0}
-  winText: {fileID: 0}
-  id: {fileID: 0}
-  deathText: {fileID: 0}
-  deathTimerText: {fileID: 0}
-  ResourcePickUp: {fileID: 116834, guid: 976667ad8326a483eaa9c21ec560f8b2, type: 2}
+  tearDropId: {fileID: 10237434}
   mainCamera: {fileID: 0}
   obsCamera: {fileID: 475270, guid: 5d633392a34c14108aad562f21512f74, type: 2}
   planetCenter: {x: 0, y: 0, z: 0}
-  score: 0
-  scoreToRemove: 0
-  projectileModel: {fileID: 160548, guid: 823fb5d2b403d4d4cbaf79c62f7342d8, type: 2}
-  shield: {fileID: 126432, guid: a23682b793533f6488eb51aa72925236, type: 2}
-  resourcePowerUpManager: {fileID: 0}
+  playerDetails: {fileID: 11416008}
+  dictId: 0
+--- !u!114 &11488444
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 158602}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b49ee848ad1e14082aee0c6d03badeb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nIdentity: {fileID: 11489970}
+  playerTransform: {fileID: 404412}
+  lerpRate: 15
+  updateAll: 0
 --- !u!114 &11489970
 MonoBehaviour:
   m_ObjectHideFlags: 1

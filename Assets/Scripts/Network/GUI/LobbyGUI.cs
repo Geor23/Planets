@@ -38,31 +38,17 @@ public class LobbyGUI : MonoBehaviour {
 
 
   public void StartGame() {
-
-    if(PlayerConfig.singleton.GetObserver()) {
-      Debug.Log("Player is observer on start game!");
-    }
     nm.client.Send(Msgs.startGame, new EmptyMessage());
-
   }
 
 
 	public void OnClientReceiveTeamList(NetworkMessage msg){
 		TeamList tl = msg.ReadMessage<TeamList>(); 
-    //Debug.Log("bo");
-		if (tl.team == 0) { // if we received team pirates
-      //Debug.Log("team 00000");
-      //update accordingly
+		if (tl.team == TeamID.TEAM_PIRATES) { 
 			teamA.text = tl.teamList;
-      Debug.Log(tl.teamList);
-
-		} else if (tl.team == 1) {  // if we received team super-corp 
-      //Debug.Log("team 11");
-      // update accordingly
+		} else if (tl.team == TeamID.TEAM_SUPERCORP) {  // if we received team super-corp 
 			teamB.text = tl.teamList;
-
 		} else {
-
 			Debug.LogError("ERROR[OnClientReceiveTeamList] : Received wrong team ");
 
 		}
