@@ -103,6 +103,7 @@ public class RoundEvents : MonoBehaviour {
         yield return new WaitForSeconds(1);
         foreach(KeyValuePair<int, Player> kp in pm.getPlayerDict()){
             Player p = kp.Value;
+            if(p.getPlayerTeam() == TeamID.TEAM_OBSERVER) continue;
             NetworkServer.SendToClient(p.getConnValue(), Msgs.spawnSelf, new UniqueObjectMessage());
             yield return new WaitForSeconds(0.5f);
         }
