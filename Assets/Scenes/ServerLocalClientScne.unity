@@ -1011,11 +1011,11 @@ GameObject:
   - 114: {fileID: 328971360}
   m_Layer: 0
   m_Name: Main Camera
-  m_TagString: MainCamera
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!81 &328971355
 AudioListener:
   m_ObjectHideFlags: 0
@@ -1394,7 +1394,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 114930, guid: 150fb83b86bf6b5488321a9a60592a0d, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114930, guid: 150fb83b86bf6b5488321a9a60592a0d, type: 2}
+      propertyPath: m_Name
+      value: UsePlanetariumCamera
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 150fb83b86bf6b5488321a9a60592a0d, type: 2}
