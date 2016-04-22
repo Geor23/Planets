@@ -17,6 +17,7 @@ private RectTransform rTransform;
 	}
 
 	void OnGUI () {
+		Debug.Log(RectTransformUtility.RectangleContainsScreenPoint(rTransform, Event.current.mousePosition));
 		if (Event.current.type == EventType.MouseUp && RectTransformUtility.RectangleContainsScreenPoint(rTransform, Event.current.mousePosition))
 		{
 			if (pirate) { 
@@ -30,6 +31,8 @@ private RectTransform rTransform;
 	}
 
 	void Update () {
+		Debug.Log(RectTransformUtility.RectangleContainsScreenPoint(rTransform, Event.current.mousePosition));
+
 		if (Input.GetMouseButtonDown(0) && RectTransformUtility.RectangleContainsScreenPoint(rTransform, Input.mousePosition)) {
 			if (pirate) { 
 				lobbyGUI.ChooseTeamPirates();
