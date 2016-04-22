@@ -4,13 +4,6 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Networking;
 
-enum TeamID : int {
-  TEAM_OBSERVER = -1,
-  TEAM_PIRATES,
-  TEAM_SUPERCORP
-};
-
-
 class Msgs : MsgType {
 
   public const short clientJoinMsg = 50;
@@ -32,12 +25,24 @@ class Msgs : MsgType {
   public const short updateLocalScore = 66;
   public const short requestName = 67;
   public const short serverName = 68;
-
+  public const short updatePos = 69;
+  public const short updateRot = 70;
+  public const short updateRotTurret = 71;
+  public const short fireProjectile = 72;
+  public const short killPlayer = 73;
+  public const short killPlayerRequestClient = 74;
+  public const short updatePlayer = 75;
+  public const short addNewPlayer = 76;
+  public const short spawnPlayer = 77;
+  public const short addNewPlayerToObserver = 78;
+  public const short updatePlayerToObserver = 79;
+  public const short spawnSelf = 80;
 }
 
 public class JoinMessage : MessageBase {
   public string name;
-  public short playerControllerID = 0;
+  //public short playerControllerID = 0;
+  public int team;
 }
 
 public class TeamChoice : MessageBase {
@@ -72,7 +77,7 @@ public class TeamList : MessageBase {
 public class AddScore : MessageBase {
 	public int score;
 	public int team;
-    public GameObject obj;
+ public GameObject obj;
 }
 
 public class TeamScore : MessageBase {
@@ -84,8 +89,7 @@ public class TimeMessage : MessageBase{
     public float time;
 }
 
-public class DeathResource : MessageBase
-{
+public class DeathResource : MessageBase{
     public int team;
     public int score;
     public GameObject drID;
@@ -93,4 +97,42 @@ public class DeathResource : MessageBase
 
 public class UpdateLocalScore : MessageBase {
     public int score;
+}
+
+public class UniqueObjectMessage : MessageBase {
+    public NetworkInstanceId netId;
+}
+
+public class UpdatePos : MessageBase {
+    public NetworkInstanceId netId;
+    public Vector3 pos;
+}
+
+public class UpdateRot : MessageBase {
+    public NetworkInstanceId netId;
+    public Quaternion rot;
+}
+
+public class UpdateRotTurret : MessageBase {
+    public NetworkInstanceId netId;
+    public Quaternion rot;
+}
+
+public class KillPlayer : MessageBase {
+    public NetworkInstanceId netId;
+    public GameObject obj;
+}
+
+public class PlayerValues : MessageBase {
+    public int dictId;
+    public int oldId;
+    public int connVal;
+    public string playerIP;
+    public string playerName;
+    public int playerTeam;
+}
+
+public class PlayerSpawnMsg : MessageBase {
+    public int playerId;
+    public Vector3 pos;
 }

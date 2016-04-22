@@ -8,12 +8,11 @@ public class ServerSyncPos : NetworkBehaviour {
   private Transform transformT;
   private Rigidbody rb;
 
-  [ClientRpc]
-  public void RpcSyncClient(Vector3 position, Vector3 direction){
+  /*[TargetRpc]*/
+  public void TargetSyncClient(NetworkConnection nc, Vector3 position, Vector3 direction){
     if(isServer)
       return;
     GetComponent<Transform>().position = position;
     GetComponent<ProjectileMovement>().setDirection(direction);
   }
-
 }

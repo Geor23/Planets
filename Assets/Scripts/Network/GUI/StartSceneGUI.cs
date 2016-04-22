@@ -9,12 +9,22 @@ public class StartSceneGUI : MonoBehaviour {
   public NetworkManager nm;
   public Text networkAddr;
   public Text nameT;
-
+  public int playerChoice = TeamID.TEAM_NEUTRAL;
+  public bool keyPressed = false;
   void Start(){
     nm = NetworkManager.singleton;
     DontDestroyOnLoad(transform.gameObject);
   }
 
+    void Update(){ //TODO : REMOVE THIS, REPLACE WITH OBSERVER SCENE
+        if (Input.GetKeyDown("o") && Input.GetKeyDown("p")){
+            playerChoice = TeamID.TEAM_OBSERVER;
+            PlayerConfig.singleton.SetTeam(TeamID.TEAM_OBSERVER);
+            Debug.LogError("Now an observer");
+        }
+    }
+
+    //Gives the local Network Manager the network address. Request a start client, also adds a handler for the SendJoinMessageCallback
   public void StartClient(){
     nm.networkAddress = networkAddr.text;
     nm.StartClient().RegisterHandler(MsgType.Connect, SendJoinMessageCallback);
@@ -27,6 +37,7 @@ public class StartSceneGUI : MonoBehaviour {
   public void SendJoinMessage(){
     JoinMessage jm = new JoinMessage();
     jm.name = nameT.text;
+    jm.team = playerChoice;
     nm.client.Send(Msgs.clientJoinMsg, jm);
   }
 
@@ -36,8 +47,9 @@ public class StartSceneGUI : MonoBehaviour {
     SendJoinMessage();
   }
 
-  void StartDedicatedHost(){
-		//Something
+  public void StartDedicatedHost(){
+    nm = NetworkManager.singleton;
+    nm.StartServer();
 	}
 
 }

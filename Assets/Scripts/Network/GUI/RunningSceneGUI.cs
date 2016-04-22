@@ -10,20 +10,40 @@ public class RunningSceneGUI : MonoBehaviour {
 	NetworkManager nm;
 	public Text teamAScore;
 	public Text teamBScore;
-  public Text scoreText;
+  	public Text scoreText;
 	public Image piratesWin;
 	public Image superCorpWin;
+
+	public Image idImgPir;
+	public Image idImgSup;
+
+	
 	public Text killFeed;
+
 	int teamA;
 	int teamB;
 	
-	public void Start() { 
+	public void Start() {
+		if(!NetworkClient.active) {
+	  		this.enabled = false;
+	  		return;
+  		}
 		nm = NetworkManager.singleton;
 		nm.client.RegisterHandler (Msgs.serverTeamScore, OnClientReceiveScores);
 		nm.client.RegisterHandler (Msgs.serverKillFeed, OnClientReceiveKillFeed);
-		nm.client.Send(Msgs.requestTeamScores, new EmptyMessage());
+		// if (PersonalPlayerInfo.singleton.getPlayerTeam()==0){
+		// 	idImgPir.gameObject.SetActive(true);
+		// 	idImgSup.gameObject.SetActive(false);
+  //       } else if (PersonalPlayerInfo.singleton.getPlayerTeam() == 1){
+		// 	idImgSup.gameObject.SetActive(true);
+		// 	idImgPir.gameObject.SetActive(false);
+  //       } else { 
+  //       	idImgSup.gameObject.SetActive(false);
+		// 	idImgPir.gameObject.SetActive(false);
+  //       }
 
-	}
+
+    }
 	
     public void OnClientReceiveKillFeed(NetworkMessage msg) {
 		Kill tl = msg.ReadMessage<Kill>(); 
@@ -34,7 +54,7 @@ public class RunningSceneGUI : MonoBehaviour {
 	public void OnClientReceiveScores(NetworkMessage msg) {
 
 		TeamScore tl = msg.ReadMessage<TeamScore>(); 
-		if (tl.team == 0) { // if we received team pirates
+		if (tl.team == TeamID.TEAM_PIRATES) { // if we received team pirates
 
 			teamA = tl.score;
 			if (teamA > teamB ) {
@@ -44,10 +64,9 @@ public class RunningSceneGUI : MonoBehaviour {
 				piratesWin.gameObject.SetActive(false);
 				superCorpWin.gameObject.SetActive(true);
 			}
-      		//update accordingly
 			teamAScore.text = tl.score.ToString();
 
-		} else if (tl.team == 1) {  // if we received team super-corp 
+		} else if (tl.team == TeamID.TEAM_SUPERCORP) {  // if we received team super-corp 
 			teamB = tl.score;
 			if (teamA < teamB ) {
 				piratesWin.gameObject.SetActive(false);
