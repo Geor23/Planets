@@ -261,7 +261,6 @@ public class PlayerControllerMobile : NetworkBehaviour {
             }
             int dictId = playerDetails.getDictId();
             roundEvents.getRoundScoreManager().increasePlayerScore(dictId, resourceScore);
-            pm.addScore(dictId, resourceScore);
         }
 
         else if (col.gameObject.CompareTag("ResourcePickUpDeath")) {

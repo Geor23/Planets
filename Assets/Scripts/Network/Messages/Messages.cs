@@ -130,6 +130,10 @@ public class PlayerValues : MessageBase {
     public string playerIP;
     public string playerName;
     public int playerTeam;
+    public int deaths;
+    public int kills;
+    public int scoreAcc;
+    public int scoreTotal;
 }
 
 public class PlayerSpawnMsg : MessageBase {

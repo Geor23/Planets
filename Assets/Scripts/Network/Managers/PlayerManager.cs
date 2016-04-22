@@ -33,6 +33,26 @@ public class PlayerManager {
         }
     }
 
+    public int getScoreTotal(int id) {
+        return playerDict[id].getTotalScore();
+    }
+
+    public int getRoundScore(int id){
+        return playerDict[id].getPlayerScoreRound();
+    }
+
+    public int getRoundScoreAcc(int id){
+        return playerDict[id].getRoundScoreAcc();
+    }
+
+    public int getKills(int id) {
+        return playerDict[id].getKills();
+    }
+
+    public int getDeaths(int id) {
+        return playerDict[id].getDeaths();
+    }
+
     public int findPlayerWithIP(string ip){
         foreach (var i in playerDict) {
             string val = playerDict[i.Key].getPlayerIP();

@@ -236,11 +236,7 @@ public class PlanetsNetworkManager : NetworkManager {
         if (((idValOld != -10)&&(!allowSharedIPs)) || ((pm.checkIfExists(idValue))&&(allowSharedIPs))){ //-10 means not found. If it was found, adjust old player
             Debug.LogError("Player " + idValOld + " exists, setting connected once more");
             Debug.LogError("connected state is " + pm.isConnected(idValOld));
-            pm.setNewID(idValOld, idValue); //Makes new id connection based off new conn id
-            pm.setConnected(idValue); //Indicate player is again connected
-            pm.setConnValue(idValue, msg.conn.connectionId); //Updates old conn value
-            pm.setNetworkConnection(idValue, msg.conn);
-
+            //Get all info prior to changing
             PlayerValues pv = new PlayerValues();
             pv.dictId = idValue;
             pv.oldId = idValOld;
@@ -248,22 +244,30 @@ public class PlanetsNetworkManager : NetworkManager {
             pv.playerIP = address;
             pv.playerName = name;
             pv.playerTeam = teamChoice;
+            pv.kills = pm.getKills(idValOld);
+            pv.deaths = pm.getDeaths(idValOld);
+            pv.scoreTotal = pm.getScoreTotal(idValOld);
+            pv.scoreAcc = pm.getRoundScoreAcc(idValOld);
+
+            //Change data in pm
+            pm.setNewID(idValOld, idValue); //Makes new id connection based off new conn id
+            pm.setConnected(idValue); //Indicate player is again connected
+            pm.setConnValue(idValue, msg.conn.connectionId); //Updates old conn value
+            pm.setNetworkConnection(idValue, msg.conn);
+
             NetworkServer.SendToClient(msg.conn.connectionId, Msgs.addNewPlayer, pv);
             if (teamChoice == TeamID.TEAM_OBSERVER)
             { //Checks if player is indicated as an observer. If so adds to observers list
                 observingListeners.Add(msg.conn);
-            }
-            else
-            {//If it's not an observer, inform observers
-                foreach (NetworkConnection nc in getUpdateListeners())
-                {
+            } else {//If it's not an observer, inform observers
+                foreach (NetworkConnection nc in getUpdateListeners())  {
                     NetworkServer.SendToClient(nc.connectionId, Msgs.updatePlayerToObserver, pv); //Sends player info to the client that re-connected
                 }
             }
 
         } else { //If is entirely new player
             Debug.Log("New player "+ address + ", given id" + idValue + ", offering team " + teamChoice);
-            Player newPlayer = new Player(idValue, msg.conn.connectionId, address, name, teamChoice);
+            Player newPlayer = new Player(idValue, msg.conn.connectionId, address, name, teamChoice, 0, 0, 0, 0);
             
             pm.addPlayer(idValue, newPlayer);
             pm.setConnected(idValue); //Indicate player is again connected
@@ -278,14 +282,10 @@ public class PlanetsNetworkManager : NetworkManager {
             pv.playerName = pm.getName(idValue);
             pv.playerTeam = pm.getTeam(idValue);
             NetworkServer.SendToClient(msg.conn.connectionId, Msgs.addNewPlayer, pv); //Sends player info to the client that re-connected
-            if (teamChoice == TeamID.TEAM_OBSERVER)
-            { //Checks if player is indicated as an observer. If so adds to observers list
+            if (teamChoice == TeamID.TEAM_OBSERVER){ //Checks if player is indicated as an observer. If so adds to observers list
                 observingListeners.Add(msg.conn);
-            }
-            else
-            {//If it's not an observer, inform observers
-                foreach (NetworkConnection nc in getUpdateListeners())
-                {
+            } else {//If it's not an observer, inform observers
+                foreach (NetworkConnection nc in getUpdateListeners()) {
                     NetworkServer.SendToClient(nc.connectionId, Msgs.addNewPlayerToObserver, pv); //Sends player info to the client that re-connected
                 }
             }
@@ -365,6 +365,10 @@ public class PlanetsNetworkManager : NetworkManager {
         pv.playerIP = msg.conn.address;
         pv.playerName = name;
         pv.playerTeam = choice;
+        pv.kills = pm.getKills(idVal);
+        pv.deaths = pm.getDeaths(idVal);
+        pv.scoreTotal = pm.getScoreTotal(idVal);
+        pv.scoreAcc = pm.getRoundScoreAcc(idVal);
         foreach (NetworkConnection nc in getUpdateListeners()){
             NetworkServer.SendToClient(nc.connectionId, Msgs.updatePlayerToObserver, pv); //Sends player info to the client that re-connected
         }
@@ -416,7 +420,7 @@ public class PlanetsNetworkManager : NetworkManager {
     //Updates Observer player
     public void OnPlayerUpdateObserver(NetworkMessage msg){
         PlayerValues pv = msg.ReadMessage<PlayerValues>();
-        Player updatedPlayer = new Player(pv.dictId, pv.connVal, pv.playerIP, pv.playerName, pv.playerTeam);
+        Player updatedPlayer = new Player(pv.dictId, pv.connVal, pv.playerIP, pv.playerName, pv.playerTeam, pv.deaths, pv.kills, pv.scoreAcc, pv.scoreTotal);
         pm.updatePlayerIncludingID(pv.oldId, updatedPlayer);
         Debug.Log("attempting to update player");
     }
@@ -429,13 +433,13 @@ public class PlanetsNetworkManager : NetworkManager {
     */
     public void OnNewPlayer(NetworkMessage msg) {
         PlayerValues pv = msg.ReadMessage<PlayerValues>();
-        Player newPlayer = new Player(pv.dictId, pv.connVal, pv.playerIP, pv.playerName, pv.playerTeam);
+        Player newPlayer = new Player(pv.dictId, pv.connVal, pv.playerIP, pv.playerName, pv.playerTeam, pv.deaths, pv.kills, pv.scoreAcc, pv.scoreTotal);
         ppi.setPlayerDetails(pv.dictId, newPlayer); //Sets details of player to non-destroyable space
     }
 
     public void OnNewPlayerObserver(NetworkMessage msg){
         PlayerValues pv = msg.ReadMessage<PlayerValues>();
-        Player newPlayer = new Player(pv.dictId, pv.connVal, pv.playerIP, pv.playerName, pv.playerTeam);
+        Player newPlayer = new Player(pv.dictId, pv.connVal, pv.playerIP, pv.playerName, pv.playerTeam, pv.deaths, pv.kills, pv.scoreAcc, pv.scoreTotal);
             pm.addPlayer(pv.dictId, newPlayer);
     }
 

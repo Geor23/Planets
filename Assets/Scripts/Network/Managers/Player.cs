@@ -17,7 +17,7 @@ public class Player {
     private int playerKills; //Contains number of times you killed in a round
     private int playerDeaths; //Contains number of times you died in a round
 
-    public Player (int dictVal, int conn, string playIP, string playName, int teamChoice){
+    public Player (int dictVal, int conn, string playIP, string playName, int teamChoice, int playerD, int playerK, int playerScoreAR, int playerTotal){
         playerDictVal = dictVal;
         connVal = conn;
         playerIP = playIP;
@@ -25,8 +25,30 @@ public class Player {
         playerScoreRound = 0;
         playerTeam = teamChoice; //Unassigned team, not an observer
         isConnected = true;
-        playerDeaths = 0; //TODO: Ensure these values pass on if you dc and reconnect
-        playerKills = 0;
+        playerDeaths = playerK; //TODO: Ensure these values pass on if you dc and reconnect
+        playerKills = playerD;
+        playerScoreAccRound = playerScoreAR;
+        playerScoreTotal = playerTotal;
+    }
+
+    public int getTotalScore() {
+        return playerScoreTotal;
+    }
+    
+    public int getRoundScore() {
+        return playerScoreRound;
+    }
+
+    public int getRoundScoreAcc() {
+        return playerScoreAccRound;
+    }
+
+    public int getKills() {
+        return playerKills;
+    }
+
+    public int getDeaths() {
+        return playerDeaths;
     }
 
     public int getPlayerId() {
@@ -65,13 +87,6 @@ public class Player {
         return isConnected;
     }
 
-    public void incrementPlayerScore(int score){
-        playerScore += score;
-    }
-
-    public void decrementPlayerScore(int score){
-        playerScore -= score;
-    }
 
     public void setIsConnected(bool connBool) {
         isConnected = connBool;

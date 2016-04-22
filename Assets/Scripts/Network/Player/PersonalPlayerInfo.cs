@@ -39,7 +39,7 @@ public class PersonalPlayerInfo : MonoBehaviour {
     }
 
     public int getPlayerScore(){
-        return playerDetails.getPlayerScore();
+        return playerDetails.getPlayerScoreRound();
     }
 
     public int getPlayerTeam(){
