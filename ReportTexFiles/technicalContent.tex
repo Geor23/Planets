@@ -1,0 +1,31 @@
+\chapter{Technical Content}
+
+%Choose some of the more interesting/challenging/novel aspects of the project to discuss in detail. Explain why they are technically interesting or challenging and discuss how the problems were overcome. A successful game will:
+
+%Have several technically interesting challenges which have been overcome, and explained succinctly, including good software development.
+
+%Be playable with little or no training - but have enough depth to satisfy an experienced gamer.
+
+%Have come from a development team who have demonstrated a willingness to address problems in the team and have found solutions to them.
+
+%Have a relevant look and feel (creative content creation) and be novel.
+
+%All the above will be assessed with equal weighting.
+
+\section{Technical Challenges}
+\markboth{\MakeUppercase{\thechapter}}
+Creating a server where players will be able to connect in order to play. We had to develop our own dedicated server, using an Intel NUC in order to provide our players a dedicated network in which they could enjoy our game.\\
+
+Turning the game into a multiplayer experience over a network: One of the biggest obstacles our team had to face in order for our game to take the desired form. Sharing resources over the network was quite challenge since passing the various game updates over a network like who killed who, which resources have been picked up or which have spawn, cannot be passed simply as a variable, its a much more complex procedure. We had to take into consideration the amount of data we had to move send around the network, as we wanted to contain that as much as possible.\\
+
+Porting of the game to the planetarium dome: The way planetarium projectors work is that they project the computer monitors onto a large dome. In order to cope with this we had to rescale all our assets and prefabs.\\
+
+Utilize the 3D capabilities of the Planetarium for our games purposes:
+
+% ------------------------------------------------------------------------
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "../thesis"
+%%% End: 

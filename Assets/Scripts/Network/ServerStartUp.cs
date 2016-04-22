@@ -7,7 +7,7 @@ public class ServerStartUp : MonoBehaviour {
 
 	public GameObject s;
 	void Start(){
-		s.GetComponent<StartSceneGUI>().StartHost();
+		s.GetComponent<StartSceneGUI>().StartDedicatedHost();
 	}
 	
 	void Update(){
