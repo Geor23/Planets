@@ -118,6 +118,10 @@ public class PlayerManager {
         return playerDict[id].getPlayerName();
     }
 
+    public void addScore(int id, int scoreToAdd) {
+        playerDict[id].addScore(scoreToAdd);
+    }
+
     public void setName(int id, string name){
         playerDict[id].setPlayerName(name);
     }
