@@ -29,8 +29,8 @@ static class Const {
     public const int RUNNING = 1;
     public const int FINISHED = -1;
     public const int NOTSTARTED = 0;
-    public const int INITIALTIMER = 50;
-    public const int ROUNDOVERTIMER = 15;
+    public const int INITIALTIMER = 10;
+    public const int ROUNDOVERTIMER = 10;
 }
 
 public class RoundScores {
@@ -73,6 +73,10 @@ public class PlanetsNetworkManager : NetworkManager {
     	roundList.Add("Round2");
     	roundList.Add("RoundOver");
     	roundList.Add("Round3");
+        roundList.Add("RoundOver");
+        roundList.Add("Round4");
+        roundList.Add("RoundOver");
+        roundList.Add("Round5");
     	roundList.Add("GameOver");
         pm = new PlayerManager();
     }
