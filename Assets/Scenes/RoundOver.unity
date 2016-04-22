@@ -1823,7 +1823,8 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0.25907195, z: 0, w: 0.96585804}
   m_LocalPosition: {x: 0, y: 0, z: -2}
   m_LocalScale: {x: 13.258242, y: 13.258243, z: 13.258243}
-  m_Children: []
+  m_Children:
+  - {fileID: 865767578}
   m_Father: {fileID: 1373486693}
   m_RootOrder: 3
   m_AnchorMin: {x: 0.526701, y: 0.1563168}
@@ -2033,16 +2034,16 @@ RectTransform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 865767577}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: -0.0060252105, z: 0, w: 0.9999819}
+  m_LocalPosition: {x: 0, y: 0, z: 0.8000046}
+  m_LocalScale: {x: 0.07542478, y: 0.07542478, z: 0.07542478}
   m_Children: []
-  m_Father: {fileID: 1373486693}
-  m_RootOrder: 7
+  m_Father: {fileID: 560349933}
+  m_RootOrder: 0
   m_AnchorMin: {x: 0.72065824, y: 0.23400001}
   m_AnchorMax: {x: 0.8535485, y: 0.48174444}
-  m_AnchoredPosition: {x: -1.5899963, y: 2.100006}
-  m_SizeDelta: {x: 1, y: -1}
+  m_AnchoredPosition: {x: -8.59, y: 3.92}
+  m_SizeDelta: {x: 102.843704, y: 138.60414}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &865767579
 MonoBehaviour:
@@ -2056,7 +2057,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.7379308, g: 0, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -2064,7 +2065,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 31e69a86e7ab840c0807ee1f50009174, type: 3}
+    m_Font: {fileID: 12800000, guid: 7cb2912222469634ba17a77055919ea8, type: 3}
     m_FontSize: 90
     m_FontStyle: 0
     m_BestFit: 0
@@ -2520,7 +2521,6 @@ RectTransform:
   - {fileID: 620727027}
   - {fileID: 1006945330}
   - {fileID: 588825515}
-  - {fileID: 865767578}
   - {fileID: 1828563244}
   m_Father: {fileID: 0}
   m_RootOrder: 1
@@ -2888,7 +2888,7 @@ Transform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 1373486693}
-  m_RootOrder: 8
+  m_RootOrder: 7
 --- !u!199 &1828563245
 ParticleSystemRenderer:
   m_ObjectHideFlags: 0
