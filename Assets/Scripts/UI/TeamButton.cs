@@ -9,16 +9,16 @@ public bool superCorp;
 public LobbyGUI lobbyGUI;
 public Text header;
 public Text otherHeader;
-private RectTransform rTransform;
+private Rect rect;
+public Camera camera;
 
 	void Start () {
 		header.color = new Color(1F,0.5F,0.5F,1F);
-		rTransform = GetComponent<RectTransform>();
+		rect = GetScreenRect(GetComponent<RectTransform>());
 	}
 
 	void OnGUI () {
-		Debug.Log(RectTransformUtility.RectangleContainsScreenPoint(rTransform, Event.current.mousePosition));
-		if (Event.current.type == EventType.MouseUp && RectTransformUtility.RectangleContainsScreenPoint(rTransform, Event.current.mousePosition))
+		if (Event.current.type == EventType.MouseUp && rect.Contains(Event.current.mousePosition))
 		{
 			if (pirate) { 
 				lobbyGUI.ChooseTeamPirates();
@@ -31,9 +31,8 @@ private RectTransform rTransform;
 	}
 
 	void Update () {
-		Debug.Log(RectTransformUtility.RectangleContainsScreenPoint(rTransform, Event.current.mousePosition));
 
-		if (Input.GetMouseButtonDown(0) && RectTransformUtility.RectangleContainsScreenPoint(rTransform, Input.mousePosition)) {
+		if (Input.GetMouseButtonDown(0) && rect.Contains(Input.mousePosition)) {
 			if (pirate) { 
 				lobbyGUI.ChooseTeamPirates();
 			} else { 
@@ -53,5 +52,21 @@ private RectTransform rTransform;
 		header.color = new Color (1F,1F,1F,1F);
 		otherHeader.color = new Color (1F,0.5F,0.5F,1F);
 	}
+
+	private Rect GetScreenRect(RectTransform rTransform) {
+        
+        Vector3[] corners = new Vector3[4];
+        Vector3[] screenCorners = new Vector3[2];
+ 
+        rTransform.GetWorldCorners(corners);
+
+        screenCorners[0] = RectTransformUtility.WorldToScreenPoint(camera, corners[1]);
+        screenCorners[1] = RectTransformUtility.WorldToScreenPoint(camera, corners[3]);
+ 
+        screenCorners[0].y = Screen.height - screenCorners[0].y;
+        screenCorners[1].y = Screen.height - screenCorners[1].y;
+ 
+        return new Rect(screenCorners[0], screenCorners[1] - screenCorners[0]);
+    }
 
 }
