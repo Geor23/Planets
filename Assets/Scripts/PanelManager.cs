@@ -17,6 +17,8 @@ public class PanelManager : MonoBehaviour {
 
 	public void OnEnable()
 	{
+
+
 		m_OpenParameterId = Animator.StringToHash (k_OpenTransitionName);
 
 		if (initiallyOpen == null)
@@ -27,7 +29,7 @@ public class PanelManager : MonoBehaviour {
 
 	public void OpenPanel (Animator anim)
 	{
-		if (m_Open == anim)
+        if (m_Open == anim)
 			return;
 
 		anim.gameObject.SetActive(true);
