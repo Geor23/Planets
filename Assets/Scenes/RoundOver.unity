@@ -85,6 +85,10 @@ NavMeshSettings:
     cellSize: 0.16666667
     manualCellSize: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &91180047 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 142330, guid: 66fc11827f41e83468bcf9446ceaa4a6, type: 2}
+  m_PrefabInternal: {fileID: 584756725}
 --- !u!1 &307764851
 GameObject:
   m_ObjectHideFlags: 0
@@ -2734,6 +2738,7 @@ MonoBehaviour:
   ScoreP: {fileID: 1006945331}
   ScoreS: {fileID: 588825516}
   timer: {fileID: 865767579}
+  timerRadial: {fileID: 91180047}
   time: 10
 --- !u!1001 &1437045389
 Prefab:
