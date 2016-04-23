@@ -1,9 +1,11 @@
 using System;
 using UnityEngine;
+using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Networking;
 using UnityEngine.Networking.NetworkSystem;
+using ProgressBar;
 
 public class RoundOverGUI : MonoBehaviour {
 
@@ -13,8 +15,10 @@ public class RoundOverGUI : MonoBehaviour {
   public Text ScoreP;
   public Text ScoreS;
   public Text timer;
+  public GameObject timerRadial;
 
   public float time=10.0F;
+  private float lastUpdatedTime;
    
 
   public void Start() {
@@ -36,51 +40,58 @@ public class RoundOverGUI : MonoBehaviour {
   void OnClientReceiveTime(NetworkMessage msg){
         TimeMessage tm = msg.ReadMessage<TimeMessage>();
         time = tm.time;
-        Debug.Log(time);
+        lastUpdatedTime = time;
         timer.text = time.ToString();
-    }
+        timerRadial.GetComponent<ProgressRadialBehaviour>().SetFillerSize(1);
+        timerRadial.GetComponent<ProgressRadialBehaviour>().SetFillerSizeAsPercentage(100);
+  }
 
-    void Update(){
-        time -= Time.deltaTime;
-        if (time > 0){
-            timer.text = ((int)time).ToString();
-        }
-    }
+  void Update(){
+      time -= Time.deltaTime;
+      if (time > 0){
+          timer.text = ((int)time).ToString();
+          if (lastUpdatedTime - time >= 1.0f) {
+            lastUpdatedTime = time;
+            timerRadial.GetComponent<ProgressRadialBehaviour>().DecrementValue(10);
+          }
+
+      }
+  }
 
 	public void OnClientReceiveTeamList(NetworkMessage msg){
-		TeamList tl = msg.ReadMessage<TeamList>(); 
-		if (tl.team == TeamID.TEAM_PIRATES) {
-			teamP.text = tl.teamList;
+		// TeamList tl = msg.ReadMessage<TeamList>(); 
+		// if (tl.team == TeamID.TEAM_PIRATES) {
+		// 	teamP.text = tl.teamList;
 
-		} else if (tl.team == TeamID.TEAM_SUPERCORP) {
-			teamS.text = tl.teamList;
-		} else {
-			Debug.LogError("ERROR[OnClientReceiveTeamList] : Received wrong team ");
-		}
+		// } else if (tl.team == TeamID.TEAM_SUPERCORP) {
+		// 	teamS.text = tl.teamList;
+		// } else {
+		// 	Debug.LogError("ERROR[OnClientReceiveTeamList] : Received wrong team ");
+		// }
 	}
 
 
   public void OnClientReceiveScores(NetworkMessage msg) {
-    FinalScores tl = msg.ReadMessage<FinalScores>(); 
-    int pirateCounter = 0;
-    int superCorpCounter = 0;
+    // FinalScores tl = msg.ReadMessage<FinalScores>(); 
+    // int pirateCounter = 0;
+    // int superCorpCounter = 0;
 
-    if (tl.round1P >= tl.round1S) pirateCounter ++;
-    else superCorpCounter ++;
+    // if (tl.round1P >= tl.round1S) pirateCounter ++;
+    // else superCorpCounter ++;
     
     
-    if ((tl.round2P != -1)) {
-      if (tl.round2P >= tl.round2S) pirateCounter ++;
-      else superCorpCounter ++;
-    }
+    // if ((tl.round2P != -1)) {
+    //   if (tl.round2P >= tl.round2S) pirateCounter ++;
+    //   else superCorpCounter ++;
+    // }
       
-    if ((tl.round3P != -1)) {
-      if (tl.round3P >= tl.round3S) pirateCounter ++;
-      else superCorpCounter ++;
-    }
+    // if ((tl.round3P != -1)) {
+    //   if (tl.round3P >= tl.round3S) pirateCounter ++;
+    //   else superCorpCounter ++;
+    // }
     
-    ScoreP.text = pirateCounter.ToString();
-    ScoreS.text = superCorpCounter.ToString();
+    // ScoreP.text = pirateCounter.ToString();
+    // ScoreS.text = superCorpCounter.ToString();
 
   }
 
