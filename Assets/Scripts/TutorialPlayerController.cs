@@ -56,8 +56,13 @@ public class TutorialPlayerController : MonoBehaviour
     }
 
 
-    void Update ()
-    {
+    void Update () {
+
+        float aimH = (-(Input.GetKey("left") ? 1 : 0) + (Input.GetKey("right") ? 1 : 0));
+        float aimV = ((Input.GetKey("up") ? 1 : 0) - (Input.GetKey("down") ? 1 : 0));
+        float moveV = ((Input.GetKey("w") ? 1 : 0) - (Input.GetKey("s") ? 1 : 0));
+        float moveH = (-(Input.GetKey("a") ? 1 : 0) + (Input.GetKey("d") ? 1 : 0));
+
         if (doubleScore == true)
         {
             doubleScoreTime -= Time.deltaTime;
