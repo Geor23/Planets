@@ -15,6 +15,10 @@ public class RoundOverGUI : MonoBehaviour {
   public Text ScoreP;
   public Text ScoreS;
   public Text timer;
+  public Text kills;
+  public Text deaths;
+  public Text mostScores;
+  public Text finalScores;
   public GameObject timerRadial;
 
   public float time=10.0F;
@@ -31,9 +35,10 @@ public class RoundOverGUI : MonoBehaviour {
 	  nm.client.RegisterHandler (Msgs.serverTeamMsg, OnClientReceiveTeamList);
     nm.client.RegisterHandler (Msgs.serverFinalScores, OnClientReceiveScores);
     nm.client.Send(Msgs.requestTeamMsg, new EmptyMessage());
-    nm.client.Send(Msgs.requestFinalScores, new EmptyMessage());
+    // nm.client.Send(Msgs.requestFinalScores, new EmptyMessage());
     nm.client.RegisterHandler(Msgs.sendCurrentTime, OnClientReceiveTime); //Creates a handler for when the client recieves a time from the server
     nm.client.Send(Msgs.requestCurrentTime, new EmptyMessage()); //Requests the current time in-game 
+    nm.client.RegisterHandler(Msgs.sendRoundOverValuesToPlayer, OnPlayerRecievePlayerScore);
 
   }
 
@@ -57,6 +62,20 @@ public class RoundOverGUI : MonoBehaviour {
 
       }
   }
+
+   public void OnPlayerRecievePlayerScore(NetworkMessage msg){
+        Debug.Log(" goooooot it ");
+        PlayerValues pv = msg.ReadMessage<PlayerValues>();
+        kills.text = "Kills : " + pv.kills.ToString();
+        Debug.Log("Kills is " + pv.kills);
+        deaths.text = "Deaths : " + pv.deaths.ToString();
+        Debug.Log("Deaths is " + pv.deaths);
+        mostScores.text = "Total score : " + pv.scoreTotal.ToString();
+        Debug.Log("Score Total is " + pv.scoreTotal);
+        Debug.Log("Score Acc is " + pv.scoreAcc);
+        finalScores.text = "Final scores : " + pv.scoreRound.ToString();
+        Debug.Log("ScoreRound is " + pv.scoreRound);
+    }
 
 	public void OnClientReceiveTeamList(NetworkMessage msg){
 		// TeamList tl = msg.ReadMessage<TeamList>(); 

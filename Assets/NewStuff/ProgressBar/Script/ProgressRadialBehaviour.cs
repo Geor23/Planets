@@ -177,7 +177,7 @@ namespace ProgressBar
         public void DecrementValue(float dec)
         {
             m_Value -= dec / 100;
-            Debug.Log("new counter is " + m_Value);
+            // Debug.Log("new counter is " + m_Value);
             if (m_Value < 0) m_Value = 0;
         }
     }
