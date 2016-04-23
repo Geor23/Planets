@@ -134,7 +134,7 @@ namespace ProgressBar
         public void SetFillerSize(float fill)
         {
             if (m_AttachedText)
-                m_AttachedText.text = Mathf.RoundToInt(fill*100).ToString() + " %";
+                m_AttachedText.text = Mathf.RoundToInt(fill*100).ToString();
 
             m_Fill.fillAmount = fill;
         }

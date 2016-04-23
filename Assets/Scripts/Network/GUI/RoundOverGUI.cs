@@ -41,7 +41,6 @@ public class RoundOverGUI : MonoBehaviour {
         TimeMessage tm = msg.ReadMessage<TimeMessage>();
         time = tm.time;
         lastUpdatedTime = time;
-        // Debug.Log(time);
         timer.text = time.ToString();
         timerRadial.GetComponent<ProgressRadialBehaviour>().SetFillerSize(1);
         timerRadial.GetComponent<ProgressRadialBehaviour>().SetFillerSizeAsPercentage(100);
