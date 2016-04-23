@@ -68,7 +68,7 @@ public class PlanetsNetworkManager : NetworkManager {
 
         //TOCHANGE
     	roundList = new List<string>();
-    	roundList.Add("Round1");
+    	roundList.Add("Round4");
         roundList.Add("RoundOver");
     	roundList.Add("Round2");
     	roundList.Add("RoundOver");
