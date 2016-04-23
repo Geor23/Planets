@@ -65,6 +65,7 @@ public class Exploder : MonoBehaviour {
 
 	void FixedUpdate() {
 		if (Time.time > explosionTime && !exploded) {
+			Debug.Log("gonna explode");
 			exploded = true;
 			StartCoroutine("explode");
 		}
