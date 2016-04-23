@@ -12,6 +12,7 @@ public class AudioManager : MonoBehaviour {
     public AudioSource clip5;
     public AudioSource clip6;
 	public AudioSource currentClip;
+  
 
 	// Use this for initialization
 	void Start () {
@@ -100,6 +101,20 @@ public class AudioManager : MonoBehaviour {
             Debug.Log("Stop " + currentClip.name);
            }
 
+        //Mute Clip
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            if (currentClip.mute) {
+                currentClip.mute = false;
+                Debug.Log("Un Mute " + currentClip.name);
+            }
+            else {
+                currentClip.mute = true;
+                Debug.Log("Mute " + currentClip.name);
+            }
+        
+
+        }
 
     }
 
