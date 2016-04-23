@@ -335,12 +335,12 @@ public class PlanetsNetworkManager : NetworkManager {
   	public void OnServerRecieveTeamChoice(NetworkMessage msg) {
 	    TeamChoice teamChoice = msg.ReadMessage<TeamChoice>();
 	    int choice = teamChoice.teamChoice;
-     int idVal = ipToId(msg.conn.address, msg.conn.connectionId);
+        int idVal = ipToId(msg.conn.address, msg.conn.connectionId);
         if (!pm.checkIfExists(idVal)) {
             Debug.LogError("ID DOES NOT EXISTS, CONN IS "+msg.conn.connectionId);
             return;
         }
-     int team = pm.getTeam(idVal);
+        int team = pm.getTeam(idVal);
 
 	    // if the player is choosing the team for the first time
 		if (team == TeamID.TEAM_NEUTRAL){
@@ -348,7 +348,7 @@ public class PlanetsNetworkManager : NetworkManager {
 			
 			pm.setTeam(idVal, choice);
 			teamManager.addPlayerToTeam(pm.getName(idVal), choice);
-   sendTeam (choice);
+            sendTeam (choice);
 
         } else if (pm.getTeam(idVal) != choice) { // if the player has switched teams
                                                   // delete player from old list and send updated list to all clients
@@ -413,7 +413,7 @@ public class PlanetsNetworkManager : NetworkManager {
         client.RegisterHandler(Msgs.addNewPlayer, OnNewPlayer);
         client.RegisterHandler(Msgs.addNewPlayerToObserver, OnNewPlayerObserver);
         client.RegisterHandler(Msgs.updatePlayerToObserver, OnPlayerUpdateObserver);
-        client.RegisterHandler(Msgs.sendRoundOverValuesToPlayer, OnPlayerRecievePlayerScore);
+        // client.RegisterHandler(Msgs.sendRoundOverValuesToPlayer, OnPlayerRecievePlayerScore);
     }
 
     //TODO: USE THIS WHEN PLAYER CHANGES TEAM AND SUCH
@@ -467,19 +467,21 @@ public class PlanetsNetworkManager : NetworkManager {
     // called when told to be not-ready by a server
     //public override void OnClientNotReady(NetworkConnection conn);
     public void OnServerRecievePlayerScore(NetworkMessage msg){
+        // Debug.Log("receive player scoreeee");
         PlayerValues pv = msg.ReadMessage<PlayerValues>();
         NetworkServer.SendToClient(pv.connVal, Msgs.sendRoundOverValuesToPlayer, pv);
+        // Debug.Log("sent det");
     }
 
 
-    public void OnPlayerRecievePlayerScore(NetworkMessage msg){
-        PlayerValues pv = msg.ReadMessage<PlayerValues>();
-        Debug.Log("Kills is " + pv.kills);
-        Debug.Log("Deaths is " + pv.deaths);
-        Debug.Log("Score Total is " + pv.scoreTotal);
-        Debug.Log("Score Acc is " + pv.scoreAcc);
-        Debug.Log("ScoreRound is " + pv.scoreRound);
-    }
+    // public void OnPlayerRecievePlayerScore(NetworkMessage msg){
+    //     PlayerValues pv = msg.ReadMessage<PlayerValues>();
+    //     Debug.Log("Kills is " + pv.kills);
+    //     Debug.Log("Deaths is " + pv.deaths);
+    //     Debug.Log("Score Total is " + pv.scoreTotal);
+    //     Debug.Log("Score Acc is " + pv.scoreAcc);
+    //     Debug.Log("ScoreRound is " + pv.scoreRound);
+    // }
 
     //RUN ON OBSERVER
     public void sendScoresToPlayers(){
