@@ -341,18 +341,17 @@ public class PlanetsNetworkManager : NetworkManager {
 		if (team == TeamID.TEAM_NEUTRAL){
 			// update the team and send updated list to all clients
 			
-			pm.setTeam(idVal, choice);	
-			teamManager.addPlayerToTeam(pm.getName(idVal), choice);
-
-			sendTeam (choice);
-
-		} else if (pm.getTeam(idVal) != choice) {	// if the player has switched teams
-			// delete player from old list and send updated list to all clients
-			teamManager.deletePlayer(pm.getName(idVal), pm.getTeam(idVal));
-			sendTeam (pm.getTeam(idVal));
-
-			// add player to new team and send updated list to clients
 			pm.setTeam(idVal, choice);
+			teamManager.addPlayerToTeam(pm.getName(idVal), choice);
+   sendTeam (choice);
+
+        } else if (pm.getTeam(idVal) != choice) { // if the player has switched teams
+                                                  // delete player from old list and send updated list to all clients
+            teamManager.deletePlayer(pm.getName(idVal), pm.getTeam(idVal));
+            sendTeam (pm.getTeam(idVal));
+
+            // add player to new team and send updated list to clients
+            pm.setTeam(idVal, choice);
 			teamManager.addPlayerToTeam(pm.getName(idVal), choice);
 			sendTeam (choice);
 		}
@@ -360,15 +359,16 @@ public class PlanetsNetworkManager : NetworkManager {
         //Send changes to the observers
         PlayerValues pv = new PlayerValues();
         pv.dictId = idVal;
-        pv.oldId = idVal;
+        pv.oldId = idVal; //Not changing id, so same id
         pv.connVal = msg.conn.connectionId;
         pv.playerIP = msg.conn.address;
-        pv.playerName = name;
+        pv.playerName = pm.getName(idVal);
         pv.playerTeam = choice;
         foreach (NetworkConnection nc in getUpdateListeners()){
             NetworkServer.SendToClient(nc.connectionId, Msgs.updatePlayerToObserver, pv); //Sends player info to the client that re-connected
         }
-	  }
+        Debug.LogError("After END " + pm.getName(idVal));
+    }
     // send the team list of players to all clients
     public void sendTeam(int team) {
 		string display = "";
