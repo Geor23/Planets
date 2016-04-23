@@ -33,6 +33,7 @@ public class PlayerManager {
         }
     }
 
+
     public int getScoreTotal(int id) {
         return playerDict[id].getTotalScore();
     }
@@ -49,8 +50,20 @@ public class PlayerManager {
         return playerDict[id].getKills();
     }
 
+    public void addKill(int id) {
+        playerDict[id].addKill();
+    }
+
+    public void addDeath(int id) {
+        playerDict[id].addDeath();
+    }
+
     public int getDeaths(int id) {
         return playerDict[id].getDeaths();
+    }
+
+    public void resetRoundScore(int id) {
+        playerDict[id].resetRoundScore();
     }
 
     public int findPlayerWithIP(string ip){

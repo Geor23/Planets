@@ -37,6 +37,8 @@ class Msgs : MsgType {
   public const short addNewPlayerToObserver = 78;
   public const short updatePlayerToObserver = 79;
   public const short spawnSelf = 80;
+  public const short givePlayerScores = 81;
+  public const short sendRoundOverValuesToPlayer = 82;
 }
 
 public class JoinMessage : MessageBase {
@@ -134,6 +136,7 @@ public class PlayerValues : MessageBase {
     public int kills;
     public int scoreAcc;
     public int scoreTotal;
+    public int scoreRound;
 }
 
 public class PlayerSpawnMsg : MessageBase {

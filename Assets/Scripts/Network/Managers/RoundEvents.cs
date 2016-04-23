@@ -44,6 +44,12 @@ public class RoundEvents : MonoBehaviour {
 
     /* CLIENT FUNCS PLZ */
 
+    void Update()
+    {
+        if (Input.GetKeyDown("m")){
+            nm.sendScoresToPlayers();
+        }
+    }
 
     void clientInit(){
         nm.client.RegisterHandler(Msgs.killPlayer, OnClientDeath);
@@ -72,6 +78,8 @@ public class RoundEvents : MonoBehaviour {
         kp.netId = netId;
         nm.client.Send(Msgs.killPlayer, kp);
         pom.killPlayerLocal(playerKilledId, playerKillerId);
+        pm.addKill(playerKillerId);
+        pm.addDeath(playerKilledId);
         Debug.Log("Player " + playerKilledId + " died");
     }
 
@@ -93,8 +101,8 @@ public class RoundEvents : MonoBehaviour {
     IEnumerator serverInit(){
         NetworkServer.RegisterHandler(Msgs.killPlayer, OnServerRegisterDeath);
         NetworkServer.RegisterHandler(Msgs.spawnPlayer, OnServerSpawnPlayer);
-
-        foreach(KeyValuePair<int, Player> kp in pm.getPlayerDict()){
+        yield return new WaitForSeconds(5);
+        foreach (KeyValuePair<int, Player> kp in pm.getPlayerDict()){
             Player p = kp.Value;
 
             if(p.getPlayerTeam() == TeamID.TEAM_OBSERVER){

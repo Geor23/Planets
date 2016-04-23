@@ -111,4 +111,17 @@ public class Player {
    public void setPlayerDictVal(int id){
         playerDictVal = id;
     }
+
+    public void resetRoundScore() {
+        playerScoreRound = 0;
+        playerScoreAccRound = 0;
+    }
+
+    public void addKill() {
+        playerKills += 1;
+    }
+
+    public void addDeath() {
+        playerDeaths += 1;
+    }
 }

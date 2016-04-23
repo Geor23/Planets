@@ -178,6 +178,7 @@ public class PlanetsNetworkManager : NetworkManager {
         NetworkServer.RegisterHandler(Msgs.requestTeamMsg, OnServerRecieveTeamRequest);
 	    NetworkServer.RegisterHandler(Msgs.startGame, OnServerStartGame);
 	    NetworkServer.RegisterHandler(Msgs.requestCurrentTime, OnServerRecieveTimeRequest);
+        NetworkServer.RegisterHandler(Msgs.givePlayerScores, OnServerRecievePlayerScore);
     }
 
     public int ipToId(string address, int connId){
@@ -408,6 +409,7 @@ public class PlanetsNetworkManager : NetworkManager {
         client.RegisterHandler(Msgs.addNewPlayer, OnNewPlayer);
         client.RegisterHandler(Msgs.addNewPlayerToObserver, OnNewPlayerObserver);
         client.RegisterHandler(Msgs.updatePlayerToObserver, OnPlayerUpdateObserver);
+        client.RegisterHandler(Msgs.sendRoundOverValuesToPlayer, OnPlayerRecievePlayerScore);
     }
 
     //TODO: USE THIS WHEN PLAYER CHANGES TEAM AND SUCH
@@ -457,7 +459,41 @@ public class PlanetsNetworkManager : NetworkManager {
 	public override void OnClientError(NetworkConnection conn, int errorCode){
 		Debug.LogError("OnClientError with connection " + conn + ", error code: " + errorCode);
 	}
-	
-	// called when told to be not-ready by a server
-	//public override void OnClientNotReady(NetworkConnection conn);
+
+    // called when told to be not-ready by a server
+    //public override void OnClientNotReady(NetworkConnection conn);
+    public void OnServerRecievePlayerScore(NetworkMessage msg){
+        PlayerValues pv = msg.ReadMessage<PlayerValues>();
+        NetworkServer.SendToClient(pv.connVal, Msgs.sendRoundOverValuesToPlayer, pv);
+    }
+
+
+    public void OnPlayerRecievePlayerScore(NetworkMessage msg){
+        PlayerValues pv = msg.ReadMessage<PlayerValues>();
+        Debug.Log("Kills is " + pv.kills);
+        Debug.Log("Deaths is " + pv.deaths);
+        Debug.Log("Score Total is " + pv.scoreTotal);
+        Debug.Log("Score Acc is " + pv.scoreAcc);
+        Debug.Log("ScoreRound is " + pv.scoreRound);
+    }
+
+    //RUN ON OBSERVER
+    public void sendScoresToPlayers(){
+        Debug.LogError("YAYAYA");
+        Dictionary<int, Player> playerDict = pm.getPlayerDict();
+        Debug.LogError(playerDict.Count);
+        foreach (var i in playerDict) {
+            if (playerDict[i.Key].getIsConnected()){
+                PlayerValues pv = new PlayerValues();
+                pv.kills = playerDict[i.Key].getKills();
+                pv.deaths = playerDict[i.Key].getDeaths();
+                pv.scoreTotal = playerDict[i.Key].getTotalScore();
+                pv.scoreAcc = playerDict[i.Key].getRoundScoreAcc();
+                pv.scoreRound = playerDict[i.Key].getPlayerScoreRound();
+                pv.connVal = playerDict[i.Key].getConnValue();
+                client.Send(Msgs.givePlayerScores, pv);
+                pm.resetRoundScore(i.Key);
+            }
+        }
+    }
 }
