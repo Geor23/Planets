@@ -8,18 +8,47 @@ public class Player {
     private int connVal;
     private string playerIP;
     private string playerName;
-    private int playerScore;
     private int playerTeam;
     private bool isConnected;
 
-    public Player (int dictVal, int conn, string playIP, string playName, int teamChoice){
+    private int playerScoreRound; //Contains final personal score of a round
+    private int playerScoreAccRound;  //MAYBE?
+    private int playerScoreTotal; //Contains final personal score of all rounds
+    private int playerKills; //Contains number of times you killed in a round
+    private int playerDeaths; //Contains number of times you died in a round
+
+    public Player (int dictVal, int conn, string playIP, string playName, int teamChoice, int playerD, int playerK, int playerScoreAR, int playerTotal){
         playerDictVal = dictVal;
         connVal = conn;
         playerIP = playIP;
         playerName = playName;
-        playerScore = 0;
+        playerScoreRound = 0;
         playerTeam = teamChoice; //Unassigned team, not an observer
         isConnected = true;
+        playerDeaths = playerK; //TODO: Ensure these values pass on if you dc and reconnect
+        playerKills = playerD;
+        playerScoreAccRound = playerScoreAR;
+        playerScoreTotal = playerTotal;
+    }
+
+    public int getTotalScore() {
+        return playerScoreTotal;
+    }
+    
+    public int getRoundScore() {
+        return playerScoreRound;
+    }
+
+    public int getRoundScoreAcc() {
+        return playerScoreAccRound;
+    }
+
+    public int getKills() {
+        return playerKills;
+    }
+
+    public int getDeaths() {
+        return playerDeaths;
     }
 
     public int getPlayerId() {
@@ -34,25 +63,30 @@ public class Player {
         return playerName;
     }
 
-    public int getPlayerScore() {
-        return playerScore;
+    public int getPlayerScoreRound() {
+        return playerScoreRound;
     }
 
     public int getPlayerTeam() {
         return playerTeam;
     }
 
+    public void addScore(int score) {
+        playerScoreRound    += score;
+        playerScoreTotal    += score;
+        playerScoreAccRound += score;
+    }
+
+    public void playerDie() {
+        playerScoreTotal -= playerScoreRound;
+        playerScoreRound = 0;
+        playerDeaths += 1;
+    }
+
     public bool getIsConnected(){
         return isConnected;
     }
 
-    public void incrementPlayerScore(int score){
-        playerScore += score;
-    }
-
-    public void decrementPlayerScore(int score){
-        playerScore -= score;
-    }
 
     public void setIsConnected(bool connBool) {
         isConnected = connBool;
@@ -76,5 +110,18 @@ public class Player {
 
    public void setPlayerDictVal(int id){
         playerDictVal = id;
+    }
+
+    public void resetRoundScore() {
+        playerScoreRound = 0;
+        playerScoreAccRound = 0;
+    }
+
+    public void addKill() {
+        playerKills += 1;
+    }
+
+    public void addDeath() {
+        playerDeaths += 1;
     }
 }

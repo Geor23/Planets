@@ -10,6 +10,7 @@ public class Exploder : MonoBehaviour {
 	public float power = 1;
 	public int probeCount = 150;
 	public float explodeDuration = 0.5f;
+	public bool needsToExplode = false;
 
 	protected bool exploded = false;
 	
@@ -63,10 +64,20 @@ public class Exploder : MonoBehaviour {
 		init();
 	}
 
+	public void expl() {
+		needsToExplode = true;
+	}
+
 	void FixedUpdate() {
-		if (Time.time > explosionTime && !exploded) {
+		// if (Time.time > explosionTime && !exploded) {
+		// 	Debug.Log("gonna explode");
+		// 	exploded = true;
+		// 	StartCoroutine("explode");
+		// }
+		if (needsToExplode == true) {
 			exploded = true;
 			StartCoroutine("explode");
+			needsToExplode = false;
 		}
 	}
 

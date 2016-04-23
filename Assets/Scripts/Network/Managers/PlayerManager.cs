@@ -33,6 +33,39 @@ public class PlayerManager {
         }
     }
 
+
+    public int getScoreTotal(int id) {
+        return playerDict[id].getTotalScore();
+    }
+
+    public int getRoundScore(int id){
+        return playerDict[id].getPlayerScoreRound();
+    }
+
+    public int getRoundScoreAcc(int id){
+        return playerDict[id].getRoundScoreAcc();
+    }
+
+    public int getKills(int id) {
+        return playerDict[id].getKills();
+    }
+
+    public void addKill(int id) {
+        playerDict[id].addKill();
+    }
+
+    public void addDeath(int id) {
+        playerDict[id].addDeath();
+    }
+
+    public int getDeaths(int id) {
+        return playerDict[id].getDeaths();
+    }
+
+    public void resetRoundScore(int id) {
+        playerDict[id].resetRoundScore();
+    }
+
     public int findPlayerWithIP(string ip){
         foreach (var i in playerDict) {
             string val = playerDict[i.Key].getPlayerIP();
@@ -116,6 +149,10 @@ public class PlayerManager {
 
     public string getName(int id) {
         return playerDict[id].getPlayerName();
+    }
+
+    public void addScore(int id, int scoreToAdd) {
+        playerDict[id].addScore(scoreToAdd);
     }
 
     public void setName(int id, string name){

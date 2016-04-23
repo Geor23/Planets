@@ -19,14 +19,14 @@ public class RoundScoreManager {
     }
 
     public void increasePlayerScore(int playerId, int score){
-        playerDict[playerId].incrementPlayerScore(score);
+        playerDict[playerId].addScore(score);
         if(pm.getTeam(playerId) == TeamID.TEAM_PIRATES){
             pirateScore += score;
         } else {
             superCorpScore += score;
         }
     }
-
+/* //SHOULDN'T EVER NEED TO DECREMENT, ONLY RESET TO 0
     public void decreasePlayerScore(int playerId, int score){
         playerDict[playerId].decrementPlayerScore(score);
         if(pm.getTeam(playerId) == TeamID.TEAM_PIRATES){
@@ -35,7 +35,7 @@ public class RoundScoreManager {
             superCorpScore -= score;
         }
     }
-
+*/
 
     public int getPirateScore(){
         return pirateScore;
@@ -47,7 +47,7 @@ public class RoundScoreManager {
 
     public int getPlayerScore(int playerId){
         Player p = pm.getPlayer(playerId);
-        if(p == null) return 0;
-        else return p.getPlayerScore();
+        if (p == null) return 0;
+        else return p.getPlayerScoreRound();
     }
 }

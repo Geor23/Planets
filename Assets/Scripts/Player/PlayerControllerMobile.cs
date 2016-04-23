@@ -242,6 +242,7 @@ public class PlayerControllerMobile : NetworkBehaviour {
             if ((hasCollide == false) && (shielded == false)) {
                 //hasCollide = true;
                 int killerId = col.gameObject.GetComponent<ProjectileData>().ownerId;
+                gameObject.GetComponent<Exploder>().expl();
                 Destroy(col.gameObject);
                 roundEvents.registerKill(netId, playerDetails.getDictId(), killerId);
             }
@@ -250,6 +251,7 @@ public class PlayerControllerMobile : NetworkBehaviour {
             if ((hasCollide == false) && (shielded == false)) {
                 //hasCollide = true;
                 int killerId = col.gameObject.GetComponent<ProjectileData>().ownerId;
+                gameObject.GetComponent<Exploder>().expl();
                 Destroy(col.gameObject);
                 roundEvents.registerKill(netId, playerDetails.getDictId(), killerId);
             }
