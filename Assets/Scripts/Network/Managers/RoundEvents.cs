@@ -14,17 +14,22 @@ using UnityEngine.UI;
 
 
 public class RoundEvents : MonoBehaviour {
-    public RoundPlayerObjectManager pom;
-    public RoundScoreManager sm;
-    public PlayerManager pm;
-    public PlanetsNetworkManager nm;
+    private RoundPlayerObjectManager pom;
+    private RoundScoreManager sm;
+    private PlayerManager pm;
+    private PlanetsNetworkManager nm;
+
+    public bool sandBox = false;
+
+
 
     void Start(){
         pm = PlayerManager.singleton;
         pom = new RoundPlayerObjectManager();
         sm = new RoundScoreManager(pm.getPlayerDict());
         nm = (PlanetsNetworkManager)PlanetsNetworkManager.singleton;
-        GameStatsManager.singleton.addNewRoundDatas(pom, sm);
+        //If not sandbox, add to game stats
+        if(!sandBox) GameStatsManager.singleton.addNewRoundDatas(pom, sm);
 
         //Handle messages from server such as end of round signal etc. act upon them
 
@@ -46,6 +51,7 @@ public class RoundEvents : MonoBehaviour {
 
     void Update()
     {
+        //PLS no??
         if (Input.GetKeyDown("m")){
             nm.sendScoresToPlayers();
         }
@@ -79,7 +85,11 @@ public class RoundEvents : MonoBehaviour {
         KillPlayer kp = new KillPlayer();
         kp.netId = netId;
         nm.client.Send(Msgs.killPlayer, kp);
+
         pom.killPlayerLocal(playerKilledId, playerKillerId);
+
+        if(sandBox) return;
+        //Do we even need this ? ALl the data is in RoundObjectmanager
         pm.addKill(playerKillerId);
         pm.addDeath(playerKilledId);
         Debug.Log("Player " + playerKilledId + " died");
