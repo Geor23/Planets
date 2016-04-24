@@ -50,6 +50,9 @@ public class PlanetsNetworkManager : NetworkManager {
   	public HashSet<NetworkConnection> updateListeners;
   	public HashSet<NetworkConnection> observingListeners;
 
+    //Fill up queue with playerIdds of those who are ready to spawn
+    private Queue<int> spawnReadyPlayers;
+
     public bool allowSharedIPs = false;
   	public bool onlyUpdateObservers = false;
   	public bool usingSplitScreen = false;
@@ -64,6 +67,7 @@ public class PlanetsNetworkManager : NetworkManager {
   	public void Start() {
     	updateListeners = new HashSet<NetworkConnection>();
     	observingListeners = new HashSet<NetworkConnection>();
+        spawnReadyPlayers = new Queue<int>();
         ppi = PersonalPlayerInfo.singleton;
 
         //TOCHANGE
@@ -183,6 +187,7 @@ public class PlanetsNetworkManager : NetworkManager {
 	    NetworkServer.RegisterHandler(Msgs.startGame, OnServerStartGame);
 	    NetworkServer.RegisterHandler(Msgs.requestCurrentTime, OnServerRecieveTimeRequest);
         NetworkServer.RegisterHandler(Msgs.givePlayerScores, OnServerRecievePlayerScore);
+        NetworkServer.RegisterHandler(Msgs.playerReadyToSpawn, OnServerPlayerReadyToSpawn);
     }
 
     public int ipToId(string address, int connId){
@@ -192,7 +197,17 @@ public class PlanetsNetworkManager : NetworkManager {
             return idValue;
         } 
         return -1;
-    }   
+    }
+
+    public Queue<int> getSpawnablePlayers(){
+        return spawnReadyPlayers;
+    }
+
+    public void OnServerPlayerReadyToSpawn(NetworkMessage msg){
+        //Add player to the spawnReady queue;
+        int playerId = pm.findPlayerIdWithConnID(msg.conn.connectionId);
+        spawnReadyPlayers.Enqueue(playerId);
+    }
     
     // called when a new player is added for a client
     // next two functions are important
@@ -204,6 +219,7 @@ public class PlanetsNetworkManager : NetworkManager {
         if (pm.getTeam(idVal) != TeamID.TEAM_NEUTRAL){
             GameObject chosen = playerObjectType(idVal);
             GameObject player = Instantiate(chosen, teamManager.getSpawnP(pm.getTeam(idVal)), Quaternion.identity) as GameObject;
+            Debug.Log(player);
             if (pm.getTeam(idVal) != TeamID.TEAM_OBSERVER){
                 //Player playa = pm.getPlayer(idValue);
                 //chosen.GetComponent<PlayerDetails>().setPlayerDetails(idValue,playa);

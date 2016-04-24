@@ -95,10 +95,12 @@ public class PlayerControllerMobile : NetworkBehaviour {
         }
         Debug.Log("Setting teardrop id to " + playerDetails.getObsId().ToString()); //BUG
         tearDropId.text = playerDetails.getObsId().ToString();
+        if(nIdentity.isLocalPlayer) gameObject.transform.localScale = new Vector3(3,3,3);
     }
 
     void Update() {
         if(nIdentity == null) return;
+        if(nIdentity.isLocalPlayer) gameObject.transform.localScale = new Vector3(3,3,3);
 
         if (doubleScore == true) {
             doubleScoreTime -= Time.deltaTime;
