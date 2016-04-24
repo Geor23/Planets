@@ -29,8 +29,8 @@ static class Const {
     public const int RUNNING = 1;
     public const int FINISHED = -1;
     public const int NOTSTARTED = 0;
-    public const int INITIALTIMER = 50;
-    public const int ROUNDOVERTIMER = 15;
+    public const int INITIALTIMER = 10;
+    public const int ROUNDOVERTIMER = 10;
 }
 
 public class RoundScores {
@@ -50,6 +50,9 @@ public class PlanetsNetworkManager : NetworkManager {
   	public HashSet<NetworkConnection> updateListeners;
   	public HashSet<NetworkConnection> observingListeners;
 
+    //Fill up queue with playerIdds of those who are ready to spawn
+    private Queue<int> spawnReadyPlayers;
+
     public bool allowSharedIPs = false;
   	public bool onlyUpdateObservers = false;
   	public bool usingSplitScreen = false;
@@ -64,15 +67,20 @@ public class PlanetsNetworkManager : NetworkManager {
   	public void Start() {
     	updateListeners = new HashSet<NetworkConnection>();
     	observingListeners = new HashSet<NetworkConnection>();
+        spawnReadyPlayers = new Queue<int>();
         ppi = PersonalPlayerInfo.singleton;
 
         //TOCHANGE
     	roundList = new List<string>();
-    	roundList.Add("Round1");
+    	roundList.Add("Round4");
         roundList.Add("RoundOver");
     	roundList.Add("Round2");
     	roundList.Add("RoundOver");
     	roundList.Add("Round3");
+        roundList.Add("RoundOver");
+        roundList.Add("Round4");
+        roundList.Add("RoundOver");
+        roundList.Add("Round5");
     	roundList.Add("GameOver");
         pm = new PlayerManager();
     }
@@ -179,6 +187,7 @@ public class PlanetsNetworkManager : NetworkManager {
 	    NetworkServer.RegisterHandler(Msgs.startGame, OnServerStartGame);
 	    NetworkServer.RegisterHandler(Msgs.requestCurrentTime, OnServerRecieveTimeRequest);
         NetworkServer.RegisterHandler(Msgs.givePlayerScores, OnServerRecievePlayerScore);
+        NetworkServer.RegisterHandler(Msgs.playerReadyToSpawn, OnServerPlayerReadyToSpawn);
     }
 
     public int ipToId(string address, int connId){
@@ -188,7 +197,17 @@ public class PlanetsNetworkManager : NetworkManager {
             return idValue;
         } 
         return -1;
-    }   
+    }
+
+    public Queue<int> getSpawnablePlayers(){
+        return spawnReadyPlayers;
+    }
+
+    public void OnServerPlayerReadyToSpawn(NetworkMessage msg){
+        //Add player to the spawnReady queue;
+        int playerId = pm.findPlayerIdWithConnID(msg.conn.connectionId);
+        spawnReadyPlayers.Enqueue(playerId);
+    }
     
     // called when a new player is added for a client
     // next two functions are important
@@ -200,6 +219,7 @@ public class PlanetsNetworkManager : NetworkManager {
         if (pm.getTeam(idVal) != TeamID.TEAM_NEUTRAL){
             GameObject chosen = playerObjectType(idVal);
             GameObject player = Instantiate(chosen, teamManager.getSpawnP(pm.getTeam(idVal)), Quaternion.identity) as GameObject;
+            Debug.Log(player);
             if (pm.getTeam(idVal) != TeamID.TEAM_OBSERVER){
                 //Player playa = pm.getPlayer(idValue);
                 //chosen.GetComponent<PlayerDetails>().setPlayerDetails(idValue,playa);
@@ -331,29 +351,28 @@ public class PlanetsNetworkManager : NetworkManager {
   	public void OnServerRecieveTeamChoice(NetworkMessage msg) {
 	    TeamChoice teamChoice = msg.ReadMessage<TeamChoice>();
 	    int choice = teamChoice.teamChoice;
-     int idVal = ipToId(msg.conn.address, msg.conn.connectionId);
+        int idVal = ipToId(msg.conn.address, msg.conn.connectionId);
         if (!pm.checkIfExists(idVal)) {
             Debug.LogError("ID DOES NOT EXISTS, CONN IS "+msg.conn.connectionId);
             return;
         }
-     int team = pm.getTeam(idVal);
+        int team = pm.getTeam(idVal);
 
 	    // if the player is choosing the team for the first time
 		if (team == TeamID.TEAM_NEUTRAL){
 			// update the team and send updated list to all clients
 			
-			pm.setTeam(idVal, choice);	
-			teamManager.addPlayerToTeam(pm.getName(idVal), choice);
-
-			sendTeam (choice);
-
-		} else if (pm.getTeam(idVal) != choice) {	// if the player has switched teams
-			// delete player from old list and send updated list to all clients
-			teamManager.deletePlayer(pm.getName(idVal), pm.getTeam(idVal));
-			sendTeam (pm.getTeam(idVal));
-
-			// add player to new team and send updated list to clients
 			pm.setTeam(idVal, choice);
+			teamManager.addPlayerToTeam(pm.getName(idVal), choice);
+            sendTeam (choice);
+
+        } else if (pm.getTeam(idVal) != choice) { // if the player has switched teams
+                                                  // delete player from old list and send updated list to all clients
+            teamManager.deletePlayer(pm.getName(idVal), pm.getTeam(idVal));
+            sendTeam (pm.getTeam(idVal));
+
+            // add player to new team and send updated list to clients
+            pm.setTeam(idVal, choice);
 			teamManager.addPlayerToTeam(pm.getName(idVal), choice);
 			sendTeam (choice);
 		}
@@ -361,10 +380,10 @@ public class PlanetsNetworkManager : NetworkManager {
         //Send changes to the observers
         PlayerValues pv = new PlayerValues();
         pv.dictId = idVal;
-        pv.oldId = idVal;
+        pv.oldId = idVal; //Not changing id, so same id
         pv.connVal = msg.conn.connectionId;
         pv.playerIP = msg.conn.address;
-        pv.playerName = name;
+        pv.playerName = pm.getName(idVal);
         pv.playerTeam = choice;
         pv.kills = pm.getKills(idVal);
         pv.deaths = pm.getDeaths(idVal);
@@ -373,7 +392,8 @@ public class PlanetsNetworkManager : NetworkManager {
         foreach (NetworkConnection nc in getUpdateListeners()){
             NetworkServer.SendToClient(nc.connectionId, Msgs.updatePlayerToObserver, pv); //Sends player info to the client that re-connected
         }
-	  }
+        Debug.LogError("After END " + pm.getName(idVal));
+    }
     // send the team list of players to all clients
     public void sendTeam(int team) {
 		string display = "";
@@ -409,7 +429,7 @@ public class PlanetsNetworkManager : NetworkManager {
         client.RegisterHandler(Msgs.addNewPlayer, OnNewPlayer);
         client.RegisterHandler(Msgs.addNewPlayerToObserver, OnNewPlayerObserver);
         client.RegisterHandler(Msgs.updatePlayerToObserver, OnPlayerUpdateObserver);
-        client.RegisterHandler(Msgs.sendRoundOverValuesToPlayer, OnPlayerRecievePlayerScore);
+        // client.RegisterHandler(Msgs.sendRoundOverValuesToPlayer, OnPlayerRecievePlayerScore);
     }
 
     //TODO: USE THIS WHEN PLAYER CHANGES TEAM AND SUCH
@@ -463,19 +483,21 @@ public class PlanetsNetworkManager : NetworkManager {
     // called when told to be not-ready by a server
     //public override void OnClientNotReady(NetworkConnection conn);
     public void OnServerRecievePlayerScore(NetworkMessage msg){
+        // Debug.Log("receive player scoreeee");
         PlayerValues pv = msg.ReadMessage<PlayerValues>();
         NetworkServer.SendToClient(pv.connVal, Msgs.sendRoundOverValuesToPlayer, pv);
+        // Debug.Log("sent det");
     }
 
 
-    public void OnPlayerRecievePlayerScore(NetworkMessage msg){
-        PlayerValues pv = msg.ReadMessage<PlayerValues>();
-        Debug.Log("Kills is " + pv.kills);
-        Debug.Log("Deaths is " + pv.deaths);
-        Debug.Log("Score Total is " + pv.scoreTotal);
-        Debug.Log("Score Acc is " + pv.scoreAcc);
-        Debug.Log("ScoreRound is " + pv.scoreRound);
-    }
+    // public void OnPlayerRecievePlayerScore(NetworkMessage msg){
+    //     PlayerValues pv = msg.ReadMessage<PlayerValues>();
+    //     Debug.Log("Kills is " + pv.kills);
+    //     Debug.Log("Deaths is " + pv.deaths);
+    //     Debug.Log("Score Total is " + pv.scoreTotal);
+    //     Debug.Log("Score Acc is " + pv.scoreAcc);
+    //     Debug.Log("ScoreRound is " + pv.scoreRound);
+    // }
 
     //RUN ON OBSERVER
     public void sendScoresToPlayers(){

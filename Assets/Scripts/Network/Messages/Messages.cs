@@ -39,6 +39,7 @@ class Msgs : MsgType {
   public const short spawnSelf = 80;
   public const short givePlayerScores = 81;
   public const short sendRoundOverValuesToPlayer = 82;
+  public const short playerReadyToSpawn = 82;
 }
 
 public class JoinMessage : MessageBase {
