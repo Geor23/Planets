@@ -20,8 +20,8 @@ Material:
           name: _MainTex
         second:
           m_Texture: {fileID: 2800000, guid: 0c42e81e40aab4fcebd5b941b618b379, type: 3}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
+          m_Scale: {x: 5, y: 5}
+          m_Offset: {x: 5, y: 5}
       data:
         first:
           name: _BumpMap
@@ -78,6 +78,20 @@ Material:
           m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _RampTex
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _DispTex
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
     m_Floats:
       data:
         first:
@@ -98,7 +112,7 @@ Material:
       data:
         first:
           name: _Glossiness
-        second: 0.5
+        second: 0.44
       data:
         first:
           name: _Metallic
@@ -127,6 +141,14 @@ Material:
         first:
           name: _Mode
         second: 0
+      data:
+        first:
+          name: _Displacement
+        second: 0.1
+      data:
+        first:
+          name: _ClipRange
+        second: 0.8
     m_Colors:
       data:
         first:
@@ -135,4 +157,12 @@ Material:
       data:
         first:
           name: _Color
-        second: {r: 0.08627451, g: 0.1254902, b: 0.29411766, a: 1}
+        second: {r: 0, g: 1, b: 0.21379304, a: 1}
+      data:
+        first:
+          name: _Range
+        second: {r: 0, g: 0.5, b: 0, a: 1}
+      data:
+        first:
+          name: _ChannelFactor
+        second: {r: 1, g: 0, b: 0, a: 1}
