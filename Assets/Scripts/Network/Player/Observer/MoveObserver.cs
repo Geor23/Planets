@@ -1,11 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Networking;
 
 public class MoveObserver : MonoBehaviour {
     public GameObject obj1;
+    public NetworkIdentity nIdentity;
 
 	// Update is called once per frame
 	void Update () {
+        if(!nIdentity.isLocalPlayer) return;
         if (Input.GetKey(KeyCode.A)) {  //Camera one commands
             obj1.transform.position -= transform.right.normalized/10;
         }else if(Input.GetKey(KeyCode.D)){
