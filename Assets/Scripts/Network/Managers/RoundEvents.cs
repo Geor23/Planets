@@ -114,13 +114,17 @@ public class RoundEvents : MonoBehaviour {
         NetworkServer.RegisterHandler(Msgs.killPlayer, OnServerRegisterDeath);
         NetworkServer.RegisterHandler(Msgs.spawnPlayer, OnServerSpawnPlayer);
         Queue<int> spawnable = nm.getSpawnablePlayers();
+        Queue<int> notChosenTeam = new Queue<int>();
         while(true){
+            while(notChosenTeam.Count > 0){
+                spawnable.Enqueue(notChosenTeam.Dequeue());
+            }
             while(spawnable.Count > 0){
                 int pId = spawnable.Dequeue();
                 Player p = pm.getPlayer(pId);
                 if(p.getPlayerTeam() == TeamID.TEAM_NEUTRAL){
                     //Team not yet picked, return player
-                    spawnable.Enqueue(pId);
+                    notChosenTeam.Enqueue(pId);
                 } else {
                     Debug.Log("Spawning " + p.getConnValue());
                     NetworkServer.SendToClient(p.getConnValue(), Msgs.spawnSelf,  new UniqueObjectMessage()); 
