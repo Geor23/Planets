@@ -14,17 +14,22 @@ using UnityEngine.UI;
 
 
 public class RoundEvents : MonoBehaviour {
-    public RoundPlayerObjectManager pom;
-    public RoundScoreManager sm;
-    public PlayerManager pm;
-    public PlanetsNetworkManager nm;
+    private RoundPlayerObjectManager pom;
+    private RoundScoreManager sm;
+    private PlayerManager pm;
+    private PlanetsNetworkManager nm;
+
+    public bool sandBox = false;
+
+
 
     void Start(){
         pm = PlayerManager.singleton;
         pom = new RoundPlayerObjectManager();
         sm = new RoundScoreManager(pm.getPlayerDict());
         nm = (PlanetsNetworkManager)PlanetsNetworkManager.singleton;
-        GameStatsManager.singleton.addNewRoundDatas(pom, sm);
+        //If not sandbox, add to game stats
+        if(!sandBox) GameStatsManager.singleton.addNewRoundDatas(pom, sm);
 
         //Handle messages from server such as end of round signal etc. act upon them
 
@@ -46,6 +51,7 @@ public class RoundEvents : MonoBehaviour {
 
     void Update()
     {
+        //PLS no??
         if (Input.GetKeyDown("m")){
             nm.sendScoresToPlayers();
         }
@@ -54,6 +60,8 @@ public class RoundEvents : MonoBehaviour {
     void clientInit(){
         nm.client.RegisterHandler(Msgs.killPlayer, OnClientDeath);
         nm.client.RegisterHandler(Msgs.spawnSelf, OnClientSpawnSelf);
+        //Tell server we are ready to spawn
+        nm.client.Send(Msgs.playerReadyToSpawn, new UniqueObjectMessage());
 
         // If observer, invoke repeating respawn players
         if(PlayerConfig.singleton.GetObserver()){
@@ -77,7 +85,11 @@ public class RoundEvents : MonoBehaviour {
         KillPlayer kp = new KillPlayer();
         kp.netId = netId;
         nm.client.Send(Msgs.killPlayer, kp);
+
         pom.killPlayerLocal(playerKilledId, playerKillerId);
+
+        if(sandBox) return;
+        //Do we even need this ? ALl the data is in RoundObjectmanager
         pm.addKill(playerKillerId);
         pm.addDeath(playerKilledId);
         Debug.Log("Player " + playerKilledId + " died");
@@ -101,21 +113,40 @@ public class RoundEvents : MonoBehaviour {
     IEnumerator serverInit(){
         NetworkServer.RegisterHandler(Msgs.killPlayer, OnServerRegisterDeath);
         NetworkServer.RegisterHandler(Msgs.spawnPlayer, OnServerSpawnPlayer);
-        yield return new WaitForSeconds(5);
-        foreach (KeyValuePair<int, Player> kp in pm.getPlayerDict()){
-            Player p = kp.Value;
-
-            if(p.getPlayerTeam() == TeamID.TEAM_OBSERVER){
-                NetworkServer.SendToClient(p.getConnValue(), Msgs.spawnSelf,  new UniqueObjectMessage());
+        Queue<int> spawnable = nm.getSpawnablePlayers();
+        Queue<int> notChosenTeam = new Queue<int>();
+        while(true){
+            while(notChosenTeam.Count > 0){
+                spawnable.Enqueue(notChosenTeam.Dequeue());
             }
+            while(spawnable.Count > 0){
+                int pId = spawnable.Dequeue();
+                Player p = pm.getPlayer(pId);
+                if(p.getPlayerTeam() == TeamID.TEAM_NEUTRAL){
+                    //Team not yet picked, return player
+                    notChosenTeam.Enqueue(pId);
+                } else {
+                    Debug.Log("Spawning " + p.getConnValue());
+                    NetworkServer.SendToClient(p.getConnValue(), Msgs.spawnSelf,  new UniqueObjectMessage()); 
+                }
+            }
+            yield return new WaitForSeconds(1);
         }
-        yield return new WaitForSeconds(1);
-        foreach(KeyValuePair<int, Player> kp in pm.getPlayerDict()){
-            Player p = kp.Value;
-            if(p.getPlayerTeam() == TeamID.TEAM_OBSERVER) continue;
-            NetworkServer.SendToClient(p.getConnValue(), Msgs.spawnSelf, new UniqueObjectMessage());
-            yield return new WaitForSeconds(0.5f);
-        }
+        // yield return new WaitForSeconds(5);
+        // foreach (KeyValuePair<int, Player> kp in pm.getPlayerDict()){
+        //     Player p = kp.Value;
+
+        //     if(p.getPlayerTeam() == TeamID.TEAM_OBSERVER){
+        //         NetworkServer.SendToClient(p.getConnValue(), Msgs.spawnSelf,  new UniqueObjectMessage());
+        //     }
+        // }
+        // yield return new WaitForSeconds(1);
+        // foreach(KeyValuePair<int, Player> kp in pm.getPlayerDict()){
+        //     Player p = kp.Value;
+        //     if(p.getPlayerTeam() == TeamID.TEAM_OBSERVER) continue;
+        //     NetworkServer.SendToClient(p.getConnValue(), Msgs.spawnSelf, new UniqueObjectMessage());
+        //     yield return new WaitForSeconds(0.5f);
+        // }
     }
 
     public void OnServerRegisterDeath(NetworkMessage msg){

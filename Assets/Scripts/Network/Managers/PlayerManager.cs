@@ -91,6 +91,19 @@ public class PlayerManager {
         return null; //Indicates nothing found
 
     }
+
+    public int findPlayerIdWithConnID(int id){
+        foreach (var i in playerDict){
+            int val = playerDict[i.Key].getConnValue();
+            if(id == val){
+                return i.Key;
+            }
+        }
+
+        return -10; //Indicates nothing found
+
+    }
+
     public void addPlayer(int id, Player player){
         if (getPlayer(player.getPlayerId()) == null) { //If the connection doesn't exist...
             playerDict.Add(id, player);
