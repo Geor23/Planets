@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections;
  
 public class CameraController : MonoBehaviour {
@@ -23,6 +24,7 @@ public class CameraController : MonoBehaviour {
     }
 
     void Update () {
+        if(!GetComponent<NetworkIdentity>().isLocalPlayer) return;
 
         count = 0;
         playersS = GameObject.FindGameObjectsWithTag("PlayerSuperCorp");
@@ -46,27 +48,6 @@ public class CameraController : MonoBehaviour {
         point = sum/count;
         avgUp = camUps/count;
         Quaternion newRot = Quaternion.LookRotation(point, -avgUp);
-
-        if (Input.GetKey(KeyCode.A)) {  //Camera one commands
-            pos -= transform.right.normalized/10;
-        }else if(Input.GetKey(KeyCode.D)){
-            pos += transform.right.normalized / 10;
-        }
-
-        if(Input.GetKey(KeyCode.W)) {
-            pos -= transform.up.normalized / 10;
-        }
-        else if(Input.GetKey(KeyCode.S)){
-            pos += transform.up.normalized / 10;
-        }
-
-
-        if(Input.GetKey(KeyCode.Q)) {
-            pos += transform.forward.normalized / 10;
-        }else if (Input.GetKey(KeyCode.E)) {
-            pos -= transform.forward.normalized / 10;
-        }
-
         transform.rotation = Quaternion.Lerp(transform.rotation, newRot, Time.deltaTime * lerpRate);
         transform.position = pos;
     }
