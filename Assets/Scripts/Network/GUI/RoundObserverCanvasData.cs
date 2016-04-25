@@ -38,12 +38,14 @@ public class RoundObserverCanvasData : MonoBehaviour {
 		killFeed.text = re.getRoundPlayerObjectManager().getKillsAsList(5); // Show last 5 kills;
 		pirateScore.text = pirateScoreInt.ToString();
 		superCorpScore.text = superCorpScoreInt.ToString();
+		if (pirateScoreInt+superCorpScoreInt!=0) {
+			float ppercentage = pirateScoreInt/(pirateScoreInt+superCorpScoreInt)*100;
+			piratesBar.GetComponent<ProgressBarBehaviour>().UpdateValue(ppercentage);
 
-		float ppercentage = pirateScoreInt/(pirateScoreInt+superCorpScoreInt)*100;
-		piratesBar.GetComponent<ProgressBarBehaviour>().UpdateValue(ppercentage);
-
-		float spercentage = superCorpScoreInt/(pirateScoreInt+superCorpScoreInt)*100;
-		piratesBar.GetComponent<ProgressBarBehaviour>().UpdateValue(spercentage);
+			float spercentage = superCorpScoreInt/(pirateScoreInt+superCorpScoreInt)*100;
+			piratesBar.GetComponent<ProgressBarBehaviour>().UpdateValue(spercentage);
+		}
+		
 		// if(pirateScoreInt > superCorpScoreInt){
 		// 	piratesWinning.SetActive(true);
 		// 	superCorpWinning.SetActive(false);
