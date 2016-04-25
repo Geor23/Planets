@@ -26,6 +26,7 @@ public class RoundObserverCanvasData : MonoBehaviour {
 		InvokeRepeating("UpdateKills", 0, 1);
 		piratesBar.GetComponent<ProgressBarBehaviour>().UpdateValue(50);
 		superCorpBar.GetComponent<ProgressBarBehaviour>().UpdateValue(50);
+		Debug.Log("blaaaaa");
 
 	}
 
