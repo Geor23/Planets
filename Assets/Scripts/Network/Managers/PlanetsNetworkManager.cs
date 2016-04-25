@@ -72,11 +72,11 @@ public class PlanetsNetworkManager : NetworkManager {
 
         //TOCHANGE
     	roundList = new List<string>();
-    	roundList.Add("Round4");
+    	roundList.Add("Round3");
         roundList.Add("RoundOver");
     	roundList.Add("Round2");
     	roundList.Add("RoundOver");
-    	roundList.Add("Round3");
+    	roundList.Add("Round1");
     	roundList.Add("GameOver");
         pm = new PlayerManager();
     }

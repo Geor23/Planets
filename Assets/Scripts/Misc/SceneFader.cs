@@ -10,7 +10,11 @@ public class SceneFader : MonoBehaviour {
     private float alpha = 1.0f;    //textures alpha value between 0 and 1
     private int fadeDir = -1;       //direction to fade:in = -1 , out - 1
 
-    void onGUI ()
+    // void Start(){
+    //     BeginFade(-1);
+    // }
+
+    void OnGUI ()
     {
         alpha += fadeDir * fadeSpeed * Time.deltaTime;
 
