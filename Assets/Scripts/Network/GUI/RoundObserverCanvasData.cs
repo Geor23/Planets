@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using ProgressBar;
 
 public class RoundObserverCanvasData : MonoBehaviour {
 
@@ -9,8 +10,11 @@ public class RoundObserverCanvasData : MonoBehaviour {
 	public Text killFeed;
 	public Text pirateScore;
 	public Text superCorpScore;
-	public GameObject piratesWinning;
-	public GameObject superCorpWinning;
+	public GameObject piratesBar;
+	public GameObject superCorpBar;
+
+	// public GameObject piratesWinning;
+	// public GameObject superCorpWinning;
 	public RoundEvents re;
 
 
@@ -20,6 +24,11 @@ public class RoundObserverCanvasData : MonoBehaviour {
 			Debug.LogError("Couldn't find RoundEvents!");
 		}
 		InvokeRepeating("UpdateKills", 0, 1);
+		piratesBar.GetComponent<ProgressBarBehaviour>().SetFillerSize(0.5f);
+        piratesBar.GetComponent<ProgressBarBehaviour>().SetFillerSizeAsPercentage(50);    
+		superCorpBar.GetComponent<ProgressBarBehaviour>().SetFillerSize(0.5f);
+        superCorpBar.GetComponent<ProgressBarBehaviour>().SetFillerSizeAsPercentage(50);   
+
 	}
 
 	void UpdateKills(){
@@ -30,13 +39,15 @@ public class RoundObserverCanvasData : MonoBehaviour {
 		pirateScore.text = pirateScoreInt.ToString();
 		superCorpScore.text = superCorpScoreInt.ToString();
 
-		if(pirateScoreInt > superCorpScoreInt){
-			piratesWinning.SetActive(true);
-			superCorpWinning.SetActive(false);
-		}
-		if(pirateScoreInt < superCorpScoreInt){
-			piratesWinning.SetActive(false);
-			superCorpWinning.SetActive(true);	
-		}
+		// piratesBar.GetComponent<ProgressBarBehaviour>().UpdateValue((float)time);
+
+		// if(pirateScoreInt > superCorpScoreInt){
+		// 	piratesWinning.SetActive(true);
+		// 	superCorpWinning.SetActive(false);
+		// }
+		// if(pirateScoreInt < superCorpScoreInt){
+		// 	piratesWinning.SetActive(false);
+		// 	superCorpWinning.SetActive(true);	
+		// }
 	}
 }
