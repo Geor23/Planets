@@ -39,8 +39,11 @@ public class RoundObserverCanvasData : MonoBehaviour {
 		pirateScore.text = pirateScoreInt.ToString();
 		superCorpScore.text = superCorpScoreInt.ToString();
 
-		// piratesBar.GetComponent<ProgressBarBehaviour>().UpdateValue((float)time);
+		float ppercentage = pirateScoreInt/(pirateScoreInt+superCorpScoreInt)*100;
+		piratesBar.GetComponent<ProgressBarBehaviour>().UpdateValue(ppercentage);
 
+		float spercentage = superCorpScoreInt/(pirateScoreInt+superCorpScoreInt)*100;
+		piratesBar.GetComponent<ProgressBarBehaviour>().UpdateValue(spercentage);
 		// if(pirateScoreInt > superCorpScoreInt){
 		// 	piratesWinning.SetActive(true);
 		// 	superCorpWinning.SetActive(false);
