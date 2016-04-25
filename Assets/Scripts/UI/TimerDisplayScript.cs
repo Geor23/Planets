@@ -9,7 +9,7 @@ public class TimerDisplayScript : MonoBehaviour {
     public Text textField;
     float time=99.0F;
     public AudioClip endRoundSound;
-    public GameObject timer;
+    // public GameObject timer;
     private AudioSource source;
 
 	// Use this for initialization
@@ -28,8 +28,8 @@ public class TimerDisplayScript : MonoBehaviour {
        TimeMessage tm = msg.ReadMessage<TimeMessage>();
        time = tm.time;
        textField.text = time.ToString();
-       timer.GetComponent<ProgressBarBehaviour>().SetFillerSize(1);
-       timer.GetComponent<ProgressBarBehaviour>().SetFillerSizeAsPercentage(100);   
+       // timer.GetComponent<ProgressBarBehaviour>().SetFillerSize(1);
+       // timer.GetComponent<ProgressBarBehaviour>().SetFillerSizeAsPercentage(100);   
     }
 
     void Update(){
@@ -39,7 +39,7 @@ public class TimerDisplayScript : MonoBehaviour {
         } 
         if (time > 0){
             textField.text = ((int)time).ToString();
-            timer.GetComponent<ProgressBarBehaviour>().UpdateValue((float)time);
+            // timer.GetComponent<ProgressBarBehaviour>().UpdateValue((float)time);
 
             
         }else{
