@@ -2,7 +2,14 @@ using UnityEngine;
 using System.Collections;
 
 public class PlanetariumDomeControl : MonoBehaviour {
+
+    public bool enablePlanetariumMode = false;
+
     void Start() {
+        if(!enablePlanetariumMode) {
+            GetComponent<Domemaster>().enabled = false;
+            return;
+        }
         DontDestroyOnLoad(transform.gameObject);
         turnOffOtherCameras();
     }
