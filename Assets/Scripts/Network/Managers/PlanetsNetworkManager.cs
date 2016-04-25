@@ -77,10 +77,6 @@ public class PlanetsNetworkManager : NetworkManager {
     	roundList.Add("Round2");
     	roundList.Add("RoundOver");
     	roundList.Add("Round3");
-        roundList.Add("RoundOver");
-        roundList.Add("Round4");
-        roundList.Add("RoundOver");
-        roundList.Add("Round5");
     	roundList.Add("GameOver");
         pm = new PlayerManager();
     }
@@ -188,6 +184,8 @@ public class PlanetsNetworkManager : NetworkManager {
 	    NetworkServer.RegisterHandler(Msgs.requestCurrentTime, OnServerRecieveTimeRequest);
         NetworkServer.RegisterHandler(Msgs.givePlayerScores, OnServerRecievePlayerScore);
         NetworkServer.RegisterHandler(Msgs.playerReadyToSpawn, OnServerPlayerReadyToSpawn);
+        // NetworkServer.RegisterHandler(Msgs.requestFinalScores, sendScoresToPlayers);
+
     }
 
     public int ipToId(string address, int connId){
