@@ -2666,6 +2666,7 @@ GameObject:
   - 114: {fileID: 1373486695}
   - 114: {fileID: 1373486694}
   - 114: {fileID: 1373486697}
+  - 114: {fileID: 1373486698}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -2776,6 +2777,18 @@ MonoBehaviour:
   finalScores: {fileID: 1193276412}
   timerRadial: {fileID: 91180047}
   time: 10
+--- !u!114 &1373486698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1373486692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 497cb43cdefe7c04695479910bde3b18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nm: {fileID: 0}
 --- !u!1001 &1437045389
 Prefab:
   m_ObjectHideFlags: 0

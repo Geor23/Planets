@@ -49,13 +49,13 @@ public class RoundEvents : MonoBehaviour {
 
     /* CLIENT FUNCS PLZ */
 
-    void Update()
-    {
+    // void Update()
+    // {
         //PLS no??
-        if (Input.GetKeyDown("m")){
-            nm.sendScoresToPlayers();
-        }
-    }
+        // if (Input.GetKeyDown("m")){
+        //     nm.sendScoresToPlayers();
+        // }
+    // }
 
     void clientInit(){
         nm.client.RegisterHandler(Msgs.killPlayer, OnClientDeath);

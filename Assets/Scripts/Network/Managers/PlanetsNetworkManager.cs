@@ -184,7 +184,7 @@ public class PlanetsNetworkManager : NetworkManager {
 	    NetworkServer.RegisterHandler(Msgs.requestCurrentTime, OnServerRecieveTimeRequest);
         NetworkServer.RegisterHandler(Msgs.givePlayerScores, OnServerRecievePlayerScore);
         NetworkServer.RegisterHandler(Msgs.playerReadyToSpawn, OnServerPlayerReadyToSpawn);
-        NetworkServer.RegisterHandler(Msgs.requestFinalScores, sendScoresToPlayers);
+        // NetworkServer.RegisterHandler(Msgs.requestFinalScores, sendScoresToPlayers);
 
     }
 
@@ -498,7 +498,7 @@ public class PlanetsNetworkManager : NetworkManager {
     // }
 
     //RUN ON OBSERVER
-    public void sendScoresToPlayers(NetworkMessage msg){
+    public void sendScoresToPlayers(){
         Debug.LogError("YAYAYA");
         Dictionary<int, Player> playerDict = pm.getPlayerDict();
         Debug.LogError(playerDict.Count);

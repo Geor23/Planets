@@ -36,7 +36,7 @@ public class RoundOverGUI : MonoBehaviour {
     nm.client.RegisterHandler (Msgs.serverFinalScores, OnClientReceiveScores);
     nm.client.Send(Msgs.requestTeamMsg, new EmptyMessage());
     // | leave this in - works when there's an observer
-    nm.client.Send(Msgs.requestFinalScores, new EmptyMessage());
+    // nm.client.Send(Msgs.requestFinalScores, new EmptyMessage());
     nm.client.RegisterHandler(Msgs.sendCurrentTime, OnClientReceiveTime); //Creates a handler for when the client recieves a time from the server
     nm.client.Send(Msgs.requestCurrentTime, new EmptyMessage()); //Requests the current time in-game 
     nm.client.RegisterHandler(Msgs.sendRoundOverValuesToPlayer, OnPlayerRecievePlayerScore);
