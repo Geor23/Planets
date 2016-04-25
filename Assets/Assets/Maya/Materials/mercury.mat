@@ -19,7 +19,7 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 2800000, guid: 406598a29ea7946bd97780139da9532e, type: 3}
+          m_Texture: {fileID: 2800000, guid: 93ac7b06531f14c64baaaa85fa0125a7, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -97,27 +97,15 @@ Material:
       data:
         first:
           name: _Cutoff
-        second: .5
+        second: 0.5
       data:
         first:
           name: _Shininess
         second: 10
       data:
         first:
-          name: _DiffuseThreshold
-        second: .100000001
-      data:
-        first:
-          name: _LitOutlineThickness
-        second: .100000001
-      data:
-        first:
-          name: _UnlitOutlineThickness
-        second: .400000006
-      data:
-        first:
           name: _Parallax
-        second: .0199999996
+        second: 0.02
       data:
         first:
           name: _ZWrite
@@ -149,7 +137,19 @@ Material:
       data:
         first:
           name: _Metallic
-        second: .100000001
+        second: 0.1
+      data:
+        first:
+          name: _DiffuseThreshold
+        second: 0.1
+      data:
+        first:
+          name: _LitOutlineThickness
+        second: 0.1
+      data:
+        first:
+          name: _UnlitOutlineThickness
+        second: 0.4
     m_Colors:
       data:
         first:
@@ -158,7 +158,7 @@ Material:
       data:
         first:
           name: _Color
-        second: {r: .788235366, g: .788235366, b: .788235366, a: 1}
+        second: {r: 0.78823537, g: 0.78823537, b: 0.78823537, a: 1}
       data:
         first:
           name: _SpecColor
@@ -166,7 +166,7 @@ Material:
       data:
         first:
           name: _UnlitColor
-        second: {r: .5, g: .5, b: .5, a: 1}
+        second: {r: 0.5, g: 0.5, b: 0.5, a: 1}
       data:
         first:
           name: _OutlineColor
