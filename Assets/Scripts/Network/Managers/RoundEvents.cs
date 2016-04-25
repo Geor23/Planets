@@ -89,7 +89,6 @@ public class RoundEvents : MonoBehaviour {
         pom.killPlayerLocal(playerKilledId, playerKillerId);
 
         if(sandBox) return;
-        //Do we even need this ? ALl the data is in RoundObjectmanager
         pm.addKill(playerKillerId);
         pm.addDeath(playerKilledId);
         Debug.Log("Player " + playerKilledId + " died");

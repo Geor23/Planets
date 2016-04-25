@@ -32,4 +32,19 @@ public class GameStatsManager : MonoBehaviour {
 	public void makeGraph(){
 
 	}
+
+	public RoundScoreManager getRoundScores(int round){
+		if(round > roundPlayerData.Count) return null;
+		return roundScoreData[round-1];
+	}
+
+	public RoundPlayerObjectManager getRoundPlayerData(int round){
+		if(round > roundPlayerData.Count) return null;
+		return roundPlayerData[round-1];
+	}
+
+	//Assumes that the data has been populated correctly by Round Events
+	public int getLatestRound(){
+		return roundPlayerData.Count;
+	}
 }
