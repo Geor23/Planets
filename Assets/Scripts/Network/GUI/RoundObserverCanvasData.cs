@@ -24,10 +24,8 @@ public class RoundObserverCanvasData : MonoBehaviour {
 			Debug.LogError("Couldn't find RoundEvents!");
 		}
 		InvokeRepeating("UpdateKills", 0, 1);
-		piratesBar.GetComponent<ProgressBarBehaviour>().SetFillerSize(0.5f);
-        piratesBar.GetComponent<ProgressBarBehaviour>().SetFillerSizeAsPercentage(50);    
-		superCorpBar.GetComponent<ProgressBarBehaviour>().SetFillerSize(0.5f);
-        superCorpBar.GetComponent<ProgressBarBehaviour>().SetFillerSizeAsPercentage(50);   
+		piratesBar.GetComponent<ProgressBarBehaviour>().UpdateValue(50);
+		superCorpBar.GetComponent<ProgressBarBehaviour>().UpdateValue(50);
 
 	}
 
@@ -43,7 +41,7 @@ public class RoundObserverCanvasData : MonoBehaviour {
 			piratesBar.GetComponent<ProgressBarBehaviour>().UpdateValue(ppercentage);
 
 			float spercentage = superCorpScoreInt/(pirateScoreInt+superCorpScoreInt)*100;
-			piratesBar.GetComponent<ProgressBarBehaviour>().UpdateValue(spercentage);
+			superCorpBar.GetComponent<ProgressBarBehaviour>().UpdateValue(spercentage);
 		}
 		
 		// if(pirateScoreInt > superCorpScoreInt){
