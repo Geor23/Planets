@@ -29,7 +29,7 @@ GameObject:
   - 114: {fileID: 11433602}
   m_Layer: 0
   m_Name: PlanetariumDomeControl
-  m_TagString: Untagged
+  m_TagString: Planetarium
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -621,6 +621,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d6a5ce3e1804b749957c85d58e51f3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enablePlanetariumMode: 0
 --- !u!114 &11452208
 MonoBehaviour:
   m_ObjectHideFlags: 1
