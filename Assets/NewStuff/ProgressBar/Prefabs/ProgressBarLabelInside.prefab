@@ -62,7 +62,6 @@ GameObject:
   - 222: {fileID: 22249070}
   - 114: {fileID: 11449068}
   - 114: {fileID: 11449070}
-  - 114: {fileID: 11448608}
   m_Layer: 5
   m_Name: ProgressBarLabelInside
   m_TagString: Untagged
@@ -70,20 +69,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &11448608
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 149070}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01d587f8957a4df47837106c0bdd21a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textField: {fileID: 11449064}
-  endRoundSound: {fileID: 0}
-  timer: {fileID: 149070}
 --- !u!114 &11449062
 MonoBehaviour:
   m_ObjectHideFlags: 1
