@@ -80,4 +80,30 @@ public class RoundPlayerObjectManager { //TODO
         return "noobed";
     }
 
+    public Player getPlayerWithMostKills(int team){
+        int max = 0;
+        Player maxP = null;
+        foreach(KeyValuePair<int, Player> kv in pm.getPlayerDict()){
+            int prs = kv.Value.getKills();
+            if(prs > max && kv.Value.getPlayerTeam() == team){
+                max = prs;
+                maxP = kv.Value;
+            }
+        }
+        return maxP;
+    }
+
+    public Player getPlayerWithLeastDeaths(int team){
+        int min = 10000;
+        Player minP = null;
+        foreach(KeyValuePair<int, Player> kv in pm.getPlayerDict()){
+            int prs = kv.Value.getDeaths();
+            if(prs < min && kv.Value.getPlayerTeam() == team){
+                min = prs;
+                minP = kv.Value;
+            }
+        }
+        return minP;
+    }
+
 }

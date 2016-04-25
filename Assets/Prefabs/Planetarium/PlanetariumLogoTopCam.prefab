@@ -121,6 +121,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 422344}
   - 225: {fileID: 22548916}
+  - 114: {fileID: 11486612}
   m_Layer: 0
   m_Name: PlanetariumLogoTopCam
   m_TagString: Untagged
@@ -442,6 +443,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Target: {fileID: 0}
+--- !u!114 &11486612
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 189798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb1102080b0a37b4fa8cae9fdd1abb4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &21243870
 SpriteRenderer:
   m_ObjectHideFlags: 1
