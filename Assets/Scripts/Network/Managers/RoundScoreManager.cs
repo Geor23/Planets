@@ -50,4 +50,17 @@ public class RoundScoreManager {
         if (p == null) return 0;
         else return p.getPlayerScoreRound();
     }
+
+    public Player getPlayerWithMostResources(int team){
+        int max = 0;
+        Player maxP = null;
+        foreach(KeyValuePair<int, Player> kv in playerDict){
+            int prs = kv.Value.getRoundScore();
+            if(prs > max && kv.Value.getPlayerTeam() == team){
+                max = prs;
+                maxP = kv.Value;
+            }
+        }
+        return maxP;
+    }
 }
