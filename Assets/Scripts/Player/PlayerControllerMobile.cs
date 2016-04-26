@@ -338,10 +338,19 @@ public class PlayerControllerMobile : NetworkBehaviour {
 
     void OnMouseDown() {
         Vector3 temp = pin.transform.localScale;
-        pin.transform.localScale = Vector3.Lerp (pin.transform.localScale, 10*temp, Time.deltaTime);
+        // pin.transform.localScale = Vector3.Lerp (pin.transform.localScale, 10*temp, Time.deltaTime);
 
-        pin.transform.localScale = Vector3.Lerp (pin.transform.localScale, temp, Time.deltaTime);
+        // pin.transform.localScale = Vector3.Lerp (pin.transform.localScale, temp, Time.deltaTime);
 
+        // pin.transform.localScale.x = minSize + Mathf.PingPong(Time.time * speed, range);
+// transform.position = Vector3( Mathf.PingPong(Time.time, 3), transform.position.y, transform.position.z);
+    
+        pin.transform.localScale = temp + new Vector3(Mathf.PingPong(Time.time * 1.0f, 2), Mathf.PingPong(Time.time * 1.0f, 2), Mathf.PingPong(Time.time * 1.0f, 2)) ;
+        pin.transform.localScale = temp;
+        // pin.transform.localScale.y = temp.y + Mathf.PingPong(Time.time * 1.0f, 10);
+        // pin.transform.localScale.z = temp.z + Mathf.PingPong(Time.time * 1.0f, 10);
+
+// transform.localScale.y = (Mathf.Sin(Time.time * 1.0) + 1.0) / 2.0 * 10*t + minSize;
         // gameObject.transform.localScale = Vector3.Lerp (gameObject.transform.localScale, 10*temp, Time.deltaTime);
 
         // gameObject.transform.localScale = temp;
