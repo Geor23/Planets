@@ -86,6 +86,7 @@ public class RoundEvents : MonoBehaviour {
         if(sandBox) return;
         pm.addKill(playerKillerId);
         pm.addDeath(playerKilledId);
+
         Debug.Log("Player " + playerKilledId + " died");
     }
 

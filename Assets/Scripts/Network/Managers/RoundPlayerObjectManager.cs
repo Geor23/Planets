@@ -32,6 +32,12 @@ public class RoundPlayerObjectManager { //TODO
     private List<KillInfo> killHistory;
     private PlayerManager pm;
 
+    public int pirateKills = 0;
+    public int superCorpKills = 0;
+    public int pirateDeaths = 0;
+    public int superCorpDeaths = 0;
+
+
     public RoundPlayerObjectManager(){
         deadPlayers = new Queue<int>();
         killHistory = new List<KillInfo>();
@@ -43,6 +49,18 @@ public class RoundPlayerObjectManager { //TODO
         KillInfo ki = new KillInfo(playerIdKiller, playerIdKilled, KillType.ELE);
         killHistory.Add(ki);
         deadPlayers.Enqueue(playerIdKilled);
+
+        //Increment team kill and death counters
+        //Got killed players team
+        int team = pm.getPlayer(playerIdKilled).getPlayerTeam();
+        if (team == TeamID.TEAM_SUPERCORP) {
+            pirateKills += 1;
+            superCorpDeaths += 1;
+        }
+        else {
+            pirateDeaths += 1;
+            superCorpKills += 1;
+        }
     }
 
     public int mostRecentDeath(){
@@ -71,8 +89,8 @@ public class RoundPlayerObjectManager { //TODO
         return getKillString(killHistory.Count - 1);
     }
 
-    public string getKillTypeString(int killType){
-        switch(killType){
+    public string getKillTypeString(int killType) {
+        switch(killType) {
             case KillType.BULLET: return "blasted";
             case KillType.METEOR: return "meteored";
             case KillType.ELE:    return "eleftheriosized";
@@ -105,5 +123,4 @@ public class RoundPlayerObjectManager { //TODO
         }
         return minP;
     }
-
 }
