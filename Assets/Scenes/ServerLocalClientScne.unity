@@ -174,7 +174,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 11489486, guid: af28d3f0fb326294fb32a70529d06809, type: 2}
       propertyPath: m_SpawnPrefabs.Array.size
-      value: 8
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 447324, guid: af28d3f0fb326294fb32a70529d06809, type: 2}
       propertyPath: m_LocalPosition.x
@@ -215,7 +215,7 @@ Prefab:
     - target: {fileID: 11489486, guid: af28d3f0fb326294fb32a70529d06809, type: 2}
       propertyPath: m_SpawnPrefabs.Array.data[7]
       value: 
-      objectReference: {fileID: 126588, guid: e9e78e1f4340f004b8a159f0fa130c1d, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 11489486, guid: af28d3f0fb326294fb32a70529d06809, type: 2}
       propertyPath: observerSingleScreen
       value: 
@@ -227,6 +227,30 @@ Prefab:
     - target: {fileID: 11489486, guid: af28d3f0fb326294fb32a70529d06809, type: 2}
       propertyPath: INITIALTIMER
       value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 11489486, guid: af28d3f0fb326294fb32a70529d06809, type: 2}
+      propertyPath: m_SpawnPrefabs.Array.data[2]
+      value: 
+      objectReference: {fileID: 192962, guid: 7dc54a31299ac4abd87316f438f5f103, type: 2}
+    - target: {fileID: 11489486, guid: af28d3f0fb326294fb32a70529d06809, type: 2}
+      propertyPath: m_SpawnPrefabs.Array.data[3]
+      value: 
+      objectReference: {fileID: 177056, guid: 2d1995fadd0c04b3eab52ed051bc1936, type: 2}
+    - target: {fileID: 11489486, guid: af28d3f0fb326294fb32a70529d06809, type: 2}
+      propertyPath: m_SpawnPrefabs.Array.data[4]
+      value: 
+      objectReference: {fileID: 197474, guid: 5d633392a34c14108aad562f21512f74, type: 2}
+    - target: {fileID: 11489486, guid: af28d3f0fb326294fb32a70529d06809, type: 2}
+      propertyPath: m_SpawnPrefabs.Array.data[5]
+      value: 
+      objectReference: {fileID: 126588, guid: e9e78e1f4340f004b8a159f0fa130c1d, type: 2}
+    - target: {fileID: 11489486, guid: af28d3f0fb326294fb32a70529d06809, type: 2}
+      propertyPath: m_SpawnPrefabs.Array.data[6]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 11489486, guid: af28d3f0fb326294fb32a70529d06809, type: 2}
+      propertyPath: m_CustomConfig
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: af28d3f0fb326294fb32a70529d06809, type: 2}
@@ -1249,7 +1273,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11433602, guid: 150fb83b86bf6b5488321a9a60592a0d, type: 2}
       propertyPath: enablePlanetariumMode
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114930, guid: 150fb83b86bf6b5488321a9a60592a0d, type: 2}
       propertyPath: m_TagString
