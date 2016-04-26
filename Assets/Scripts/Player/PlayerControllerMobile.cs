@@ -5,6 +5,7 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 using UnityEngine.Networking.NetworkSystem;
 using UnityStandardAssets.CrossPlatformInput;
+using System.Collections;
 
 [NetworkSettings(channel = 1)]
 public class PlayerControllerMobile : NetworkBehaviour {
@@ -346,7 +347,10 @@ public class PlayerControllerMobile : NetworkBehaviour {
 // transform.position = Vector3( Mathf.PingPong(Time.time, 3), transform.position.y, transform.position.z);
     
         pin.transform.localScale = temp + new Vector3(Mathf.PingPong(Time.time * 1.0f, 2), Mathf.PingPong(Time.time * 1.0f, 2), Mathf.PingPong(Time.time * 1.0f, 2)) ;
-        pin.transform.localScale = temp;
+        
+        StartCoroutine(Wait(temp));
+        
+        // yield WaitForSeconds (2);
         // pin.transform.localScale.y = temp.y + Mathf.PingPong(Time.time * 1.0f, 10);
         // pin.transform.localScale.z = temp.z + Mathf.PingPong(Time.time * 1.0f, 10);
 
@@ -362,6 +366,12 @@ public class PlayerControllerMobile : NetworkBehaviour {
         //     NetworkServer.SendToClient(nc.connectionId, Msgs.ping, new EmptyMessage());
         // }
         Debug.Log("ping!");
+    }
+
+    IEnumerator Wait(Vector3 temp) {
+        yield return new WaitForSeconds(0.5f);      
+        pin.transform.localScale = temp;
+
     }
 
 
