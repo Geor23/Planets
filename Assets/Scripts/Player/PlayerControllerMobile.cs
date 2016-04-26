@@ -335,7 +335,26 @@ public class PlayerControllerMobile : NetworkBehaviour {
     }
 
     void OnMouseDown() {
-        
+        int originalx = gameObject.transform.localScale.x;
+        int originaly = gameObject.transform.localScale.y;
+        int originalz = gameObject.transform.localScale.z;
+
+        gameObject.transform.localScale.x = 10;
+        gameObject.transform.localScale.y = 10;
+        gameObject.transform.localScale.z = 10;
+
+        gameObject.transform.localScale.x = originalx;
+        gameObject.transform.localScale.y = originaly;
+        gameObject.transform.localScale.z = originalz;
+
+        gameObject.transform.localScale.x = 10;
+        gameObject.transform.localScale.y = 10;
+        gameObject.transform.localScale.z = 10;
+
+        gameObject.transform.localScale.x = originalx;
+        gameObject.transform.localScale.y = originaly;
+        gameObject.transform.localScale.z = originalz;
+
         if (!nIdentity.isLocalPlayer) return;
         // nm.ping();
         foreach (NetworkConnection nc in ((PlanetsNetworkManager)PlanetsNetworkManager.singleton).getUpdateListeners()){
