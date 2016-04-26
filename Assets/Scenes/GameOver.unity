@@ -4524,13 +4524,29 @@ Prefab:
       propertyPath: m_Name
       value: Maze-supercorp
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 11439216, guid: fb8bffbde3ae84e5db1cc51f96470508, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: fb8bffbde3ae84e5db1cc51f96470508, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &1660221128 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 192316, guid: fb8bffbde3ae84e5db1cc51f96470508, type: 2}
   m_PrefabInternal: {fileID: 1660221127}
+--- !u!114 &1660221129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1660221128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 371b4f3e36a0940d19bd646858007537, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  teamP: {fileID: 0}
+  teamS: {fileID: 0}
+  ScoreP: {fileID: 0}
+  ScoreS: {fileID: 0}
 --- !u!1 &1735771924
 GameObject:
   m_ObjectHideFlags: 0
