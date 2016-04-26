@@ -1,4 +1,4 @@
-    using System;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using UnityEngine;
@@ -416,6 +416,13 @@ public class PlanetsNetworkManager : NetworkManager {
 
 	
 	/* ------------------  Client functions ---------------- */
+
+
+    // public void ping() {
+    //     foreach (NetworkConnection nc in getUpdateListeners()){
+    //         NetworkServer.SendToClient(nc.connectionId, Msgs.ping, new EmptyMessage()); 
+    //     }
+    // }
 	
     // called when connected to a server
 	public override void OnClientConnect(NetworkConnection conn) {
@@ -427,9 +434,15 @@ public class PlanetsNetworkManager : NetworkManager {
         ppi = PersonalPlayerInfo.singleton;
         client.RegisterHandler(Msgs.updatePlayer, OnPlayerUpdate);
         client.RegisterHandler(Msgs.addNewPlayer, OnNewPlayer);
+        client.RegisterHandler(Msgs.ping, OnPing);
         client.RegisterHandler(Msgs.addNewPlayerToObserver, OnNewPlayerObserver);
         client.RegisterHandler(Msgs.updatePlayerToObserver, OnPlayerUpdateObserver);
         // client.RegisterHandler(Msgs.sendRoundOverValuesToPlayer, OnPlayerRecievePlayerScore);
+    }
+
+    public void OnPing(NetworkMessage msg) {
+        Debug.Log("Ping!");
+        // msg.conn.connectionId
     }
 
     //TODO: USE THIS WHEN PLAYER CHANGES TEAM AND SUCH
