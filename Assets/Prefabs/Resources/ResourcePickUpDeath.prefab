@@ -12,12 +12,8 @@ GameObject:
   - 135: {fileID: 13530694}
   - 23: {fileID: 2311746}
   - 54: {fileID: 5465672}
-  - 114: {fileID: 11453202}
-  - 114: {fileID: 11413754}
   - 114: {fileID: 11448070}
   - 222: {fileID: 22261376}
-  - 114: {fileID: 11410500}
-  - 148: {fileID: 14811138}
   m_Layer: 8
   m_Name: ResourcePickUpDeath
   m_TagString: ResourcePickUpDeath
@@ -73,71 +69,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &11410500
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 116834}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 10
-    m_MaxSize: 40
-    m_Alignment: 0
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: -1
---- !u!114 &11413754
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 116834}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SceneId:
-    m_Value: 0
-  m_AssetId:
-    i0: 151
-    i1: 102
-    i2: 103
-    i3: 173
-    i4: 131
-    i5: 38
-    i6: 164
-    i7: 131
-    i8: 234
-    i9: 169
-    i10: 194
-    i11: 30
-    i12: 197
-    i13: 96
-    i14: 248
-    i15: 178
-  m_ServerOnly: 0
-  m_LocalPlayerAuthority: 0
 --- !u!114 &11448070
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -150,17 +81,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   score: 0
---- !u!114 &11453202
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 116834}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11ca26c994b954608aeba06d7eeb4447, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!135 &13530694
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -173,18 +93,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!148 &14811138
-NetworkView:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 116834}
-  m_Enabled: 1
-  m_StateSynchronization: 1
-  m_Observed: {fileID: 22447542}
-  m_ViewID:
-    m_ID: 0
-    m_Type: 0
 --- !u!222 &22261376
 CanvasRenderer:
   m_ObjectHideFlags: 1
