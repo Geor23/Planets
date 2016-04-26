@@ -85,6 +85,88 @@ NavMeshSettings:
     cellSize: 0.16666667
     manualCellSize: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &1007157596
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 22472354, guid: fb026f01e730d5244a4f00457c97d6fa, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22472354, guid: fb026f01e730d5244a4f00457c97d6fa, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22472354, guid: fb026f01e730d5244a4f00457c97d6fa, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 68.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 22472354, guid: fb026f01e730d5244a4f00457c97d6fa, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22472354, guid: fb026f01e730d5244a4f00457c97d6fa, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22472354, guid: fb026f01e730d5244a4f00457c97d6fa, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22472354, guid: fb026f01e730d5244a4f00457c97d6fa, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 22472354, guid: fb026f01e730d5244a4f00457c97d6fa, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 22472354, guid: fb026f01e730d5244a4f00457c97d6fa, type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: -27.523487
+      objectReference: {fileID: 0}
+    - target: {fileID: 22472354, guid: fb026f01e730d5244a4f00457c97d6fa, type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: -14.4199505
+      objectReference: {fileID: 0}
+    - target: {fileID: 22472354, guid: fb026f01e730d5244a4f00457c97d6fa, type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 778
+      objectReference: {fileID: 0}
+    - target: {fileID: 22472354, guid: fb026f01e730d5244a4f00457c97d6fa, type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 525
+      objectReference: {fileID: 0}
+    - target: {fileID: 22472354, guid: fb026f01e730d5244a4f00457c97d6fa, type: 2}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22472354, guid: fb026f01e730d5244a4f00457c97d6fa, type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22472354, guid: fb026f01e730d5244a4f00457c97d6fa, type: 2}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22472354, guid: fb026f01e730d5244a4f00457c97d6fa, type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22472354, guid: fb026f01e730d5244a4f00457c97d6fa, type: 2}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 22472354, guid: fb026f01e730d5244a4f00457c97d6fa, type: 2}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: fb026f01e730d5244a4f00457c97d6fa, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &1787568675
 GameObject:
   m_ObjectHideFlags: 0
@@ -144,7 +226,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 1
+  orthographic: 0
   orthographic size: 5
   m_Depth: -1
   m_CullingMask:
@@ -166,7 +248,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1787568675}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 41.2, y: 49.3, z: 18.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
