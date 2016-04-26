@@ -12,6 +12,12 @@ public class GameOverGUI : MonoBehaviour {
 	public Text teamS;
   public Text ScoreP;
   public Text ScoreS;
+  public GameObject tumorpirate;
+  public GameObject tumorsupercorp;
+  public GameObject mazepirate;
+  public GameObject mazesupercorp;
+  public GameObject citypirate;
+  public GameObject citysupercorp;
 
   public void Start() {
 
@@ -40,14 +46,35 @@ public class GameOverGUI : MonoBehaviour {
     int pirateCounter = 0;
     int superCorpCounter = 0;
 
-    if (tl.round1P >= tl.round1S) pirateCounter ++;
-    else superCorpCounter ++;
+    if (tl.round1P >= tl.round1S) {
+      pirateCounter ++;
+      tumorpirate.SetActive(true);
+      tumorsupercorp.SetActive(false);
+    } else {
+      superCorpCounter ++;
+      tumorpirate.SetActive(false);
+      tumorsupercorp.SetActive(true);
+    }
 
-    if (tl.round2P >= tl.round2S) pirateCounter ++;
-    else superCorpCounter ++;
+    if (tl.round2P >= tl.round2S) {
+      pirateCounter ++;
+      mazepirate.SetActive(true);
+      mazesupercorp.SetActive(false);
+    } else {
+      superCorpCounter ++;
+      mazepirate.SetActive(false);
+      mazesupercorp.SetActive(true);
+    }
 
-    if (tl.round3P >= tl.round3S) pirateCounter ++;
-    else superCorpCounter ++;
+    if (tl.round3P >= tl.round3S) {
+      pirateCounter ++;
+      citypirate.SetActive(true);
+      citysupercorp.SetActive(false);
+    } else {
+      superCorpCounter ++;
+      citypirate.SetActive(false);
+      citysupercorp.SetActive(true);
+    }
 
     ScoreP.text = pirateCounter.ToString();
     ScoreS.text = superCorpCounter.ToString();
