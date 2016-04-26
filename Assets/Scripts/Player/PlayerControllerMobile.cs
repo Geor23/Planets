@@ -335,7 +335,13 @@ public class PlayerControllerMobile : NetworkBehaviour {
     }
 
     void OnMouseDown() {
-        Debug.Log("ping!");
+        
+        if (!nIdentity.isLocalPlayer) return;
+        // nm.ping();
+        foreach (NetworkConnection nc in ((PlanetsNetworkManager)PlanetsNetworkManager.singleton).getUpdateListeners()){
+            NetworkServer.SendToClient(nc.connectionId, Msgs.ping, new EmptyMessage());
+        }
+        // Debug.Log("ping!");
     }
 
 

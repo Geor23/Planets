@@ -40,6 +40,7 @@ class Msgs : MsgType {
   public const short givePlayerScores = 81;
   public const short sendRoundOverValuesToPlayer = 82;
   public const short playerReadyToSpawn = 82;
+  public const short ping = 83;
 }
 
 public class JoinMessage : MessageBase {
