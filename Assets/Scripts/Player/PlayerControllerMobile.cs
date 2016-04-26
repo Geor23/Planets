@@ -135,19 +135,19 @@ public class PlayerControllerMobile : NetworkBehaviour {
         rb = GetComponent<Rigidbody>();
         Vector3 forward = transform.forward;
         Vector3 right = transform.right;
-#if UNITY_ANDROID
+        #if UNITY_ANDROID
         float aimH = CrossPlatformInputManager.GetAxis ("AimH");
         float aimV = CrossPlatformInputManager.GetAxis ("AimV");
         float moveV = CrossPlatformInputManager.GetAxis("MoveV");
         float moveH = CrossPlatformInputManager.GetAxis("MoveH");
-#endif
+        #endif
 
-#if UNITY_STANDALONE
+        #if UNITY_STANDALONE
         float aimH = (-(Input.GetKey("left") ? 1 : 0) + (Input.GetKey("right") ? 1 : 0));
         float aimV = ((Input.GetKey("up") ? 1 : 0) - (Input.GetKey("down") ? 1 : 0));
         float moveV = ((Input.GetKey("w") ? 1 : 0) - (Input.GetKey("s") ? 1 : 0));
         float moveH = (-(Input.GetKey("a") ? 1 : 0) + (Input.GetKey("d") ? 1 : 0));
-#endif
+        #endif
 
         lastMoveH = moveH;
         lastMoveV = moveV;
@@ -185,13 +185,13 @@ public class PlayerControllerMobile : NetworkBehaviour {
         Quaternion currentRotation = Quaternion.LookRotation(direction, upDir);
         obj.rotation = Quaternion.Lerp(obj.rotation, currentRotation, Time.deltaTime * rotSpeed);
 
-#if UNITY_ANDROID
+        #if UNITY_ANDROID
 		if(CrossPlatformInputManager.GetAxis ("AimH") + CrossPlatformInputManager.GetAxis ("AimV") != 0){
-#endif
-#if UNITY_STANDALONE
+        #endif
+        #if UNITY_STANDALONE
         if (Input.GetKey("left") || Input.GetKey("right") || Input.GetKey("up") || Input.GetKey("down"))
         {
-#endif
+        #endif
             if (Time.time < nextFire)
                 return;
             CmdFireProjectile();
@@ -258,7 +258,7 @@ public class PlayerControllerMobile : NetworkBehaviour {
                 roundEvents.registerKill(netId, playerDetails.getDictId(), killerId);
             }
         }
-    else if (col.gameObject.CompareTag("ResourcePickUp")) { //Dealt with on the resource currently
+        else if (col.gameObject.CompareTag("ResourcePickUp")) { //Dealt with on the resource currently
             int resourceScore = resourcePowerUpManager.resourcePickUpCollision(col.gameObject);
             if (doubleScore) { //If points are to count for double, double score
                 resourceScore *= 2;
@@ -333,6 +333,11 @@ public class PlayerControllerMobile : NetworkBehaviour {
         projectile.GetComponent<ProjectileData>().ownerId = playerDetails.getDictId();
         Destroy(projectile, 2);
     }
+
+    void OnMouseDown() {
+        Debug.Log("ping!");
+    }
+
 
     void OnDestroy(){
         if(nIdentity.isLocalPlayer)
