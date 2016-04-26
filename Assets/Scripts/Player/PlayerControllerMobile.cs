@@ -340,47 +340,12 @@ public class PlayerControllerMobile : NetworkBehaviour {
     void OnMouseDown() {
         Vector3 temp = pin.transform.localScale;
         pin.transform.localScale = Vector3.Lerp (pin.transform.localScale, 7*temp, Time.deltaTime);
-
-        // Invoke("scaleUp", 0.5);
-        // Invoke("scaleDown", 0.5);
-        // Invoke("scaleUp", 0.5);
-        // Invoke("scaleUp", 0.5);
-        // pin.transform.localScale = Vector3.Lerp (pin.transform.localScale, temp, Time.deltaTime);
-
-        // pin.transform.localScale.x = minSize + Mathf.PingPong(Time.time * speed, range);
-// transform.position = Vector3( Mathf.PingPong(Time.time, 3), transform.position.y, transform.position.z);
-    
-        // pin.transform.localScale = temp + new Vector3(Mathf.PingPong(Time.time * 1.0f, 2), Mathf.PingPong(Time.time * 1.0f, 2), Mathf.PingPong(Time.time * 1.0f, 2)) ;
-        
+   
         StartCoroutine(Wait(temp));
-        
-        // yield WaitForSeconds (2);
-        // pin.transform.localScale.y = temp.y + Mathf.PingPong(Time.time * 1.0f, 10);
-        // pin.transform.localScale.z = temp.z + Mathf.PingPong(Time.time * 1.0f, 10);
-
-// transform.localScale.y = (Mathf.Sin(Time.time * 1.0) + 1.0) / 2.0 * 10*t + minSize;
-        // gameObject.transform.localScale = Vector3.Lerp (gameObject.transform.localScale, 10*temp, Time.deltaTime);
-
-        // gameObject.transform.localScale = temp;
-
-
-        // if (!nIdentity.isLocalPlayer) return;
-        // // nm.ping();
-        // foreach (NetworkConnection nc in ((PlanetsNetworkManager)PlanetsNetworkManager.singleton).getUpdateListeners()){
-        //     NetworkServer.SendToClient(nc.connectionId, Msgs.ping, new EmptyMessage());
-        // }
         Debug.Log("ping!");
     }
 
-    // void scaleUp(Vector3 temp) {
-    //     pin.transform.localScale = Vector3.Lerp (pin.transform.localScale, 5*temp, Time.deltaTime);
-    // }
-
-    // void scaleDown(Vector3 temp) {
-    //     pin.transform.localScale = Vector3.Lerp (pin.transform.localScale, temp, Time.deltaTime);
-    // }
-
-
+ 
     IEnumerator Wait(Vector3 temp) {
         yield return new WaitForSeconds(0.3f);      
         pin.transform.localScale = temp;
