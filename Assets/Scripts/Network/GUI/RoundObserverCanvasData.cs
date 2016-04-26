@@ -31,17 +31,18 @@ public class RoundObserverCanvasData : MonoBehaviour {
 	}
 
 	void UpdateKills(){
-		int pirateScoreInt = re.getRoundScoreManager().getPirateScore();
-		int superCorpScoreInt = re.getRoundScoreManager().getSuperCorpScore();
+		float pirateScoreFloat = (float)re.getRoundScoreManager().getPirateScore();
+		float superCorpScoreFloat = (float)re.getRoundScoreManager().getSuperCorpScore();
 		latestKill.text = re.getRoundPlayerObjectManager().getLatestKill();
 		killFeed.text = re.getRoundPlayerObjectManager().getKillsAsList(5); // Show last 5 kills;
-		pirateScore.text = pirateScoreInt.ToString();
-		superCorpScore.text = superCorpScoreInt.ToString();
-		if (pirateScoreInt+superCorpScoreInt!=0) {
-			float ppercentage = pirateScoreInt/(pirateScoreInt+superCorpScoreInt)*100;
+		pirateScore.text = pirateScoreFloat.ToString();
+		superCorpScore.text = superCorpScoreFloat.ToString();
+		if (pirateScoreFloat+superCorpScoreFloat!=0) {
+			float ppercentage = pirateScoreFloat/(pirateScoreFloat+superCorpScoreFloat)*100;
+			Debug.Log("pperc" + ppercentage);
 			piratesBar.GetComponent<ProgressBarBehaviour>().UpdateValue(ppercentage);
-
-			float spercentage = superCorpScoreInt/(pirateScoreInt+superCorpScoreInt)*100;
+			float spercentage = superCorpScoreFloat/(pirateScoreFloat+superCorpScoreFloat)*100;
+			Debug.Log("sperc" + spercentage);
 			superCorpBar.GetComponent<ProgressBarBehaviour>().UpdateValue(spercentage);
 		}
 		
