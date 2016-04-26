@@ -34,13 +34,13 @@ public class CameraController : MonoBehaviour {
 
         foreach (GameObject player in playersS) {
             sum += player.transform.position;
-            camUps += player.transform.GetChild(2).transform.up;
+            camUps += player.transform.GetChild(1).transform.up;
             count++;
         }
 
         foreach (GameObject player in playersP) {
             sum += player.transform.position;
-            camUps += player.transform.GetChild(2).transform.up;
+            camUps += player.transform.GetChild(1).transform.up;
             count++;
         }
         if(count == 0) return;
