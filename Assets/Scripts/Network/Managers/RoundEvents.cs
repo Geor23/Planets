@@ -121,6 +121,7 @@ public class RoundEvents : MonoBehaviour {
                     //Team not yet picked, return player
                     notChosenTeam.Enqueue(pId);
                 } else {
+                    p.zeroRoundData();
                     Debug.Log("Spawning " + p.getConnValue());
                     NetworkServer.SendToClient(p.getConnValue(), Msgs.spawnSelf,  new UniqueObjectMessage()); 
                 }
