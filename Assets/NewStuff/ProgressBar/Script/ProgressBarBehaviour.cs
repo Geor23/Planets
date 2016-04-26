@@ -214,5 +214,17 @@ namespace ProgressBar
 
             if (Value < 0) Value = 0;
         }
+
+
+        /// <summary>
+        /// Decrement value by X percents
+        /// </summary>
+        /// <param name="inc">percents</param>
+        public void UpdateValue(float dec)
+        {
+            Value = dec;
+
+            if (Value < 0) Value = 0;
+        }
     }
 }
