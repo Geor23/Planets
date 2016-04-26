@@ -51,6 +51,7 @@ public class PlayerControllerMobile : NetworkBehaviour {
     public Transform turret;
     public TextMesh tearDropId;
     private Rigidbody rb;
+    public GameObject pin;
 
 
     public Camera mainCamera;
@@ -334,33 +335,24 @@ public class PlayerControllerMobile : NetworkBehaviour {
         Destroy(projectile, 2);
     }
 
+
     void OnMouseDown() {
-        int originalx = gameObject.transform.localScale.x;
-        int originaly = gameObject.transform.localScale.y;
-        int originalz = gameObject.transform.localScale.z;
+        Vector3 temp = pin.transform.localScale;
+        pin.transform.localScale = Vector3.Lerp (pin.transform.localScale, 10*temp, Time.deltaTime);
 
-        gameObject.transform.localScale.x = 10;
-        gameObject.transform.localScale.y = 10;
-        gameObject.transform.localScale.z = 10;
+        pin.transform.localScale = Vector3.Lerp (pin.transform.localScale, temp, Time.deltaTime);
 
-        gameObject.transform.localScale.x = originalx;
-        gameObject.transform.localScale.y = originaly;
-        gameObject.transform.localScale.z = originalz;
+        // gameObject.transform.localScale = Vector3.Lerp (gameObject.transform.localScale, 10*temp, Time.deltaTime);
 
-        gameObject.transform.localScale.x = 10;
-        gameObject.transform.localScale.y = 10;
-        gameObject.transform.localScale.z = 10;
+        // gameObject.transform.localScale = temp;
 
-        gameObject.transform.localScale.x = originalx;
-        gameObject.transform.localScale.y = originaly;
-        gameObject.transform.localScale.z = originalz;
 
-        if (!nIdentity.isLocalPlayer) return;
-        // nm.ping();
-        foreach (NetworkConnection nc in ((PlanetsNetworkManager)PlanetsNetworkManager.singleton).getUpdateListeners()){
-            NetworkServer.SendToClient(nc.connectionId, Msgs.ping, new EmptyMessage());
-        }
-        // Debug.Log("ping!");
+        // if (!nIdentity.isLocalPlayer) return;
+        // // nm.ping();
+        // foreach (NetworkConnection nc in ((PlanetsNetworkManager)PlanetsNetworkManager.singleton).getUpdateListeners()){
+        //     NetworkServer.SendToClient(nc.connectionId, Msgs.ping, new EmptyMessage());
+        // }
+        Debug.Log("ping!");
     }
 
 
