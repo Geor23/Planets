@@ -554,6 +554,7 @@ GameObject:
   - 114: {fileID: 11403892}
   - 114: {fileID: 11422440}
   - 114: {fileID: 11458178}
+  - 114: {fileID: 11444812}
   m_Layer: 5
   m_Name: ObserverRoundCanvasWorldSpace
   m_TagString: Untagged
@@ -1358,6 +1359,18 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: blaaaa
+--- !u!114 &11444812
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 196342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4775aedaf05adc4aa07415a54f0b662, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ni: {fileID: 11431220}
 --- !u!114 &11446330
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1972,7 +1985,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 126588}
   m_LocalRotation: {x: 0, y: 0, z: 1, w: -0.00000016292068}
-  m_LocalPosition: {x: 0, y: 0, z: -14.1}
+  m_LocalPosition: {x: 0, y: 0, z: 84.15807}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 495396}
@@ -1981,7 +1994,7 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -22.147833, y: 155.93953}
+  m_AnchoredPosition: {x: -31.312735, y: 105.31712}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
 --- !u!224 &22413638
