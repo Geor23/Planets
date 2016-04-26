@@ -124,4 +124,11 @@ public class Player {
     public void addDeath() {
         playerDeaths += 1;
     }
+
+    public void zeroRoundData(){
+        playerScoreRound = 0;
+        playerDeaths = 0;
+        playerKills = 0;
+        playerScoreTotal = 0;
+    }
 }
