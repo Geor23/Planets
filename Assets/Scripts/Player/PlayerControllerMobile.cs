@@ -101,6 +101,16 @@ public class PlayerControllerMobile : NetworkBehaviour {
     }
 
     void Update() {
+/*
+    	Debug.Log ("AimH Crossplatform:" + CrossPlatformInputManager.GetAxis ("AimH"));
+        Debug.Log ("AimV Crossplatform:" + CrossPlatformInputManager.GetAxis ("AimV"));
+        Debug.Log ("MoveH Crossplatform:" + CrossPlatformInputManager.GetAxis ("MoveH"));
+        Debug.Log ("MoveV Crossplatform:" + CrossPlatformInputManager.GetAxis ("MoveV"));
+        Debug.Log ("AimH Input:" + Input.GetAxis ("AimH"));
+        Debug.Log ("AimV Input:" + Input.GetAxis ("AimV"));
+        Debug.Log ("MoveH Input:" + Input.GetAxis ("MoveH"));
+        Debug.Log ("MoveV Input:" + Input.GetAxis ("MoveV"));
+*/
         if(nIdentity == null) return;
         if(nIdentity.isLocalPlayer) gameObject.transform.localScale = new Vector3(3,3,3);
 
@@ -149,7 +159,12 @@ public class PlayerControllerMobile : NetworkBehaviour {
         float aimV = ((Input.GetKey("up") ? 1 : 0) - (Input.GetKey("down") ? 1 : 0));
         float moveV = ((Input.GetKey("w") ? 1 : 0) - (Input.GetKey("s") ? 1 : 0));
         float moveH = (-(Input.GetKey("a") ? 1 : 0) + (Input.GetKey("d") ? 1 : 0));
+        if (aimH == 0) {aimH = Input.GetAxis("AimH");}
+        if (aimV == 0) {aimV = Input.GetAxis("AimV");}
+        if (moveH == 0) {moveH = Input.GetAxis("MoveH");}
+        if (moveV == 0) {moveV = Input.GetAxis("MoveV");}
         #endif
+
 
         lastMoveH = moveH;
         lastMoveV = moveV;
