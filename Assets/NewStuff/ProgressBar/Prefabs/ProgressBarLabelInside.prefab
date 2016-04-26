@@ -128,7 +128,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 0 %
+  m_Text: 0
 --- !u!114 &11449066
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -212,7 +212,8 @@ MonoBehaviour:
           m_StringArgument: 446f6e65
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: 50726f67726573734261722e5574696c732e4f6e436f6d706c6574654576656e742c20417373656d626c792d4353686172702c2056657273696f6e3d302e302e302e302c2043756c747572653d6e65757472616c2c205075626c69634b6579546f6b656e3d6e756c6c
+    m_TypeName: ProgressBar.Utils.OnCompleteEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!222 &22249064
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -305,8 +306,8 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -12}
-  m_SizeDelta: {x: 450, y: 30}
+  m_AnchoredPosition: {x: 13, y: -230}
+  m_SizeDelta: {x: 689, y: 37}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &100100000
 Prefab:

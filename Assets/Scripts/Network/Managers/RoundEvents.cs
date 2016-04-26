@@ -20,6 +20,7 @@ public class RoundEvents : MonoBehaviour {
     private PlanetsNetworkManager nm;
 
     public bool sandBox = false;
+    public int timeUntilRespawn = 2;
 
 
 
@@ -62,16 +63,10 @@ public class RoundEvents : MonoBehaviour {
         nm.client.RegisterHandler(Msgs.spawnSelf, OnClientSpawnSelf);
         //Tell server we are ready to spawn
         nm.client.Send(Msgs.playerReadyToSpawn, new UniqueObjectMessage());
-
-        // If observer, invoke repeating respawn players
-        if(PlayerConfig.singleton.GetObserver()){
-            InvokeRepeating("respawnPlayer", 0, 1); // Respawn 1 player per second
-        }
     }
 
-    public void respawnPlayer(){
-        int playerId = pom.mostRecentDeath();
-        if(playerId == -25) return;
+    public IEnumerator respawnPlayer(int playerId){
+        yield return new WaitForSeconds(timeUntilRespawn);
         PlayerSpawnMsg ps = new PlayerSpawnMsg();
         ps.playerId = playerId;
         Transform obsCamTrans = GameObject.FindGameObjectsWithTag("Observer")[0].transform.GetChild(0);
@@ -82,11 +77,11 @@ public class RoundEvents : MonoBehaviour {
     }
 
     public void registerKill(NetworkInstanceId netId, int playerKilledId, int playerKillerId){
+        pom.killPlayerLocal(playerKilledId, playerKillerId);
         KillPlayer kp = new KillPlayer();
         kp.netId = netId;
         nm.client.Send(Msgs.killPlayer, kp);
-
-        pom.killPlayerLocal(playerKilledId, playerKillerId);
+        StartCoroutine(respawnPlayer(playerKilledId));
 
         if(sandBox) return;
         pm.addKill(playerKillerId);

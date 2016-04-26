@@ -29,8 +29,6 @@ static class Const {
     public const int RUNNING = 1;
     public const int FINISHED = -1;
     public const int NOTSTARTED = 0;
-    public const int INITIALTIMER = 10;
-    public const int ROUNDOVERTIMER = 10;
 }
 
 public class RoundScores {
@@ -45,7 +43,10 @@ public class PlanetsNetworkManager : NetworkManager {
     [SerializeField] GameObject observerSplitScreen;
     TeamManager teamManager = new TeamManager();
 	RoundManager roundManager = new RoundManager();
-  	
+
+  	public int INITIALTIMER = 10;
+    public int ROUNDOVERTIMER = 10;
+
     private List<string> roundList;
   	public HashSet<NetworkConnection> updateListeners;
   	public HashSet<NetworkConnection> observingListeners;
@@ -58,13 +59,14 @@ public class PlanetsNetworkManager : NetworkManager {
   	public bool usingSplitScreen = false;
     public int key = 0;
     public string round1Scene; //Round 1 name
-    private float timerRound = Const.INITIALTIMER; //This is the time communicated to clients
+    private float timerRound; //This is the time communicated to clients
     public bool timerOn = true;
 
     public PlayerManager pm;
     public PersonalPlayerInfo ppi; //Singleton
 
   	public void Start() {
+        timerRound = INITIALTIMER;
     	updateListeners = new HashSet<NetworkConnection>();
     	observingListeners = new HashSet<NetworkConnection>();
         spawnReadyPlayers = new Queue<int>();
@@ -72,11 +74,11 @@ public class PlanetsNetworkManager : NetworkManager {
 
         //TOCHANGE
     	roundList = new List<string>();
-    	roundList.Add("Round4");
+    	roundList.Add("Round3");
         roundList.Add("RoundOver");
     	roundList.Add("Round2");
     	roundList.Add("RoundOver");
-    	roundList.Add("Round3");
+    	roundList.Add("Round1");
     	roundList.Add("GameOver");
         pm = new PlayerManager();
     }
@@ -150,7 +152,7 @@ public class PlanetsNetworkManager : NetworkManager {
     		timerRound -= Time.deltaTime;
     		if (timerRound < 0) {
             	ServerChangeScene( roundList[ 2 * ( roundManager.getRoundId() - 1 ) ] );
-            	timerRound = Const.INITIALTIMER;
+            	timerRound = INITIALTIMER;
         	}
 
     	} else if ((roundList.Contains(NetworkManager.networkSceneName)) &&  (roundList.IndexOf(NetworkManager.networkSceneName) != (roundList.Count - 1))) {
@@ -164,14 +166,14 @@ public class PlanetsNetworkManager : NetworkManager {
             	teamManager.resetScores();
             	if (roundManager.getFinishedState() == 1) {
             		ServerChangeScene( roundList[ 2 * ( roundManager.getRoundId() - 1 ) + 1 ] );
-            		timerRound = Const.INITIALTIMER;
+            		timerRound = INITIALTIMER;
             	} else {	
             		ServerChangeScene( roundList[ 2 * ( roundManager.getRoundId() - 1 ) - 1 ] );
-            		timerRound = Const.ROUNDOVERTIMER;
+            		timerRound = ROUNDOVERTIMER;
             	}
         	}
         } else {
-          	timerRound = Const.INITIALTIMER;
+          	timerRound = INITIALTIMER;
         }
     }
 

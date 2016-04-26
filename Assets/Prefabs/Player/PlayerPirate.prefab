@@ -79,7 +79,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &181750
 GameObject:
   m_ObjectHideFlags: 0
@@ -435,6 +435,7 @@ MonoBehaviour:
   power: 10
   probeCount: 100
   explodeDuration: 0.5
+  needsToExplode: 0
 --- !u!114 &11441538
 MonoBehaviour:
   m_ObjectHideFlags: 1
