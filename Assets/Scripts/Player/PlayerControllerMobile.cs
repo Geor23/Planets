@@ -339,16 +339,20 @@ public class PlayerControllerMobile : NetworkBehaviour {
 
     void OnMouseDown() {
         Vector3 temp = pin.transform.localScale;
-        // pin.transform.localScale = Vector3.Lerp (pin.transform.localScale, 10*temp, Time.deltaTime);
+        pin.transform.localScale = Vector3.Lerp (pin.transform.localScale, 5*temp, Time.deltaTime);
 
+        Invoke("scaleUp", 0.5);
+        Invoke("scaleDown", 1);
+        Invoke("scaleUp", 1.5);
+        Invoke("scaleDown", 2);
         // pin.transform.localScale = Vector3.Lerp (pin.transform.localScale, temp, Time.deltaTime);
 
         // pin.transform.localScale.x = minSize + Mathf.PingPong(Time.time * speed, range);
 // transform.position = Vector3( Mathf.PingPong(Time.time, 3), transform.position.y, transform.position.z);
     
-        pin.transform.localScale = temp + new Vector3(Mathf.PingPong(Time.time * 1.0f, 2), Mathf.PingPong(Time.time * 1.0f, 2), Mathf.PingPong(Time.time * 1.0f, 2)) ;
+        // pin.transform.localScale = temp + new Vector3(Mathf.PingPong(Time.time * 1.0f, 2), Mathf.PingPong(Time.time * 1.0f, 2), Mathf.PingPong(Time.time * 1.0f, 2)) ;
         
-        StartCoroutine(Wait(temp));
+        // StartCoroutine(Wait(temp));
         
         // yield WaitForSeconds (2);
         // pin.transform.localScale.y = temp.y + Mathf.PingPong(Time.time * 1.0f, 10);
@@ -368,11 +372,20 @@ public class PlayerControllerMobile : NetworkBehaviour {
         Debug.Log("ping!");
     }
 
-    IEnumerator Wait(Vector3 temp) {
-        yield return new WaitForSeconds(0.5f);      
-        pin.transform.localScale = temp;
-
+    void scaleUp(Vector3 temp) {
+        pin.transform.localScale = Vector3.Lerp (pin.transform.localScale, 5*temp, Time.deltaTime);
     }
+
+    void scaleDown(Vector3 temp) {
+        pin.transform.localScale = Vector3.Lerp (pin.transform.localScale, temp, Time.deltaTime);
+    }
+
+
+    // IEnumerator Wait(Vector3 temp) {
+    //     yield return new WaitForSeconds(0.5f);      
+    //     pin.transform.localScale = temp;
+
+    // }
 
 
     void OnDestroy(){
