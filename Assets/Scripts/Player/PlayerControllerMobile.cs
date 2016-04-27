@@ -56,7 +56,6 @@ public class PlayerControllerMobile : NetworkBehaviour {
 
 
     public Camera mainCamera;
-    public Transform obsCamera;
     public Vector3 planetCenter = new Vector3(0, 0, 0);
 
     /* Variables belonging to split screen controls */
@@ -90,7 +89,7 @@ public class PlayerControllerMobile : NetworkBehaviour {
         needsReflection = gameObject.CompareTag("PlayerSuperCorp");
         //Debug.Log("Player + " + PlayerManager.singleton.getPlayer(dictId));
 
-            if (pm.checkIfExists(dictId)) {
+        if (pm.checkIfExists(dictId)) {
             playerDetails.setPlayerDetails(dictId, pm.getPlayer(dictId));
         } else {
             playerDetails.setPlayerDetails(dictId, ppi.getPlayer());
@@ -170,12 +169,20 @@ public class PlayerControllerMobile : NetworkBehaviour {
         Vector3 moveDir = forwardSpeed * forward + strafeSpeed * right;
         Vector3 turretDirection = ((forward * aimV) + (right * aimH)).normalized;
         rotateObject(turret, turretDirection);
-        Vector3 worldPos = obsCamera.position + obsCamera.parent.transform.position;
+        Transform obsCam = GameObject.FindGameObjectsWithTag("Observer")[0].transform.GetChild(0);
+
+        Vector3 worldPos = obsCam.position + obsCam.parent.transform.position;
         Vector3 newLocation = transform.position + moveDir * Time.deltaTime * 5;
         float distPlanetToCam = Vector3.Distance(planetCenter, worldPos);
         float distPlayerToCam = Vector3.Distance(newLocation, worldPos);
-        rotateObject(model, moveDir.normalized);
-        rb.MovePosition(newLocation);
+
+        if (distPlanetToCam>distPlayerToCam) {
+            rotateObject(model, moveDir.normalized);
+            rb.MovePosition(newLocation);
+        } else {
+            Debug.Log("can't move!");
+        }
+       
 
     }
 
