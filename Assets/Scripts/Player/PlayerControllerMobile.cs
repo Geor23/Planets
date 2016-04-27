@@ -224,6 +224,7 @@ public class PlayerControllerMobile : NetworkBehaviour {
     }
 
     void OnCollisionEnter(Collision col){
+        if(nm == null) return;
         if (nm.observerCollisionsOnly()){
             if (!PlayerConfig.singleton.GetObserver()) return;
         }
