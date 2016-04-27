@@ -213,7 +213,7 @@ public class PlayerControllerMobile : NetworkBehaviour {
 		if(CrossPlatformInputManager.GetAxis ("AimH") + CrossPlatformInputManager.GetAxis ("AimV") != 0){
         #endif
         #if UNITY_STANDALONE
-        if (Input.GetKey("left") || Input.GetKey("right") || Input.GetKey("up") || Input.GetKey("down"))
+        if (Input.GetKey("left") || Input.GetKey("right") || Input.GetKey("up") || Input.GetKey("down") || (Input.GetAxis ("AimH") + Input.GetAxis ("AimV")) != 0) 
         {
         #endif
             if (Time.time < nextFire)
