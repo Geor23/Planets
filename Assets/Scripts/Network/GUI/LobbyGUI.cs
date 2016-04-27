@@ -55,4 +55,10 @@ public class LobbyGUI : MonoBehaviour {
 
 	}
 
+	void Update () {
+		if (Input.GetKeyDown("s")) {
+			StartGame();
+		}
+	}
+
 }

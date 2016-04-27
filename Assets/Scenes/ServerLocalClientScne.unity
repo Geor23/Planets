@@ -340,6 +340,10 @@ Prefab:
       propertyPath: m_CustomConfig
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11489486, guid: af28d3f0fb326294fb32a70529d06809, type: 2}
+      propertyPath: usingSplitScreen
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: af28d3f0fb326294fb32a70529d06809, type: 2}
   m_IsPrefabParent: 0
@@ -2013,7 +2017,7 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 740069113}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4cf43e73fde6f674c86b1ea3fc0a4695, type: 3}
   m_Name: 
