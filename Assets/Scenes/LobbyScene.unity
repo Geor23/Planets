@@ -599,7 +599,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22419804, guid: e9374233ad0db471cbc9a0edcd9bc0e3, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 22419804, guid: e9374233ad0db471cbc9a0edcd9bc0e3, type: 2}
       propertyPath: m_SizeDelta.x
@@ -607,7 +607,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22419804, guid: e9374233ad0db471cbc9a0edcd9bc0e3, type: 2}
       propertyPath: m_SizeDelta.y
-      value: 584
+      value: 636.5
       objectReference: {fileID: 0}
     - target: {fileID: 22419804, guid: e9374233ad0db471cbc9a0edcd9bc0e3, type: 2}
       propertyPath: m_AnchorMin.x
@@ -633,50 +633,18 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 22348914, guid: e9374233ad0db471cbc9a0edcd9bc0e3, type: 2}
-      propertyPath: m_Camera
-      value: 
-      objectReference: {fileID: 328971358}
-    - target: {fileID: 11492990, guid: e9374233ad0db471cbc9a0edcd9bc0e3, type: 2}
-      propertyPath: lobbyGUI
-      value: 
-      objectReference: {fileID: 1648734032}
     - target: {fileID: 11493732, guid: e9374233ad0db471cbc9a0edcd9bc0e3, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1648734032}
-    - target: {fileID: 22495992, guid: e9374233ad0db471cbc9a0edcd9bc0e3, type: 2}
-      propertyPath: m_AnchorMax.x
-      value: 0.86624104
-      objectReference: {fileID: 0}
-    - target: {fileID: 22495992, guid: e9374233ad0db471cbc9a0edcd9bc0e3, type: 2}
-      propertyPath: m_AnchoredPosition.x
-      value: 9.120425
-      objectReference: {fileID: 0}
-    - target: {fileID: 22495992, guid: e9374233ad0db471cbc9a0edcd9bc0e3, type: 2}
-      propertyPath: m_SizeDelta.x
-      value: 32.476433
-      objectReference: {fileID: 0}
-    - target: {fileID: 22495992, guid: e9374233ad0db471cbc9a0edcd9bc0e3, type: 2}
-      propertyPath: m_AnchorMax.y
-      value: 0.231
-      objectReference: {fileID: 0}
-    - target: {fileID: 22495992, guid: e9374233ad0db471cbc9a0edcd9bc0e3, type: 2}
-      propertyPath: m_AnchoredPosition.y
-      value: 1.9891195
-      objectReference: {fileID: 0}
-    - target: {fileID: 22495992, guid: e9374233ad0db471cbc9a0edcd9bc0e3, type: 2}
-      propertyPath: m_SizeDelta.y
-      value: 4.517929
-      objectReference: {fileID: 0}
-    - target: {fileID: 22495992, guid: e9374233ad0db471cbc9a0edcd9bc0e3, type: 2}
-      propertyPath: m_AnchorMin.x
-      value: 0.11418444
-      objectReference: {fileID: 0}
-    - target: {fileID: 22495992, guid: e9374233ad0db471cbc9a0edcd9bc0e3, type: 2}
-      propertyPath: m_AnchorMin.y
-      value: 0.08926037
-      objectReference: {fileID: 0}
+    - target: {fileID: 11492990, guid: e9374233ad0db471cbc9a0edcd9bc0e3, type: 2}
+      propertyPath: lobbyGUI
+      value: 
+      objectReference: {fileID: 1648734032}
+    - target: {fileID: 22348914, guid: e9374233ad0db471cbc9a0edcd9bc0e3, type: 2}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 328971358}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e9374233ad0db471cbc9a0edcd9bc0e3, type: 2}
   m_IsPrefabParent: 0
