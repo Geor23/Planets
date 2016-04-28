@@ -185,13 +185,20 @@ public class PlayerControllerMobile : NetworkBehaviour {
         Vector3 turretDirection = ((forward * aimV) + (right * aimH)).normalized;
         rotateObject(turret, turretDirection);
         Transform obsCam = GameObject.FindGameObjectsWithTag("Observer")[0].transform.GetChild(0);
+        Vector3 worldPos = Vector3.zero, 
+                newLocation = Vector3.zero;
+        if(obsCam == null){
+            Debug.Log("Can't find observer!");
+        } else{
+            worldPos = obsCam.position + obsCam.parent.transform.position;
+            newLocation = transform.position + moveDir * Time.deltaTime * 5;
+        }
 
-        Vector3 worldPos = obsCam.position + obsCam.parent.transform.position;
-        Vector3 newLocation = transform.position + moveDir * Time.deltaTime * 5;
+
         float distPlanetToCam = Vector3.Distance(planetCenter, worldPos);
         float distPlayerToCam = Vector3.Distance(newLocation, worldPos);
 
-        if (distPlanetToCam - 5 >distPlayerToCam) {
+        if (distPlanetToCam - 30 > distPlayerToCam) {
             rotateObject(model, moveDir.normalized);
             rb.MovePosition(newLocation);
         } else {
