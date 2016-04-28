@@ -72,6 +72,7 @@ public class PlayerControllerMobile : NetworkBehaviour {
     private RoundEvents roundEvents; //Contains reference to RoundEventsManager object
 
     private bool dead = true;
+    private bool pinScaling = false;
 
     [SyncVar]
     public int dictId;
@@ -379,8 +380,10 @@ public class PlayerControllerMobile : NetworkBehaviour {
 
 
     void OnMouseDown() {
+        if(pinScaling) return;
+        pinScaling = true;
         Vector3 temp = pin.transform.localScale;
-        pin.transform.localScale = Vector3.Lerp (pin.transform.localScale, 7*temp, Time.deltaTime);
+        pin.transform.localScale = Vector3.Lerp (pin.transform.localScale, 100*temp, Time.deltaTime);
    
         StartCoroutine(Wait(temp));
         Debug.Log("ping!");
@@ -388,12 +391,13 @@ public class PlayerControllerMobile : NetworkBehaviour {
 
  
     IEnumerator Wait(Vector3 temp) {
-        yield return new WaitForSeconds(0.3f);      
+        yield return new WaitForSeconds(1f);      
         pin.transform.localScale = temp;
-        yield return new WaitForSeconds(0.3f);      
-        pin.transform.localScale = Vector3.Lerp (pin.transform.localScale, 7*temp, Time.deltaTime);
-        yield return new WaitForSeconds(0.3f);      
+        yield return new WaitForSeconds(1f);      
+        pin.transform.localScale = Vector3.Lerp (pin.transform.localScale, 100*temp, Time.deltaTime);
+        yield return new WaitForSeconds(1f);      
         pin.transform.localScale = temp;
+        pinScaling = false;
     }
 
 
