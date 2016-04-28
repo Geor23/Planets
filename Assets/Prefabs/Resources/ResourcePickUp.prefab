@@ -63,9 +63,10 @@ GameObject:
   - 198: {fileID: 19860512}
   - 199: {fileID: 19996214}
   - 135: {fileID: 13533808}
+  - 114: {fileID: 11449694}
   m_Layer: 0
   m_Name: ResourcePickUp
-  m_TagString: Untagged
+  m_TagString: ResourcePickUp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2192,6 +2193,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 70
+--- !u!114 &11449694
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 116834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5758e11a74035284786ee2d428dde00e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resourceScore: 0
 --- !u!122 &12207622
 Halo:
   m_ObjectHideFlags: 1
