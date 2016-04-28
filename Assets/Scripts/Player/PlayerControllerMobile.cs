@@ -191,7 +191,7 @@ public class PlayerControllerMobile : NetworkBehaviour {
         float distPlanetToCam = Vector3.Distance(planetCenter, worldPos);
         float distPlayerToCam = Vector3.Distance(newLocation, worldPos);
 
-        if (distPlanetToCam>distPlayerToCam) {
+        if (distPlanetToCam - 5 >distPlayerToCam) {
             rotateObject(model, moveDir.normalized);
             rb.MovePosition(newLocation);
         } else {
