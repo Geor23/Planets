@@ -392,7 +392,6 @@ public class PlanetsNetworkManager : NetworkManager {
         foreach (NetworkConnection nc in getUpdateListeners()){
             NetworkServer.SendToClient(nc.connectionId, Msgs.updatePlayerToObserver, pv); //Sends player info to the client that re-connected
         }
-        Debug.LogError("After END " + pm.getName(idVal));
     }
     // send the team list of players to all clients
     public void sendTeam(int team) {
@@ -514,9 +513,7 @@ public class PlanetsNetworkManager : NetworkManager {
 
     //RUN ON OBSERVER
     public void sendScoresToPlayers(){
-        Debug.LogError("YAYAYA");
         Dictionary<int, Player> playerDict = pm.getPlayerDict();
-        Debug.LogError(playerDict.Count);
         foreach (var i in playerDict) {
             if (playerDict[i.Key].getIsConnected()){
                 PlayerValues pv = new PlayerValues();
