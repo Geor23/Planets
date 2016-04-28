@@ -16,24 +16,26 @@ public class PlayerControllerMobile : NetworkBehaviour {
     public PersonalPlayerInfo ppi;
     public PlayerManager pm;
 
-    private const float fireRate = 0.3F;
-    private float currentFireRate = fireRate;
+    public  float fireRate;
+    public  float fasterFireTimeInit;
+    public  float doubleScoreTimeInit;
+    public  float shieldedTimeInit;
+    public float fasterFireTime;
+
+
+    private float currentFireRate;
     private float nextFire = 0.0F;    
 
     // ------- POWER UP VARS---------------- //
-    public bool doubleScore = false;
-    private const float doubleScoreTimeInit = 5;
-    private float doubleScoreTime = doubleScoreTimeInit;
+    public bool doubleScore = true;
+    private float doubleScoreTime;
 
 
     private bool fasterFire = false;
     private float fasterFireSpeed = 0.1F;
-    private const float fasterFireTimeInit = 5;
-    private float fasterFireTime = fasterFireTimeInit;
 
     private bool shielded = false;
-    private const float shieldedTimeInit = 120;
-    private float shieldedTime = shieldedTimeInit;
+    private float shieldedTime;
 
     // -------------------------------------- //
 
@@ -97,6 +99,11 @@ public class PlayerControllerMobile : NetworkBehaviour {
         tearDropId.text = playerDetails.getObsId().ToString();
         if(nIdentity.isLocalPlayer) gameObject.transform.localScale = new Vector3(3,3,3);
         dead = false;
+
+        currentFireRate = fireRate;
+        doubleScoreTime = doubleScoreTimeInit;
+        fasterFireTime = fasterFireTimeInit;
+        shieldedTime = shieldedTimeInit;
     }
 
     void Update() {

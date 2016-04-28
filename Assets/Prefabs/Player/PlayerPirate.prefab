@@ -517,6 +517,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ppi: {fileID: 0}
+  fireRate: 0.3
+  fasterFireTimeInit: 10
+  doubleScoreTimeInit: 10
+  shieldedTimeInit: 15
+  fasterFireTime: 10
   doubleScore: 0
   speed: 1.5
   rotSpeed: 12
@@ -529,7 +534,6 @@ MonoBehaviour:
   tearDropId: {fileID: 10237434}
   pin: {fileID: 124618}
   mainCamera: {fileID: 0}
-  obsCamera: {fileID: 475270, guid: 5d633392a34c14108aad562f21512f74, type: 2}
   planetCenter: {x: 0, y: 0, z: 0}
   playerDetails: {fileID: 11416008}
   dictId: 0
