@@ -49,7 +49,8 @@ public class PlayerControllerMobile : NetworkBehaviour {
     public Transform planet;
     public Transform model;
     public Transform turret;
-    public TextMesh tearDropId;
+    public GameObject tearDrop;
+    public TextMesh tearDropText;
     private Rigidbody rb;
     public GameObject pin;
 
@@ -96,7 +97,7 @@ public class PlayerControllerMobile : NetworkBehaviour {
             playerDetails.setPlayerDetails(dictId, ppi.getPlayer());
         }
         Debug.Log("Setting teardrop id to " + playerDetails.getObsId().ToString()); //BUG
-        tearDropId.text = playerDetails.getObsId().ToString();
+        tearDropText.text = playerDetails.getObsId().ToString();
         if(nIdentity.isLocalPlayer) gameObject.transform.localScale = new Vector3(3,3,3);
         dead = false;
 
@@ -104,6 +105,7 @@ public class PlayerControllerMobile : NetworkBehaviour {
         doubleScoreTime = doubleScoreTimeInit;
         fasterFireTime = fasterFireTimeInit;
         shieldedTime = shieldedTimeInit;
+
     }
 
     void Update() {
@@ -148,6 +150,8 @@ public class PlayerControllerMobile : NetworkBehaviour {
                 shieldedTime = fasterFireTimeInit; //Resets timer
             }
         }
+        Transform obsCam = GameObject.FindGameObjectsWithTag("Observer")[0].transform.GetChild(0);
+        tearDrop.transform.LookAt(obsCam.position, -obsCam.up);
         if (!nIdentity.isLocalPlayer) return;
 
         rb = GetComponent<Rigidbody>();
@@ -191,7 +195,6 @@ public class PlayerControllerMobile : NetworkBehaviour {
         Vector3 moveDir = forwardSpeed * forward + strafeSpeed * right;
         Vector3 turretDirection = ((forward * aimV) + (right * aimH)).normalized;
         rotateObject(turret, turretDirection);
-        Transform obsCam = GameObject.FindGameObjectsWithTag("Observer")[0].transform.GetChild(0);
         Vector3 worldPos = Vector3.zero, 
                 newLocation = Vector3.zero;
         if(obsCam == null){

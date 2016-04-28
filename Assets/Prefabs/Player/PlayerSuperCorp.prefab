@@ -507,7 +507,6 @@ MonoBehaviour:
   fasterFireTimeInit: 10
   doubleScoreTimeInit: 10
   shieldedTimeInit: 15
-  fasterFireTime: 10
   doubleScore: 0
   speed: 1.5
   rotSpeed: 12
@@ -517,7 +516,8 @@ MonoBehaviour:
   planet: {fileID: 495726, guid: 45efd7c7e513e4b29a58c3f9dde560bf, type: 2}
   model: {fileID: 22443142}
   turret: {fileID: 479182}
-  tearDropId: {fileID: 10243388}
+  tearDrop: {fileID: 148030}
+  tearDropText: {fileID: 10243388}
   pin: {fileID: 148030}
   mainCamera: {fileID: 0}
   planetCenter: {x: 0, y: 0, z: 0}
@@ -642,7 +642,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 135240}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -5.6415725}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 479182}
@@ -653,7 +653,7 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -5.6386814, y: -3.9968452}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22429172
@@ -663,7 +663,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 148030}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.498}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 22449034}
@@ -698,8 +698,8 @@ RectTransform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 152590}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: 0, y: 0, z: 1}
+  m_LocalRotation: {x: 0.9998285, y: 0.00006629967, z: 0.018157255, w: 0.0036507891}
+  m_LocalPosition: {x: 0, y: 0, z: 0.022}
   m_LocalScale: {x: 0.2, y: 0.20000002, z: 0.20000002}
   m_Children:
   - {fileID: 490780}
@@ -707,7 +707,7 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0.035, y: -0.635}
   m_SizeDelta: {x: 10, y: 10}
   m_Pivot: {x: 0, y: 0}
 --- !u!1001 &100100000
