@@ -6,6 +6,9 @@ using UnityStandardAssets.CrossPlatformInput;
 
 public class ResourcePowerUpManager : MonoBehaviour {
 
+    //used to normalize objects to surface
+    public float planetSize = 50;
+
     public GameObject resourceObject;
     public GameObject shieldObject;
     public GameObject fasterFireObject;
@@ -28,6 +31,8 @@ public class ResourcePowerUpManager : MonoBehaviour {
     public GameObject[] doubleScoreSpawnPoints;
     public GameObject[] fasterFireSpawnPoints;
     public GameObject[] meteorSpawnPoints;
+
+
 
 
     public int maxResourceOnPlanet = 5;
@@ -55,6 +60,11 @@ public class ResourcePowerUpManager : MonoBehaviour {
         shields = new List<GameObject>();
         meteor = new List<GameObject>();
 
+        normalizeGameObjectsToPlanet(resourceSpawnPoints);
+        normalizeGameObjectsToPlanet(shieldSpawnPoints);
+        normalizeGameObjectsToPlanet(doubleScoreSpawnPoints);
+        normalizeGameObjectsToPlanet(fasterFireSpawnPoints);
+
         //Spawn Resources, Power Ups and Meteors and initialize lists 
 
         InvokeRepeating("spawnResource",0.0f, resourceSpawnTime);
@@ -65,6 +75,12 @@ public class ResourcePowerUpManager : MonoBehaviour {
         InvokeRepeating("spawnShield", 0.0f, powerUpSpawnTime);
 
        //InvokeRepeating("spawnMeteor", 0.0f, meteorSpawnTime);
+    }
+
+    void normalizeGameObjectsToPlanet(GameObject[] list){
+        foreach(GameObject g in list){
+            g.transform.position = g.transform.position.normalized * planetSize;
+        }
     }
 
     void UpdateRandomResourceScoreValue()  {
@@ -80,21 +96,21 @@ public class ResourcePowerUpManager : MonoBehaviour {
         int currentResourceScore = resourceGameObject.GetComponent<CurrentResourceScore>().resourceScore;
 
         if (currentResourceScore == initialScore) {
-            scale = 0.2f;
+            scale = 1f;
             resourceGameObject.GetComponent<Renderer>().enabled = false;
             resourceGameObject.GetComponent<SphereCollider>().enabled = false;
         }
         else if (currentResourceScore - minResourceScore < tmp * 2) {
-            scale = 0.4f;
+            scale = 1.2f;
             resourceGameObject.GetComponent<Renderer>().enabled = true;
             resourceGameObject.GetComponent<SphereCollider>().enabled = true;
         }
-        else if (currentResourceScore - minResourceScore < tmp * 3) { scale = 0.6f; }
-        else if (currentResourceScore - minResourceScore < tmp * 4) { scale = 0.8f; }
-        else if (currentResourceScore - minResourceScore < tmp * 5) { scale = 1.0f; }
-        else if (currentResourceScore - minResourceScore < tmp * 6) { scale = 1.2f; }
-        else if (currentResourceScore - minResourceScore < tmp * 7) { scale = 1.4f; }
-        else if (currentResourceScore - minResourceScore < tmp * 8) { scale = 1.6f; }
+        else if (currentResourceScore - minResourceScore < tmp * 3) { scale = 1.3f; }
+        else if (currentResourceScore - minResourceScore < tmp * 4) { scale = 1.4f; }
+        else if (currentResourceScore - minResourceScore < tmp * 5) { scale = 1.5f; }
+        else if (currentResourceScore - minResourceScore < tmp * 6) { scale = 1.6f; }
+        else if (currentResourceScore - minResourceScore < tmp * 7) { scale = 1.7f; }
+        else if (currentResourceScore - minResourceScore < tmp * 8) { scale = 1.7f; }
         else if (currentResourceScore - minResourceScore < tmp * 9) { scale = 1.8f; }
         else { scale = 1.8f; }
         resourceGameObject.transform.localScale = new Vector3(scale, scale, scale);
