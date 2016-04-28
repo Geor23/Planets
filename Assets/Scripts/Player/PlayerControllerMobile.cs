@@ -18,10 +18,7 @@ public class PlayerControllerMobile : NetworkBehaviour {
 
     private const float fireRate = 0.3F;
     private float currentFireRate = fireRate;
-    private float nextFire = 0.0F;
-    private bool hasCollide = false;
-
-    
+    private float nextFire = 0.0F;    
 
     // ------- POWER UP VARS---------------- //
     public bool doubleScore = false;
@@ -71,6 +68,8 @@ public class PlayerControllerMobile : NetworkBehaviour {
     private RoundPlayerObjectManager roundPlayerObjectManager;
     private RoundEvents roundEvents; //Contains reference to RoundEventsManager object
 
+    private bool dead = true;
+
     [SyncVar]
     public int dictId;
 
@@ -97,6 +96,7 @@ public class PlayerControllerMobile : NetworkBehaviour {
         Debug.Log("Setting teardrop id to " + playerDetails.getObsId().ToString()); //BUG
         tearDropId.text = playerDetails.getObsId().ToString();
         if(nIdentity.isLocalPlayer) gameObject.transform.localScale = new Vector3(3,3,3);
+        dead = false;
     }
 
     void Update() {
@@ -224,6 +224,7 @@ public class PlayerControllerMobile : NetworkBehaviour {
     }
 
     void OnCollisionEnter(Collision col){
+        if(dead) return;
         if(nm == null) return;
         if (nm.observerCollisionsOnly()){
             if (!PlayerConfig.singleton.GetObserver()) return;
@@ -266,8 +267,8 @@ public class PlayerControllerMobile : NetworkBehaviour {
         }
         //TOFIX
         else if (col.gameObject.CompareTag("ProjectilePirate") && gameObject.CompareTag("PlayerSuperCorp")) {
-            if ((hasCollide == false) && (shielded == false)) {
-                //hasCollide = true;
+            if (!dead && !shielded) {
+                dead = true;
                 int killerId = col.gameObject.GetComponent<ProjectileData>().ownerId;
                 gameObject.GetComponent<Exploder>().expl();
                 Destroy(col.gameObject);
@@ -275,8 +276,8 @@ public class PlayerControllerMobile : NetworkBehaviour {
             }
         }
         else if (col.gameObject.CompareTag("ProjectileSuperCorp") && gameObject.CompareTag("PlayerPirate")) {
-            if ((hasCollide == false) && (shielded == false)) {
-                //hasCollide = true;
+            if (!dead && !shielded) {
+                dead = true;
                 int killerId = col.gameObject.GetComponent<ProjectileData>().ownerId;
                 gameObject.GetComponent<Exploder>().expl();
                 Destroy(col.gameObject);
