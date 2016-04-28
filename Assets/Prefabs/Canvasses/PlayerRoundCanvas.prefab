@@ -11,7 +11,7 @@ GameObject:
   - 223: {fileID: 22316886}
   - 114: {fileID: 11467436}
   - 114: {fileID: 11435938}
-  - 114: {fileID: 11445656}
+  - 114: {fileID: 11409366}
   m_Layer: 5
   m_Name: PlayerRoundCanvas
   m_TagString: Untagged
@@ -125,6 +125,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &11409366
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 120628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a7f4b1166a0d3e4a91af7069687bd09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: {fileID: 11438248}
+  piratesTeardrop: {fileID: 124504}
+  superCorpTeardrop: {fileID: 143878}
+  localScore: {fileID: 11416542}
 --- !u!114 &11416542
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -260,25 +275,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: '-'
---- !u!114 &11445656
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 120628}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9f2e0644dd64406f8878e61a38ff424, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  teamAScore: {fileID: 0}
-  teamBScore: {fileID: 0}
-  scoreText: {fileID: 0}
-  piratesWin: {fileID: 0}
-  superCorpWin: {fileID: 0}
-  idImgPir: {fileID: 0}
-  idImgSup: {fileID: 0}
-  killFeed: {fileID: 0}
 --- !u!114 &11450086
 MonoBehaviour:
   m_ObjectHideFlags: 1
