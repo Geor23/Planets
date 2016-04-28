@@ -20,7 +20,6 @@ public class PlayerControllerMobile : NetworkBehaviour {
     public  float fasterFireTimeInit;
     public  float doubleScoreTimeInit;
     public  float shieldedTimeInit;
-    public float fasterFireTime;
 
 
     private float currentFireRate;
@@ -32,7 +31,8 @@ public class PlayerControllerMobile : NetworkBehaviour {
 
 
     private bool fasterFire = false;
-    private float fasterFireSpeed = 0.1F;
+    private float fasterFireTime;
+    private float fasterFireSpeed = 0.1f;
 
     private bool shielded = false;
     private float shieldedTime;
