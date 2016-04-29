@@ -193,7 +193,7 @@ public class PlanetsNetworkManager : NetworkManager {
     public int ipToId(string address, int connId){
         if (address != "localClient") {
             int idValue;
-            idValue = connId*(IPAddress.Parse(address).GetAddressBytes()[15] + 1);
+            idValue = (connId*256) + (IPAddress.Parse(address).GetAddressBytes()[15]);
             return idValue;
         } 
         return -1;
