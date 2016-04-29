@@ -109,6 +109,10 @@ public class PlayerControllerMobile : NetworkBehaviour {
 
     }
 
+    public override void OnStartLocalPlayer(){
+        PersonalPlayerInfo.singleton.getPlayer().setPlayerObject(gameObject);
+    }
+
     void Update() {
 /*
     	Debug.Log ("AimH Crossplatform:" + CrossPlatformInputManager.GetAxis ("AimH"));
@@ -379,14 +383,13 @@ public class PlayerControllerMobile : NetworkBehaviour {
     }
 
 
-    void OnMouseDown() {
+    public void Ping() {
         if(pinScaling) return;
         pinScaling = true;
         Vector3 temp = pin.transform.localScale;
-        pin.transform.localScale = Vector3.Lerp (pin.transform.localScale, 100*temp, Time.deltaTime);
+        pin.transform.localScale = Vector3.Lerp (pin.transform.localScale, 50*temp, Time.deltaTime);
    
         StartCoroutine(Wait(temp));
-        Debug.Log("ping!");
     }
 
  
@@ -394,7 +397,7 @@ public class PlayerControllerMobile : NetworkBehaviour {
         yield return new WaitForSeconds(1f);      
         pin.transform.localScale = temp;
         yield return new WaitForSeconds(1f);      
-        pin.transform.localScale = Vector3.Lerp (pin.transform.localScale, 100*temp, Time.deltaTime);
+        pin.transform.localScale = Vector3.Lerp (pin.transform.localScale, 50*temp, Time.deltaTime);
         yield return new WaitForSeconds(1f);      
         pin.transform.localScale = temp;
         pinScaling = false;

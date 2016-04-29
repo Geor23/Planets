@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.Networking;
 using ProgressBar;
 
 public class RoundPlayerCanvasData : MonoBehaviour {
@@ -20,6 +21,13 @@ public class RoundPlayerCanvasData : MonoBehaviour {
 		}else{
 			superCorpTeardrop.SetActive(false);
 		}
+	}
+
+	public void PingPlayer(){
+		Debug.LogError("PINGPING");
+		UniqueObjectMessage uom = new UniqueObjectMessage();
+		uom.netId = PersonalPlayerInfo.singleton.getPlayer().getPlayerObject().GetComponent<NetworkIdentity>().netId;
+		NetworkManager.singleton.client.Send(Msgs.ping, uom);
 	}
 	//TODO update
 }
