@@ -101,7 +101,6 @@ GameObject:
   - 222: {fileID: 22259196}
   - 114: {fileID: 11452688}
   - 114: {fileID: 11473130}
-  - 114: {fileID: 11418088}
   m_Layer: 5
   m_Name: RightStick
   m_TagString: Untagged
@@ -120,7 +119,6 @@ GameObject:
   - 222: {fileID: 22208474}
   - 114: {fileID: 11418466}
   - 114: {fileID: 11420530}
-  - 114: {fileID: 11483654}
   m_Layer: 5
   m_Name: LeftStick
   m_TagString: Untagged
@@ -245,18 +243,6 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: 
---- !u!114 &11418088
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 153252}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5c37905f60904b45b3b613890f4fc08, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  observerVisible: 0
 --- !u!114 &11418466
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -296,6 +282,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   observerVisible: 0
+  playerVisible: 1
 --- !u!114 &11420530
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -560,18 +547,6 @@ MonoBehaviour:
   axesToUse: 0
   horizontalAxisName: AimH
   verticalAxisName: AimV
---- !u!114 &11483654
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 192174}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5c37905f60904b45b3b613890f4fc08, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  observerVisible: 0
 --- !u!222 &22203668
 CanvasRenderer:
   m_ObjectHideFlags: 1
