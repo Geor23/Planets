@@ -195,7 +195,7 @@ public class PlanetsNetworkManager : NetworkManager {
             int idValue;
             idValue = (connId*256) + (IPAddress.Parse(address).GetAddressBytes()[15]);
             return idValue;
-        } 
+        }
         return -1;
     }
 
@@ -433,15 +433,9 @@ public class PlanetsNetworkManager : NetworkManager {
         ppi = PersonalPlayerInfo.singleton;
         client.RegisterHandler(Msgs.updatePlayer, OnPlayerUpdate);
         client.RegisterHandler(Msgs.addNewPlayer, OnNewPlayer);
-        client.RegisterHandler(Msgs.ping, OnPing);
         client.RegisterHandler(Msgs.addNewPlayerToObserver, OnNewPlayerObserver);
         client.RegisterHandler(Msgs.updatePlayerToObserver, OnPlayerUpdateObserver);
         // client.RegisterHandler(Msgs.sendRoundOverValuesToPlayer, OnPlayerRecievePlayerScore);
-    }
-
-    public void OnPing(NetworkMessage msg) {
-        Debug.Log("Ping!");
-        // msg.conn.connectionId
     }
 
     //TODO: USE THIS WHEN PLAYER CHANGES TEAM AND SUCH
