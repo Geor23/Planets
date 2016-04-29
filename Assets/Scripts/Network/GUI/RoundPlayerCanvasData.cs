@@ -24,7 +24,6 @@ public class RoundPlayerCanvasData : MonoBehaviour {
 	}
 
 	public void PingPlayer(){
-		Debug.LogError("PINGPING");
 		UniqueObjectMessage uom = new UniqueObjectMessage();
 		uom.netId = PersonalPlayerInfo.singleton.getPlayer().getPlayerObject().GetComponent<NetworkIdentity>().netId;
 		NetworkManager.singleton.client.Send(Msgs.ping, uom);

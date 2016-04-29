@@ -55,6 +55,7 @@ public class RoundOverGUI : MonoBehaviour {
   void Update(){
       time -= Time.deltaTime;
       if (time > 0){
+          // ?????? Errors here
           timer.text = ((int)time).ToString();
           if (lastUpdatedTime - time >= 1.0f) {
             lastUpdatedTime = time;
@@ -65,17 +66,11 @@ public class RoundOverGUI : MonoBehaviour {
   }
 
    public void OnPlayerRecievePlayerScore(NetworkMessage msg){
-        Debug.Log(" goooooot it ");
         PlayerValues pv = msg.ReadMessage<PlayerValues>();
         kills.text = "Kills : " + pv.kills.ToString();
-        Debug.Log("Kills is " + pv.kills);
         deaths.text = "Deaths : " + pv.deaths.ToString();
-        Debug.Log("Deaths is " + pv.deaths);
         mostScores.text = "Total score : " + pv.scoreTotal.ToString();
-        Debug.Log("Score Total is " + pv.scoreTotal);
-        Debug.Log("Score Acc is " + pv.scoreAcc);
         finalScores.text = "Final scores : " + pv.scoreRound.ToString();
-        Debug.Log("ScoreRound is " + pv.scoreRound);
     }
 
 	public void OnClientReceiveTeamList(NetworkMessage msg){
