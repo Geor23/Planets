@@ -94,21 +94,20 @@ MonoBehaviour:
   m_SpawnPrefabs:
   - {fileID: 158602, guid: e2bec8779cef647cbacae305c253fec0, type: 2}
   - {fileID: 135240, guid: 5d90277e2d19d41e092696113922c674, type: 2}
-  - {fileID: 116834, guid: 976667ad8326a483eaa9c21ec560f8b2, type: 2}
-  - {fileID: 116834, guid: 247d629bb9a114da68aa35aee9e91501, type: 2}
   - {fileID: 192962, guid: 7dc54a31299ac4abd87316f438f5f103, type: 2}
   - {fileID: 177056, guid: 2d1995fadd0c04b3eab52ed051bc1936, type: 2}
   - {fileID: 197474, guid: 5d633392a34c14108aad562f21512f74, type: 2}
+  - {fileID: 126588, guid: e9e78e1f4340f004b8a159f0fa130c1d, type: 2}
   m_CustomConfig: 1
   m_MaxConnections: 100
   m_ConnectionConfig:
     m_PacketSize: 1500
     m_FragmentSize: 500
     m_ResendTimeout: 1200
-    m_DisconnectTimeout: 2000
+    m_DisconnectTimeout: 20000
     m_ConnectTimeout: 2000
     m_MinUpdateTimeout: 10
-    m_PingTimeout: 500
+    m_PingTimeout: 5000
     m_ReducedPingTimeout: 100
     m_AllCostTimeout: 20
     m_NetworkDropThreshold: 5
@@ -129,8 +128,8 @@ MonoBehaviour:
     m_MaxPacketSize: 2000
   m_Channels: 0500000000000000
   m_UseWebSockets: 0
-  m_UseSimulator: 0
-  m_SimulatedLatency: 18
+  m_UseSimulator: 1
+  m_SimulatedLatency: 1
   m_PacketLossPercentage: 0
   m_MatchHost: mm.unet.unity3d.com
   m_MatchPort: 443
@@ -140,14 +139,16 @@ MonoBehaviour:
   matchSize: 4
   player1: {fileID: 158602, guid: e2bec8779cef647cbacae305c253fec0, type: 2}
   player2: {fileID: 135240, guid: 5d90277e2d19d41e092696113922c674, type: 2}
-  observerSingleScreen: {fileID: 197474, guid: 5d633392a34c14108aad562f21512f74, type: 2}
+  observerSingleScreen: {fileID: 126588, guid: e9e78e1f4340f004b8a159f0fa130c1d, type: 2}
   observerSplitScreen: {fileID: 177056, guid: 2d1995fadd0c04b3eab52ed051bc1936, type: 2}
+  INITIALTIMER: 120
+  ROUNDOVERTIMER: 10
   allowSharedIPs: 1
   onlyUpdateObservers: 1
   usingSplitScreen: 0
   key: 0
-  round1Scene: Round1
-  timerOn: 0
+  round1Scene: Round3
+  timerOn: 1
   ppi: {fileID: 0}
 --- !u!1001 &100100000
 Prefab:

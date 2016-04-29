@@ -193,9 +193,9 @@ public class PlanetsNetworkManager : NetworkManager {
     public int ipToId(string address, int connId){
         if (address != "localClient") {
             int idValue;
-            idValue = connId*(IPAddress.Parse(address).GetAddressBytes()[15] + 1);
+            idValue = (connId*256) + (IPAddress.Parse(address).GetAddressBytes()[15]);
             return idValue;
-        } 
+        }
         return -1;
     }
 
@@ -392,7 +392,6 @@ public class PlanetsNetworkManager : NetworkManager {
         foreach (NetworkConnection nc in getUpdateListeners()){
             NetworkServer.SendToClient(nc.connectionId, Msgs.updatePlayerToObserver, pv); //Sends player info to the client that re-connected
         }
-        Debug.LogError("After END " + pm.getName(idVal));
     }
     // send the team list of players to all clients
     public void sendTeam(int team) {
@@ -434,15 +433,9 @@ public class PlanetsNetworkManager : NetworkManager {
         ppi = PersonalPlayerInfo.singleton;
         client.RegisterHandler(Msgs.updatePlayer, OnPlayerUpdate);
         client.RegisterHandler(Msgs.addNewPlayer, OnNewPlayer);
-        client.RegisterHandler(Msgs.ping, OnPing);
         client.RegisterHandler(Msgs.addNewPlayerToObserver, OnNewPlayerObserver);
         client.RegisterHandler(Msgs.updatePlayerToObserver, OnPlayerUpdateObserver);
         // client.RegisterHandler(Msgs.sendRoundOverValuesToPlayer, OnPlayerRecievePlayerScore);
-    }
-
-    public void OnPing(NetworkMessage msg) {
-        Debug.Log("Ping!");
-        // msg.conn.connectionId
     }
 
     //TODO: USE THIS WHEN PLAYER CHANGES TEAM AND SUCH
@@ -514,9 +507,7 @@ public class PlanetsNetworkManager : NetworkManager {
 
     //RUN ON OBSERVER
     public void sendScoresToPlayers(){
-        Debug.LogError("YAYAYA");
         Dictionary<int, Player> playerDict = pm.getPlayerDict();
-        Debug.LogError(playerDict.Count);
         foreach (var i in playerDict) {
             if (playerDict[i.Key].getIsConnected()){
                 PlayerValues pv = new PlayerValues();

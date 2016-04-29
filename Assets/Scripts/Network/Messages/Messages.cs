@@ -144,4 +144,5 @@ public class PlayerValues : MessageBase {
 public class PlayerSpawnMsg : MessageBase {
     public int playerId;
     public Vector3 pos;
+    public Quaternion rot;
 }

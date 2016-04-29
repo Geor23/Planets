@@ -16,27 +16,26 @@ public class PlayerControllerMobile : NetworkBehaviour {
     public PersonalPlayerInfo ppi;
     public PlayerManager pm;
 
-    private const float fireRate = 0.3F;
-    private float currentFireRate = fireRate;
-    private float nextFire = 0.0F;
-    private bool hasCollide = false;
+    public  float fireRate;
+    public  float fasterFireTimeInit;
+    public  float doubleScoreTimeInit;
+    public  float shieldedTimeInit;
 
-    
+
+    private float currentFireRate;
+    private float nextFire = 0.0F;    
 
     // ------- POWER UP VARS---------------- //
-    public bool doubleScore = false;
-    private const float doubleScoreTimeInit = 5;
-    private float doubleScoreTime = doubleScoreTimeInit;
+    public bool doubleScore = true;
+    private float doubleScoreTime;
 
 
     private bool fasterFire = false;
-    private float fasterFireSpeed = 0.1F;
-    private const float fasterFireTimeInit = 5;
-    private float fasterFireTime = fasterFireTimeInit;
+    private float fasterFireTime;
+    private float fasterFireSpeed = 0.1f;
 
     private bool shielded = false;
-    private const float shieldedTimeInit = 120;
-    private float shieldedTime = shieldedTimeInit;
+    private float shieldedTime;
 
     // -------------------------------------- //
 
@@ -50,7 +49,8 @@ public class PlayerControllerMobile : NetworkBehaviour {
     public Transform planet;
     public Transform model;
     public Transform turret;
-    public TextMesh tearDropId;
+    public GameObject tearDrop;
+    public TextMesh tearDropText;
     private Rigidbody rb;
     public GameObject pin;
 
@@ -70,6 +70,9 @@ public class PlayerControllerMobile : NetworkBehaviour {
     private ResourcePowerUpManager resourcePowerUpManager;
     private RoundPlayerObjectManager roundPlayerObjectManager;
     private RoundEvents roundEvents; //Contains reference to RoundEventsManager object
+
+    private bool dead = true;
+    private bool pinScaling = false;
 
     [SyncVar]
     public int dictId;
@@ -95,8 +98,19 @@ public class PlayerControllerMobile : NetworkBehaviour {
             playerDetails.setPlayerDetails(dictId, ppi.getPlayer());
         }
         Debug.Log("Setting teardrop id to " + playerDetails.getObsId().ToString()); //BUG
-        tearDropId.text = playerDetails.getObsId().ToString();
+        tearDropText.text = playerDetails.getObsId().ToString();
         if(nIdentity.isLocalPlayer) gameObject.transform.localScale = new Vector3(3,3,3);
+        dead = false;
+
+        currentFireRate = fireRate;
+        doubleScoreTime = doubleScoreTimeInit;
+        fasterFireTime = fasterFireTimeInit;
+        shieldedTime = shieldedTimeInit;
+
+    }
+
+    public override void OnStartLocalPlayer(){
+        PersonalPlayerInfo.singleton.getPlayer().setPlayerObject(gameObject);
     }
 
     void Update() {
@@ -141,6 +155,8 @@ public class PlayerControllerMobile : NetworkBehaviour {
                 shieldedTime = fasterFireTimeInit; //Resets timer
             }
         }
+        Transform obsCam = GameObject.FindGameObjectsWithTag("Observer")[0].transform.GetChild(0);
+        tearDrop.transform.LookAt(obsCam.position, -obsCam.up);
         if (!nIdentity.isLocalPlayer) return;
 
         rb = GetComponent<Rigidbody>();
@@ -184,14 +200,20 @@ public class PlayerControllerMobile : NetworkBehaviour {
         Vector3 moveDir = forwardSpeed * forward + strafeSpeed * right;
         Vector3 turretDirection = ((forward * aimV) + (right * aimH)).normalized;
         rotateObject(turret, turretDirection);
-        Transform obsCam = GameObject.FindGameObjectsWithTag("Observer")[0].transform.GetChild(0);
+        Vector3 worldPos = Vector3.zero, 
+                newLocation = Vector3.zero;
+        if(obsCam == null){
+            Debug.Log("Can't find observer!");
+        } else{
+            worldPos = obsCam.position + obsCam.parent.transform.position;
+            newLocation = transform.position + moveDir * Time.deltaTime * 5;
+        }
 
-        Vector3 worldPos = obsCam.position + obsCam.parent.transform.position;
-        Vector3 newLocation = transform.position + moveDir * Time.deltaTime * 5;
+
         float distPlanetToCam = Vector3.Distance(planetCenter, worldPos);
         float distPlayerToCam = Vector3.Distance(newLocation, worldPos);
 
-        if (distPlanetToCam>distPlayerToCam) {
+        if (distPlanetToCam - 30 > distPlayerToCam) {
             rotateObject(model, moveDir.normalized);
             rb.MovePosition(newLocation);
         } else {
@@ -224,6 +246,8 @@ public class PlayerControllerMobile : NetworkBehaviour {
     }
 
     void OnCollisionEnter(Collision col){
+        if(dead) return;
+        if(nm == null) return;
         if (nm.observerCollisionsOnly()){
             if (!PlayerConfig.singleton.GetObserver()) return;
         }
@@ -265,8 +289,8 @@ public class PlayerControllerMobile : NetworkBehaviour {
         }
         //TOFIX
         else if (col.gameObject.CompareTag("ProjectilePirate") && gameObject.CompareTag("PlayerSuperCorp")) {
-            if ((hasCollide == false) && (shielded == false)) {
-                //hasCollide = true;
+            if (!dead && !shielded) {
+                dead = true;
                 int killerId = col.gameObject.GetComponent<ProjectileData>().ownerId;
                 gameObject.GetComponent<Exploder>().expl();
                 Destroy(col.gameObject);
@@ -274,8 +298,8 @@ public class PlayerControllerMobile : NetworkBehaviour {
             }
         }
         else if (col.gameObject.CompareTag("ProjectileSuperCorp") && gameObject.CompareTag("PlayerPirate")) {
-            if ((hasCollide == false) && (shielded == false)) {
-                //hasCollide = true;
+            if (!dead && !shielded) {
+                dead = true;
                 int killerId = col.gameObject.GetComponent<ProjectileData>().ownerId;
                 gameObject.GetComponent<Exploder>().expl();
                 Destroy(col.gameObject);
@@ -359,22 +383,24 @@ public class PlayerControllerMobile : NetworkBehaviour {
     }
 
 
-    void OnMouseDown() {
+    public void Ping() {
+        if(pinScaling) return;
+        pinScaling = true;
         Vector3 temp = pin.transform.localScale;
-        pin.transform.localScale = Vector3.Lerp (pin.transform.localScale, 7*temp, Time.deltaTime);
+        pin.transform.localScale = Vector3.Lerp (pin.transform.localScale, 50*temp, Time.deltaTime);
    
         StartCoroutine(Wait(temp));
-        Debug.Log("ping!");
     }
 
  
     IEnumerator Wait(Vector3 temp) {
-        yield return new WaitForSeconds(0.3f);      
+        yield return new WaitForSeconds(1f);      
         pin.transform.localScale = temp;
-        yield return new WaitForSeconds(0.3f);      
-        pin.transform.localScale = Vector3.Lerp (pin.transform.localScale, 7*temp, Time.deltaTime);
-        yield return new WaitForSeconds(0.3f);      
+        yield return new WaitForSeconds(1f);      
+        pin.transform.localScale = Vector3.Lerp (pin.transform.localScale, 50*temp, Time.deltaTime);
+        yield return new WaitForSeconds(1f);      
         pin.transform.localScale = temp;
+        pinScaling = false;
     }
 
 

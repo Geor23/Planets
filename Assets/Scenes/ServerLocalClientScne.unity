@@ -260,10 +260,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 11489486, guid: af28d3f0fb326294fb32a70529d06809, type: 2}
-      propertyPath: m_SpawnPrefabs.Array.size
-      value: 6
-      objectReference: {fileID: 0}
     - target: {fileID: 447324, guid: af28d3f0fb326294fb32a70529d06809, type: 2}
       propertyPath: m_LocalPosition.x
       value: 1.0950017
@@ -297,51 +293,7 @@ Prefab:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 11489486, guid: af28d3f0fb326294fb32a70529d06809, type: 2}
-      propertyPath: timerOn
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 11489486, guid: af28d3f0fb326294fb32a70529d06809, type: 2}
-      propertyPath: m_SpawnPrefabs.Array.data[7]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 11489486, guid: af28d3f0fb326294fb32a70529d06809, type: 2}
-      propertyPath: observerSingleScreen
-      value: 
-      objectReference: {fileID: 126588, guid: e9e78e1f4340f004b8a159f0fa130c1d, type: 2}
-    - target: {fileID: 11489486, guid: af28d3f0fb326294fb32a70529d06809, type: 2}
-      propertyPath: round1Scene
-      value: Round3
-      objectReference: {fileID: 0}
-    - target: {fileID: 11489486, guid: af28d3f0fb326294fb32a70529d06809, type: 2}
-      propertyPath: INITIALTIMER
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 11489486, guid: af28d3f0fb326294fb32a70529d06809, type: 2}
-      propertyPath: m_SpawnPrefabs.Array.data[2]
-      value: 
-      objectReference: {fileID: 192962, guid: 7dc54a31299ac4abd87316f438f5f103, type: 2}
-    - target: {fileID: 11489486, guid: af28d3f0fb326294fb32a70529d06809, type: 2}
-      propertyPath: m_SpawnPrefabs.Array.data[3]
-      value: 
-      objectReference: {fileID: 177056, guid: 2d1995fadd0c04b3eab52ed051bc1936, type: 2}
-    - target: {fileID: 11489486, guid: af28d3f0fb326294fb32a70529d06809, type: 2}
-      propertyPath: m_SpawnPrefabs.Array.data[4]
-      value: 
-      objectReference: {fileID: 197474, guid: 5d633392a34c14108aad562f21512f74, type: 2}
-    - target: {fileID: 11489486, guid: af28d3f0fb326294fb32a70529d06809, type: 2}
-      propertyPath: m_SpawnPrefabs.Array.data[5]
-      value: 
-      objectReference: {fileID: 126588, guid: e9e78e1f4340f004b8a159f0fa130c1d, type: 2}
-    - target: {fileID: 11489486, guid: af28d3f0fb326294fb32a70529d06809, type: 2}
-      propertyPath: m_SpawnPrefabs.Array.data[6]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 11489486, guid: af28d3f0fb326294fb32a70529d06809, type: 2}
-      propertyPath: m_CustomConfig
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 11489486, guid: af28d3f0fb326294fb32a70529d06809, type: 2}
-      propertyPath: usingSplitScreen
+      propertyPath: m_UseSimulator
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -783,7 +735,7 @@ MonoBehaviour:
   m_CaretColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_CustomCaretColor: 0
   m_SelectionColor: {r: 0.65882355, g: 0.80784315, b: 1, a: 0.7529412}
-  m_Text: localhost
+  m_Text: 192.168.0.6
   m_CaretBlinkRate: 0.85
   m_CaretWidth: 1
   m_ReadOnly: 0
@@ -820,7 +772,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 10.1.21.1
+  m_Text: 192.168.0.6
 --- !u!95 &254800050
 Animator:
   serializedVersion: 3
@@ -1452,7 +1404,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 456730, guid: 150fb83b86bf6b5488321a9a60592a0d, type: 2}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 114930, guid: 150fb83b86bf6b5488321a9a60592a0d, type: 2}
       propertyPath: m_IsActive
@@ -2017,7 +1969,7 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 740069113}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4cf43e73fde6f674c86b1ea3fc0a4695, type: 3}
   m_Name: 
@@ -2367,11 +2319,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 422344, guid: 8c78489206f2bd24981c138c66e84150, type: 2}
       propertyPath: m_RootOrder
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 189798, guid: 8c78489206f2bd24981c138c66e84150, type: 2}
-      propertyPath: m_IsActive
-      value: 0
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8c78489206f2bd24981c138c66e84150, type: 2}

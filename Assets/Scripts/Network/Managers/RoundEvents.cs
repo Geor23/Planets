@@ -71,6 +71,7 @@ public class RoundEvents : MonoBehaviour {
         ps.playerId = playerId;
         Transform obsCamTrans = GameObject.FindGameObjectsWithTag("Observer")[0].transform.GetChild(0);
         ps.pos = obsCamTrans.transform.position; //Observer cam;
+        ps.rot = obsCamTrans.transform.rotation;
         if(pm.getTeam(playerId) == TeamID.TEAM_PIRATES) ps.pos += -obsCamTrans.right*5;
         else ps.pos += obsCamTrans.right*5;
         nm.client.Send(Msgs.spawnPlayer, ps);
@@ -154,7 +155,7 @@ public class RoundEvents : MonoBehaviour {
 
     public void OnServerSpawnPlayer(NetworkMessage msg){
         PlayerSpawnMsg ps = msg.ReadMessage<PlayerSpawnMsg>();
-        GameObject player = Instantiate(nm.playerObjectType(ps.playerId), ps.pos, Quaternion.identity) as GameObject;
+        GameObject player = Instantiate(nm.playerObjectType(ps.playerId), ps.pos, ps.rot) as GameObject;
         player.GetComponent<PlayerControllerMobile>().dictId = ps.playerId;
         Debug.Log("Player " + ps.playerId + "being respawned");
         NetworkServer.AddPlayerForConnection(pm.getNetworkConnection(ps.playerId), player, 0);

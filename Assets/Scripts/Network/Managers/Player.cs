@@ -17,6 +17,8 @@ public class Player {
     private int playerKills; //Contains number of times you killed in a round
     private int playerDeaths; //Contains number of times you died in a round
 
+    private GameObject currentPlayerObject;
+
     public Player (int dictVal, int conn, string playIP, string playName, int teamChoice, int playerD, int playerK, int playerScoreAR, int playerTotal){
         playerDictVal = dictVal;
         connVal = conn;
@@ -130,5 +132,13 @@ public class Player {
         playerDeaths = 0;
         playerKills = 0;
         playerScoreTotal = 0;
+    }
+
+    public void setPlayerObject(GameObject obj){
+        currentPlayerObject = obj;
+    }
+
+    public GameObject getPlayerObject(){
+        return currentPlayerObject;
     }
 }

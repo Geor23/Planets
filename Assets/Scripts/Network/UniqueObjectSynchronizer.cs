@@ -11,14 +11,20 @@ public class UniqueObjectSynchronizer : MonoBehaviour {
 	NetworkManager nm;
 
 	void Start(){
-        if(!NetworkClient.active) return;
-		nm = NetworkManager.singleton;
-		nm.client.RegisterHandler(Msgs.updatePos, UpdateLocalPos);
-		nm.client.RegisterHandler(Msgs.updateRot, UpdateLocalRot);
-		nm.client.RegisterHandler(Msgs.updateRotTurret, UpdateLocalRotTurret);
-		nm.client.RegisterHandler(Msgs.fireProjectile, FireProjectile);
+        nm = NetworkManager.singleton;
+        if(NetworkClient.active){
+    		nm.client.RegisterHandler(Msgs.updatePos, UpdateLocalPos);
+    		nm.client.RegisterHandler(Msgs.updateRot, UpdateLocalRot);
+    		nm.client.RegisterHandler(Msgs.updateRotTurret, UpdateLocalRotTurret);
+    		nm.client.RegisterHandler(Msgs.fireProjectile, FireProjectile);
+            nm.client.RegisterHandler(Msgs.ping, PingPlayer);
+        }
+        if(NetworkServer.active){
+            NetworkServer.RegisterHandler(Msgs.ping, OnServerRecievePing);
+        }
 	}
 
+    /* CLIENT FUNZ */
 
 	void UpdateLocalPos(NetworkMessage msg){
 		UpdatePos up = msg.ReadMessage<UpdatePos>();
@@ -59,5 +65,26 @@ public class UniqueObjectSynchronizer : MonoBehaviour {
         }
         obj.GetComponent<PlayerControllerMobile>().TargetFireProjectile(fp);
 	}
+
+    void PingPlayer(NetworkMessage msg){
+        UniqueObjectMessage m = msg.ReadMessage<UniqueObjectMessage>();
+        GameObject obj = ClientScene.FindLocalObject(m.netId);
+        if(obj == null){
+            Debug.LogError("PingPlayer: GameObject with netId " + m.netId + " could not be found.");
+            return;
+        }
+        obj.GetComponent<PlayerControllerMobile>().Ping();
+    }
+
+
+
+    /* SERVER FUNZ */
+
+    void OnServerRecievePing(NetworkMessage msg){
+        foreach (NetworkConnection nc in ((PlanetsNetworkManager)PlanetsNetworkManager.singleton).getUpdateListeners()){
+            NetworkServer.SendToClient(nc.connectionId, Msgs.ping, msg.ReadMessage<UniqueObjectMessage>());
+        }
+    }
+
 }
 #endif

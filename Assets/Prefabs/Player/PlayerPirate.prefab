@@ -213,7 +213,7 @@ Camera:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 176450}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_ClearFlags: 1
   m_BackGroundColor: {r: 0.116614945, g: 0.085640125, b: 0.16176468, a: 0}
@@ -464,7 +464,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nIdentity: {fileID: 11489970}
   myTransform: {fileID: 22445154}
-  lerpRate: 3
+  lerpRate: 2
   updateAll: 0
 --- !u!114 &11451542
 MonoBehaviour:
@@ -517,6 +517,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ppi: {fileID: 0}
+  fireRate: 0.3
+  fasterFireTimeInit: 10
+  doubleScoreTimeInit: 10
+  shieldedTimeInit: 15
   doubleScore: 0
   speed: 1.5
   rotSpeed: 12
@@ -526,10 +530,10 @@ MonoBehaviour:
   planet: {fileID: 495726, guid: 45efd7c7e513e4b29a58c3f9dde560bf, type: 2}
   model: {fileID: 453450}
   turret: {fileID: 404412}
-  tearDropId: {fileID: 10237434}
+  tearDrop: {fileID: 124618}
+  tearDropText: {fileID: 10237434}
   pin: {fileID: 124618}
   mainCamera: {fileID: 0}
-  obsCamera: {fileID: 475270, guid: 5d633392a34c14108aad562f21512f74, type: 2}
   planetCenter: {x: 0, y: 0, z: 0}
   playerDetails: {fileID: 11416008}
   dictId: 0
@@ -647,8 +651,8 @@ RectTransform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 181750}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: 0, y: 0, z: 1}
+  m_LocalRotation: {x: 0.9999949, y: 0, z: 0, w: 0.003208003}
+  m_LocalPosition: {x: 0, y: 0, z: 0.068}
   m_LocalScale: {x: 0.002, y: 0.002, z: 0.002}
   m_Children:
   - {fileID: 420658}
@@ -656,7 +660,7 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.0061838627, y: -0.06171739}
+  m_AnchoredPosition: {x: 0.0061838627, y: -0.918}
   m_SizeDelta: {x: 32.4, y: 21.8}
   m_Pivot: {x: 0, y: 0}
 --- !u!224 &22445154
