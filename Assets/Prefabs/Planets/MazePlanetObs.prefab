@@ -3956,6 +3956,9 @@ GameObject:
   - 114: {fileID: 11481696}
   - 114: {fileID: 11402608}
   - 114: {fileID: 11468794}
+  - 114: {fileID: 11422678}
+  - 114: {fileID: 11413780}
+  - 114: {fileID: 11470852}
   m_Layer: 0
   m_Name: MazePlanetObs
   m_TagString: Planet
@@ -19348,7 +19351,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 115860}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0613, y: 0.501, z: -0.14}
+  m_LocalPosition: {x: -0.0613, y: 0.5531, z: -0.14}
   m_LocalScale: {x: 0.033333335, y: 0.033333335, z: 0.033333335}
   m_Children: []
   m_Father: {fileID: 451500}
@@ -19588,7 +19591,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 194422}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.1276, y: 0.4847, z: 0.0918}
+  m_LocalPosition: {x: -0.1276, y: 0.5349, z: 0.0918}
   m_LocalScale: {x: 0.033333335, y: 0.033333335, z: 0.033333335}
   m_Children: []
   m_Father: {fileID: 451500}
@@ -23389,7 +23392,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 114626}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.003, z: 0}
+  m_LocalPosition: {x: 0, y: 0.016, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 453976}
@@ -78792,6 +78795,39 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnObject1: {fileID: 115860}
   spawnObject2: {fileID: 194422}
+--- !u!114 &11413780
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 125544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c8447707869e4740843fba36fa42f84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explosionEffectsContainer: {fileID: 100000, guid: 15ca5b8fa431dc04291a79cadcd19874,
+    type: 2}
+  scale: 1
+  playbackSpeed: 1
+--- !u!114 &11422678
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 125544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d039134acf55a14fbb781a9c088c4ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explosionTime: 0
+  randomizeExplosionTime: 0
+  radius: 150
+  power: 100
+  probeCount: 150
+  explodeDuration: 0.5
+  needsToExplode: 0
 --- !u!114 &11468794
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -78803,6 +78839,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e45eef4bd9badf448048755e4456e57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  planetSize: 50
   resourceObject: {fileID: 116834, guid: 247d629bb9a114da68aa35aee9e91501, type: 2}
   shieldObject: {fileID: 141604, guid: ecd079d636a2a4e92b9705fa78d46291, type: 2}
   fasterFireObject: {fileID: 145916, guid: 8f692cbb3a65f44f6afc310fc71eecf9, type: 2}
@@ -78864,6 +78901,22 @@ MonoBehaviour:
   resourceSpawnTime: 1.5
   powerUpSpawnTime: 10.5
   meteorSpawnTime: 5.5
+--- !u!114 &11470852
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 125544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 026a2deff3dab194893abb8f75720da5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  volumetricExplosion: {fileID: 100000, guid: 5d028565f79e270408884b995abc06ef, type: 2}
+  count: 300
+  scale: 30
+  randomness: 1
+  duration: 1
 --- !u!114 &11476202
 MonoBehaviour:
   m_ObjectHideFlags: 1

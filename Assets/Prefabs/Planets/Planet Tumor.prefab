@@ -3533,6 +3533,9 @@ GameObject:
   - 114: {fileID: 11445402}
   - 114: {fileID: 11449890}
   - 114: {fileID: 11402888}
+  - 114: {fileID: 11475064}
+  - 114: {fileID: 11489590}
+  - 114: {fileID: 11469594}
   m_Layer: 0
   m_Name: Planet Tumor
   m_TagString: Planet
@@ -13714,6 +13717,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e45eef4bd9badf448048755e4456e57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  planetSize: 50
   resourceObject: {fileID: 116834, guid: 247d629bb9a114da68aa35aee9e91501, type: 2}
   shieldObject: {fileID: 141604, guid: ecd079d636a2a4e92b9705fa78d46291, type: 2}
   fasterFireObject: {fileID: 145916, guid: 8f692cbb3a65f44f6afc310fc71eecf9, type: 2}
@@ -13813,6 +13817,40 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Meteor
+--- !u!114 &11469594
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 183064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 026a2deff3dab194893abb8f75720da5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  volumetricExplosion: {fileID: 100000, guid: 5d028565f79e270408884b995abc06ef, type: 2}
+  count: 300
+  scale: 30
+  randomness: 1
+  duration: 1
+--- !u!114 &11475064
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 183064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d039134acf55a14fbb781a9c088c4ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explosionTime: 0
+  randomizeExplosionTime: 0
+  radius: 15
+  power: 1
+  probeCount: 150
+  explodeDuration: 0.5
+  needsToExplode: 0
 --- !u!114 &11485186
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -13825,6 +13863,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speedFactor: 2
+--- !u!114 &11489590
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 183064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c8447707869e4740843fba36fa42f84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explosionEffectsContainer: {fileID: 100000, guid: 15ca5b8fa431dc04291a79cadcd19874,
+    type: 2}
+  scale: 1
+  playbackSpeed: 1
 --- !u!135 &13500036
 SphereCollider:
   m_ObjectHideFlags: 1

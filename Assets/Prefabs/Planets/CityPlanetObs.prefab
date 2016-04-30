@@ -3372,6 +3372,9 @@ GameObject:
   - 114: {fileID: 11491576}
   - 114: {fileID: 11430606}
   - 114: {fileID: 11496144}
+  - 114: {fileID: 11431676}
+  - 114: {fileID: 11418860}
+  - 114: {fileID: 11431500}
   m_Layer: 0
   m_Name: CityPlanetObs
   m_TagString: Planet
@@ -20894,6 +20897,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11ca26c994b954608aeba06d7eeb4447, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11418860
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 152192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c8447707869e4740843fba36fa42f84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explosionEffectsContainer: {fileID: 100000, guid: 15ca5b8fa431dc04291a79cadcd19874,
+    type: 2}
+  scale: 1
+  playbackSpeed: 1
 --- !u!114 &11430606
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -20905,6 +20923,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e45eef4bd9badf448048755e4456e57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  planetSize: 50
   resourceObject: {fileID: 116834, guid: 247d629bb9a114da68aa35aee9e91501, type: 2}
   shieldObject: {fileID: 141604, guid: ecd079d636a2a4e92b9705fa78d46291, type: 2}
   fasterFireObject: {fileID: 145916, guid: 8f692cbb3a65f44f6afc310fc71eecf9, type: 2}
@@ -20945,6 +20964,40 @@ MonoBehaviour:
   resourceSpawnTime: 1.5
   powerUpSpawnTime: 10.5
   meteorSpawnTime: 10.5
+--- !u!114 &11431500
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 152192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 026a2deff3dab194893abb8f75720da5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  volumetricExplosion: {fileID: 100000, guid: 5d028565f79e270408884b995abc06ef, type: 2}
+  count: 300
+  scale: 30
+  randomness: 1
+  duration: 1
+--- !u!114 &11431676
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 152192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d039134acf55a14fbb781a9c088c4ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explosionTime: 0
+  randomizeExplosionTime: 0
+  radius: 15
+  power: 1
+  probeCount: 150
+  explodeDuration: 0.5
+  needsToExplode: 0
 --- !u!114 &11445806
 MonoBehaviour:
   m_ObjectHideFlags: 1
