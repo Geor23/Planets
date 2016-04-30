@@ -59,6 +59,7 @@ public class SceneFadeInOut : MonoBehaviour
     
     public void EndScene ()
     {
+        Debug.Log("<<<<<<<<<Ending scene>>>>>>");
         // Make sure the texture is enabled.
         GetComponent<GUITexture>().enabled = true;
         
@@ -66,8 +67,8 @@ public class SceneFadeInOut : MonoBehaviour
         FadeToBlack();
         
         // If the screen is almost black...
-        if(GetComponent<GUITexture>().color.a >= 0.95f)
+        // if(GetComponent<GUITexture>().color.a >= 0.95f)
             // ... reload the level.
-            Application.LoadLevel(0);
+            // Application.LoadLevel(0);
     }
 }

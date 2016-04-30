@@ -151,6 +151,7 @@ public class PlanetsNetworkManager : NetworkManager {
     	if ( NetworkManager.networkSceneName == "RoundOver" ) {
     		timerRound -= Time.deltaTime;
     		if (timerRound < 0) {
+                GameObject.Find("FadeTexture").GetComponent<SceneFadeInOut>().EndScene();
             	ServerChangeScene( roundList[ 2 * ( roundManager.getRoundId() - 1 ) ] );
             	timerRound = INITIALTIMER;
         	}
@@ -165,9 +166,11 @@ public class PlanetsNetworkManager : NetworkManager {
             	roundManager.changeRound();
             	teamManager.resetScores();
             	if (roundManager.getFinishedState() == 1) {
-            		ServerChangeScene( roundList[ 2 * ( roundManager.getRoundId() - 1 ) + 1 ] );
+            		GameObject.Find("FadeTexture").GetComponent<SceneFadeInOut>().EndScene();
+                    ServerChangeScene( roundList[ 2 * ( roundManager.getRoundId() - 1 ) + 1 ] );
             		timerRound = INITIALTIMER;
             	} else {	
+                    GameObject.Find("FadeTexture").GetComponent<SceneFadeInOut>().EndScene();
             		ServerChangeScene( roundList[ 2 * ( roundManager.getRoundId() - 1 ) - 1 ] );
             		timerRound = ROUNDOVERTIMER;
             	}
