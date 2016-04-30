@@ -38,6 +38,7 @@ public class LobbyGUI : MonoBehaviour {
 
 
   public void StartGame() {
+    GameObject.Find("FadeTexture").GetComponent<SceneFadeInOut>().EndScene();
     nm.client.Send(Msgs.startGame, new EmptyMessage());
   }
 

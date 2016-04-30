@@ -166,7 +166,6 @@ public class PlanetsNetworkManager : NetworkManager {
             	roundManager.changeRound();
             	teamManager.resetScores();
             	if (roundManager.getFinishedState() == 1) {
-            		GameObject.Find("FadeTexture").GetComponent<SceneFadeInOut>().EndScene();
                     ServerChangeScene( roundList[ 2 * ( roundManager.getRoundId() - 1 ) + 1 ] );
             		timerRound = INITIALTIMER;
             	} else {	
