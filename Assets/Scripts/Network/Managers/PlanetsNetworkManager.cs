@@ -324,7 +324,7 @@ public class PlanetsNetworkManager : NetworkManager {
                 NetworkServer.Destroy(player);
                 Debug.LogError("OnServerRemovePlayer: Destroying player"); // We shall finish our business on slack plz :)
             }
-            updateListeners.Remove(conn);
+            //updateListeners.Remove(conn);
         }
     }
 
