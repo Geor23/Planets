@@ -39,6 +39,11 @@ public class TimerDisplayScript : MonoBehaviour {
         } 
         if (time > 0){
             textField.text = ((int)time).ToString();
+            if (time <= 1) {
+              GameObject planet = GameObject.Find("Planet");
+              planet.GetComponent<Exploder>().expl();
+              // Debug.Log("explodin");
+            }
             // timer.GetComponent<ProgressBarBehaviour>().UpdateValue((float)time);
 
             

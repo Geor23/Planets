@@ -76,6 +76,7 @@ public class Exploder : MonoBehaviour {
 		// }
 		if (needsToExplode == true) {
 			exploded = true;
+			Debug.Log("expllll");
 			StartCoroutine("explode");
 			needsToExplode = false;
 		}
