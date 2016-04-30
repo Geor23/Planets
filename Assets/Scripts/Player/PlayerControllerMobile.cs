@@ -160,8 +160,10 @@ public class PlayerControllerMobile : NetworkBehaviour {
         if (!nIdentity.isLocalPlayer) return;
 
         rb = GetComponent<Rigidbody>();
-        Vector3 forward = transform.forward;
-        Vector3 right = transform.right;
+        // Vector3 forward = transform.forward;
+        // Vector3 right = transform.right;
+        Vector3 forward = obsCam.up;
+        Vector3 right = obsCam.right;
         #if UNITY_ANDROID
         float aimH = CrossPlatformInputManager.GetAxis ("AimH");
         float aimV = CrossPlatformInputManager.GetAxis ("AimV");
