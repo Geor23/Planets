@@ -1150,6 +1150,10 @@ Prefab:
       propertyPath: m_LocalPosition.y
       value: 0.5531
       objectReference: {fileID: 0}
+    - target: {fileID: 463342, guid: f4587433faa6b4d95bf8af75e504b312, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0.016
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f4587433faa6b4d95bf8af75e504b312, type: 2}
   m_IsPrefabParent: 0
@@ -1316,7 +1320,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
 --- !u!1001 &1753433304
 Prefab:
   m_ObjectHideFlags: 0
