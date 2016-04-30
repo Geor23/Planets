@@ -22,6 +22,13 @@ public class StartSceneGUI : MonoBehaviour {
             PlayerConfig.singleton.SetTeam(TeamID.TEAM_OBSERVER);
             Debug.LogError("Now an observer");
         }
+
+        if ((Input.GetKeyDown("g") && Input.GetKeyDown("h"))){
+          GameObject.Find("FadeTexture").GetComponent<SceneFadeInOut>().EndScene();
+          nm = NetworkManager.singleton;
+          nm.StartHost();
+          SendJoinMessage();
+        }
     }
 
     //Gives the local Network Manager the network address. Request a start client, also adds a handler for the SendJoinMessageCallback
@@ -42,12 +49,12 @@ public class StartSceneGUI : MonoBehaviour {
     nm.client.Send(Msgs.clientJoinMsg, jm);
   }
 
-  public void StartHost(){
-    GameObject.Find("FadeTexture").GetComponent<SceneFadeInOut>().EndScene();
-    nm = NetworkManager.singleton;
-    nm.StartHost();
-    SendJoinMessage();
-  }
+  // public void StartHost(){
+  //   GameObject.Find("FadeTexture").GetComponent<SceneFadeInOut>().EndScene();
+  //   nm = NetworkManager.singleton;
+  //   nm.StartHost();
+  //   SendJoinMessage();
+  // }
 
   public void StartDedicatedHost(){
     GameObject.Find("FadeTexture").GetComponent<SceneFadeInOut>().EndScene();
