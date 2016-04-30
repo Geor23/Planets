@@ -49,6 +49,12 @@ public class StartSceneGUI : MonoBehaviour {
     nm.client.Send(Msgs.clientJoinMsg, jm);
   }
 
+  public void BecomeObserver() {
+    playerChoice = TeamID.TEAM_OBSERVER;
+    PlayerConfig.singleton.SetTeam(TeamID.TEAM_OBSERVER);
+    Debug.LogError("Now an observer");
+  }
+
   // public void StartHost(){
   //   GameObject.Find("FadeTexture").GetComponent<SceneFadeInOut>().EndScene();
   //   nm = NetworkManager.singleton;
