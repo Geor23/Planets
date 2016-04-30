@@ -26,6 +26,7 @@ public class StartSceneGUI : MonoBehaviour {
 
     //Gives the local Network Manager the network address. Request a start client, also adds a handler for the SendJoinMessageCallback
   public void StartClient(){
+    GameObject.Find("FadeTexture").GetComponent<SceneFadeInOut>().EndScene();
     nm.networkAddress = networkAddr.text;
     nm.StartClient().RegisterHandler(MsgType.Connect, SendJoinMessageCallback);
   }
@@ -42,12 +43,14 @@ public class StartSceneGUI : MonoBehaviour {
   }
 
   public void StartHost(){
+    GameObject.Find("FadeTexture").GetComponent<SceneFadeInOut>().EndScene();
     nm = NetworkManager.singleton;
     nm.StartHost();
     SendJoinMessage();
   }
 
   public void StartDedicatedHost(){
+    GameObject.Find("FadeTexture").GetComponent<SceneFadeInOut>().EndScene();
     nm = NetworkManager.singleton;
     nm.StartServer();
 	}
