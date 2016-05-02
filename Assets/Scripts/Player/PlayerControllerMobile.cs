@@ -46,6 +46,7 @@ public class PlayerControllerMobile : NetworkBehaviour {
     public GameObject projectileModel;
     public GameObject shield;
     public GameObject ResourcePickUp;
+    public GameObject ResourcePickUpDeath;
     public Transform planet;
     public Transform model;
     public Transform turret;
@@ -242,7 +243,7 @@ public class PlayerControllerMobile : NetworkBehaviour {
         #endif
             if (Time.time < nextFire)
                 return;
-            CmdFireProjectile();
+            CmdFireProjectile(turret.transform.rotation);
             nextFire = Time.time + currentFireRate;
         }
     }
@@ -290,21 +291,18 @@ public class PlayerControllerMobile : NetworkBehaviour {
             //TODO
         }
         //TOFIX
-        else if (col.gameObject.CompareTag("ProjectilePirate") && gameObject.CompareTag("PlayerSuperCorp")) {
+        else if (col.gameObject.CompareTag("ProjectilePirate") || col.gameObject.CompareTag("ProjectileSuperCorp")) {
             if (!dead && !shielded) {
                 dead = true;
                 int killerId = col.gameObject.GetComponent<ProjectileData>().ownerId;
                 gameObject.GetComponent<Exploder>().expl();
                 Destroy(col.gameObject);
-                roundEvents.registerKill(netId, playerDetails.getDictId(), killerId);
-            }
-        }
-        else if (col.gameObject.CompareTag("ProjectileSuperCorp") && gameObject.CompareTag("PlayerPirate")) {
-            if (!dead && !shielded) {
-                dead = true;
-                int killerId = col.gameObject.GetComponent<ProjectileData>().ownerId;
-                gameObject.GetComponent<Exploder>().expl();
-                Destroy(col.gameObject);
+
+                int score = pm.getRoundScore(dictId);
+                if(score != 0){
+                    GameObject resource = (GameObject) Instantiate(ResourcePickUpDeath, gameObject.transform.position, Quaternion.identity);
+                    resource.GetComponent<CurrentResourceScore>().resourceScore = score;
+                }
                 roundEvents.registerKill(netId, playerDetails.getDictId(), killerId);
             }
         }
@@ -318,10 +316,9 @@ public class PlayerControllerMobile : NetworkBehaviour {
         }
 
         else if (col.gameObject.CompareTag("ResourcePickUpDeath")) {
-            //int resourceScore = resourcePowerUpManager.collided(col.gameObject);
-            int resourceScore = 1; //TODO: Make resourcePowerManager work
+            int resourceScore = resourcePowerUpManager.resourcePickUpCollision(col.gameObject);
             int dictId = playerDetails.getDictId();
-            roundEvents.GetComponent<RoundEvents>().getRoundScoreManager().increasePlayerScore(dictId, resourceScore);
+            roundEvents.getRoundScoreManager().increasePlayerScore(dictId, resourceScore);
         }
     }
 
@@ -351,14 +348,15 @@ public class PlayerControllerMobile : NetworkBehaviour {
     }
 
     [Command]
-    void CmdFireProjectile(){
+    void CmdFireProjectile(Quaternion rot){
         foreach (NetworkConnection nc in ((PlanetsNetworkManager)PlanetsNetworkManager.singleton).getUpdateListeners()){
             #if UNITY_5_4_OR_NEWER
             TargetFireProjectile(nc);
             #else
-            UniqueObjectMessage uom = new UniqueObjectMessage();
-            uom.netId = nIdentity.netId;
-            NetworkServer.SendToClient(nc.connectionId, Msgs.fireProjectile, uom);
+            FireProjectile fp = new FireProjectile();
+            fp.netId = GetComponent<NetworkIdentity>().netId;
+            fp.turretRot = rot;
+            NetworkServer.SendToClient(nc.connectionId, Msgs.fireProjectile, fp);
             #endif
         }
     }
@@ -367,8 +365,9 @@ public class PlayerControllerMobile : NetworkBehaviour {
     [TargetRpc]
     void TargetFireProjectile(NetworkConnection nc){
     #else
-    public void TargetFireProjectile(UniqueObjectMessage msg){
+    public void TargetFireProjectile(FireProjectile fp){
     #endif
+        turret.transform.rotation = fp.turretRot;
         SpawnProjectile();
         if (fasterFire){
             Invoke("SpawnProjectile", fireRate / 2);
@@ -403,11 +402,5 @@ public class PlayerControllerMobile : NetworkBehaviour {
         yield return new WaitForSeconds(1f);      
         pin.transform.localScale = temp;
         pinScaling = false;
-    }
-
-
-    void OnDestroy(){
-        if(nIdentity.isLocalPlayer)
-        Debug.LogError("Why was I destroyed?");
     }
 }

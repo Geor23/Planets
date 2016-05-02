@@ -14,9 +14,10 @@ public class RoundPlayerCanvasData : MonoBehaviour {
 	private PersonalPlayerInfo ppi;
 
 	void Start(){
+		if(!NetworkClient.active) return;
 		PersonalPlayerInfo ppi = PersonalPlayerInfo.singleton;
 		id.text = ppi.getObsId().ToString();
-		if(ppi.getPlayerTeam() == TeamID.TEAM_SUPERCORP){
+		if(PlayerConfig.singleton.getTeam() == TeamID.TEAM_SUPERCORP){
 			piratesTeardrop.SetActive(false);
 		}else{
 			superCorpTeardrop.SetActive(false);

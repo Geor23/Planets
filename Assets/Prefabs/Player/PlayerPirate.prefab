@@ -526,7 +526,8 @@ MonoBehaviour:
   rotSpeed: 12
   projectileModel: {fileID: 160548, guid: 823fb5d2b403d4d4cbaf79c62f7342d8, type: 2}
   shield: {fileID: 126432, guid: a23682b793533f6488eb51aa72925236, type: 2}
-  ResourcePickUp: {fileID: 116834, guid: 976667ad8326a483eaa9c21ec560f8b2, type: 2}
+  ResourcePickUp: {fileID: 116834, guid: 247d629bb9a114da68aa35aee9e91501, type: 2}
+  ResourcePickUpDeath: {fileID: 116834, guid: 976667ad8326a483eaa9c21ec560f8b2, type: 2}
   planet: {fileID: 495726, guid: 45efd7c7e513e4b29a58c3f9dde560bf, type: 2}
   model: {fileID: 453450}
   turret: {fileID: 404412}
@@ -543,7 +544,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 158602}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b49ee848ad1e14082aee0c6d03badeb1, type: 3}
   m_Name: 

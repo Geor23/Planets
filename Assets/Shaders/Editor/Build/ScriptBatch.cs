@@ -53,7 +53,7 @@ class ScriptBatch {
         List<string> serverLevels = MandatoryScenes();
         serverLevels.Insert(0, "Assets/Scenes/ServerStartScene.unity");
         string path = EditorUtility.SaveFolderPanel("Choose location to build in", "", "");
-        BuildPipeline.BuildPlayer(serverLevels.ToArray(), path + "/planets-server", BuildTarget.StandaloneLinux, BuildOptions.Development);
+        BuildPipeline.BuildPlayer(serverLevels.ToArray(), path + "/planets-server", BuildTarget.StandaloneLinux, BuildOptions.EnableHeadlessMode);
     }
 
     [MenuItem("BUILD/Deployment build/Android APK")]

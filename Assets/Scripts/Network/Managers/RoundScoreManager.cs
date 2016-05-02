@@ -26,16 +26,17 @@ public class RoundScoreManager {
             superCorpScore += score;
         }
     }
-/* //SHOULDN'T EVER NEED TO DECREMENT, ONLY RESET TO 0
-    public void decreasePlayerScore(int playerId, int score){
-        playerDict[playerId].decrementPlayerScore(score);
+ //SHOULDN'T EVER NEED TO DECREMENT, ONLY RESET TO 0
+    public void decreasePlayerScore(int playerId){
+        int score = pm.getRoundScore(playerId);
+        playerDict[playerId].playerDie();
         if(pm.getTeam(playerId) == TeamID.TEAM_PIRATES){
             pirateScore -= score;
         } else {
             superCorpScore -= score;
         }
     }
-*/
+
 
     public int getPirateScore(){
         return pirateScore;

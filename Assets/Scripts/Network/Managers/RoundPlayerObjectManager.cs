@@ -46,7 +46,7 @@ public class RoundPlayerObjectManager { //TODO
 
     //Kills player, potentially starts timer for respawn too
     public void killPlayerLocal(int playerIdKilled, int playerIdKiller){ //TODO
-        KillInfo ki = new KillInfo(playerIdKiller, playerIdKilled, KillType.ELE);
+        KillInfo ki = new KillInfo(playerIdKiller, playerIdKilled, KillType.BULLET);
         killHistory.Add(ki);
         deadPlayers.Enqueue(playerIdKilled);
 
@@ -78,7 +78,7 @@ public class RoundPlayerObjectManager { //TODO
 
     public string getKillsAsList(int howMany){
         string kills = "";
-        for (int i = killHistory.Count - 1; i >= 0 ; i--) {
+        for (int i = killHistory.Count - 2; i >= 0 ; i--) {
             kills += getKillString(i) + '\n';
         }
         return kills;

@@ -63,7 +63,6 @@ public class StartSceneGUI : MonoBehaviour {
   // }
 
   public void StartDedicatedHost(){
-    GameObject.Find("FadeTexture").GetComponent<SceneFadeInOut>().EndScene();
     nm = NetworkManager.singleton;
     nm.StartServer();
 	}

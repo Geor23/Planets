@@ -6,6 +6,7 @@ public class DisableIfNotObserver : MonoBehaviour {
     private PlanetsNetworkManager nm;
     // Use this for initialization
     void Start () {
+        if(!NetworkClient.active) return;
         nm = (PlanetsNetworkManager)NetworkManager.singleton;
         if (nm.observerCollisionsOnly()){
            // Debug.Log("Is observer?" + PlayerConfig.singleton.GetObserver());
