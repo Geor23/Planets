@@ -14,6 +14,7 @@ public class RoundPlayerCanvasData : MonoBehaviour {
 	private PersonalPlayerInfo ppi;
 
 	void Start(){
+		if(!NetworkClient.active) return;
 		PersonalPlayerInfo ppi = PersonalPlayerInfo.singleton;
 		id.text = ppi.getObsId().ToString();
 		if(ppi.getPlayerTeam() == TeamID.TEAM_SUPERCORP){

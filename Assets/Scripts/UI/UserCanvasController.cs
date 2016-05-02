@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Networking;
 
 public class UserCanvasController : MonoBehaviour {
 
@@ -9,6 +10,7 @@ public class UserCanvasController : MonoBehaviour {
 	bool isObserver;
 	
 	void Start () {
+		if(!NetworkClient.active) return;
 		isObserver = PlayerConfig.singleton.GetObserver();
 	}
 	

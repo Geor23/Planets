@@ -46,6 +46,7 @@ public class PlayerControllerMobile : NetworkBehaviour {
     public GameObject projectileModel;
     public GameObject shield;
     public GameObject ResourcePickUp;
+    public GameObject ResourcePickUpDeath;
     public Transform planet;
     public Transform model;
     public Transform turret;
@@ -290,16 +291,7 @@ public class PlayerControllerMobile : NetworkBehaviour {
             //TODO
         }
         //TOFIX
-        else if (col.gameObject.CompareTag("ProjectilePirate") && gameObject.CompareTag("PlayerSuperCorp")) {
-            if (!dead && !shielded) {
-                dead = true;
-                int killerId = col.gameObject.GetComponent<ProjectileData>().ownerId;
-                gameObject.GetComponent<Exploder>().expl();
-                Destroy(col.gameObject);
-                roundEvents.registerKill(netId, playerDetails.getDictId(), killerId);
-            }
-        }
-        else if (col.gameObject.CompareTag("ProjectileSuperCorp") && gameObject.CompareTag("PlayerPirate")) {
+        else if (col.gameObject.CompareTag("ProjectilePirate") || col.gameObject.CompareTag("ProjectileSuperCorp")) {
             if (!dead && !shielded) {
                 dead = true;
                 int killerId = col.gameObject.GetComponent<ProjectileData>().ownerId;
@@ -357,7 +349,7 @@ public class PlayerControllerMobile : NetworkBehaviour {
             TargetFireProjectile(nc);
             #else
             UniqueObjectMessage uom = new UniqueObjectMessage();
-            uom.netId = nIdentity.netId;
+            uom.netId = GetComponent<NetworkIdentity>().netId;
             NetworkServer.SendToClient(nc.connectionId, Msgs.fireProjectile, uom);
             #endif
         }
@@ -403,11 +395,5 @@ public class PlayerControllerMobile : NetworkBehaviour {
         yield return new WaitForSeconds(1f);      
         pin.transform.localScale = temp;
         pinScaling = false;
-    }
-
-
-    void OnDestroy(){
-        if(nIdentity.isLocalPlayer)
-        Debug.LogError("Why was I destroyed?");
     }
 }
