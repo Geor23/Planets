@@ -46,7 +46,7 @@ public class RoundPlayerObjectManager { //TODO
 
     //Kills player, potentially starts timer for respawn too
     public void killPlayerLocal(int playerIdKilled, int playerIdKiller){ //TODO
-        KillInfo ki = new KillInfo(playerIdKiller, playerIdKilled, KillType.ELE);
+        KillInfo ki = new KillInfo(playerIdKiller, playerIdKilled, KillType.BULLET);
         killHistory.Add(ki);
         deadPlayers.Enqueue(playerIdKilled);
 
