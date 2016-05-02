@@ -297,6 +297,12 @@ public class PlayerControllerMobile : NetworkBehaviour {
                 int killerId = col.gameObject.GetComponent<ProjectileData>().ownerId;
                 gameObject.GetComponent<Exploder>().expl();
                 Destroy(col.gameObject);
+
+                int score = pm.getRoundScore(dictId);
+                if(score != 0){
+                    GameObject resource = (GameObject) Instantiate(ResourcePickUpDeath, gameObject.transform.position, Quaternion.identity);
+                    resource.GetComponent<CurrentResourceScore>().resourceScore = score;
+                }
                 roundEvents.registerKill(netId, playerDetails.getDictId(), killerId);
             }
         }
@@ -310,10 +316,9 @@ public class PlayerControllerMobile : NetworkBehaviour {
         }
 
         else if (col.gameObject.CompareTag("ResourcePickUpDeath")) {
-            //int resourceScore = resourcePowerUpManager.collided(col.gameObject);
-            int resourceScore = 1; //TODO: Make resourcePowerManager work
+            int resourceScore = resourcePowerUpManager.resourcePickUpCollision(col.gameObject);
             int dictId = playerDetails.getDictId();
-            roundEvents.GetComponent<RoundEvents>().getRoundScoreManager().increasePlayerScore(dictId, resourceScore);
+            roundEvents.getRoundScoreManager().increasePlayerScore(dictId, resourceScore);
         }
     }
 

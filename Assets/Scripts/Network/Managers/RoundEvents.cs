@@ -79,6 +79,7 @@ public class RoundEvents : MonoBehaviour {
 
     public void registerKill(NetworkInstanceId netId, int playerKilledId, int playerKillerId){
         pom.killPlayerLocal(playerKilledId, playerKillerId);
+        sm.decreasePlayerScore(playerKilledId);
         KillPlayer kp = new KillPlayer();
         kp.netId = netId;
         nm.client.Send(Msgs.killPlayer, kp);
