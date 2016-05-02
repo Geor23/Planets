@@ -243,7 +243,7 @@ public class PlayerControllerMobile : NetworkBehaviour {
         #endif
             if (Time.time < nextFire)
                 return;
-            CmdFireProjectile();
+            CmdFireProjectile(turret.transform.rotation);
             nextFire = Time.time + currentFireRate;
         }
     }
@@ -343,14 +343,15 @@ public class PlayerControllerMobile : NetworkBehaviour {
     }
 
     [Command]
-    void CmdFireProjectile(){
+    void CmdFireProjectile(Quaternion rot){
         foreach (NetworkConnection nc in ((PlanetsNetworkManager)PlanetsNetworkManager.singleton).getUpdateListeners()){
             #if UNITY_5_4_OR_NEWER
             TargetFireProjectile(nc);
             #else
-            UniqueObjectMessage uom = new UniqueObjectMessage();
-            uom.netId = GetComponent<NetworkIdentity>().netId;
-            NetworkServer.SendToClient(nc.connectionId, Msgs.fireProjectile, uom);
+            FireProjectile fp = new FireProjectile();
+            fp.netId = GetComponent<NetworkIdentity>().netId;
+            fp.turretRot = rot;
+            NetworkServer.SendToClient(nc.connectionId, Msgs.fireProjectile, fp);
             #endif
         }
     }
@@ -359,8 +360,9 @@ public class PlayerControllerMobile : NetworkBehaviour {
     [TargetRpc]
     void TargetFireProjectile(NetworkConnection nc){
     #else
-    public void TargetFireProjectile(UniqueObjectMessage msg){
+    public void TargetFireProjectile(FireProjectile fp){
     #endif
+        turret.transform.rotation = fp.turretRot;
         SpawnProjectile();
         if (fasterFire){
             Invoke("SpawnProjectile", fireRate / 2);

@@ -57,7 +57,7 @@ public class UniqueObjectSynchronizer : MonoBehaviour {
 	}
 
 	void FireProjectile(NetworkMessage msg){
-		UniqueObjectMessage fp = msg.ReadMessage<UniqueObjectMessage>();
+		FireProjectile fp = msg.ReadMessage<FireProjectile>();
         GameObject obj = ClientScene.FindLocalObject(fp.netId);
         if(obj == null) {
         	Debug.LogError("FireProjectile: GameObject with netId " + fp.netId + " could not be found");

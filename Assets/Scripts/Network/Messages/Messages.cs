@@ -122,6 +122,11 @@ public class UpdateRotTurret : MessageBase {
     public Quaternion rot;
 }
 
+public class FireProjectile : MessageBase {
+    public NetworkInstanceId netId;
+    public Quaternion turretRot;
+}
+
 public class KillPlayer : MessageBase {
     public NetworkInstanceId netId;
     public GameObject obj;
