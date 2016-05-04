@@ -24,8 +24,6 @@ public class RoundOverGUI : MonoBehaviour {
   public float time=10.0F;
   private float lastUpdatedTime;
 
-
-
   public void Start() {
     if(!NetworkClient.active) {
       this.enabled = false;
@@ -41,8 +39,6 @@ public class RoundOverGUI : MonoBehaviour {
     nm.client.RegisterHandler(Msgs.sendCurrentTime, OnClientReceiveTime); //Creates a handler for when the client recieves a time from the server
     nm.client.Send(Msgs.requestCurrentTime, new EmptyMessage()); //Requests the current time in-game 
     nm.client.RegisterHandler(Msgs.sendRoundOverValuesToPlayer, OnPlayerRecievePlayerScore);
-
-        GameStatsManager gsm = new GameStatsManager();
     }
 
     void OnClientReceiveTime(NetworkMessage msg){
