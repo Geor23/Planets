@@ -24,14 +24,9 @@ public class GameStatsManager : MonoBehaviour {
 		roundScoreData.Add(rsm);
 	}
 
-	public void churnDataIntoStats(){
+	public void churnDataIntoStats(){}
 
-
-	}
-
-	public void makeGraph(){
-
-	}
+	public void makeGraph(){}
 
 	public RoundScoreManager getRoundScores(int round){
 		if(round > roundPlayerData.Count) return null;
@@ -47,4 +42,16 @@ public class GameStatsManager : MonoBehaviour {
 	public int getLatestRound(){
 		return roundPlayerData.Count;
 	}
+
+    public void returnRoundScores()
+    {
+        int latestRound = getLatestRound();
+        this.getRoundScores(latestRound);
+    }
+
+    public void returnRoundPlayerData()
+    {
+        int latestRound = getLatestRound();
+        this.getRoundPlayerData(latestRound);
+    }
 }
