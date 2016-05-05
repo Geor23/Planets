@@ -48,8 +48,7 @@ public class RoundOverObserverCanvasData : MonoBehaviour {
         int superCorpKills = gsm.getRoundPlayerData(latestRound).superCorpKills;
         totalDeathsS.text = "Total Deaths: " + superCorpDeaths.ToString();
         totalKillsS.text = "Total Kills: " + superCorpKills.ToString();
-        if (gsm.getRoundPlayerData(latestRound).numPlayers() > 1)
-        {
+        if (gsm.getRoundPlayerData(latestRound).numPlayers() > 1) {
             string leastDeathsPlayerP = gsm.getRoundPlayerData(latestRound).getPlayerWithLeastDeaths(0).getPlayerName();
             string mostKillsPlayerP = gsm.getRoundPlayerData(latestRound).getPlayerWithMostKills(0).getPlayerName();
             leastDeathsP.text = "Least Deaths: " + leastDeathsPlayerP;
@@ -58,14 +57,8 @@ public class RoundOverObserverCanvasData : MonoBehaviour {
             string leastDeathsPlayerS = gsm.getRoundPlayerData(latestRound).getPlayerWithLeastDeaths(1).getPlayerName();
             string mostKillsPlayerS = gsm.getRoundPlayerData(latestRound).getPlayerWithMostKills(1).getPlayerName();
             leastDeathsS.text = "Least Deaths: " + leastDeathsPlayerS;
-            Debug.Log("YOUR SISTER");
-            Debug.Log("YOUR FATHER " + mostKillsS);
             mostKillsS.text = "Most Kills: " + mostKillsPlayerS;
-            Debug.Log("YOUR MOTHER");
         }
-        Debug.Log("YOUR SISTER");
-        Debug.Log("YOUR FATHER " + mostKillsS);
-        Debug.Log("IT IS " + gsm.returnRoundWinner(latestRound));
         return winnerTeam.text = "WINNER "+ gsm.returnRoundWinner(latestRound);
 
     }

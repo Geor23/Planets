@@ -66,36 +66,24 @@ public class GameStatsManager : MonoBehaviour {
         int superCorpDeaths = getRoundPlayerData(latestRound).superCorpDeaths;
         int superCorpKills = getRoundPlayerData(latestRound).superCorpKills;
 
-        if (pirateScore > superCorpScore)
-        {
-            Debug.Log("WINNER - PIRATES");
+        if (pirateScore > superCorpScore) {
             return "PIRATES";
         }
-        else if (superCorpScore > pirateScore)
-        {
-            Debug.Log("WINNER - Super Corp");
+        else if (superCorpScore > pirateScore) {
             return "SUPER CORP";
         }
         else {
-            if (pirateKills > superCorpKills)
-            {
-                Debug.Log("WINNER - PIRATES");
+            if (pirateKills > superCorpKills) {
                 return "PIRATES";
             }
-            else if (superCorpKills > pirateKills)
-            {
-                Debug.Log("WINNER - Super Corp");
+            else if (superCorpKills > pirateKills) {
                 return "SUPER CORP";
             }
             else {
-                if (pirateDeaths > superCorpDeaths)
-                {
-                    Debug.Log("WINNER - Super Corp");
+                if (pirateDeaths > superCorpDeaths) {
                     return "SUPER CORP";
                 }
-                else
-                {
-                    Debug.Log("WINNER - PIRATES");
+                else {
                     return "PIRATES";
                 }
             }

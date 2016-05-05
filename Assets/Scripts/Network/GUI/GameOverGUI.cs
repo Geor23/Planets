@@ -8,8 +8,8 @@ using UnityEngine.Networking.NetworkSystem;
 public class GameOverGUI : MonoBehaviour {
 
     //NetworkManager nm;
-    public Text teamP;
-    public Text teamS;
+    //public Text teamP;
+    //public Text teamS;
 
     public Text totalScoreP;
     public Text totalScoreS;
@@ -20,13 +20,14 @@ public class GameOverGUI : MonoBehaviour {
     public Text totalDeathsP;
     public Text totalDeathsS;
 
+    public Text winnerTeam;
+
     public GameObject tumorpirate;
     public GameObject tumorsupercorp;
     public GameObject mazepirate;
     public GameObject mazesupercorp;
     public GameObject citypirate;
     public GameObject citysupercorp;
-
 
     public GameStatsManager gsm;
 
@@ -99,43 +100,57 @@ public class GameOverGUI : MonoBehaviour {
 
     public void displayData() {
         int latestRound = gsm.getLatestRound();
-        calculateFinalPirateData(latestRound);
-        calculateFinalSuperCorpData(latestRound);
-
+        calculateGameOverData(latestRound);
     }
 
-    public void calculateFinalPirateData(int latestRound) {
+    public void calculateGameOverData(int latestRound) {
         int pirateFinalScore = 0;
         int pirateKills = 0;
         int pirateDeaths = 0;
+
+        int superCorpFinalScore = 0;
+        int superCorpKills = 0;
+        int superCorpDeaths = 0;
+
+        int pirateWins = 0;
+        int superCorpWins = 0;
+
+        string roundWinner;
+
         for (int i =latestRound; i>0; i-- ) {
             pirateFinalScore += gsm.getRoundScores(i).getPirateScore();
             pirateKills += gsm.getRoundPlayerData(i).pirateKills;
             pirateDeaths += gsm.getRoundPlayerData(i).pirateDeaths;
 
+            superCorpFinalScore += gsm.getRoundScores(i).getSuperCorpScore();
+            superCorpKills += gsm.getRoundPlayerData(i).superCorpKills;
+            superCorpDeaths += gsm.getRoundPlayerData(i).superCorpDeaths;
+
+            roundWinner = gsm.returnRoundWinner(latestRound);
+            if (roundWinner == "PIRATES")
+            {
+                pirateWins += 1;
+            }
+            else
+            {
+                superCorpWins += 1;
+            }
         }
         totalScoreP.text = "Total Resources: " + pirateFinalScore.ToString();
         totalKillsP.text = "Total Kills: " + pirateKills.ToString();
         totalDeathsP.text = "Total Deaths: " + pirateDeaths.ToString();
-    }
 
-    public void calculateFinalSuperCorpData(int latestRound) {
-        int superCorpFinalScore = 0;
-        int superCorpKills = 0;
-        int superCorpDeaths = 0;
-
-        for (int i = latestRound; i > 0; i--) {
-            superCorpFinalScore += gsm.getRoundScores(i).getSuperCorpScore();
-            superCorpKills += gsm.getRoundPlayerData(i).pirateKills;
-            superCorpDeaths += gsm.getRoundPlayerData(i).pirateDeaths;
-        }
         totalScoreS.text = "Total Resources: " + superCorpFinalScore.ToString();
         totalKillsS.text = "Total Kills: " + superCorpKills.ToString();
         totalDeathsS.text = "Total Deaths: " + superCorpDeaths.ToString();
+
+        if (pirateWins > superCorpWins) {
+            winnerTeam.text = "WINNER PIRATES";
+        }
+        else
+        {
+            winnerTeam.text = "WINNER SUPER CORP";
+        }
     }
-
-
-
-
 
 }
