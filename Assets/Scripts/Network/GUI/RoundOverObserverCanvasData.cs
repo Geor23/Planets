@@ -31,7 +31,7 @@ public class RoundOverObserverCanvasData : MonoBehaviour {
         displayData();
     }
 
-    public void displayData() {
+    public string displayData() {
         int latestRound = gsm.getLatestRound();
 
         int pirateScore = gsm.getRoundScores(latestRound).getPirateScore();
@@ -48,40 +48,27 @@ public class RoundOverObserverCanvasData : MonoBehaviour {
         int superCorpKills = gsm.getRoundPlayerData(latestRound).superCorpKills;
         totalDeathsS.text = "Total Deaths: " + superCorpDeaths.ToString();
         totalKillsS.text = "Total Kills: " + superCorpKills.ToString();
+        if (gsm.getRoundPlayerData(latestRound).numPlayers() > 1)
+        {
+            string leastDeathsPlayerP = gsm.getRoundPlayerData(latestRound).getPlayerWithLeastDeaths(0).getPlayerName();
+            string mostKillsPlayerP = gsm.getRoundPlayerData(latestRound).getPlayerWithMostKills(0).getPlayerName();
+            leastDeathsP.text = "Least Deaths: " + leastDeathsPlayerP;
+            mostKillsP.text = "Most Kills: " + mostKillsPlayerP;
 
-        string leastDeathsPlayerP = gsm.getRoundPlayerData(latestRound).getPlayerWithLeastDeaths(0).getPlayerName();
-        string mostKillsPlayerP = gsm.getRoundPlayerData(latestRound).getPlayerWithMostKills(0).getPlayerName();
-        leastDeathsP.text = "Least Deaths: " + leastDeathsPlayerP;
-        mostKillsP.text = "Most Kills: " + mostKillsPlayerP;
-
-        string leastDeathsPlayerS = gsm.getRoundPlayerData(latestRound).getPlayerWithLeastDeaths(1).getPlayerName();
-        string mostKillsPlayerS = gsm.getRoundPlayerData(latestRound).getPlayerWithMostKills(1).getPlayerName();
-        leastDeathsS.text = "Least Deaths: " + leastDeathsPlayerS;
-        mostKillsS.text = "Most Kills: " + mostKillsPlayerS;
-
-        if (pirateScore > superCorpScore) {
-            winnerTeam.text = "WINNER - PIRATES";
+            string leastDeathsPlayerS = gsm.getRoundPlayerData(latestRound).getPlayerWithLeastDeaths(1).getPlayerName();
+            string mostKillsPlayerS = gsm.getRoundPlayerData(latestRound).getPlayerWithMostKills(1).getPlayerName();
+            leastDeathsS.text = "Least Deaths: " + leastDeathsPlayerS;
+            Debug.Log("YOUR SISTER");
+            Debug.Log("YOUR FATHER " + mostKillsS);
+            mostKillsS.text = "Most Kills: " + mostKillsPlayerS;
+            Debug.Log("YOUR MOTHER");
         }
-        else if (superCorpScore > pirateScore) {
-            winnerTeam.text = "WINNER - SUPER CORP";
-        }
-        else if (pirateScore == superCorpScore) {
-            if (pirateKills > superCorpKills) {
-                winnerTeam.text = "WINNER - PIRATES";
-            }
-            else if (superCorpKills > pirateKills) {
-                winnerTeam.text = "WINNER - SUPER CORP";
-            }
-            else if (superCorpKills == pirateKills) {
-                if (pirateDeaths > superCorpDeaths) {
-                    winnerTeam.text = "WINNER - SUPER CORP";
-                }
-                else {
-                    winnerTeam.text = "WINNER - PIRATES";
-                }
-            } 
+        Debug.Log("YOUR SISTER");
+        Debug.Log("YOUR FATHER " + mostKillsS);
+        Debug.Log("IT IS " + gsm.returnRoundWinner(latestRound));
+        return winnerTeam.text = "WINNER "+ gsm.returnRoundWinner(latestRound);
 
-        }
-
-    } 
+    }
+    
+    
 }

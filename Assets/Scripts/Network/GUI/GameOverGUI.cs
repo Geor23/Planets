@@ -7,29 +7,44 @@ using UnityEngine.Networking.NetworkSystem;
 
 public class GameOverGUI : MonoBehaviour {
 
-  NetworkManager nm;
-	public Text teamP;
-	public Text teamS;
-  public Text ScoreP;
-  public Text ScoreS;
-  public GameObject tumorpirate;
-  public GameObject tumorsupercorp;
-  public GameObject mazepirate;
-  public GameObject mazesupercorp;
-  public GameObject citypirate;
-  public GameObject citysupercorp;
+    //NetworkManager nm;
+    public Text teamP;
+    public Text teamS;
 
-  public void Start() {
+    public Text totalScoreP;
+    public Text totalScoreS;
 
+    public Text totalKillsP;
+    public Text totalKillsS;
+
+    public Text totalDeathsP;
+    public Text totalDeathsS;
+
+    public GameObject tumorpirate;
+    public GameObject tumorsupercorp;
+    public GameObject mazepirate;
+    public GameObject mazesupercorp;
+    public GameObject citypirate;
+    public GameObject citysupercorp;
+
+
+    public GameStatsManager gsm;
+
+    public void Start() {
+
+        /*
     nm = NetworkManager.singleton;
 	  nm.client.RegisterHandler (Msgs.serverTeamMsg, OnClientReceiveTeamList);
     nm.client.RegisterHandler (Msgs.serverFinalScores, OnClientReceiveScores);
     nm.client.Send(Msgs.requestTeamMsg, new EmptyMessage());
     nm.client.Send(Msgs.requestFinalScores, new EmptyMessage());
+    */
 
-  }
-
-	public void OnClientReceiveTeamList(NetworkMessage msg){
+        gsm = GameStatsManager.singleton;
+        displayData();
+    }
+    /*
+    public void OnClientReceiveTeamList(NetworkMessage msg){
 		TeamList tl = msg.ReadMessage<TeamList>(); 
 		if (tl.team == TeamID.TEAM_PIRATES) { // if we received team pirates
 			teamP.text = tl.teamList;
@@ -80,5 +95,47 @@ public class GameOverGUI : MonoBehaviour {
     ScoreS.text = superCorpCounter.ToString();
 
   }
+  */
+
+    public void displayData() {
+        int latestRound = gsm.getLatestRound();
+        calculateFinalPirateData(latestRound);
+        calculateFinalSuperCorpData(latestRound);
+
+    }
+
+    public void calculateFinalPirateData(int latestRound) {
+        int pirateFinalScore = 0;
+        int pirateKills = 0;
+        int pirateDeaths = 0;
+        for (int i =latestRound; i>0; i-- ) {
+            pirateFinalScore += gsm.getRoundScores(i).getPirateScore();
+            pirateKills += gsm.getRoundPlayerData(i).pirateKills;
+            pirateDeaths += gsm.getRoundPlayerData(i).pirateDeaths;
+
+        }
+        totalScoreP.text = "Total Resources: " + pirateFinalScore.ToString();
+        totalKillsP.text = "Total Kills: " + pirateKills.ToString();
+        totalDeathsP.text = "Total Deaths: " + pirateDeaths.ToString();
+    }
+
+    public void calculateFinalSuperCorpData(int latestRound) {
+        int superCorpFinalScore = 0;
+        int superCorpKills = 0;
+        int superCorpDeaths = 0;
+
+        for (int i = latestRound; i > 0; i--) {
+            superCorpFinalScore += gsm.getRoundScores(i).getSuperCorpScore();
+            superCorpKills += gsm.getRoundPlayerData(i).pirateKills;
+            superCorpDeaths += gsm.getRoundPlayerData(i).pirateDeaths;
+        }
+        totalScoreS.text = "Total Resources: " + superCorpFinalScore.ToString();
+        totalKillsS.text = "Total Kills: " + superCorpKills.ToString();
+        totalDeathsS.text = "Total Deaths: " + superCorpDeaths.ToString();
+    }
+
+
+
+
 
 }
