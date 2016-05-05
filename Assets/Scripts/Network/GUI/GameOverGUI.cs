@@ -22,12 +22,12 @@ public class GameOverGUI : MonoBehaviour {
 
     public Text winnerTeam;
 
-    public GameObject tumorpirate;
-    public GameObject tumorsupercorp;
-    public GameObject mazepirate;
-    public GameObject mazesupercorp;
-    public GameObject citypirate;
-    public GameObject citysupercorp;
+    public GameObject tumorPirate;
+    public GameObject tumorSuperCorp;
+    public GameObject mazePirate;
+    public GameObject mazeSuperCorp;
+    public GameObject cityPirate;
+    public GameObject citySuperCorp;
 
     public GameStatsManager gsm;
 
@@ -117,7 +117,7 @@ public class GameOverGUI : MonoBehaviour {
 
         string roundWinner;
 
-        for (int i =latestRound; i>0; i-- ) {
+        for (int i = latestRound; i>0; i-- ) {
             pirateFinalScore += gsm.getRoundScores(i).getPirateScore();
             pirateKills += gsm.getRoundPlayerData(i).pirateKills;
             pirateDeaths += gsm.getRoundPlayerData(i).pirateDeaths;
@@ -130,10 +130,40 @@ public class GameOverGUI : MonoBehaviour {
             if (roundWinner == "PIRATES")
             {
                 pirateWins += 1;
+                switch (i)
+                {
+                    case 1:
+                        tumorPirate.SetActive(true);
+                        tumorSuperCorp.SetActive(false);
+                        break;
+                    case 2:
+                        mazePirate.SetActive(true);
+                        mazeSuperCorp.SetActive(false);
+                        break;
+                    case 3:
+                        cityPirate.SetActive(true);
+                        citySuperCorp.SetActive(false);
+                        break;
+                }
             }
             else
             {
                 superCorpWins += 1;
+                switch (i)
+                {
+                    case 1:
+                        tumorPirate.SetActive(false);
+                        tumorSuperCorp.SetActive(true);
+                        break;
+                    case 2:
+                        mazePirate.SetActive(false);
+                        mazeSuperCorp.SetActive(true);
+                        break;
+                    case 3:
+                        cityPirate.SetActive(false);
+                        citySuperCorp.SetActive(true);
+                        break;
+                }
             }
         }
         totalScoreP.text = "Total Resources: " + pirateFinalScore.ToString();
