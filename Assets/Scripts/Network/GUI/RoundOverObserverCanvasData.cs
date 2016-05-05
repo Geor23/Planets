@@ -22,11 +22,12 @@ public class RoundOverObserverCanvasData : MonoBehaviour {
     public Text finalResourcesP;
     public Text finalResourcesS;
 
+    public Text winnerTeam;
+
     public GameStatsManager gsm;
 
     void Start () {
         gsm = GameStatsManager.singleton;
-        Debug.Log("Entered Round Over Observer Canvas Data");
         displayData();
     }
 
@@ -40,22 +41,47 @@ public class RoundOverObserverCanvasData : MonoBehaviour {
 
         int pirateDeaths = gsm.getRoundPlayerData(latestRound).pirateDeaths;
         int pirateKills = gsm.getRoundPlayerData(latestRound).pirateKills;
-        totalDeathsP.text = "Total Deaths:" + pirateDeaths.ToString();
-        totalKillsP.text = "Total Kills:" + totalKillsP.ToString();
+        totalDeathsP.text = "Total Deaths: " + pirateDeaths.ToString();
+        totalKillsP.text = "Total Kills: " + pirateKills.ToString();
 
         int superCorpDeaths = gsm.getRoundPlayerData(latestRound).superCorpDeaths;
         int superCorpKills = gsm.getRoundPlayerData(latestRound).superCorpKills;
-        totalDeathsS.text = "Total Deaths:" + superCorpDeaths.ToString();
-        totalKillsS.text = "Total Kills:" + superCorpKills.ToString();
+        totalDeathsS.text = "Total Deaths: " + superCorpDeaths.ToString();
+        totalKillsS.text = "Total Kills: " + superCorpKills.ToString();
 
         string leastDeathsPlayerP = gsm.getRoundPlayerData(latestRound).getPlayerWithLeastDeaths(0).getPlayerName();
         string mostKillsPlayerP = gsm.getRoundPlayerData(latestRound).getPlayerWithMostKills(0).getPlayerName();
-        leastDeathsP.text = "Least Deaths:" + leastDeathsPlayerP;
-        mostKillsP.text = "Most Kills" + mostKillsPlayerP;
+        leastDeathsP.text = "Least Deaths: " + leastDeathsPlayerP;
+        mostKillsP.text = "Most Kills: " + mostKillsPlayerP;
 
         string leastDeathsPlayerS = gsm.getRoundPlayerData(latestRound).getPlayerWithLeastDeaths(1).getPlayerName();
         string mostKillsPlayerS = gsm.getRoundPlayerData(latestRound).getPlayerWithMostKills(1).getPlayerName();
-        leastDeathsS.text = "Least Deaths:" + leastDeathsPlayerS;
-        mostKillsS.text = "Most Kills:" + mostKillsPlayerS;
+        leastDeathsS.text = "Least Deaths: " + leastDeathsPlayerS;
+        mostKillsS.text = "Most Kills: " + mostKillsPlayerS;
+
+        if (pirateScore > superCorpScore) {
+            winnerTeam.text = "WINNER - PIRATES";
+        }
+        else if (superCorpScore > pirateScore) {
+            winnerTeam.text = "WINNER - SUPER CORP";
+        }
+        else if (pirateScore == superCorpScore) {
+            if (pirateKills > superCorpKills) {
+                winnerTeam.text = "WINNER - PIRATES";
+            }
+            else if (superCorpKills > pirateKills) {
+                winnerTeam.text = "WINNER - SUPER CORP";
+            }
+            else if (superCorpKills == pirateKills) {
+                if (pirateDeaths > superCorpDeaths) {
+                    winnerTeam.text = "WINNER - SUPER CORP";
+                }
+                else {
+                    winnerTeam.text = "WINNER - PIRATES";
+                }
+            } 
+
+        }
+
     } 
 }
