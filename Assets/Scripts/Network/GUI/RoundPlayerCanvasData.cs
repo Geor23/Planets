@@ -12,17 +12,37 @@ public class RoundPlayerCanvasData : MonoBehaviour {
 	public GameObject superCorpTeardrop;
 	public Text localScore;
 	private PersonalPlayerInfo ppi;
-
-	void Start(){
+ private int team;
+ void Start(){
 		if(!NetworkClient.active) return;
-		PersonalPlayerInfo ppi = PersonalPlayerInfo.singleton;
-		id.text = ppi.getObsId().ToString();
-		if(PlayerConfig.singleton.getTeam() == TeamID.TEAM_SUPERCORP){
-			piratesTeardrop.SetActive(false);
+	   ppi = PersonalPlayerInfo.singleton;
+    Debug.Log("ID IS " + ppi.getObsId());
+    if (ppi.getObsId().ToString() != null){
+        id.text = ppi.getObsId().ToString();
+    }
+  if (PlayerConfig.singleton.getTeam() == TeamID.TEAM_SUPERCORP){
+    team = TeamID.TEAM_SUPERCORP;
+		  piratesTeardrop.SetActive(false);
 		}else{
-			superCorpTeardrop.SetActive(false);
+    team = TeamID.TEAM_PIRATES;
+    superCorpTeardrop.SetActive(false);
 		}
 	}
+
+ void Update(){
+        if (PlayerConfig.singleton.getTeam() != team){
+            id.text = ppi.getObsId().ToString();
+            if (PlayerConfig.singleton.getTeam() == TeamID.TEAM_SUPERCORP){
+                team = TeamID.TEAM_SUPERCORP;
+                piratesTeardrop.SetActive(false);
+                superCorpTeardrop.SetActive(true);
+            } else {
+                team = TeamID.TEAM_PIRATES;
+                superCorpTeardrop.SetActive(false);
+                piratesTeardrop.SetActive(true);
+            }
+        }
+    }
 
 	public void PingPlayer(){
 		UniqueObjectMessage uom = new UniqueObjectMessage();

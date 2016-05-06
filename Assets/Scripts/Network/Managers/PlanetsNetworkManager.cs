@@ -183,11 +183,11 @@ public class PlanetsNetworkManager : NetworkManager {
 	    base.OnStartServer();
 	    NetworkServer.RegisterHandler(Msgs.clientJoinMsg, OnServerRecieveName);
 	    NetworkServer.RegisterHandler(Msgs.clientTeamMsg, OnServerRecieveTeamChoice);
-        NetworkServer.RegisterHandler(Msgs.requestTeamMsg, OnServerRecieveTeamRequest);
+     NetworkServer.RegisterHandler(Msgs.requestTeamMsg, OnServerRecieveTeamRequest);
 	    NetworkServer.RegisterHandler(Msgs.startGame, OnServerStartGame);
 	    NetworkServer.RegisterHandler(Msgs.requestCurrentTime, OnServerRecieveTimeRequest);
-        NetworkServer.RegisterHandler(Msgs.givePlayerScores, OnServerRecievePlayerScore);
-        NetworkServer.RegisterHandler(Msgs.playerReadyToSpawn, OnServerPlayerReadyToSpawn);
+     NetworkServer.RegisterHandler(Msgs.givePlayerScores, OnServerRecievePlayerScore);
+     NetworkServer.RegisterHandler(Msgs.playerReadyToSpawn, OnServerPlayerReadyToSpawn);
         // NetworkServer.RegisterHandler(Msgs.requestFinalScores, sendScoresToPlayers);
 
     }
@@ -219,22 +219,20 @@ public class PlanetsNetworkManager : NetworkManager {
         //Change so that the spawn area is from a more random general area chosen from the PlayerSpawnArea script
 
         /* This is where you can register players with teams, and spawn the player at custom points in the team space */
-        int idVal = ipToId(conn.address, conn.connectionId);;
-        if (pm.getTeam(idVal) != TeamID.TEAM_NEUTRAL){
-            GameObject chosen = playerObjectType(idVal);
-            GameObject player = Instantiate(chosen, teamManager.getSpawnP(pm.getTeam(idVal)), Quaternion.identity) as GameObject;
-            Debug.Log(player);
-            if (pm.getTeam(idVal) != TeamID.TEAM_OBSERVER){
-                //Player playa = pm.getPlayer(idValue);
-                //chosen.GetComponent<PlayerDetails>().setPlayerDetails(idValue,playa);
-                player.GetComponent<PlayerControllerMobile>().dictId = idVal;
-            }
-            updateListeners.Add(conn);
-
-            //Add to observing listeners if not a player
-            //if (pm.getTeam(idVal) == TeamID.TEAM_OBSERVER) observingListeners.Add(conn);
-            NetworkServer.AddPlayerForConnection(conn, player, playerControllerId);
+        int idVal = ipToId(conn.address, conn.connectionId);
+        GameObject chosen = playerObjectType(idVal);
+        GameObject player = Instantiate(chosen, teamManager.getSpawnP(pm.getTeam(idVal)), Quaternion.identity) as GameObject;
+        Debug.Log(player);
+        if (pm.getTeam(idVal) != TeamID.TEAM_OBSERVER){
+            //Player playa = pm.getPlayer(idValue);
+            //chosen.GetComponent<PlayerDetails>().setPlayerDetails(idValue,playa);
+            player.GetComponent<PlayerControllerMobile>().dictId = idVal;
         }
+        updateListeners.Add(conn);
+
+        //Add to observing listeners if not a player
+        //if (pm.getTeam(idVal) == TeamID.TEAM_OBSERVER) observingListeners.Add(conn);
+        NetworkServer.AddPlayerForConnection(conn, player, playerControllerId);
     }
 
     public GameObject playerObjectType(int idVal){
@@ -281,8 +279,7 @@ public class PlanetsNetworkManager : NetworkManager {
             pm.setNetworkConnection(idValue, msg.conn);
 
             NetworkServer.SendToClient(msg.conn.connectionId, Msgs.addNewPlayer, pv);
-            if (teamChoice == TeamID.TEAM_OBSERVER)
-            { //Checks if player is indicated as an observer. If so adds to observers list
+            if (teamChoice == TeamID.TEAM_OBSERVER){ //Checks if player is indicated as an observer. If so adds to observers list
                 observingListeners.Add(msg.conn);
             } else {//If it's not an observer, inform observers
                 foreach (NetworkConnection nc in getUpdateListeners())  {
@@ -313,6 +310,9 @@ public class PlanetsNetworkManager : NetworkManager {
                 foreach (NetworkConnection nc in getUpdateListeners()) {
                     NetworkServer.SendToClient(nc.connectionId, Msgs.addNewPlayerToObserver, pv); //Sends player info to the client that re-connected
                 }
+            }
+            if(teamChoice==TeamID.TEAM_NEUTRAL) { //If no team, choose a team
+                changeTeam(-3, address, msg.conn.connectionId, true);
             }
             //NEED TO UPDATE OBSERVER'S INFORMATION AS WELL, AS THIS MAY OCCUR MID-GAME
         }
@@ -355,44 +355,59 @@ public class PlanetsNetworkManager : NetworkManager {
   	public void OnServerRecieveTeamChoice(NetworkMessage msg) {
 	    TeamChoice teamChoice = msg.ReadMessage<TeamChoice>();
 	    int choice = teamChoice.teamChoice;
-        int idVal = ipToId(msg.conn.address, msg.conn.connectionId);
-        if (!pm.checkIfExists(idVal)) {
-            Debug.LogError("ID DOES NOT EXISTS, CONN IS "+msg.conn.connectionId);
+     string ip = msg.conn.address;
+     int connId = msg.conn.connectionId;
+     bool wasNeutral = false;
+     if(choice == -3) {
+            wasNeutral = true;
+     }
+     changeTeam(choice, ip, connId, wasNeutral);
+    }
+
+    public void changeTeam(int choice, string address, int connID, bool notAssigned){
+        int idVal = ipToId(address, connID);
+        if(notAssigned) {
+            choice = teamManager.getTeamWithLessPlayers();
+        }
+        if (!pm.checkIfExists(idVal)){
+            Debug.LogError("ID DOES NOT EXIST, CONN IS " + connID);
             return;
         }
         int team = pm.getTeam(idVal);
 
-	    // if the player is choosing the team for the first time
-		if (team == TeamID.TEAM_NEUTRAL){
-			// update the team and send updated list to all clients
-			
-			pm.setTeam(idVal, choice);
-			teamManager.addPlayerToTeam(pm.getName(idVal), choice);
-            sendTeam (choice);
-
+        // if the player is choosing the team for the first time
+        if (team == TeamID.TEAM_NEUTRAL){
+            // update the team and send updated list to all clients
+            pm.setTeam(idVal, choice);
+            teamManager.addPlayerToTeam(pm.getName(idVal), choice);
+            sendTeam(choice);
         } else if (pm.getTeam(idVal) != choice) { // if the player has switched teams
-                                                  // delete player from old list and send updated list to all clients
+          // delete player from old list and send updated list to all clients
             teamManager.deletePlayer(pm.getName(idVal), pm.getTeam(idVal));
-            sendTeam (pm.getTeam(idVal));
+            sendTeam(pm.getTeam(idVal));
 
             // add player to new team and send updated list to clients
             pm.setTeam(idVal, choice);
-			teamManager.addPlayerToTeam(pm.getName(idVal), choice);
-			sendTeam (choice);
-		}
+            teamManager.addPlayerToTeam(pm.getName(idVal), choice);
+            sendTeam(choice);
+        }
 
         //Send changes to the observers
         PlayerValues pv = new PlayerValues();
         pv.dictId = idVal;
         pv.oldId = idVal; //Not changing id, so same id
-        pv.connVal = msg.conn.connectionId;
-        pv.playerIP = msg.conn.address;
+        pv.connVal = connID;
+        pv.playerIP = address;
         pv.playerName = pm.getName(idVal);
         pv.playerTeam = choice;
         pv.kills = pm.getKills(idVal);
         pv.deaths = pm.getDeaths(idVal);
         pv.scoreTotal = pm.getScoreTotal(idVal);
         pv.scoreAcc = pm.getRoundScoreAcc(idVal);
+        if (notAssigned){
+            Debug.Log("Reaches non-assigned area, connID is " + connID);
+            NetworkServer.SendToClient(connID, Msgs.updatePlayer, pv); //Sends player info to the client that re-connected
+        }
         foreach (NetworkConnection nc in getUpdateListeners()){
             NetworkServer.SendToClient(nc.connectionId, Msgs.updatePlayerToObserver, pv); //Sends player info to the client that re-connected
         }
@@ -444,9 +459,11 @@ public class PlanetsNetworkManager : NetworkManager {
 
     //TODO: USE THIS WHEN PLAYER CHANGES TEAM AND SUCH
     public void OnPlayerUpdate(NetworkMessage msg) {
-      PlayerValues pv = msg.ReadMessage<PlayerValues>();
-      //  pm.updatePlayer(pv.dictId, pv.player);
-      Debug.Log("attempting to update player");
+        PlayerValues pv = msg.ReadMessage<PlayerValues>();
+      Player updatedPlayer = new Player(pv.dictId, pv.connVal, pv.playerIP, pv.playerName, pv.playerTeam, pv.deaths, pv.kills, pv.scoreAcc, pv.scoreTotal);
+        Debug.LogError(pv.playerTeam + " IS PLAYER TEAM LOOK AT ME");
+        pm.updatePlayerIncludingID(pv.oldId, updatedPlayer);
+      PlayerConfig.singleton.SetTeam(pv.playerTeam);
     }
 
     //Updates Observer player
@@ -454,8 +471,9 @@ public class PlanetsNetworkManager : NetworkManager {
         PlayerValues pv = msg.ReadMessage<PlayerValues>();
         Player updatedPlayer = new Player(pv.dictId, pv.connVal, pv.playerIP, pv.playerName, pv.playerTeam, pv.deaths, pv.kills, pv.scoreAcc, pv.scoreTotal);
         pm.updatePlayerIncludingID(pv.oldId, updatedPlayer);
-        Debug.Log("attempting to update player");
+        Debug.Log("attempting to update player on observer");
     }
+
 
     /*
     //TODO: THIS IS CALLED WHEN PLAYER DISCONNECTS, SETS CONNECTED INDICATOR TO FALSE ON OBSERVERS

@@ -50,18 +50,19 @@ public class RoundEvents : MonoBehaviour {
 
     /* CLIENT FUNCS PLZ */
 
-    // void Update()
-    // {
-        //PLS no??
-        // if (Input.GetKeyDown("m")){
-        //     nm.sendScoresToPlayers();
-        // }
-    // }
 
     void clientInit(){
+        PlayerConfig pc = PlayerConfig.singleton;
         nm.client.RegisterHandler(Msgs.killPlayer, OnClientDeath);
         nm.client.RegisterHandler(Msgs.spawnSelf, OnClientSpawnSelf);
         //Tell server we are ready to spawn
+        //Am I in a team? If not request a team from server.
+        //Send team change request msg(-3)
+        if (pc.getTeam() == TeamID.TEAM_NEUTRAL) {
+            TeamChoice tc = new TeamChoice();
+            tc.teamChoice = -3; //Indicates to function that no team has been chosen
+            nm.client.Send(Msgs.clientTeamMsg, tc);
+        }
         nm.client.Send(Msgs.playerReadyToSpawn, new UniqueObjectMessage());
     }
 

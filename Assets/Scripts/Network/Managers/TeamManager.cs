@@ -35,6 +35,16 @@ public class TeamManager {
 		}
 	}
 
+    public int getTeamWithLessPlayers() {
+        int numPirates = teams[0].getPlayers().Count;
+        int numSuper = teams[1].getPlayers().Count;
+        if (numPirates <= numSuper) {
+            return TeamID.TEAM_PIRATES;
+        } else { 
+           return TeamID.TEAM_SUPERCORP;
+        }
+    }
+
 	public void addScore(int score, int team) {
 		if ( team == 0 || team == 1 ) {
 			teams[team].addScore(score);
