@@ -44,7 +44,11 @@ public class StartSceneGUI : MonoBehaviour {
 
   public void SendJoinMessage(){
     JoinMessage jm = new JoinMessage();
-    jm.name = nameT.text;
+        /*if (nameT.text.Length < 1)
+        {
+            //request new name input
+        }*/
+    jm.name = nameT.text; // Add check so that invalid names are avoided
     jm.team = playerChoice;
     nm.client.Send(Msgs.clientJoinMsg, jm);
   }

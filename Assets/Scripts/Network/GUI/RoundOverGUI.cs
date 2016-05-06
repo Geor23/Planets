@@ -23,7 +23,6 @@ public class RoundOverGUI : MonoBehaviour {
 
   public float time=10.0F;
   private float lastUpdatedTime;
-   
 
   public void Start() {
     if(!NetworkClient.active) {
@@ -31,7 +30,7 @@ public class RoundOverGUI : MonoBehaviour {
       return;
     }
 
-    nm = NetworkManager.singleton;
+        nm = NetworkManager.singleton;
 	  nm.client.RegisterHandler (Msgs.serverTeamMsg, OnClientReceiveTeamList);
     nm.client.RegisterHandler (Msgs.serverFinalScores, OnClientReceiveScores);
     nm.client.Send(Msgs.requestTeamMsg, new EmptyMessage());
@@ -40,10 +39,9 @@ public class RoundOverGUI : MonoBehaviour {
     nm.client.RegisterHandler(Msgs.sendCurrentTime, OnClientReceiveTime); //Creates a handler for when the client recieves a time from the server
     nm.client.Send(Msgs.requestCurrentTime, new EmptyMessage()); //Requests the current time in-game 
     nm.client.RegisterHandler(Msgs.sendRoundOverValuesToPlayer, OnPlayerRecievePlayerScore);
+    }
 
-  }
-
-  void OnClientReceiveTime(NetworkMessage msg){
+    void OnClientReceiveTime(NetworkMessage msg){
         TimeMessage tm = msg.ReadMessage<TimeMessage>();
         time = tm.time;
         lastUpdatedTime = time;
@@ -61,7 +59,6 @@ public class RoundOverGUI : MonoBehaviour {
             lastUpdatedTime = time;
             timerRadial.GetComponent<ProgressRadialBehaviour>().DecrementValue(10);
           }
-
       }
   }
 

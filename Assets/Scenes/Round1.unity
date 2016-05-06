@@ -196,7 +196,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 472026, guid: 403d5763fe34bf44bb00da9f8520d550, type: 2}
       propertyPath: m_RootOrder
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 403d5763fe34bf44bb00da9f8520d550, type: 2}
@@ -360,7 +360,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 405406, guid: f80c691bc58f6441b92c7965069224e8, type: 2}
       propertyPath: m_RootOrder
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f80c691bc58f6441b92c7965069224e8, type: 2}
@@ -402,7 +402,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22441350, guid: 83d0ce4d781376c469c6c519c0bd7622, type: 2}
       propertyPath: m_RootOrder
-      value: 12
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 22441350, guid: 83d0ce4d781376c469c6c519c0bd7622, type: 2}
       propertyPath: m_AnchoredPosition.x
@@ -486,7 +486,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 460974, guid: 6d5a0bd9c6a1de54c8a775196d014f5a, type: 2}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6d5a0bd9c6a1de54c8a775196d014f5a, type: 2}
@@ -528,11 +528,27 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 433890, guid: 827692d712edc43b29e8ad4755d5fdd8, type: 2}
       propertyPath: m_RootOrder
-      value: 9
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 152192, guid: 827692d712edc43b29e8ad4755d5fdd8, type: 2}
       propertyPath: m_Name
       value: Planet
+      objectReference: {fileID: 0}
+    - target: {fileID: 11430606, guid: 827692d712edc43b29e8ad4755d5fdd8, type: 2}
+      propertyPath: maxResourceOnPlanet
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 11430606, guid: 827692d712edc43b29e8ad4755d5fdd8, type: 2}
+      propertyPath: maxShieldOnPlanet
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 11430606, guid: 827692d712edc43b29e8ad4755d5fdd8, type: 2}
+      propertyPath: maxDoubleScoreOnPlanet
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 11430606, guid: 827692d712edc43b29e8ad4755d5fdd8, type: 2}
+      propertyPath: maxFasterFireOnPlanet
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 827692d712edc43b29e8ad4755d5fdd8, type: 2}

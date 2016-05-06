@@ -1142,6 +1142,22 @@ Prefab:
       propertyPath: m_Name
       value: Planet
       objectReference: {fileID: 0}
+    - target: {fileID: 11468794, guid: f4587433faa6b4d95bf8af75e504b312, type: 2}
+      propertyPath: maxResourceOnPlanet
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 11468794, guid: f4587433faa6b4d95bf8af75e504b312, type: 2}
+      propertyPath: maxShieldOnPlanet
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 11468794, guid: f4587433faa6b4d95bf8af75e504b312, type: 2}
+      propertyPath: maxDoubleScoreOnPlanet
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 11468794, guid: f4587433faa6b4d95bf8af75e504b312, type: 2}
+      propertyPath: maxFasterFireOnPlanet
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f4587433faa6b4d95bf8af75e504b312, type: 2}
   m_IsPrefabParent: 0

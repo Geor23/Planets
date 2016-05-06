@@ -63,6 +63,10 @@ public class RoundPlayerObjectManager { //TODO
         }
     }
 
+    public int numPlayers(){
+        return pm.getPlayerDict().Count;
+    }
+
     public int mostRecentDeath(){
         if(deadPlayers.Count != 0)
             return deadPlayers.Dequeue();
@@ -103,7 +107,7 @@ public class RoundPlayerObjectManager { //TODO
         Player maxP = null;
         foreach(KeyValuePair<int, Player> kv in pm.getPlayerDict()){
             int prs = kv.Value.getKills();
-            if(prs > max && kv.Value.getPlayerTeam() == team){
+            if(prs >= max && kv.Value.getPlayerTeam() == team){
                 max = prs;
                 maxP = kv.Value;
             }
