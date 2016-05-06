@@ -32,71 +32,9 @@ public class GameOverGUI : MonoBehaviour {
     public GameStatsManager gsm;
 
     public void Start() {
-
-        /*
-    nm = NetworkManager.singleton;
-	  nm.client.RegisterHandler (Msgs.serverTeamMsg, OnClientReceiveTeamList);
-    nm.client.RegisterHandler (Msgs.serverFinalScores, OnClientReceiveScores);
-    nm.client.Send(Msgs.requestTeamMsg, new EmptyMessage());
-    nm.client.Send(Msgs.requestFinalScores, new EmptyMessage());
-    */
-
         gsm = GameStatsManager.singleton;
         displayData();
     }
-    /*
-    public void OnClientReceiveTeamList(NetworkMessage msg){
-		TeamList tl = msg.ReadMessage<TeamList>(); 
-		if (tl.team == TeamID.TEAM_PIRATES) { // if we received team pirates
-			teamP.text = tl.teamList;
-		} else if (tl.team == TeamID.TEAM_SUPERCORP) {  // if we received team super-corp 
-			teamS.text = tl.teamList;
-		} else {
-			Debug.LogError("ERROR[OnClientReceiveTeamList] : Received wrong team ");
-		}
-	}
-
-
-  public void OnClientReceiveScores(NetworkMessage msg) {
-    FinalScores tl = msg.ReadMessage<FinalScores>(); 
-    int pirateCounter = 0;
-    int superCorpCounter = 0;
-
-    if (tl.round1P >= tl.round1S) {
-      pirateCounter ++;
-      tumorpirate.SetActive(true);
-      tumorsupercorp.SetActive(false);
-    } else {
-      superCorpCounter ++;
-      tumorpirate.SetActive(false);
-      tumorsupercorp.SetActive(true);
-    }
-
-    if (tl.round2P >= tl.round2S) {
-      pirateCounter ++;
-      mazepirate.SetActive(true);
-      mazesupercorp.SetActive(false);
-    } else {
-      superCorpCounter ++;
-      mazepirate.SetActive(false);
-      mazesupercorp.SetActive(true);
-    }
-
-    if (tl.round3P >= tl.round3S) {
-      pirateCounter ++;
-      citypirate.SetActive(true);
-      citysupercorp.SetActive(false);
-    } else {
-      superCorpCounter ++;
-      citypirate.SetActive(false);
-      citysupercorp.SetActive(true);
-    }
-
-    ScoreP.text = pirateCounter.ToString();
-    ScoreS.text = superCorpCounter.ToString();
-
-  }
-  */
 
     public void displayData() {
         int latestRound = gsm.getLatestRound();
@@ -117,21 +55,36 @@ public class GameOverGUI : MonoBehaviour {
 
         string roundWinner;
 
+        tumorPirate.SetActive(false);
+        tumorSuperCorp.SetActive(false);
+
+        mazePirate.SetActive(false);
+        mazeSuperCorp.SetActive(false);
+
+        cityPirate.SetActive(false);
+        citySuperCorp.SetActive(false); 
+
         for (int i = latestRound; i>0; i-- ) {
+
             pirateFinalScore += gsm.getRoundScores(i).getPirateScore();
+            Debug.Log("Pirate Final Score Round " + i  + pirateFinalScore);
             pirateKills += gsm.getRoundPlayerData(i).pirateKills;
+            Debug.Log("Pirate Kills Round " + i + pirateKills);
             pirateDeaths += gsm.getRoundPlayerData(i).pirateDeaths;
+            Debug.Log("Pirate Deaths Round " + i + pirateDeaths);
 
             superCorpFinalScore += gsm.getRoundScores(i).getSuperCorpScore();
+            Debug.Log("Super Corp Final Score Round " + i + superCorpFinalScore);
             superCorpKills += gsm.getRoundPlayerData(i).superCorpKills;
+            Debug.Log("Super Corp Kills " + i + superCorpKills);
             superCorpDeaths += gsm.getRoundPlayerData(i).superCorpDeaths;
+            Debug.Log("Super Corp Deaths " + i + superCorpDeaths);
 
-            roundWinner = gsm.returnRoundWinner(latestRound);
-            if (roundWinner == "PIRATES")
-            {
+            roundWinner = gsm.returnRoundWinner(i);
+            Debug.Log(roundWinner);
+            if (roundWinner == "PIRATES") {
                 pirateWins += 1;
-                switch (i)
-                {
+                switch (i) {
                     case 1:
                         tumorPirate.SetActive(true);
                         tumorSuperCorp.SetActive(false);
@@ -146,11 +99,9 @@ public class GameOverGUI : MonoBehaviour {
                         break;
                 }
             }
-            else
-            {
+            else {
                 superCorpWins += 1;
-                switch (i)
-                {
+                switch (i) {
                     case 1:
                         tumorPirate.SetActive(false);
                         tumorSuperCorp.SetActive(true);
@@ -166,6 +117,7 @@ public class GameOverGUI : MonoBehaviour {
                 }
             }
         }
+
         totalScoreP.text = "Total Resources: " + pirateFinalScore.ToString();
         totalKillsP.text = "Total Kills: " + pirateKills.ToString();
         totalDeathsP.text = "Total Deaths: " + pirateDeaths.ToString();
@@ -177,10 +129,8 @@ public class GameOverGUI : MonoBehaviour {
         if (pirateWins > superCorpWins) {
             winnerTeam.text = "WINNER PIRATES";
         }
-        else
-        {
+        else {
             winnerTeam.text = "WINNER SUPER CORP";
         }
     }
-
 }

@@ -55,16 +55,16 @@ public class GameStatsManager : MonoBehaviour {
         this.getRoundPlayerData(latestRound);
     }
 
-    public String returnRoundWinner(int latestRound) {
+    public String returnRoundWinner(int roundNumber) {
 
-        int pirateScore = getRoundScores(latestRound).getPirateScore();
-        int superCorpScore = getRoundScores(latestRound).getSuperCorpScore();
+        int pirateScore = getRoundScores(roundNumber).getPirateScore();
+        int superCorpScore = getRoundScores(roundNumber).getSuperCorpScore();
 
-        int pirateDeaths = getRoundPlayerData(latestRound).pirateDeaths;
-        int pirateKills = getRoundPlayerData(latestRound).pirateKills;
+        int pirateDeaths = getRoundPlayerData(roundNumber).pirateDeaths;
+        int pirateKills = getRoundPlayerData(roundNumber).pirateKills;
 
-        int superCorpDeaths = getRoundPlayerData(latestRound).superCorpDeaths;
-        int superCorpKills = getRoundPlayerData(latestRound).superCorpKills;
+        int superCorpDeaths = getRoundPlayerData(roundNumber).superCorpDeaths;
+        int superCorpKills = getRoundPlayerData(roundNumber).superCorpKills;
 
         if (pirateScore > superCorpScore) {
             return "PIRATES";
