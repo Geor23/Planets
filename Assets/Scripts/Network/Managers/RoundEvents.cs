@@ -97,6 +97,9 @@ public class RoundEvents : MonoBehaviour {
         // deathText.enabled = true; //Causes timer for next spawn to occur
         // deathTimerText.enabled = true;
         // mainCamera.enabled = true;
+#if UNITY_ANDROID
+        Handheld.Vibrate();
+#endif
         ClientScene.RemovePlayer(0);
     }
 
