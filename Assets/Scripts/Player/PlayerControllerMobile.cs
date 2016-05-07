@@ -247,7 +247,7 @@ public class PlayerControllerMobile : NetworkBehaviour {
             nextFire = Time.time + currentFireRate;
         }
     }
-
+    
     void OnCollisionEnter(Collision col){
         if(dead) return;
         if(nm == null) return;
@@ -323,12 +323,68 @@ public class PlayerControllerMobile : NetworkBehaviour {
     }
 
     void OnTriggerEnter(Collider col){
-        if(!col.gameObject.CompareTag("InversionPlane")) return;
-        if(needsReflection){
-            reflectionMatrix = reflectionMatrix * genRefMatrix(Mathf.Atan2(lastMoveV, lastMoveH));
-        } else {
-            needsReflection = true;
-            reflectionMatrix = genRefMatrix(Mathf.Atan2(lastMoveV, lastMoveH));
+
+        if (dead) return;
+        if (nm == null) return;
+        if (nm.observerCollisionsOnly())
+        {
+            if (!PlayerConfig.singleton.GetObserver()) return;
+        }
+        else
+        {
+            if (!nIdentity.isLocalPlayer) return;
+        }
+
+        //if (!col.gameObject.CompareTag("InversionPlane")) return;
+        /* if(needsReflection){
+             reflectionMatrix = reflectionMatrix * genRefMatrix(Mathf.Atan2(lastMoveV, lastMoveH));
+         } else {
+             needsReflection = true;
+             reflectionMatrix = genRefMatrix(Mathf.Atan2(lastMoveV, lastMoveH));
+         }*/
+        if (col.gameObject.CompareTag("DoubleScore"))
+        {
+            doubleScore = true;
+
+            //Call planet manager
+            resourcePowerUpManager.powerUpCollision(col.gameObject);
+        }
+        else if (col.gameObject.CompareTag("Shield"))
+        { //Also need to potentially create an animation here?
+            shielded = true;
+            shield = Instantiate(shield);
+            shield.transform.parent = this.transform;
+            shield.transform.position = this.transform.position;
+            shield.SetActive(true);
+
+            //Call planet resource  manager
+            resourcePowerUpManager.powerUpCollision(col.gameObject);
+
+        }
+        else if (col.gameObject.CompareTag("FasterFire"))
+        { //Turn on faster fire rate. Still needs graphical additions
+            fasterFire = true;
+
+            //Call planet manager
+            resourcePowerUpManager.powerUpCollision(col.gameObject);
+            currentFireRate = fasterFireSpeed;
+        }
+        else if (col.gameObject.CompareTag("ResourcePickUp"))
+        { //Dealt with on the resource currently
+            int resourceScore = resourcePowerUpManager.resourcePickUpCollision(col.gameObject);
+            if (doubleScore)
+            { //If points are to count for double, double score
+                resourceScore *= 2;
+            }
+            int dictId = playerDetails.getDictId();
+            roundEvents.getRoundScoreManager().increasePlayerScore(dictId, resourceScore);
+        }
+
+        else if (col.gameObject.CompareTag("ResourcePickUpDeath"))
+        {
+            int resourceScore = resourcePowerUpManager.resourcePickUpCollision(col.gameObject);
+            int dictId = playerDetails.getDictId();
+            roundEvents.getRoundScoreManager().increasePlayerScore(dictId, resourceScore);
         }
     }
 
