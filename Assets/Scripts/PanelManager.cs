@@ -29,7 +29,7 @@ public class PanelManager : MonoBehaviour {
 
 	public void OpenPanel (Animator anim)
 	{
-        if (m_Open == anim)
+   if (m_Open == anim)
 			return;
 
 		anim.gameObject.SetActive(true);
@@ -91,8 +91,7 @@ public class PanelManager : MonoBehaviour {
 			anim.gameObject.SetActive(false);
 	}
 
-	private void SetSelected(GameObject go)
-	{
+	private void SetSelected(GameObject go)	{
 		EventSystem.current.SetSelectedGameObject(go);
 	}
 }

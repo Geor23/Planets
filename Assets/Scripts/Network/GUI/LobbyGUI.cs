@@ -48,7 +48,7 @@ public class LobbyGUI : MonoBehaviour {
 		if (tl.team == TeamID.TEAM_PIRATES) { 
 			teamA.text = tl.teamList;
 		} else if (tl.team == TeamID.TEAM_SUPERCORP) {  // if we received team super-corp 
-			teamB.text = tl.teamList;
+		  teamB.text = tl.teamList;
 		} else {
 			Debug.LogError("ERROR[OnClientReceiveTeamList] : Received wrong team ");
 
