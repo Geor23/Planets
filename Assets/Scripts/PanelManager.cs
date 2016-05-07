@@ -62,8 +62,7 @@ public class PanelManager : MonoBehaviour {
 		return go;
 	}
 
-	public void CloseCurrent()
-	{
+	public void CloseCurrent()	{
 		if (m_Open == null)
 			return;
 
@@ -72,6 +71,10 @@ public class PanelManager : MonoBehaviour {
 		StartCoroutine(DisablePanelDeleyed(m_Open));
 		m_Open = null;
 	}
+
+    public void exitGame(){
+        Application.Quit();
+    }
 
 	IEnumerator DisablePanelDeleyed(Animator anim)
 	{
