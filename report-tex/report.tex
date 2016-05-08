@@ -198,10 +198,14 @@ We were given an Oculus to simulate the fisheye screen present inside the planet
   old:  - Smooth gameplay, ensuring packets are fast but reliable for stereo. We designed scripts that allow the networked objects to be easily synchronized
   With networking being one of the pillars of gameplay we had many discussions relating to how we should solve the networking problem. Early on we decided that we would use Unity’s built in networking layer which allows for easy communication passing from server to clients. Unity provides built in layers for the type of communication decide: reliable and unreliable.
   On a hardware level, we are using an Intel NUC box as a Linux server. The dedicated server is essential to ensure that data from all clients is acknowledged on a fair basis, which may not be the case if running in parallel with graphics. In addition, it allows for a smooth transition into 3D in the planetarium, as the server can fairly estimate network latency (stereo is explained in depth in later paragraph).
-  There are two main scripts that enable synchronizing the position and rotation of objects between server and clients . In our final design, all clients send their positions and rotations after some threshold value has been passed to the server, and the server passes these on to the observing clients. In terms of topology it can be seen that the general flow of network traffic travels in the direction of the observer screens.
-  [Algorithm for stereo vision]
+  There are two main scripts that enable synchronizing the position and rotation of objects between server and clients .In our final design, all clients send their positions and rotations after some threshold value has been passed to the server, and the server passes these on to the observing clients. In terms of topology it can be seen that the general flow of network traffic travels in the direction of the observer screens.
+  
 
   \subsubsection{Stereo Algorithm (3D)}
+
+  The algorithm for stereo visualisation of the game is actually very simple. It is partly inspired by the Unity Cluster Renderer technique and the network solution we had already implemented. \\
+  Updates which are sent to the observer occur over a network where there is no guarantee of when they will they will arrive, of course we expect that they will take far less than say, $1$ second, but another level of execution locking is required to fully synchronize the state of two observers. \\ \\
+  This is achieved through pairing position updates with a forecast time, and packet ID at which the observer should execute the actual position update. Initially, the forecast time should be well in advance, but rapidly decrease as the observers receive more updates. This is achieved by the observers sending an acknowledgement response to the server, detailing the \textbf{actual} time at which they received the update, as opposed to the forecast time. The server then uses these responses to build a model of the network latency, and adjust the forecast time appropriately to maximize responsiveness in gameplay.
 
   \SetKwProg{Fn}{def}{}{end}
   \SetKwFunction{Fgcd}{stereoMyButthole}
@@ -249,6 +253,7 @@ We were given an Oculus to simulate the fisheye screen present inside the planet
   \end{align*}
   This method worked well for seeing the entire planet on one screen however through testing we found that the concept was difficult to grasp given that the transition occurs on a spherical shape. Therefore we required a more simple option.
 
+\pagebreak
    \subsubsection{Single Screen}
     In the single screen view all players are enforced to stay within the the view of one camera, which displays one half of the planet. This is achieved by constraining the player position to be within the distance between the camera and the centre of the planet. The camera is positioned at twice the radius of the planet, while always facing the centre of the planet. To determine where the camera should move, the average position of the players is calculated, and the camera object is rotated to face this point. This rotation is then synchronized occasionally with all players to ensure that they cannot move out from the field of view. \\ \\
 
