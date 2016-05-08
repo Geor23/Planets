@@ -82,7 +82,11 @@ Players only use their devices to control their players so that all interactivit
 This was primarily an experiment for our team to see whether we could produce a solid game which would allow multiple users to connect over a network and enjoy a gameplay session, in GLORIOUS 3D, with the planetarium dome as their view. With this project, our team has made a breakthrough, for people to start developing games for the planetarium.
 
 
+\section{Novelty Component}
 
+ The novelty component in our game can be summarised simply as a full multiplayer game visualised inside a highly immersive Planetarium environment, where players engage in battle in a cartoon-like world. The @Bristol Planetarium does not have many fully interactive sessions to showcase, and in particular they have never had a large scale multiplayer game, which are the type of new shows they are eager to promote in the future. We believe we have filled this gap for them and could take this forward as the start of a full scale network infrastructure for interactivity in the dome. \\ \\
+
+ Developing a full network solution, which includes integrating with the Planetarium network has proved challenging both technically and collaboratively with the Planetarium staff. We have worked hard to ensure that all corners have been covered, and that players will enjoy and benefit the most from the unique environment the dome brings. Due to lack of time, we were unable to achieve 3D reliably, however detailed later in the report is a succinct explanation of how this could be added, with little effort.
 
 
 
@@ -126,12 +130,6 @@ Considering the game was intended to be heavily network based, it made sense to 
 
 \pagebreak
 
-\section{Novelty Component}
-
- The novelty component in our game can be summarised simply as a full multiplayer game visualised inside a highly immersive Planetarium environment, where players engage in battle in a cartoon-like world. The @Bristol Planetarium does not have many fully interactive sessions to showcase, and in particular they have never had a large scale multiplayer game, which are the type of new shows they are eager to promote in the future. We believe we have filled this gap for them and could take this forward as the start of a full scale network infrastructure for interactivity in the dome. \\ \\
-
- Developing a full network solution, which includes integrating with the Planetarium network has proved challenging both technically and collaboratively with the Planetarium staff. We have worked hard to ensure that all corners have been covered, and that players will enjoy and benefit the most from the unique environment the dome brings. Due to lack of time, we were unable to achieve 3D reliably, however detailed later in the report is a succinct explanation of how this could be added, with little effort.
-
  \section{Software Manual}
 
  \subsection{Running the Game}
@@ -168,6 +166,7 @@ Considering the game was intended to be heavily network based, it made sense to 
   
   [Algorithm for stereo vision]
 
+  \pagebreak
   \subsection{Screen views}
 
 
@@ -184,6 +183,7 @@ Considering the game was intended to be heavily network based, it made sense to 
     In the single screen view all players are enforced to stay within the the view of one camera,k displaying one half of the planet. This is achieved by constraining the player position to be within the distance between the camera and the centre of the planet. The camera is positioned at twice the radius of the planet, while always facing the centre of the planet. To determine where the camera should move, the average position of the players is calculated, and the camera object is rotated to face this point. This rotation is then synchronized occasionally with all players to ensure that they cannot move out from the field of view. \\ \\
     Additionally, in order to ensure that the players are able to explore the entire planet, the observer cameras would move with the players, similar to an arena, however these would only be restricted in movement if two players are trying to move in opposite directions at opposite poles, thus both trying to drag the camera view in different directions.
 
+    \pagebreak
     \subsection{Planetarium Challenges}
      - How to visualise on the dome ? Technical information about the planetarium cameras, previous use of shaders etc.
      Since February we have been having frequent sessions in the Planetarium usually for 4 hours in the evening. The Planetarium houses two main systems for projecting images onto the dome; Digistar and Vioso. We were in charge of using the Vioso which uses two servers, Master and Slave. The purpose of having two servers is for the potential for 3D which the Vioso system achieves by simply overlaying the the dome projection from Master and Slave.
@@ -193,6 +193,7 @@ Considering the game was intended to be heavily network based, it made sense to 
      Through research into how others had solved the Fulldome (as it is known) view, we found one open source solution which uses 5 cameras, and projects each camera's viewports onto adjacent meshes, which stitch together to create a full fish-eye effect that has 240* field of view.
      One of our main challenge in porting the game onto the dome view was accounting for a different camera view all throughout the project, having to develop for 2 completely different views (dome and normal screen). This led to certain shaders and textures not being included in our game due to not being suitable on one of the views.
 
+     \pagebreak
      \subsection{GamePlay design challenges}
       - camera views, single, split etc. How should players move? Why twin stick, how is that implemented. Lots of design discussion with regards to the visualisation on the observer, what should be shown on the player screens etc.
       TWIN STICK and orientation on planet
@@ -201,6 +202,7 @@ Considering the game was intended to be heavily network based, it made sense to 
        Each “stick” of the user interface is responsible for controlling an axis. These axes are used to provide continuous input, resulting in smooth player navigation in the game space without any need to remove their hands of their device. The axes themselves are simply a normalized 2-dimensional vector representing direction in which the joystick is being dragged.
        One very important aspect of the user controls is ensuring that they are always consistent regardless of rotation in the observer view, i.e that up always moves the player up and similarly for the other directions. We achieve this by sending occasional updates of the observer rotation to the clients so that they can move respective to the up-vector of the observer object. The positions of the players are then sent to the server after threshold distance has been exceeded, and following this the server relays the information to the observers.
 
+       \pagebreak
        \subsection{Graphics and interface}
        Look and feel all created by ourselves to be cartoony.
         Can also appeal to the nature of the planetarium for shows where there may be lots of children, commercial aspect etc.
@@ -209,7 +211,7 @@ Considering the game was intended to be heavily network based, it made sense to 
         Another variable that took an integral in the decision was the fact that in case that the planetarium was interested in keeping the game as an extra “attraction” the game would be suitable for kids visiting.
 
 
-        The graphics are of a game are integral to the user experience. Thus, the decision to keep graphics simple and almost ‘cartoony’ was made early on in the design process. This was preferred over realistic graphics, and used bold outlines with cel-shading to achieve the effect. There were multiple factors to consider when making this choice. The first of which was the fact we were developing for the Planetarium. We were quickly given a rough polygon count by the Planetarium (of around 4,000,000)?????, which gave us more reason to go for simpler models and textures. Couple this with the fact that our game is large-scale and multiplayer, the effect that having high-polygon, realistic models and very high resolution textures would have on performance would be compounded. The Planetarium also made clear that if the game was a success, they would be interested in taking it on as a regular event. Thus, the Planetarium’s standard demographic had to be taken into account, which includes young children. This made cartoon-ish graphics stand out as the preferred choice.  
+        The graphics are of a game are integral to the user experience. Thus, the decision to keep graphics simple and almost ‘cartoony’ was made early on in the design process. This was preferred over realistic graphics, and used bold outlines with cel-shading to achieve the effect. There were multiple factors to consider when making this choice. The first of which was the fact we were developing for the Planetarium. We were quickly given a rough polygon count by the Planetarium (of around 4,000,000), which gave us more reason to go for simpler models and textures. Couple this with the fact that our game is large-scale and multiplayer, the effect that having high-polygon, realistic models and very high resolution textures would have on performance would be compounded. The Planetarium also made clear that if the game was a success, they would be interested in taking it on as a regular event. Thus, the Planetarium’s standard demographic had to be taken into account, which includes young children. This made cartoon-ish graphics stand out as the preferred choice.  
 
 
 \pagebreak
