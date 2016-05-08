@@ -128,6 +128,17 @@ Considering the game was intended to be heavily network based, it made sense to 
  \subsubsection{git}
  In order to keep track of our development and have a smooth collaboration, git has proved to be particularly useful, allowing for distributed revision control and source code management , as well as bug tracking, feature requests, task management. We have also utilised Git in order to make releases after achieving a milestone as well as providing a backup for when things go wrong. This has allowed for a scrum-based work managing, basing our development on sprints, often software integration and regular releases.
 
+
+ \subsection{Oculus rift} 
+ In order for an easier porting of our game onto the planetarium, we utilised VK2 Oculus Rift for development puposes. This has allowed us to....
+
+ \subsection{Android and IoS devices} 
+ As our game was aimed to be played on android and Ios devices, we did this by... the challenge this has brough can be resumed in....
+
+ \subsection{Microsoft Game Controllers}
+ - adapted our game so that it can also be played with controllers - this was done by... 
+
+
 \pagebreak
 
  \section{Software Manual}
@@ -139,6 +150,10 @@ Considering the game was intended to be heavily network based, it made sense to 
  \subsection{Adding New Game Functionality}
  To add new functionality to the game it is ideal that the developer uses Unity Engine 5.4.3+ to be able to build for Windows, Android and Linux. The code for the game is separated into several folders relating to the game component required. For development related to gameplay flow the developer should first start by exploring the Start, Lobby and Round scenes. All scenes contain component scripts attached to objects which control the flow of the game. The scripts attached to these objects are descendants of MonoBehaviour which means they exist in the context of a scene and relate to an object in the scene.\\ \\
  To change more core aspects of the game such as networking or rounds, the user can navigate the folder structure which is separated by functionality, and then by purpose. For example there is a Network folder which contains many subfolders relating to player object synchronisation, socket connection information etc.
+
+ Moreover, most of our features were implemented such that adding on would be a matter of simply inserting a new line of code. For example, the round system is based on having an array of all of the scenes we would want to play in order they must appear, calculating the transitions, round stats and gameplay would automatically be updated. Thus, in order to insert a new round/ a new planet, it would be a matter of adding the scene name into the array of scenes in the round manager and everything would work properly.
+
+ -- clear code made it to be easy to be developed over as we did something that has not been done before and people might want to use it as a reference for further development!!! - rewrite this
 
  \subsection{Software Maintenance During Development}
  Software maintenance was achieved using git as source control and GitHub as the hosting medium. Throughout the project a new feature, fix, or experimental code would require a new branch on the remote medium. When the branch had fulfilled its original goal it would be reviewed by the team to ensure that all team members were up to date with the new changes on this branch. When the team was happy with the final changes the branch is then merged into the default development branch. When we were happy with the state of the development branch we would make a release to the master branch, which is the latest playable version of the game.
@@ -168,12 +183,18 @@ Considering the game was intended to be heavily network based, it made sense to 
      Projecting onto the planetarium was one of the major problems that the team had to solve. Two solutions were investigated, a simple shader with one camera, and a 5-camera setup. 
      With the simple shader, one camera is applied with a fisheye correction so that pixels are shifted according to the rotation and distance from the center of the eye. The difficulty with this approach is that along the sides of the eye there is a distortion effect as the camera in most cases only has a 60* field of view. Therefore we had to investigate another solution. \\ \\
      Through research into how others had solved the Fulldome (as it is known) view, we found one open source solution which uses 5 cameras, and projects each camera's viewports onto adjacent meshes, which stitch together to create a full fish-eye effect that has 240* field of view.
-     One of our main challenge in porting the game onto the dome view was accounting for a different camera view all throughout the project, having to develop for 2 completely different views (dome and normal screen). This led to certain shaders and textures not being included in our game due to not being suitable on one of the views.
+     One of our main challenge in porting the game onto the dome view was accounting for a different camera view all throughout the project, having to develop for 2 completely different views (dome and normal screen). Thus, in order to allow for an easy switch, we implemented both views into the same project, allowing for these to change using a toggle. This meant that every feature added had to account for both versions of the game. Moreover, it led to certain shaders and textures not being included in our game due to not being suitable on one of the views.
       \pagebreak
  \subsection{Networking challenges}
   
   \noindent
   The network uses a star topology. The dedicated server is essential to ensure that data from all clients is acknowledged on a fair basis, which may not be the case if running in parallel with graphics. In addition, it allows for a smooth transition into 3D in the planetarium, as the server can fairly estimate network latency. There are two main scripts that enable synchronizing the position and rotation of objects between server and clients. In our final design, all clients send their positions and rotations to the server after some threshold has passed, and the server passes these on to the observing clients.
+
+  old:  - Smooth gameplay, ensuring packets are fast but reliable for stereo. We designed scripts that allow the networked objects to be easily synchronized
+  With networking being one of the pillars of gameplay we had many discussions relating to how we should solve the networking problem. Early on we decided that we would use Unity’s built in networking layer which allows for easy communication passing from server to clients. Unity provides built in layers for the type of communication decide: reliable and unreliable.
+  On a hardware level, we are using an Intel NUC box as a Linux server. The dedicated server is essential to ensure that data from all clients is acknowledged on a fair basis, which may not be the case if running in parallel with graphics. In addition, it allows for a smooth transition into 3D in the planetarium, as the server can fairly estimate network latency (stereo is explained in depth in later paragraph).
+  There are two main scripts that enable synchronizing the position and rotation of objects between server and clients . In our final design, all clients send their positions and rotations after some threshold value has been passed to the server, and the server passes these on to the observing clients. In terms of topology it can be seen that the general flow of network traffic travels in the direction of the observer screens.
+  [Algorithm for stereo vision]
 
   \subsubsection{Stereo Algorithm (3D)}
 
@@ -227,6 +248,23 @@ Considering the game was intended to be heavily network based, it made sense to 
 
 
         The graphics are of a game are integral to the user experience. Thus, the decision to keep graphics simple and almost ‘cartoony’ was made early on in the design process. This was preferred over realistic graphics, and used bold outlines with cel-shading to achieve the effect. There were multiple factors to consider when making this choice. The first of which was the fact we were developing for the Planetarium. We were quickly given a rough polygon count by the Planetarium (of around 4,000,000), which gave us more reason to go for simpler models and textures. Couple this with the fact that our game is large-scale and multiplayer, the effect that having high-polygon, realistic models and very high resolution textures would have on performance would be compounded. The Planetarium also made clear that if the game was a success, they would be interested in taking it on as a regular event. Thus, the Planetarium’s standard demographic had to be taken into account, which includes young children. This made cartoon-ish graphics stand out as the preferred choice.  
+
+        The design of our models were also heavily influenced by the two factions in the game. The first two ship models were created before the two teams were decided {insert photo here}. However, after the two factions in our game, pirates and super-corp were set, we re-designed the two ship models. For the super-corp we were aiming for sleek, hidraulic,... almost simplistic design, whereas the pirates needed to inspire a more rough, ...feeling. The two colour schemes utilised to distinguish between the teams, blue and red, were chosen for the same reason. 
+
+        Deciding upon the two factions in our game also led to changes in planets. For example, as the city planet was aimed to be the home of the super-corp, the planet was designed to inspire just that, by creating hude buildings....For the same reason we designed a sand/tumour planet, the home of the pirates, where we included elements such as....
+
+        The colour scheme for the UI was chosen whilst taking into account the two teams. Thus, we chose a neutral colour, we felt that turqoise would be a good fit as it would be different from the team's colours as well as stand out and give a "spacey" feel to the interface.
+
+
+        \subsection{Music}
+        Additionally, the music was also inspired by our decision of the two factions, ...
+
+
+        \subsection{Easy playability vs. Depth}
+        We feel we have achieved both, being playable with little or no training, as well as portray enough depth such that an experienced gamer would the drawn into the game. As each player controls his/hers avatar utilising a simple twin-stick controller, this makes it extremelly easy to pick up. In order for players to be eased into the game, we decided that our first planet would portray no extra features, just resources to be picked up. However, as we go further into the game, in order to draw the player into the game we add on extra features, such as meteors hitting the planet randomly on the second round or even portals that would teleport players randomly on the last planet. As well as adding onto the gameplay in order to keep the energy levels up (wtf am i talkin about), an experienced gamer could also see the strategy into the team game play. For example, as the game is built to happen as an arena style game, where players can drag the view as they move, as one player from the pirates team follows a super-corp to try and kill him, another pirate can move in the opposite direction in order to drag the view with him, making the super-corp captured, as it would be unable to move in its original direction. 
+
+
+
 
 
 \pagebreak
