@@ -201,6 +201,8 @@ Unity Cluster Renderer is a beta feature of Unity that is used to perfectly sync
         Another variable that took an integral in the decision was the fact that in case that the planetarium was interested in keeping the game as an extra “attraction” the game would be suitable for kids visiting.
 
 
+        The graphics are of a game are integral to the user experience. Thus, the decision to keep graphics simple and almost ‘cartoony’ was made early on in the design process. This was preferred over realistic graphics, and used bold outlines with cel-shading to achieve the effect. There were multiple factors to consider when making this choice. The first of which was the fact we were developing for the Planetarium. We were quickly given a rough polygon count by the Planetarium (of around 4,000,000)?????, which gave us more reason to go for simpler models and textures. Couple this with the fact that our game is large-scale and multiplayer, the effect that having high-polygon, realistic models and very high resolution textures would have on performance would be compounded. The Planetarium also made clear that if the game was a success, they would be interested in taking it on as a regular event. Thus, the Planetarium’s standard demographic had to be taken into account, which includes young children. This made cartoon-ish graphics stand out as the preferred choice. 
+
         \section{Tools used}
         Following are the various pieces of software and hardware we utilized for the completion of our project:
 
@@ -369,6 +371,8 @@ Unity Cluster Renderer is a beta feature of Unity that is used to perfectly sync
 
         \subsubsection{James O’ Connor}
 
+        Designed the SuperCorp ship model on Autodesk Maya. Made the sand planet texture, as well as the power-up pickup models. Made the skybox. Wrote some of the code for projectile firing, resource networking, respawning after death, visualizing the resources and scores, as well as the players gaining points for picking up resources.
+
 
 
 
@@ -380,21 +384,12 @@ Unity Cluster Renderer is a beta feature of Unity that is used to perfectly sync
 
         Created a script, responsible for managing the different resources around the planet. Namely it controlled the behaviour of power ups, resource pickups as well as planet hazards, like meteors. The script is responsible for keeping the planets populated by resources and power ups at any given time during the round. It keeps track of their current numbers and keep them in between the desired levels. The script is also responsible for spawning the players as soon as the game starts.
 
-        Game Play Balancing Winning Conditions
-
         Play tested the game in order to ensure the best experience for the player. This included, regulating the number of power ups and resources around the planets as well as the power up “life span”. Meaning the amount of time before a power up stops functioning as well as the rate that a resource increases in value. Made sure that no round would ever lead to a draw as the system takes into consideration variables like team score, kills and deaths.
-
-        Audio Manager
-        I also added the original basic music system for the game.
 
         Created a manager responsible for managing the music scores for each part of the game. Assigned the corresponding audio clip to each round, manu and team of our game. The script provides the user with basic controls over the clips. The user can freely play and stop the different audio clips of an instance, as well as, regulate their individual volume.
 
-
-
-        UI
         Wrote different scripts and functions for providing the User Interface with useful information regarding the game. Created a script for visualising the results of every round as well as the final results for the game. 
 
-        Debugging
         Worked on resolving a series of issues that our game had. Fixed a bug where in case the mobile device was not held horizontally when initializing the game it would immediately minimize. Resolved an issue, where when a player gor destroyed, the observer was also destroyed. Resolved by adding a check to see whether the collision was local or not.
 
 \pagebreak
