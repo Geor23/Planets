@@ -153,6 +153,12 @@ Considering the game was intended to be heavily network based, it made sense to 
  Be playable with little or no training - but have enough depth to satisfy an experienced gamer.
  Have come from a development team who have demonstrated a willingness to address problems in the team and have found solutions to them.
  Have a relevant look and feel (creative content creation) and be novel.}
+
+ \subsection{Unity Preamble}
+ It is useful to first introduce the way Unity handles objects to fully understand how problems have been solved throughout the project. 
+ Every object in the game contains a Transform. A Transform simply contains \textbf{position}, \textbf{rotation} and \textbf{scale}, which are all 3-dimensional vectors. It is also possible to query the relative \textbf{up}, \textbf{right}, and \textbf{forward} direction vectors, used commonly in 3D graphics. \\ \\
+\noindent
+ The networking layer is easily explained as sending and receiving on channels. There are two main channels: reliable and unreliable. The reliable channel ensures that the packets reach their destination through acknowledgement protocols. The unreliable channel, as it sounds, does not guarantee that the packet arrives at the destination.
  
  \subsection{Networking challenges}
 
