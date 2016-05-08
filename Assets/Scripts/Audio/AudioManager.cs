@@ -13,7 +13,7 @@ public class AudioManager : MonoBehaviour
     void Start()
     {
         //AudioSource[] allMyAudioSources = GetComponents<AudioSource>();
-        if (allMyAudioSources != null){
+        if (allMyAudioSources.Length > 0){
             currentClip = allMyAudioSources[0];
             Debug.Log("Current Clip " + currentClip.name);
         }
