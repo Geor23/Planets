@@ -1,5 +1,5 @@
 \documentclass[11pt,a4paper]{article}
-\usepackage[bmargin=1in,lmargin=0.5in,rmargin=0.5in]{geometry}
+\usepackage[bmargin=0.5in,lmargin=0.5in,rmargin=0.5in]{geometry}
 \usepackage{enumitem}
 \usepackage{mathtools}
 \usepackage{amsfonts}
@@ -66,7 +66,7 @@
 \vspace{12mm}
 \end{center}
 \begin{flushright}
-  Ele almost killed us all
+  Ele almost killed us all... HELL YEAH I DID
 \end{flushright}
 
 \pagebreak
@@ -181,17 +181,24 @@ Moreover, most of our features were implemented such that adding on would be a m
   
   \noindent
 
-  One of the major challenges for us was making the game a fully networked game, allowing for many players to play together for their own mobile devices. We require for a fair amount of data to be sent and processed by both the servers as well as the player clients and observer clients. Movement, rotation, deaths, kills, scores and game updates all needed to be synchronised and updated for all players. We initially started by using the Unity Networking structures available to us, which allowed for us to establish the basic functionality for the game in good time. Once the basic plan layout had been established, we were able to test the game in a basic form, which was helpful in assessing the current gameplay and how to improve on it. \\ \
+  One of the major challenges for us was making the game a fully networked game, allowing for many players to play together for their own mobile devices. We require for a fair amount of data to be sent and processed by both the servers as well as the player clients and observer clients. Movement, rotation, deaths, kills, scores and game updates all needed to be synchronised and updated for all players. We initially started by using the Unity Networking structures available to us, which allowed for us to establish the basic functionality for the game in good time. Once the basic plan layout had been established, we were able to test the game in a basic form, which was helpful in assessing the current gameplay and how to improve on it. \\
 
-  We realised at this stage two things: firstly that we needed to focus more of the game on the observer view, and that the Unity Networking structures we'd used were far from optimal for our usage. We from here worked on replacing the Unity structures of our own, allowing us to create very specific networking functionality for our game with single message passes between only the required devices. By moving the a lot of the computation to the observer displays, we were able to reduce the amount of network traffic significantly. By making the players only visible on the observer view, we reduced the need for all clients to recieve constant updates as to player actions, only needing for the observer to be updated with these changes. Everything besides deaths could then be dealt with on the observers, be it interactions with resources, events, or scores. Even events which seemingly would require some network traffic, such as the rotation of player objects, was with some thought and mathematics able to be purely calculated on the observer. \\ \\
+  We realised at this stage two things: firstly that we needed to focus more of the game on the observer view, and that the Unity Networking structures we'd used were far from optimal for our usage. We from here worked on replacing the Unity structures of our own, allowing us to create very specific networking functionality for our game with single message passes between only the required devices. By moving the a lot of the computation to the observer displays, we were able to reduce the amount of network traffic significantly. By making the players only visible on the observer view, we reduced the need for all clients to recieve constant updates as to player actions, only needing for the observer to be updated with these changes. Everything besides deaths could then be dealt with on the observers, be it interactions with resources, events, or scores. Even events which seemingly would require some network traffic, such as the rotation of player objects, was with some thought and mathematics able to be purely calculated on the observer. \\
 
-  The network uses a star topology. The dedicated server is essential to ensure that data from all clients is acknowledged on a fair basis, which may not be the case if running in parallel with graphics. In addition, it allows for a smooth transition into 3D in the planetarium, as the server can fairly estimate network latency. There are two main scripts that enable synchronizing the position and rotation of objects between server and clients. In our final design, all clients send their positions to the server after some threshold has passed, and the server passes these on to the observing clients. \\ \\
+  The network uses a star topology. The dedicated server is essential to ensure that data from all clients is acknowledged on a fair basis, which may not be the case if running in parallel with graphics. In addition, it allows for a smooth transition into 3D in the planetarium, as the server can fairly estimate network latency. There are two main scripts that enable synchronizing the position and rotation of objects between server and clients. In our final design, all clients send their positions to the server after some threshold has passed, and the server passes these on to the observing clients. \\
+
+  old:  - Smooth gameplay, ensuring packets are fast but reliable for stereo. We designed scripts that allow the networked objects to be easily synchronized
+  With networking being one of the pillars of gameplay we had many discussions relating to how we should solve the networking problem. Early on we decided that we would use Unity’s built in networking layer which allows for easy communication passing from server to clients. Unity provides built in layers for the type of communication decide: reliable and unreliable.
+  On a hardware level, we are using an Intel NUC box as a Linux server. The dedicated server is essential to ensure that data from all clients is acknowledged on a fair basis, which may not be the case if running in parallel with graphics. In addition, it allows for a smooth transition into 3D in the planetarium, as the server can fairly estimate network latency (stereo is explained in depth in later paragraph).
+  There are two main scripts that enable synchronizing the position and rotation of objects between server and clients .In our final design, all clients send their positions and rotations after some threshold value has been passed to the server, and the server passes these on to the observing clients. In terms of topology it can be seen that the general flow of network traffic travels in the direction of the observer screens.
+  
 
   \subsubsection{Stereo Algorithm (3D)}
 
   The algorithm for stereo visualisation of the game is actually very simple. It is partly inspired by the Unity Cluster Renderer technique and the network solution we had already implemented. \\
   Updates which are sent to the observer occur over a network where there is no guarantee of when they will they will arrive, of course we expect that they will take far less than say, $1$ second, but another level of execution locking is required to fully synchronize the state of two observers. \\ \\
-  This is achieved through pairing position updates with a forecast time, and packet ID at which the observer should execute the actual position update. Initially, the forecast time should be well in advance, but rapidly decrease as the observers receive more updates. This is achieved by the observers sending an acknowledgement response to the server, detailing the \textbf{actual} time at which they received the update, as opposed to the forecast time. The server then uses these responses to build a model of the network latency, and adjust the forecast time appropriately to maximize responsiveness in gameplay.\\ \\
+  This is achieved through pairing position updates with a forecast time, and packet ID at which the observer should execute the actual position update. Initially, the forecast time should be well in advance, but rapidly decrease as the observers receive more updates. This is achieved by the observers sending an acknowledgement response to the server, detailing the \textbf{actual} time at which they received the update, as opposed to the forecast time. The server then uses these responses to build a model of the network latency, and adjust the forecast time appropriately to maximize responsiveness in gameplay.
+
   \SetKwProg{Fn}{def}{}{end}
   \SetKwFunction{Fgcd}{stereoMyButthole}
   \begin{algorithm}[H]
@@ -204,7 +211,6 @@ Moreover, most of our features were implemented such that adding on would be a m
       }
     }
   \end{algorithm}
-
    \subsection{Interaction}
      When considering the method of interaction on the client side, many factors had to be taken into consideration. Firstly, we had to ensure the that the game is easy to pick up. To achieve this, a virtual twin stick controller was implemented. The twin stick is the most widely used control method in modern games, so this means that people could intuitively understand how to control their avatar without a lengthy explanation. The left stick is responsible for the player movement and the right for the turret rotation and shooting mechanic. \\ \\
      Each “stick” of the user interface is responsible for controlling an axis. These axes are used to provide continuous input, resulting in smooth player navigation in the game space without any need to remove their hands of their device. The axes themselves are simply a normalized 2-dimensional vector representing direction in which the joystick is being dragged. \\ \\
@@ -250,8 +256,19 @@ Moreover, most of our features were implemented such that adding on would be a m
 
     The single screen allows for a gameplay-flow effect where players of the opposing teams can push to explore different areas of the planet in search for resources and power ups. The only time where the view would be locked is when equal amounts of players are pushing against opposite ends of the camera view on the planet, which is unlikely given that the objective is to maintain and steal resources from the opposing teams.
 
+     \pagebreak
+     \subsection{GamePlay design challenges}
+      - camera views, single, split etc. How should players move? Why twin stick, how is that implemented. Lots of design discussion with regards to the visualisation on the observer, what should be shown on the player screens etc.
+      TWIN STICK and orientation on planet
+       - Ensuring movement is consistent
+       When considering the method of interaction on the client side, many factors had to be taken into consideration. Firstly, we had to ensure the that the game is easy to pick up. To achieve this, a virtual twin stick controller was implemented. The twin stick is the most widely used control method in modern games, so this means that people could intuitively understand how to control their avatar without a lengthy explanation. The left stick is responsible for the player movement and the right for the turret rotation and shooting mechanic. 
+       Each “stick” of the user interface is responsible for controlling an axis. These axes are used to provide continuous input, resulting in smooth player navigation in the game space without any need to remove their hands of their device. The axes themselves are simply a normalized 2-dimensional vector representing direction in which the joystick is being dragged.
+       One very important aspect of the user controls is ensuring that they are always consistent regardless of rotation in the observer view, i.e that up always moves the player up and similarly for the other directions. We achieve this by sending occasional updates of the observer rotation to the clients so that they can move respective to the up-vector of the observer object. The positions of the players are then sent to the server after threshold distance has been exceeded, and following this the server relays the information to the observers.
+
        \pagebreak
        \subsection{Graphics and interface}
+       Look and feel all created by ourselves to be cartoony.
+        Can also appeal to the nature of the planetarium for shows where there may be lots of children, commercial aspect etc.
 
         An important design decision that had to be taken early in the project's development was the direction that graphics should take. There were two directions that the project could take in regards to that. Either take a more photo-realistic approach or a more “cartoony” one. In order to reach a decision all the affected factors were taken into consideration. A primary concern was the fact that the game had to perform well on the Planetarium Dome, and for the result to be as smooth as possible the polygon count had to be kept at an optimal level. Using photo-realism and with the amount of players the project was aiming for could cause serious rendering and synchronization issues.
         Another variable that took an integral in the decision was the fact that in case that the planetarium was interested in keeping the game as an extra “attraction” the game would be suitable for kids visiting. \\ \\
@@ -271,7 +288,7 @@ Moreover, most of our features were implemented such that adding on would be a m
 
 
         \subsection{Easy playability vs. Depth}
-        We feel we have achieved both, being playable with little or no training, as well as portray enough depth such that an experienced gamer would the drawn into the game. As each player controls his/hers avatar utilising a simple twin-stick controller, this makes it extremelly easy to pick up. In order for players to be eased into the game, we decided that our first planet would portray no extra features, just resources to be picked up. However, as we go further into the game, in order to draw the player into the game we add on extra features, such as meteors hitting the planet randomly on the second round or even portals that would teleport players randomly on the last planet. As well as adding onto the gameplay in order to keep the energy levels up (wtf am i talkin about), an experienced gamer could also see the strategy into the team game play. For example, as the game is built to happen as an arena style game, where players can drag the view as they move, as one player from the pirates team follows a super-corp to try and kill him, another pirate can move in the opposite direction in order to drag the view with him, making the super-corp captured, as it would be unable to move in its original direction. 
+        We feel we have achieved both, being playable with little or no training, as well as portray enough depth such that an experienced gamer would the drawn into the game. As each player controls his/hers avatar utilising a simple twin-stick controller, this makes it extremely easy to pick up. In order for players to be eased into the game, we decided that our first planet would portray no extra features, just resources to be picked up. However, as we go further into the game, in order to draw the player into the game we add on extra features, such as meteors hitting the planet randomly on the second round or even portals that would teleport players randomly on the last planet. As well as adding onto the gameplay in order to keep the energy levels up (wtf am i talkin about)(what ARE you talking about?), an experienced gamer could also see the strategy into the team game play. For example, as the game is built to happen as an arena style game, where players can drag the view as they move, as one player from the pirates team follows a super-corp to try and kill him, another pirate can move in the opposite direction in order to drag the view with him, making the super-corp captured, as it would be unable to move in its original direction. 
 
 
 
@@ -320,13 +337,15 @@ Moreover, most of our features were implemented such that adding on would be a m
         Then, we had to appoint someone to be the teams Lead Programmer. A person that his/her knowledge of software and hardware would allow him to help them rest of the team with any difficulties they were to face over the games development cycle. We also appointed people which were good in more art related subjects responsible for the graphical part of the project.
         Gameplay Supervisor
         Appointed someone for supervising the gameplay development, in order to make some decisions regarding how the game should evolve to ensure the players enjoyment. 
-        The group was splitted in various combinations depending on the tasks at hand. If design of textures and models was needed then, Georgiana and Jamie would take the task of developing them and the rest of the team would focus on integration of the models in the game. Likewise, if a task was related to the networking part of the project, then Callum and Thomas C. would take focus on that and the rest of the team would focus on making sure the existing system would be able to adapt to the new network configurations, else make changes accordingly.
+
+After finding out each members strengths and weaknesses we divided the members into teams responsible for different aspects of the project. Graphics, Networking and Gameplay were the three main project pillars. If design of textures and models was needed then, Georgiana and Jamie would take the task of developing them and the rest of the team would focus on integration of the models in the game. Likewise, if a task was related to the networking part of the project, then Callum and Thomas C. would take focus on that and the rest of the team would focus on making sure the existing system would be able to adapt to the new network configurations, else make changes accordingly. The remaining members would focus on gameplay improvements and integrating new features to the game, along with making sure that no new changes and additions were causing problems to the existing implementation.
          
-        \subsection{The Good Moments}
+         
+ \subsection{The Good Moments}
         First term everything went smoothly. We had quite good communication and the milestones we were setting to complete were done in time. No good Moments , just tolerable
 
 
-        \subsection{The Improveable Moments}
+        \subsection{The Improvable Moments}
         Thankfully, after being in a group project in year 2, everybody had been taught some very important lessons regarding working in a group, so a lot of possible mistakes were avoided.
         However, as deadlines for different modules started piling up, various members of our team couldn't work on the project as much as they wanted. And we did experience some periods when the team just couldn't focus on the game's development, either due to exams or to coursework deadlines coming up.
         At the first development stages, with the project deadline being some time away, there was no particular pressure on the team, and everything was proceeding at a more lax state. This might not have worked to our advantage as we could have made use of that time, to make even further progress.  
@@ -348,7 +367,7 @@ Moreover, most of our features were implemented such that adding on would be a m
 
         \subsection{Methods Employed To Assist Collaborative Development}
         Slack was used, an application specifically designed for team communication, which allowed as to directly get a hold of anyone in the team, post something important as well as add alerts for whenever a new Trello card was added, or modified, and whenever a new meeting was scheduled. \\ \\
-        Organised weekly meetings to discuss and work together, as well as monthly or bi-monthly 12h working session depending on the workload, where we would not only work together but also discuss what has worked and what hasn’t in terms of organisation. All meetings were scheduled long in advance so everyone could organise their work on other units and were added onto the Google calendar so everyone would receive reminders the day before a meeting as well as on the day.
+        Organised weekly meetings to discuss and work together, as well as monthly or bi-monthly 12 hour working session depending on the workload, where we would not only work together but also discuss what has worked and what hasn’t in terms of organisation. All meetings were scheduled long in advance so everyone could organise their work on other units and were added onto the Google calendar so everyone would receive reminders the day before a meeting as well as on the day.
         At the beginning of the meetings we would plan out the day as well as the workload until the next meeting and all tasks would be added onto Trello, a task management tool that allowed us to keep up to date with that needs to be done, what is in progress and what has already been accomplished, as well as assign team members for the tasks and set deadlines.
         Additionally, as Git was utilised, all members were notified whenever a new contribution was added to the project so they could code review. This way, everyone was up to date with the latest project updates even if working remotely. 
         During the holidays, as most members were away, we had meetings utilising Google Hangouts to discuss progress and plan out the next development period. 
@@ -373,7 +392,7 @@ Moreover, most of our features were implemented such that adding on would be a m
           \begin{itemize}
             \item I created a team manager that would keep stats for each team such as scores, players etc.
             \item I created a kill feed.
-            \item Wrote the round manager with Elle which deals with changing the rounds when a timer would run out as well as keeping and resetting round stats.
+            \item Wrote the round manager with Elle which deals with changing the rounds when a timer would run out as well as keeping and resetting round data.
             \item Made the communication between the team manager and round manager employed on the server and the clients.
           \end{itemize}
           \item I worked on the observer view onto the planetarium:
