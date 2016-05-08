@@ -13,8 +13,10 @@ public class AudioManager : MonoBehaviour
     void Start()
     {
         //AudioSource[] allMyAudioSources = GetComponents<AudioSource>();
-        currentClip = allMyAudioSources[0];
-        Debug.Log("Current Clip " + currentClip.name);
+        if (allMyAudioSources != null){
+            currentClip = allMyAudioSources[0];
+            Debug.Log("Current Clip " + currentClip.name);
+        }
 
     }
 
