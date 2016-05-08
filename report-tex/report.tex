@@ -161,14 +161,12 @@ Considering the game was intended to be heavily network based, it made sense to 
  The networking layer is easily explained as sending and receiving on channels. There are two main channels: reliable and unreliable. The reliable channel ensures that the packets reach their destination through acknowledgement protocols. The unreliable channel, as it sounds, does not guarantee that the packet arrives at the destination.
  
  \subsection{Networking challenges}
-
-  With networking being one of the pillars of gameplay we had many discussions relating to how we should solve the networking problem. Early on we decided that we would use Unity’s built in networking layer which allows for easy communication passing from server to clients. Unity provides built in layers for the type of communication: reliable and unreliable. \\ \\
   
   \noindent
-  The dedicated server is essential to ensure that data from all clients is acknowledged on a fair basis, which may not be the case if running in parallel with graphics. In addition, it allows for a smooth transition into 3D in the planetarium, as the server can fairly estimate network latency (stereo is explained in depth in later paragraph). \\
+  The network uses a star topology, where all mobile devices communicate to the server, and servers to the observers. The dedicated server is essential to ensure that data from all clients is acknowledged on a fair basis, which may not be the case if running in parallel with graphics. In addition, it allows for a smooth transition into 3D in the planetarium, as the server can fairly estimate network latency (stereo is explained in depth in later paragraph). \\
 
   \noindent
-  There are two main scripts that enable synchronizing the position and rotation of objects between server and clients .In our final design, all clients send their positions and rotations to the server after some threshold has passed, and the server passes these on to the observing clients. In terms of topology it can be seen that the general flow of network traffic travels in the direction of the observer screens. \\
+  There are two main scripts that enable synchronizing the position and rotation of objects between server and clients. In our final design, all clients send their positions and rotations to the server after some threshold has passed, and the server passes these on to the observing clients.  \\
   
   [Algorithm for stereo vision]
 
