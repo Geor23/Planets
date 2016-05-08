@@ -40,7 +40,6 @@ public class StartSceneGUI : MonoBehaviour {
         if (nameT.text == "") {
             MobileNativeMessage msg = new MobileNativeMessage("Invalid Name", "Please use a valid name!");
         } else {
-            Debug.Log("I AM IN BUTTON");
             if (!joinPressed){
                 joinPressed = true;
                 Invoke("setButtonPressFalse", 21);

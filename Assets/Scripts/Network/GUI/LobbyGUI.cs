@@ -6,12 +6,13 @@ using UnityEngine.Networking;
 using UnityEngine.Networking.NetworkSystem;
 
 public class LobbyGUI : MonoBehaviour {
-
-  NetworkManager nm;
-	public Text teamA;
-	public Text teamB;
-
-  public void Start() {
+    bool startingGame = false;
+    NetworkManager nm;
+    public Text teamA;
+	   public Text teamB;
+    public GameObject observerCanvas;
+    public GameObject introCanvas;
+    public void Start() {
     if(NetworkServer.active && !NetworkClient.active) return;
     nm = NetworkManager.singleton;
 	  nm.client.RegisterHandler (Msgs.serverTeamMsg, OnClientReceiveTeamList);
@@ -36,12 +37,19 @@ public class LobbyGUI : MonoBehaviour {
     PlayerConfig.singleton.SetTeam(1);
   }
 
-
-  public void StartGame() {
-    GameObject.Find("FadeTexture").GetComponent<SceneFadeInOut>().EndScene();
-    nm.client.Send(Msgs.startGame, new EmptyMessage());
+  public void StartGame(){
+        if (!startingGame){
+            startingGame = true;
+            observerCanvas.SetActive(false);
+            introCanvas.SetActive(true);
+            Invoke("beginGame", 10);
+        }
   }
 
+  public void beginGame() {
+        GameObject.Find("FadeTexture").GetComponent<SceneFadeInOut>().EndScene();
+        nm.client.Send(Msgs.startGame, new EmptyMessage());
+    }
 
 	public void OnClientReceiveTeamList(NetworkMessage msg){
 		TeamList tl = msg.ReadMessage<TeamList>(); 
