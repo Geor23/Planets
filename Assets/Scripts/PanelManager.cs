@@ -29,7 +29,7 @@ public class PanelManager : MonoBehaviour {
 
 	public void OpenPanel (Animator anim)
 	{
-        if (m_Open == anim)
+   if (m_Open == anim)
 			return;
 
 		anim.gameObject.SetActive(true);
@@ -62,8 +62,7 @@ public class PanelManager : MonoBehaviour {
 		return go;
 	}
 
-	public void CloseCurrent()
-	{
+	public void CloseCurrent()	{
 		if (m_Open == null)
 			return;
 
@@ -72,6 +71,10 @@ public class PanelManager : MonoBehaviour {
 		StartCoroutine(DisablePanelDeleyed(m_Open));
 		m_Open = null;
 	}
+
+    public void exitGame(){
+        Application.Quit();
+    }
 
 	IEnumerator DisablePanelDeleyed(Animator anim)
 	{
@@ -91,8 +94,7 @@ public class PanelManager : MonoBehaviour {
 			anim.gameObject.SetActive(false);
 	}
 
-	private void SetSelected(GameObject go)
-	{
+	private void SetSelected(GameObject go)	{
 		EventSystem.current.SetSelectedGameObject(go);
 	}
 }
