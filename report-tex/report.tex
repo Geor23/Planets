@@ -1,0 +1,475 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[bmargin=0.5in,lmargin=0.5in,rmargin=0.5in]{geometry}
+\usepackage{enumitem}
+\usepackage{mathtools}
+\usepackage{amsfonts}
+\usepackage{xspace,xcolor}
+\usepackage[display]{texpower}
+\usepackage[screen,nopanel]{pdfscreen}
+\usepackage{amsmath}
+\usepackage{upgreek}
+\usepackage{comment}
+\usepackage[]{algorithm2e}
+% http://en.wikibooks.org/wiki/LaTeX/Mathematics
+
+% -------- For floor and ciel -------- %
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+% -------- For long divisions -------- %
+\newcommand{\ldsym}{$\left.\mathstrut\right)$}% unbalanced )
+\newlength{\ldwidth}
+
+\newcommand{\longdivide}[2]% #1 = denominator, #2 = numerator
+{\settowidth{\ldwidth}{\ldsym}
+  $#1\,\raisebox{1.5pt}{\ldsym}\hspace*{-.65\ldwidth}\overline{
+\mathstrut\hspace*{.35\ldwidth}\ #2}$}
+
+
+
+\newcommand{\cfbox}[2]{%
+    \colorlet{currentcolor}{.}%
+    {\color{#1}%
+    \setlength{\fboxsep}{3pt}
+    \setlength{\fboxrule}{0.1em}
+    \fbox{\parbox{\textwidth}{\color{currentcolor}#2}}}%
+}
+
+
+% ------------------------------------ %
+
+
+\begin{document}
+
+\vspace*{13mm}
+\begin{center}
+\rule[0.5ex]{\linewidth}{2pt}\vspace*{-\baselineskip}\vspace*{3.2pt}
+\rule[0.5ex]{\linewidth}{1pt}\\[\baselineskip]
+{\Huge Planetarius }\\[4mm]
+{\Large \textit{COMS  30400: The Games Project}}\\
+\rule[0.5ex]{\linewidth}{1pt}\vspace*{-\baselineskip}\vspace{3.2pt}
+\rule[0.5ex]{\linewidth}{2pt}\\
+\vspace{6.5mm}
+{\large By}\\
+\vspace{6.5mm}
+{\large\textsc{{\Huge Static Peak} \\E. Christodoulou\\ T. Camp\\ G. Ginghina\\ J. O'Connor\\ T. Michiels\\ C. Mann}}\\
+\vspace{11mm}
+\includegraphics[scale=0.2]{logos/brislogo.png}\\
+\vspace{6mm}
+{\large Department of Computer Science\\
+\textsc{University of Bristol}}\\
+\vspace{11mm}
+\begin{minipage}{10cm}
+\end{minipage}\\
+\vspace{9mm}
+{\large\textsc{\today}}
+\vspace{12mm}
+\end{center}
+\begin{flushright}
+  Ele almost killed us all
+\end{flushright}
+
+
+Planetarius
+Static Peak
+Project Documentation
+COMS30400: The Games Project
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Abstract  (max 3 Pages)
+
+Introduce your game, explaining what it does. The marking panel will play your game - but other academic members of staff and our external examiner may also view the Development Team report as part of the Departmental examination process. Assume that the reader may not have played the game; or even attended Games Day.
+We introduce to you, Planetarius. A multiplayer shooter where you choose to side either with the greedy Pirates, or the nefarious Super Corp. Then throw yourself into battle, blasting your enemies with lasers to collect the precious resource known as Elefthismium. War wages over several planets, from the lush forest planet of Napa, the pirate homeworld desert planet of Erimos, to the SuperCorp homeworld city Πόλις. You can join over network with your friends and fight alongside or against them for supremacy. [1]
+Players use their mobiles to control their players using a twin stick system; one for movement and one for firing projectiles. The aim is to collect and retain as many resources from the planet as possible before the round timer has elapsed, upon which players are shown some statistics, and then taken to the next planet. The team with the most planets claimed are declared the dominators in the race for the resources.
+Players only use their devices to control their players so that all interactivity is directed to one, large screen upon which all players are visualised. This design choice was used primarily to maximise the enhancement that the Planetarium environment brings to the game. We have been gearing our development towards the Planetarium as it is a unique opportunity to showcase a new style of interaction and teamwork gameplay.
+This was primarily an experiment for our team to see whether we could produce a solid game which would allow multiple users to connect over a network and enjoy a gameplay session, in GLORIOUS 3D, with the planetarium dome as their view. With this project, our team has made a breakthrough, for people to start developing games for the planetarium.
+
+
+
+
+
+
+Contents - Report Structure
+
+Project Overview
+Team Introduction
+Game Concept
+Tools Used  (Just An overview More Details Later)
+Novelty Component
+Software Manual
+Running the Game
+Adding New Game Functionality
+Software Maintenance During Development
+Tools Used  (Technical Content max 10 Pages)
+Unity Game Engine
+Unity Cluster Renderer
+Intel NUC (Next Unit of Computing)
+Planetarium Facilities
+Music Composers
+Project Planning
+Initial Goals Planned
+ In the beginning, there was nothing
+ Initial Implementation
+ Networking and Players
+ Planetarium and Testing
+ Gameplay Revisions
+ Innovation, Fun and Planets
+ Team Process
+ Team Members and Roles
+ The Good Times
+ And The Bad
+ Knowledge Gained Through Collaborative Teamwork
+ Given A Second Chance We Would Change…
+ Methods Employed To Assist Collaborative Development
+ Contributions
+ Georgiana Ginghina - Project Manager
+ Callum Mann - Lead Programmer
+ Tom Michiels
+ Thomas Camp
+ James O’ Connor
+ Eleftherios Christodoulou
+ Signed Assessment Page
+
+
+
+
+
+
+
+
+ Project Overview 
+
+ 1.1  Team Introduction
+ Team name: Static Peak 
+ We are a team of 6 Computer Scientists from with a wide skillset, from 3D modelling and graphics to game play or networking enthusiasts. We enjoy collaborating to the fullest and working closely to ensure success. We came together as people who like playing video games and are really excited to get a glimpse into the gaming industry in order to create a unique game, whilst discovering a wide range of technologies we have not had the chance to work with before, to highlight our skills as computer scientists.
+
+ 1.2  Game Concept
+ Our games concept is that it will allow multiple users, to connect together in the same room and play together or against, in order to complete their given objectives.
+
+ 1.3  Tools used (Go in further detail in the technical content section)
+
+ 1.3.1  Unity Game Engine
+
+ Starting out the project and while trying to flesh out our ideas we had to choose the game engine that would best suit our project. After researching the various open source game engines available to us we settled with Unity’s game engine as it provided us with the tools we needed to achieve our vision of the game. It is an established Game Engine, used by hundreds of thousand of people. We chose Unity for a number of reasons. First, the engines portability was very important to us since we needed to easily port our game to android as well as windows. Also, prior to our team, other developers had successfully ported their projects to the planetarium, so this further supported the engine’s flexibility and our chances of doing the same(the results were great- Remove). Furthermore, Unity allows specification of texture compression and resolution settings for each platform the game engine supports, and provides support for bump mapping,reflection mapping, parallax mapping, screen space ambient occlusion (SSAO), dynamic shadows using shadow maps, render-to-texture and full-screen post-processing effects. Unity's graphics engine's platform diversity can provide a shader with multiple variants and a declarative fallback specification, allowing Unity to detect the best variant for the current video hardware; and if none are compatible, fall back to an alternative shader that may sacrifice features for performance.(Reference wikipedia)
+
+ 1.3.2  Unity Cluster Renderer
+ A feature provided by Unity that lets us synchronize two servers, a master and a slave, and that way we can project two images of the same software, completely in sync with the only difference being that one of the projected views is slightly displaced than the other. Hence this enabled us to project our game in 3D.
+
+ 1.3.3  Intel Next Unit of Computing (NUC)
+ The project recalled for a necessity of broadcasting our own dedicated server. In order to accomplish this we set up an Intel NUC box that runs 32-bit Ubuntu to broadcast a signal and assign IPs to the clients.
+
+ 1.3.4  Planetarium Facilities
+ A major part of our project involved the @Bristols 3D Planetarium, as one of our main goals was to investigate the 3D capability. The planetarium provided us with the opportunity to port our project to its 4K Dome, and further enhance its atmosphere and immerse the players in an environment that completely surrounds them. The planetarium also boasts complete surround sound on top of this.
+
+ 1.3.5  Music Composers
+ The Faculty of Engineering cooperated with the Music Department of University of Bristol and after presenting our game ideas in front of them, we ended up co-operating with two excellent composers, Edward Brown and Matthew Jones. We proceeded with explaining our games universe and concept to them, in order to fully immerse them into our idea and the result was amazing. They provided us with some magnificent clips for our needs. Specifically, they composed clips for every different planet, the Pirate and Super Corp theme and  menu themes.
+
+
+ 1.3.6 Git
+ In order to keep track of our development and have a smooth collaboration, Github has proved to be particularly useful, allowing for distributed revision control and source code management , as well as bug tracking, feature requests, task management. We have also utilised Git in order to make releases after achieving a milestone as well as providing a backup for when things go wrong. This has allowed for a scrum-based work managing, basing our development on sprints, often software integration and regular releases.
+
+
+
+ Novelty Component 
+
+ The novelty component in our game can be summarised simply as a full multiplayer game visualised inside a highly immersive planetarium environment, where players engage in battle in a cartoon-like world. The @Bristol Planetarium does not have many fully interactive sessions to showcase, and in particular they have never had a large scale multiplayer game, which are the type of new shows they are eager to promote in the future. We believe we have filled this gap for them and could take this forward as the start of a full scale network infrastructure for interactivity in the dome.
+ Developing a full network solution, which includes integrating with the Planetarium network has proved challenging both technically and collaboratively with the Planetarium staff. We have worked hard to ensure that all corners have been covered, and that players will enjoy and benefit the most from the unique environment the dome brings. Due to lack of time, we were unable to achieve 3D reliably, however detailed later in the report is a succinct explanation of how this could be added, with little effort.
+ Software Manual
+
+ Running the Game
+ To run the game the individual must first have the server, observer and player executables. The server will run dedicated on a chosen device so that observers and players can connect to it. The observers (usually launched on Windows)  and players (usually on mobile devices, although can also run on windows) can enter the IP (if required) to connect to the correct machine running the dedicated server. 
+ Ideally the individual will connect the observer first so that players can see their team choices updated as they choose a team on their personal devices. Once all the players have joined the observer can click launch at which point all devices transition into a running state and the game launches into round one. From this point the game requires no more management and plays out for 3 rounds.
+
+ Adding New Game Functionality
+ To add new functionality to the game it is ideal that the developer uses Unity Engine 5.4.3+ to be able to build for Windows, Android and Linux. The code for the game is separated into several folders relating to the game component required. For development related to gameplay flow the developer should first start by exploring the Start, Lobby and Round scenes. All scenes contain component scripts attached to objects which control the flow of the game. The scripts attached to these objects are descendants of MonoBehaviour which means they exist in the context of a scene and relate to an object in the scene. 
+ To change more core aspects of the game such as networking or rounds, the user can navigate the folder structure which is separated by functionality, and then by purpose. For example there is a Network folder which contains many subfolders relating to player object synchronisation, socket connection information etc.
+
+ Software Maintenance During Development
+ Software maintenance was achieved using git as source control and GitHub as the hosting medium. Throughout the project a new feature, fix, or experimental code would require a new branch on the remote medium. When the branch had fulfilled its original goal it would be reviewed by the team to ensure that all team members were up to date with the new changes on this branch. When the team was happy with the final changes the branch is then merged into the default development branch. When we were happy with the state of the development branch we would make a release to the master branch, which is the latest playable version of the game.
+
+
+
+
+ Technical Content (10 pages max)
+
+ Choose some of the more interesting/challenging/novel aspects of the project to discuss in detail. Explain why they are technically interesting or challenging and discuss how the problems were overcome. A successful game will:
+ Have several technically interesting challenges which have been overcome, and explained succinctly, including good software development.
+ Be playable with little or no training - but have enough depth to satisfy an experienced gamer.
+ Have come from a development team who have demonstrated a willingness to address problems in the team and have found solutions to them.
+ Have a relevant look and feel (creative content creation) and be novel.
+ Networking challenges
+  - Smooth gameplay, ensuring packets are fast but reliable for stereo. We designed scripts that allow the networked objects to be easily synchronized
+  With networking being one of the pillars of gameplay we had many discussions relating to how we should solve the networking problem. Early on we decided that we would use Unity’s built in networking layer which allows for easy communication passing from server to clients. Unity provides built in layers for the type of communication decide: reliable and unreliable.
+  On a hardware level, we are using an Intel NUC box as a Linux server. The dedicated server is essential to ensure that data from all clients is acknowledged on a fair basis, which may not be the case if running in parallel with graphics. In addition, it allows for a smooth transition into 3D in the planetarium, as the server can fairly estimate network latency (stereo is explained in depth in later paragraph).
+  There are two main scripts that enable synchronizing the position and rotation of objects between server and clients . In our final design, all clients send their positions and rotations after some threshold value has been passed to the server, and the server passes these on to the observing clients. In terms of topology it can be seen that the general flow of network traffic travels in the direction of the observer screens.
+  [Algorithm for stereo vision]
+  SCREEN VIEW
+   - Large section on this, then follow on to planetarium
+   Local view and Observer view
+   Our first implementation of the game involved having two separate views, a local one for each player which would be focused on the local avatar and a separate view for an observer, which would be ported on a large screen or the @Bristol Planetarium. However, during testing we encountered several issues with this implementation. 
+   Firstly, we noticed that the player focused more on their own screen rather than on the larger battlefield view that we provided on the observer screen. In order to tackle this, we decided to remove the field of view of the player from the mobile phones and keep the data we display to a minimum. The only data visualised on the player’s device over the duration of a game, is their unique ID with their selected team colour and twin stick controller (picture here?). Additonally, in between round players are able to see their personal scores on the device and can observe their total team stats on the Observer monitor. 
+   This change was very important to maximize the use of the Planetarium screen in particular, as there is a massive range of space to utilize, and to justify its use in general. A follow on point from this is to consider how we visualised the state of the game onto the large screen. 
+   Secondly, as the game took place in space on a planet, the dome view would only be able to see one side of the planet. Hence, if the players would move to the other side, they could not be visualised. It is of course important to ensure that all players are visualised on the planet, but also to allow players to explore parts of the world by themselves and not feel like the game is a closed grid. 
+   Two main ideas were experimented with; a split screen version of the game which displayed both sides of the planet, and one single screen version. In the final product, we decided on the single screen view for ease of play.
+   Split screen 
+   - The split screen view consisted of two cameras that display one half of the planet each. The interesting aspect of this view is that the controls must be consistent when transitioning from one side of the planet to the other. So that for example, when a player moves off from the top right of the left view, they appear moving in the respective direction, from the bottom left of the right view. This meant that the right view image must be inverted in the horizontal axis. A result of this inversion means that while the players will move in a consistent direction across the views, their controls will now be reflected in the axis upon which they crossed into the other view.
+   Therefore, we introduce the notion of the joystick adjustment matrix, which is multiplied with the normalized [x, y] joystick value to correct the direction in which a player should move. When a player crossed the boundary from one view to another, another reflection is applied to the joystick adjustment matrix. [In latex will make this beautiful and add a pic]
+   Single Screen
+    In the single screen view all players are enforced to stay within the the view of one camera,k displaying one half of the planet. This is achieved by constraining the player position to be within the distance between the camera and the centre of the planet. The camera is positioned at twice the radius of the planet, while always facing the centre of the planet. To determine where the camera should move, the average position of the players is calculated, and the camera object is rotated to face this point. This rotation is then synchronized occasionally with all players to ensure that they cannot move out from the field of view.
+    Additionally, in order to ensure that the players are able to explore the entire planet, the observer cameras would move with the players, similar to an arena, however these would only be restricted in movement if two players are trying to move in opposite directions at opposite poles, thus both trying to drag the camera view in different directions.
+
+    Planetarium Challenges
+     - How to visualise on the dome ? Technical information about the planetarium cameras, previous use of shaders etc.
+     Since February we have been having frequent sessions in the Planetarium usually for 4 hours in the evening. The Planetarium houses two main systems for projecting images onto the dome; Digistar and Vioso. We were in charge of using the Vioso which uses two servers, Master and Slave. The purpose of having two servers is for the potential for 3D which the Vioso system achieves by simply overlaying the the dome projection from Master and Slave.
+     The projected image comes from two 4k projectors placed at the front and rear of the dome, which blend along the middle to the dome to produce a single hemispherical environment. The images are accompanied by a 7.1 surround sound audio system providing a uniquely immersive experience for the audience. 
+     Projecting onto the planetarium was one of the major problems that the team had to solve. Two solutions were investigated, a simple shader with one camera, and a 5-camera setup. 
+     With the simple shader, one camera is applied with a fisheye correction so that pixels are shifted according to the rotation and distance from the center of the eye. The difficulty with this approach is that along the sides of the eye there is a distortion effect as the camera in most cases only has a 60* field of view. Therefore we had to investigate another solution.
+     Through research into how others had solved the Fulldome (as it is known) view, we found one open source solution which uses 5 cameras, and projects each camera's viewports onto adjacent meshes, which stitch together to create a full fish-eye effect that has 240* field of view.
+     One of our main challenge in porting the game onto the dome view was accounting for a different camera view all throughout the project, having to develop for 2 completely different views (dome and normal screen). This led to certain shaders and textures not being included in our game due to not being suitable on one of the views.
+
+     GamePlay design challenges
+      - camera views, single, split etc. How should players move? Why twin stick, how is that implemented. Lots of design discussion with regards to the visualisation on the observer, what should be shown on the player screens etc.
+      TWIN STICK and orientation on planet
+       - Ensuring movement is consistent
+       When considering the method of interaction on the client side, many factors had to be taken into consideration. Firstly, we had to ensure the that the game is easy to pick up. To achieve this, a virtual twin stick controller was implemented. The twin stick is the most widely used control method in modern games, so this means that people could intuitively understand how to control their avatar without a lengthy explanation. The left stick is responsible for the player movement and the right for the turret rotation and shooting mechanic. 
+       Each “stick” of the user interface is responsible for controlling an axis. These axes are used to provide continuous input, resulting in smooth player navigation in the game space without any need to remove their hands of their device. The axes themselves are simply a normalized 2-dimensional vector representing direction in which the joystick is being dragged.
+       One very important aspect of the user controls is ensuring that they are always consistent regardless of rotation in the observer view, i.e that up always moves the player up and similarly for the other directions. We achieve this by sending occasional updates of the observer rotation to the clients so that they can move respective to the up-vector of the observer object. The positions of the players are then sent to the server after threshold distance has been exceeded, and following this the server relays the information to the observers.
+
+       Graphics and interface
+       Look and feel all created by ourselves to be cartoony.
+        Can also appeal to the nature of the planetarium for shows where there may be lots of children, commercial aspect etc.
+        An important design decision that had to be taken early in the project's development was the direction that graphics should take. There were two directions that the project could take in regards to that. Either take a more photo-realistic approach or a more “cartoony” one. In order to reach a decision all the affected factors were taken into consideration. A primary concern was the fact that the game had to perform well on the Planetarium Dome, and for the result to be as smooth as possible the polygon count had to be kept at an optimal level. Using photo-realism and with the amount of players the project was aiming for could cause serious rendering and synchronization issues.
+        Another variable that took an integral in the decision was the fact that in case that the planetarium was interested in keeping the game as an extra “attraction” the game would be suitable for kids visiting.
+
+
+        Tools used
+        Following are the various pieces of software and hardware we utilized for the completion of our project:
+
+        Unity Game Engine
+
+        Starting out the project and while trying to flesh out our ideas we had to choose the game engine that would best suit our project. After researching the various open source game engines available to us we settled with Unity’s game engine as it provided us with the functionalities we needed.
+
+        Unity Cluster Renderer
+
+        A feature provided by Unity that lets us synchronize two servers, a master and a slave, and that way we can project two images of the same software, completely in sync with the only difference being that one of the projected views is slightly displaced than the other. Hence this enabled us to project our game in 3D.
+
+        Intel Next Unit of Computing (NUC) 
+
+        Since our game was supposed to be played over a network, we needed a way to broadcast our own dedicated network, with which people could connect and enjoy the game alongside their friends. In order to accomplish this we programmed an Intel NUC to broadcast a signal and assign IPs to the interested players.
+        Planetarium Facilities
+
+        A major part of our project involved the @Bristols 3D Planetarium, as our final objective for our game was to be able to make it functioning in 3D.
+
+        The way the planetarium projections systems work is as it follows: There are two servers, a Master and a Slave, each dedicated to a different projection view, which then can impose on top of each other and hence acquire a 3D projection. That is of course easier said than done. The projectors require calibrations as they   
+
+
+
+        Music Composers
+
+        The Faculty of Engineering cooperated with the Music Department of University of Bristol and after presenting our game ideas in front of them, we ended up cooperating with two excellent composers, Edward Brown and Matthew Jones. We proceeded with explaining our games concept to them in order to fully immerse them into our idea and the result was very fruitful. They provided us with some magnificent clips for our needs. Specifically, they composed clips for every different planet. Additionally the Pirate and SuperCorp theme, menu themes as well as as sound effects for our projectiles and resource collection.
+
+
+
+
+
+
+
+        Project Planning
+
+        2.1 Initial Goal Planned
+
+        For organisational purposes, we set some milestones that needed to be accomplished by various points during the year so that work could proceed smoothly:
+
+        Getting to know Unity: No one in our team was particularly experienced with game development, for the purpose we scheduled a twelve hour coding session in order to familiarize ourselves with the game engine that we were going to use in order to develop our game.
+        Git learning sessions: as well as learning how to use Unity, as there were members of our team that were not that familiar with Github, we set a session that would enhance everyone’s skills in using this tool.
+        Basic single player implementation: After going through some tutorials related to our game concept we made our first step of our games creation, by implementing a simple single player demo where you are just an sphere, moving around on a square and shooting smaller spheres.
+
+        Research networking: The next step was to make our first attempt at turning the existing single player demo into a multiplayer one. We researched ports, IP address assignment and Callums buthole. A*
+        Implement Prototype Networking game 
+        Create the first sample planet: Rescaled a sphere object in order to be used as the battlefield for the players and added some very basic textures to it, in order to make it a bit more planet-like.
+        Start providing shape and refining the game: Once we had a rough version of our games vision, we started making small improvements and additions.  
+        Enable music: After discussing our idea for the game with the composers as well as providing them a small backstory of the games universe, they provided us with some amazing scores for all of the games aspects. They composed different themes for each team as well as for each separate planet.
+        Debugging: Debugging was mostly something that we would all the time, in order to ensure that the game is working properly, however we also organized some dedicated debugging sessions as well in order to make sure that the game is not barely just working, but it functions optimally under different conditions, for example, in the hands of inexperienced users.
+        Benchmarking: Since our game is supposed to be played over a network, it means that at all times all the clients must be synchronized with the current game state, receive their teams updates, as well as the enemy one. 
+        However, even though our initial plan was roughly followed, based on scrum methodologies, the feature planning process was revised often, after each release and testing session, in order to provide the best gameplay for our game. Admittedly, on each working session we would plan out the day, which proved to be a good way to manage tasks.
+
+        2.2 In the beginning, there was nothing 
+        Started out the project by familiarizing ourselves with the Unity Game Engine  as well as the programming languages we had to use, C\# and JavaScript.
+
+        2.3 Initial Implementation
+        At first the game was just a single sphere running around a much larger sphere collecting spheres. It was a very simple game, if you could call it that, that primarily served as an introduction to game development. This allowed for additions such as a twin-stick controller to control the avatar, and later on, networking, in order to account for multiple players playing in the same session.
+
+        2.4 Networking and Players
+        Expanding from a single player experience to a multiplayer was the largest problem that we had to solve. The main obstacle being that once a resource has to be shared over the network, many new variables had to be taken into consideration.
+
+        2.5 Planetarium and Testing
+        Porting the game to the planetarium was a unique and thoroughly interesting experience. The Planetarium houses two projectors that project different parts of the image onto the hemisphere. The main challenge was scaling the game's interface and objects so that they are suitable for the Dome as well as make some texture changes to the objects to ensure that they still retain a a good level of detail in 4K.
+
+        2.6 Gameplay Revisions
+        Gameplay was refined a lot throughout the project's life cycle. 
+        First of all, our planets gained a more detailed texture with every passing session, we felt that they needed to be as diverse and memorable as possible. We wrote some backstory as to why each planet is important to the game's lore and universe. 
+        Following, we have the way players interact with each other and with their game environment. Our initial game concept was merely a multiplayer game, running on android devices, where each player would choose a team and just blow up the members of the enemy team. Our vision for the game has come a long way since then, we introduced back story to our teams, gave them a reason to fight. Then we realised that the idea of just destroying spaceships is not a real novelty. In order to expand our games scope we introduced Resources, an in game item so important to the survival of each teams and their plans, that are worth fighting and dying over them. 
+        Going back to planets, after re texturing them, we felt that they felt boring and plain, even with more details provided. In order to resolve this issue we introduced the concept of Environmental Hazards. These are features that make each planet even more unique and add an extra layer of gameplay complexity to users playstyle. For example, one of our planets is surrounded by an asteroid field, however the catch is that asteroids every now and then are “detached” from their belt and proceed to a collision course with the planet, the player may not want to be in its range when it collides.
+
+        Team Process (max 4 Pages)
+        3.1 Team Members and Roles
+        Our group is consisted of 6 members. In order to optimise our groups performance we tried to exploit the strengths of each of our member and assign them the most suitable role in the team. 
+        Project Manager
+        First we had to assign a Project Manager, a person that is organized and be able to organize the rest of the group. Easy to communicate with and be able to relay information between the various people that our team had to cooperate with and the rest members of the team. 
+        Lead Programmer
+        Then, we had to appoint someone to be the teams Lead Programmer. A person that his/her knowledge of software and hardware would allow him to help them rest of the team with any difficulties they were to face over the games development cycle. We also appointed people which were good in more art related subjects responsible for the graphical part of the project.
+        Gameplay Supervisor
+        Appointed someone for supervising the gameplay development, in order to make some decisions regarding how the game should evolve to ensure the players enjoyment. 
+        The group was splitted in various combinations depending on the tasks at hand. If design of textures and models was needed then, Georgiana and Jamie would take the task of developing them and the rest of the team would focus on integration of the models in the game. Likewise, if a task was related to the networking part of the project, then Callum and Thomas C. would take focus on that and the rest of the team would focus on making sure the existing system would be able to adapt to the new network configurations, else make changes accordingly.
+         
+        3.2 The Good Moments
+        First term everything went smoothly. We had quite good communication and the milestones we were setting to complete were done in time. No good Moments , just tolerable
+
+
+        3.3 The Improveable Moments
+        Thankfully, after being in a group project in year 2, everybody had been taught some very important lessons regarding working in a group, so a lot of possible mistakes were avoided.
+        However, as deadlines for different modules started piling up, various members of our team couldn't work on the project as much as they wanted. And we did experience some periods when the team just couldn't focus on the game's development, either due to exams or to coursework deadlines coming up.
+        At the first development stages, with the project deadline being some time away, there was no particular pressure on the team, and everything was proceeding at a more lax state. This might not have worked to our advantage as we could have made use of that time, to make even further progress.  
+
+
+        3.4 Knowledge Gained Through Collaborative Teamwork
+        Communication in large scale projects is one of the most important columns that keep a team standing. Quickly realised that, we had to be constantly updated with the project's development as most of our systems functionality is interconnected, hence a small change made onto one aspect of the system could potentially break some functionality relying on it. 
+        Used Trello, a site where we posted the next implementations scheduled for the project as well as who was responsible for each of them. That way we all made sure that knew what needed to be done, as well as whom we were to collaborate in case our jobs were either similar or related.
+        Another very important aspect of working in a team is that you should always keep an eye on your team members. Make sure that you pay attention on how they are doing. If they cannot accomplish their given task help them, pair up with them so that they can better work and not struggle needlessly. Also, in case they do not seem okay, show your team that you care more than just the project.
+         
+        Organization is everything, all team members must have a task at any point, so that progress, however small must always be made. 
+
+        They wanna hear : teamwork, communication, organisation ?!
+
+
+        3.5 Given A Second Chance We Would Change ...
+        Start exploring each others strengths and weaknesses, so that we know how to better distribute the work around the team. Try to put more strict deadlines in regards to content so that we could have better understanding of how long it would take to develop some functionalities. 
+        Also try communicate more often with the team members, especially the ones assigned a high priority task, in order to make sure that everything is up to schedule and in case a difficulty comes up remedy the situation as soon as possible.
+
+        3.6 Methods Employed To Assist Collaborative Development 
+        Used slack, an application tailored for team communication, which allowed as to directly get a hold of anyone in the team, post something important as well as add alerts for whenever a new Trello card was added, or modified, and whenever a new meeting was scheduled. 
+        Organised weekly meetings to discuss and work together, as well as monthly or bi-monthly 12h working session depending on the workload, where we would not only work together but also discuss what has worked and what hasn’t in terms of organisation. All meetings were scheduled long in advance so everyone could organise their work on other units and were added onto the Google calendar so everyone would receive reminders the day before a meeting as well as on the day.
+        At the beginning of the meetings we would plan out the day as well as the workload until the next meeting and all tasks would be added onto Trello, a task management tool that allowed us to keep up to date with that needs to be done, what is in progress and what has already been accomplished, as well as assign team members for the tasks and set deadlines.
+        Additionally, as Git was utilised, all members were notified whenever a new contribution was added to the project so they could code review. This way, everyone was up to date with the latest project updates even if working remotely. 
+        During the holidays, as most members were away, we had meetings utilising Google Hangouts to discuss progress and plan out the next development period. 
+
+
+        Contributions (1 Page per Member)
+        4.10   Georgiana Ginghina - Project Manager 
+        As a team manager I dealt with group communication and organisation:
+        Made sure there were regular meeting and work sessions where everyone would catch up and work together.
+        Communication with any external factions and make sure everyone is informed.
+        I worked on graphics and UI :
+        Made the two initial ship models, as well as the final pirate ship model once we set a theme for the game
+        Made models for resources, as well as various planet enhancements, such as palm trees for the sand planet, a basic low-poly tree for the maze planet, buildings for the city planet.
+        Made the aesthetics for the final version of the UI, involving menu, animations and button responsiveness and timer visualisation. 
+        I worked on game play and networking communication:
+        I created a team manager that would keep stats for each team such as scores, players etc.
+        I created a kill feed.
+        Wrote the round manager with Elle which deals with changing the rounds when a timer would run out as well as keeping and resetting round stats.
+        Made the communication between the team manager and round manager employed on the server and the clients.
+        I worked on the observer view onto the planetarium:
+        After experimenting with different views onto the planetarium, I built the final view which would work as an arena, players only being able to access one half of the planet and also being able to move the view/ the arena towards them.
+        I worked on identification for players:
+        Made players be assigned a unique id, visualised in a tear-drop pin style onto the observer screen.
+        Made players be able to tap on their id-pin on their mobile devices and that would trigger an animation of their pin enlarging and shrinking on the observer view.
+        Added the original basic music system.
+        4.20  Callum Mann - Lead Blaze It
+        As Lead Programmer I put effort into making sure all members of the team had tasks and that everyone was familiar with how their parts will integrate into the projects,
+        Providing project structure and guidance, the importance of good API’s etc.
+        Supporting other team members with their code and source control processes
+        Reviewing code on GitHub thoroughly
+        I made large contributions to the networking component including:
+        Simulating the planetarium network and bridging wired to wireless
+        Setting up and maintaining the access point
+        Setting up the dedicated server 
+        Fixing coma-inducing bugs relating to the synchronization of player objects
+        I worked on the player experience:
+        Ensure that controls correctly map from user device to observer screen, i.e so that up is always up regardless of screen rotations
+        Tweaked the joysticks so that they are more usable on different devices
+        Experimented with split screen view and single screen view
+        I integrated the 5 Camera system into the project so that objects in the game world are correctly drawn inside the Planetarium
+        I worked on some UI screens related to the Observer
+        I modelled some parts of a Planet in Unity.
+
+
+
+
+
+
+
+        4.3 Tom Michiels
+
+        Was responsible for implementing a user friendly way for the user to interact with the game. Came up with a twin stick model, one stick for controlling your spaceship and the other for controlling the spaceships turret and fire.
+
+        4.4 Thomas Camp
+
+        My first task was to establish a basis for the networked game which could be easily used by the rest of the team. The initial creation made use of many of unity’s pre-existing network structures, which ensured for an easy to use basis for testing the game at an early stage. This largely consisted of making an operating server-client layout, allowing for the synchronisation of movement, rotation and scores.
+
+        The game required more complex networking changes as we progressed however, such as having to have all interaction checks done on observers rather than on the respective local clients for each player. This required a lot of the code to be done using only single message passes due to Unity lacking any inherent capabilities to deal with such a situation.
+
+        In addition we wished to make the game able to run with as many players as possible, which required us to try and reduce the network traffic as much as possible. This resulted in a re-work of the network system we had in place to only include the specific messages we required for our game, taking a step away from the pre-existing Unity networking solution. To ensure the changes were easily used we also sorted everything into easily-used managers for the various networked portions of the game, allowing for the members of our team less focused on the networking aspects to still be able to use it with ease.
+
+        Beyond the networking aspects I also worked on the backend structures for scores, players and rounds, also working on ensuring these structures are correctly populated and used throughout the game.
+
+        I also looked into 3d solutions along with Callum, testing Cluster Rendering as a solution for a period until unfortunately coming to the conclusion it was not fit for our needs of a networked synchronised game. We looked into other solutions to the issue of synchronisation for 3d, and eventually settled on an algorithm to be implemented. Unfortunately this did not get implemented in the final release.
+
+        4.5 James O’ Connor
+
+
+
+
+        4.6 Eleftherios Christodoulou
+
+        Feedback on the development of the game and helped evolve its gameplay.
+         
+        Helped create the initial Player Controller, which included how the player behaves inside the game environment as well as how it shoots.  
+
+        Created a script, responsible for managing the different resources around the planet. Namely it controlled the behaviour of power ups, resource pickups as well as planet hazards, like meteors. The script is responsible for keeping the planets populated by resources and power ups at any given time during the round. It keeps track of their current numbers and keep them in between the desired levels. The script is also responsible for spawning the players as soon as the game starts.
+
+        Game Play Balancing Winning Conditions
+
+        Play tested the game in order to ensure the best experience for the player. This included, regulating the number of power ups and resources around the planets as well as the power up “life span”. Meaning the amount of time before a power up stops functioning as well as the rate that a resource increases in value. Made sure that no round would ever lead to a draw as the system takes into consideration variables like team score, kills and deaths.
+
+        Audio Manager
+        I also added the original basic music system for the game.
+
+        Created a manager responsible for managing the music scores for each part of the game. Assigned the corresponding audio clip to each round, manu and team of our game. The script provides the user with basic controls over the clips. The user can freely play and stop the different audio clips of an instance, as well as, regulate their individual volume.
+
+
+
+        UI
+        Wrote different scripts and functions for providing the User Interface with useful information regarding the game. Created a script for visualising the results of every round as well as the final results for the game. 
+
+        Debugging
+        Worked on resolving a series of issues that our game had. Fixed a bug where in case the mobile device was not held horizontally when initializing the game it would immediately minimize. Resolved an issue, where when a player gor destroyed, the observer was also destroyed. Resolved by adding a check to see whether the collision was local or not.
+
+
+        Appendix A
+
+        BackStory
+
+        Our game is set in a universe where Earth is no more. Years of fighting have finally rendered the planet inhospitable so the humankind had to abandon its birthplace and look for other planets to call home. And so, the last survivors of the human race, boarder large spaceships and began an age long trip into the nothingness of space in search for new planets. While cruising the vastness of the Milky Way a wormhole sucked the remnants of humanity into a new galaxy, which the named Elpis, in hope that there lied their hope for the future. But as always, humanity could not stay united for much longer, so the populace was split into factions. We have Super Corp, the large organization responsible for the construction of the spaceships that transported the rest of human race off Earth. They declared that since they provided the means for the humans to escape, the human kind should forever praise them as Gods and do as they command. This unexpected and forced employment contract caused an uproar amongst the people and soon after this declaration some brave space pilots took it upon themselves to oppose the might of the Corporation. Being originally pilots under contract of the Corporation they one day took off with their spaceships and made a colony in the far reaches of space, away from the clutches of the Corporation. Their goal was to become a thorn to the Corporation, which soon branded them as terrorists and Pirates, and they were going to accomplish that by stealing their valuable resources which they put people to work like slaves to extract them and make people see the true face of Super Corp. Their idea is that more and more people would join their cause and one day Super Corp might find its end.
+
+        That was 20 years ago, the Pirates have more than enough power to challenge Super Corp, but have gotten drunk with power and might. They became corrupted by their unlimited freedom in the galaxy. The lines between good and bad, light and darkness are fading away and all that remains its just War.
+
+
+
+
+
+
+
+
+\end{document}
