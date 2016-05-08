@@ -228,8 +228,27 @@ We were given an Oculus to simulate the fisheye screen present inside the planet
    Secondly, as the game took place in space on a planet, the dome view would only be able to see one side of the planet. Hence, if the players would move to the other side, they could not be visualised. It is of course important to ensure that all players are visualised on the planet, but also to allow players to explore parts of the world by themselves and not feel like the game is a closed grid. \\ \\  
    Two main ideas were experimented with; a split screen version of the game which displayed both sides of the planet, and one single screen version. In the final product, we decided on the single screen view for ease of play.
    \subsubsection{Split screen} 
-   - The split screen view consisted of two cameras that display one half of the planet each. The interesting aspect of this view is that the controls must be consistent when transitioning from one side of the planet to the other. So that for example, when a player moves off from the top right of the left view, they appear moving in the respective direction, from the bottom left of the right view. This meant that the right view image must be inverted in the horizontal axis. A result of this inversion means that while the players will move in a consistent direction across the views, their controls will now be reflected in the axis upon which they crossed into the other view. \\ \\
-   Therefore, we introduce the notion of the joystick adjustment matrix, which is multiplied with the normalized [x, y] joystick value to correct the direction in which a player should move. When a player crossed the boundary from one view to another, another reflection is applied to the joystick adjustment matrix. [In latex will make this beautiful and add a pic]
+   
+   The split screen view consisted of two cameras that display one half of the planet each. The interesting aspect of this view is that the controls must be consistent when transitioning from one side of the planet to the other. So that for example, when a player moves off from the top right of the left view, they appear moving in the respective direction, from the bottom left of the right view. This meant that the right view image must be inverted in the horizontal axis. A result of this inversion means that while the players will move in a consistent direction across the views, their controls will now be reflected in the axis upon which they crossed into the other view. \\ \\
+   Therefore, we introduce the notion of the joystick adjustment matrix $J_{adj}$, which is multiplied with the normalized joystick vector $J$ to correct the direction in which a player should move. When a player crossed the boundary from one view to another, another reflection $R$ is applied to the joystick adjustment matrix. 
+  \begin{equation}
+     J=\begin{bmatrix}
+         X & Y
+        \end{bmatrix}^{T}
+        \qquad
+          R(\theta) = 
+          \begin{bmatrix}
+          \cos {2\theta} & \sin {2\theta} \\
+          \sin {2\theta} & -\cos {2\theta}
+          \end{bmatrix}
+      \qquad
+      J_{adj} = \prod_{\theta \in crossings}R({\theta})
+  \end{equation}
+  \begin{align*}
+    J_{new} = J_{adj}J
+  \end{align*}
+  This method worked well for seeing the entire planet on one screen however through testing we found that the concept was difficult to grasp given that the transition occurs on a spherical shape. Therefore we required a more simple option.
+
    \subsubsection{Single Screen}
     In the single screen view all players are enforced to stay within the the view of one camera,k displaying one half of the planet. This is achieved by constraining the player position to be within the distance between the camera and the centre of the planet. The camera is positioned at twice the radius of the planet, while always facing the centre of the planet. To determine where the camera should move, the average position of the players is calculated, and the camera object is rotated to face this point. This rotation is then synchronized occasionally with all players to ensure that they cannot move out from the field of view. \\ \\
     Additionally, in order to ensure that the players are able to explore the entire planet, the observer cameras would move with the players, similar to an arena, however these would only be restricted in movement if two players are trying to move in opposite directions at opposite poles, thus both trying to drag the camera view in different directions.
