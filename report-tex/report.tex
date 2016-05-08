@@ -114,14 +114,10 @@ Players only use their devices to control their players so that all interactivit
  After researching the various open source game engines available to us we settled with Unity’s game engine, as it provided us with the tools we needed to achieve our vision of the game. Firstly is an established Game Engine, used by hundreds of thousand of people. Secondly, the engines portability was very important to us since we needed to easily transfer our game to Android, Windows and Linux. Also, prior to our team, other developers had successfully ported their projects to the Planetarium using Unity, so this further supported the justification of the engine. Unity's graphics engine's platform diversity can provide a shader with multiple variants and a declarative fallback specification, allowing Unity to detect the best variant for the current video hardware; and if none are compatible, fall back to an alternative shader that may sacrifice features for performance.
 
  \subsubsection{ Unity Cluster Renderer}
-Unity Cluster Renderer is a beta feature of Unity that is used to perfectly synchronize two machines such that they display the exact same image. The system works by frame-locking objects in the game and manipulating objects based on timings, input and random seeds. We reached out to Unity in February to utilies this software as it would be useful for stereo vision. Once we recieved the software however, we found that it would not work with an existing network layer, and we could not use it. Nevertheless, it provided useful inside into how to implement the algorithm for 3D ourselves.
+Unity Cluster Renderer is a beta feature of Unity that is used to perfectly synchronize two machines such that they display the exact same image. The system works by frame-locking objects in the game and manipulating objects based on timings, input and random seeds. We reached out to Unity in February to utilise this software as it would be useful for stereo vision. Once we received the software however, we found that it would not work with an existing network layer, and we could not use it. Nevertheless, it provided useful inside into how to implement the algorithm for 3D ourselves.
 
  \subsubsection{ Intel Next Unit of Computing (NUC)}
-Considering the game was intended to be heavily network based, it made sense to make use of a dedicated server machine. We were provided an Intex NUC box that runs Ubuntu, and runs the Linux server component. The box simply runs an runs an access point that broadcasts an SSID (given as "Planetarium"). The box bridges wired and wireless and assumes that the wired component has access to a DHCP server. This was chosen so that we could run a network either in the Planetarium or simply next to our laptops.
-
-\subsubsection{Oculus}
-
-We were given an Oculus to simulate the fisheye screen present inside the planetarium. 
+Considering the game was intended to be heavily network based, it made sense to make use of a dedicated server machine. We were provided an Intel NUC box that runs Ubuntu, and runs the Linux server component. The box simply runs an runs an access point that broadcasts an SSID (given as "Planetarium"). The box bridges wired and wireless and assumes that the wired component has access to a DHCP server. This was chosen so that we could run a network either in the Planetarium or simply next to our laptops.
 
  \subsubsection{  Planetarium Facilities}
  A major part of our project involved the @Bristols 3D Planetarium, as one of our main goals was to investigate the 3D capability. The planetarium provided us with the opportunity to port our project to its 4K Dome, and further enhance its atmosphere and immerse the players in an environment that completely surrounds them. The planetarium also boasts complete surround sound on top of this. We had 4 our sessions every one or two weeks to test out our new ideas.
@@ -135,7 +131,7 @@ We were given an Oculus to simulate the fisheye screen present inside the planet
 
 
  \subsection{Oculus rift} 
- In order for an easier porting of our game onto the planetarium, we utilised VK2 Oculus Rift for development puposes. This has allowed us to....
+ In order for an easier porting of our game onto the planetarium, we utilised VK2 Oculus Rift for development purposes. This has allowed us to simulate the fisheye screen in the planetarium and get a better idea of how the game would be displayed onto it without physically being at the planetarium. This saved the team a lot of time since we didn’t have to spent time needlessly during the Planetarium sessions implementing micro modifications to the user interface and just focusing on the more important aspects of the project like testing networking and gameplay.
 
  \subsection{Android and IoS devices} 
  As our game was aimed to be played on android and Ios devices, we did this by... the challenge this has brough can be resumed in....
