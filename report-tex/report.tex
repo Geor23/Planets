@@ -199,9 +199,6 @@ We were given an Oculus to simulate the fisheye screen present inside the planet
 
   The network uses a star topology. The dedicated server is essential to ensure that data from all clients is acknowledged on a fair basis, which may not be the case if running in parallel with graphics. In addition, it allows for a smooth transition into 3D in the planetarium, as the server can fairly estimate network latency. There are two main scripts that enable synchronizing the position and rotation of objects between server and clients. In our final design, all clients send their positions to the server after some threshold has passed, and the server passes these on to the observing clients. \\ \\
 
-  There are two main scripts that enable synchronizing the position and rotation of objects between server and clients .In our final design, all clients send their positions and rotations after some threshold value has been passed to the server, and the server passes these on to the observing clients. In terms of topology it can be seen that the general flow of network traffic travels in the direction of the observer screens.
-  
-
   \subsubsection{Stereo Algorithm (3D)}
 
   The algorithm for stereo visualisation of the game is actually very simple. It is partly inspired by the Unity Cluster Renderer technique and the network solution we had already implemented. \\
