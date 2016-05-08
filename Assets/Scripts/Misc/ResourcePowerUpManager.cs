@@ -91,10 +91,10 @@ public class ResourcePowerUpManager : MonoBehaviour {
     }
 
     void ResourceRescale(GameObject resourceGameObject) {
-        float scale;
         float tmp = (maxResourceScore - minResourceScore) / 5;
         int currentResourceScore = resourceGameObject.GetComponent<CurrentResourceScore>().resourceScore;
-
+        Vector3 scale = (resourceGameObject.transform.localScale*1.2f);
+        /*
         if (currentResourceScore == initialScore) {
             scale = 1f;
             resourceGameObject.GetComponent<Renderer>().enabled = false;
@@ -113,7 +113,8 @@ public class ResourcePowerUpManager : MonoBehaviour {
         else if (currentResourceScore - minResourceScore < tmp * 8) { scale = 1.7f; }
         else if (currentResourceScore - minResourceScore < tmp * 9) { scale = 1.8f; }
         else { scale = 1.8f; }
-        resourceGameObject.transform.localScale = new Vector3(scale, scale, scale);
+        */
+        resourceGameObject.transform.localScale = scale;
     }
 
     //Change function to run with the new Resource Class

@@ -41,11 +41,11 @@ public class StartSceneGUI : MonoBehaviour {
             MobileNativeMessage msg = new MobileNativeMessage("Invalid Name", "Please use a valid name!");
         } else {
             if (!joinPressed){
-            GameObject.Find("FadeTexture").GetComponent<SceneFadeInOut>().EndScene();
+                joinPressed = true;
+                Invoke("setButtonPressFalse", 21);
+                GameObject.Find("FadeTexture").GetComponent<SceneFadeInOut>().EndScene();
             nm.networkAddress = networkAddr.text;
             nm.StartClient().RegisterHandler(MsgType.Connect, SendJoinMessageCallback);
-            joinPressed = true;
-            Invoke("setButtonPressFalse", 5);
         }
     }
   }

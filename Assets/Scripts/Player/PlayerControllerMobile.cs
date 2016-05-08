@@ -115,18 +115,18 @@ public class PlayerControllerMobile : NetworkBehaviour {
     }
 
     void Update() {
-/*
-    	Debug.Log ("AimH Crossplatform:" + CrossPlatformInputManager.GetAxis ("AimH"));
-        Debug.Log ("AimV Crossplatform:" + CrossPlatformInputManager.GetAxis ("AimV"));
-        Debug.Log ("MoveH Crossplatform:" + CrossPlatformInputManager.GetAxis ("MoveH"));
-        Debug.Log ("MoveV Crossplatform:" + CrossPlatformInputManager.GetAxis ("MoveV"));
-        Debug.Log ("AimH Input:" + Input.GetAxis ("AimH"));
-        Debug.Log ("AimV Input:" + Input.GetAxis ("AimV"));
-        Debug.Log ("MoveH Input:" + Input.GetAxis ("MoveH"));
-        Debug.Log ("MoveV Input:" + Input.GetAxis ("MoveV"));
-*/
-        if(nIdentity == null) return;
-        if(nIdentity.isLocalPlayer) gameObject.transform.localScale = new Vector3(3,3,3);
+        /*
+             Debug.Log ("AimH Crossplatform:" + CrossPlatformInputManager.GetAxis ("AimH"));
+                Debug.Log ("AimV Crossplatform:" + CrossPlatformInputManager.GetAxis ("AimV"));
+                Debug.Log ("MoveH Crossplatform:" + CrossPlatformInputManager.GetAxis ("MoveH"));
+                Debug.Log ("MoveV Crossplatform:" + CrossPlatformInputManager.GetAxis ("MoveV"));
+                Debug.Log ("AimH Input:" + Input.GetAxis ("AimH"));
+                Debug.Log ("AimV Input:" + Input.GetAxis ("AimV"));
+                Debug.Log ("MoveH Input:" + Input.GetAxis ("MoveH"));
+                Debug.Log ("MoveV Input:" + Input.GetAxis ("MoveV"));
+        */
+        if (nIdentity == null) return;
+        if (nIdentity.isLocalPlayer) gameObject.transform.localScale = new Vector3(3, 3, 3);
 
         if (doubleScore == true) {
             doubleScoreTime -= Time.deltaTime;
@@ -165,23 +165,23 @@ public class PlayerControllerMobile : NetworkBehaviour {
         // Vector3 right = transform.right;
         Vector3 forward = obsCam.up;
         Vector3 right = obsCam.right;
-        #if UNITY_ANDROID
+#if UNITY_ANDROID
         float aimH = CrossPlatformInputManager.GetAxis ("AimH");
         float aimV = CrossPlatformInputManager.GetAxis ("AimV");
         float moveV = CrossPlatformInputManager.GetAxis("MoveV");
         float moveH = CrossPlatformInputManager.GetAxis("MoveH");
-        #endif
+#endif
 
-        #if UNITY_STANDALONE
+#if UNITY_STANDALONE
         float aimH = (-(Input.GetKey("left") ? 1 : 0) + (Input.GetKey("right") ? 1 : 0));
         float aimV = ((Input.GetKey("up") ? 1 : 0) - (Input.GetKey("down") ? 1 : 0));
         float moveV = ((Input.GetKey("w") ? 1 : 0) - (Input.GetKey("s") ? 1 : 0));
         float moveH = (-(Input.GetKey("a") ? 1 : 0) + (Input.GetKey("d") ? 1 : 0));
-        if (aimH == 0) {aimH = Input.GetAxis("AimH");}
-        if (aimV == 0) {aimV = Input.GetAxis("AimV");}
-        if (moveH == 0) {moveH = Input.GetAxis("MoveH");}
-        if (moveV == 0) {moveV = Input.GetAxis("MoveV");}
-        #endif
+        if (aimH == 0) { aimH = Input.GetAxis("AimH"); }
+        if (aimV == 0) { aimV = Input.GetAxis("AimV"); }
+        if (moveH == 0) { moveH = Input.GetAxis("MoveH"); }
+        if (moveV == 0) { moveV = Input.GetAxis("MoveV"); }
+#endif
 
 
         lastMoveH = moveH;
@@ -203,11 +203,11 @@ public class PlayerControllerMobile : NetworkBehaviour {
         Vector3 moveDir = forwardSpeed * forward + strafeSpeed * right;
         Vector3 turretDirection = ((forward * aimV) + (right * aimH)).normalized;
         rotateObject(turret, turretDirection);
-        Vector3 worldPos = Vector3.zero, 
+        Vector3 worldPos = Vector3.zero,
                 newLocation = Vector3.zero;
-        if(obsCam == null){
+        if (obsCam == null) {
             Debug.Log("Can't find observer!");
-        } else{
+        } else {
             worldPos = obsCam.position + obsCam.parent.transform.position;
             newLocation = transform.position + moveDir * Time.deltaTime * 5;
         }
@@ -215,8 +215,13 @@ public class PlayerControllerMobile : NetworkBehaviour {
 
         float distPlanetToCam = Vector3.Distance(planetCenter, worldPos);
         float distPlayerToCam = Vector3.Distance(newLocation, worldPos);
-
-        if (distPlanetToCam - 30 > distPlayerToCam) {
+        float distCurrentPlayerToCam = Vector3.Distance(transform.position, worldPos);
+        if(distPlanetToCam < distCurrentPlayerToCam + 30){
+            Vector3 newDir = (obsCam.position - transform.position).normalized;
+            newLocation = transform.position + newDir * Time.deltaTime * 10;
+            rotateObject(model, newDir);
+            rb.MovePosition(newLocation);
+        } else if (distPlanetToCam - 30 > distPlayerToCam) {
             rotateObject(model, moveDir.normalized);
             rb.MovePosition(newLocation);
         } else {
