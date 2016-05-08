@@ -102,7 +102,7 @@ This was primarily an experiment for our team to see whether we could produce a 
  \subsection{Game Concept}
   The concept of our game was to allow multiple players to easily connect and fly into a battlefield where all players are visualised on one large screen. The players fly around the surface of a planet to collect and retain precious resources, while defending themselves with projectiles. Players use their mobile devices to control their direction of movement and turret. After every round the team with most resources wins the planet. After several rounds the team with most planets claimed wins the game.
 
- \subsection{ Tools used (Go in further detail in the technical content section)}
+ \subsection{Tools used}
 
  \subsubsection{  Unity Game Engine}
 
@@ -112,7 +112,7 @@ This was primarily an experiment for our team to see whether we could produce a 
 Unity Cluster Renderer is a beta feature of Unity that is used to perfectly synchronize two machines such that they display the exact same image. The system works by frame-locking objects in the game and manipulating objects based on timings, input and random seeds. We reached out to Unity in February to utilies this software as it would be useful for stereo vision. Once we recieved the software however, we found that it would not work with an existing network layer, and we could not use it. Nevertheless, it provided useful inside into how to implement the algorithm for 3D ourselves.
 
  \subsubsection{ Intel Next Unit of Computing (NUC)}
- The project recalled for a necessity of broadcasting our own dedicated server. In order to accomplish this we set up an Intel NUC box that runs 32-bit Ubuntu to broadcast a signal and assign IPs to the clients.
+Considering the game was intended to be heavily network based, it made sense to make use of a dedicated server machine. We were provided an Intex NUC box that runs Ubuntu, and runs the Linux server component. The box simply runs an runs an access point that broadcasts an SSID (given as "Planetarium"). The box bridges wired and wireless and assumes that the wired component has access to a DHCP server. This was chosen so that we could run a network either in the Planetarium or simply next to our laptops.
 
  \subsubsection{  Planetarium Facilities}
  A major part of our project involved the @Bristols 3D Planetarium, as one of our main goals was to investigate the 3D capability. The planetarium provided us with the opportunity to port our project to its 4K Dome, and further enhance its atmosphere and immerse the players in an environment that completely surrounds them. The planetarium also boasts complete surround sound on top of this. We had 4 our sessions every one or two weeks to test out our new ideas.
