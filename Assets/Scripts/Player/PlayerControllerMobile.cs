@@ -294,6 +294,18 @@ public class PlayerControllerMobile : NetworkBehaviour {
         else if (col.gameObject.CompareTag("Meteor"))
         {
             //TODO
+            /*
+            if (!dead && !shielded) {
+                dead = true;
+                int killedId = -5;
+        gameObject.GetComponent<Explode>().expl();   
+                resourcePowerUpManager.meteorCollision(col.gameObject);     
+                roundEvents.registerKill(netId, playerDetails.getDictId(), killerId);
+   
+            else {
+                shielded = false ;
+            }     
+        */
         }
         //TOFIX
         else if (col.gameObject.CompareTag("ProjectilePirate") || col.gameObject.CompareTag("ProjectileSuperCorp")) {

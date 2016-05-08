@@ -44,6 +44,7 @@ public class RoundPlayerObjectManager { //TODO
         pm = PlayerManager.singleton;
     }
 
+    //Modify to handle meteors
     //Kills player, potentially starts timer for respawn too
     public void killPlayerLocal(int playerIdKilled, int playerIdKiller){ //TODO
         KillInfo ki = new KillInfo(playerIdKiller, playerIdKilled, KillType.BULLET);
