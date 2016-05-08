@@ -163,18 +163,29 @@ Considering the game was intended to be heavily network based, it made sense to 
  \subsection{Networking challenges}
   
   \noindent
-  The network uses a star topology, where all mobile devices communicate to the server, and servers to the observers. The dedicated server is essential to ensure that data from all clients is acknowledged on a fair basis, which may not be the case if running in parallel with graphics. In addition, it allows for a smooth transition into 3D in the planetarium, as the server can fairly estimate network latency (stereo is explained in depth in later paragraph). \\
+  The network uses a star topology. The dedicated server is essential to ensure that data from all clients is acknowledged on a fair basis, which may not be the case if running in parallel with graphics. In addition, it allows for a smooth transition into 3D in the planetarium, as the server can fairly estimate network latency. There are two main scripts that enable synchronizing the position and rotation of objects between server and clients. In our final design, all clients send their positions and rotations to the server after some threshold has passed, and the server passes these on to the observing clients.
 
-  \noindent
-  There are two main scripts that enable synchronizing the position and rotation of objects between server and clients. In our final design, all clients send their positions and rotations to the server after some threshold has passed, and the server passes these on to the observing clients.  \\
-  
-  [Algorithm for stereo vision]
+  \subsubsection{Stereo Algorithm (3D)}
+
+  \SetKwProg{Fn}{Function}{}{end}
+  \SetKwFunction{Fgcd}{GCD}
+  \begin{algorithm}[H]
+    \LinesNumbered
+    \Fn(\tcc*[h]{compute gcd}){\Fgcd{a,b}}{
+      \eIf{$a \equiv 0 \pmod b$}{
+        \Return b
+      }{
+        \Return \Fgcd{$b$, $a \pmod b$}
+      }
+    }
+  \end{algorithm}
 
   \pagebreak
   \subsection{Screen views}
 
 
    \subsubsection{Local view and Observer view}
+
    Our first implementation of the game involved having two separate views, a local one for each player which would be focused on the local avatar and a separate view for an observer, which would be ported on a large screen or the @Bristol Planetarium. However, during testing we encountered several issues with this implementation. \\ \\
    Firstly, we noticed that the player focused more on their own screen rather than on the larger battlefield view that we provided on the observer screen. In order to tackle this, we decided to remove the field of view of the player from the mobile phones and keep the data we display to a minimum. The only data visualised on the player’s device over the duration of a game, is their unique ID with their selected team colour and twin stick controller (picture here?). Additonally, in between round players are able to see their personal scores on the device and can observe their total team stats on the Observer monitor. \\ \\
    This change was very important to maximize the use of the Planetarium screen in particular, as there is a massive range of space to utilize, and to justify its use in general. A follow on point from this is to consider how we visualised the state of the game onto the large screen. 
