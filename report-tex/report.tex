@@ -182,11 +182,11 @@ We were given an Oculus to simulate the fisheye screen present inside the planet
  
 
     \subsection{Planetarium Challenges}
-     Since February we have been having frequent sessions in the Planetarium usually for 4 hours in the evening. The Planetarium houses two main systems for projecting images onto the dome; Digistar and Vioso. We were in charge of using the Vioso which uses two servers, Master and Slave. The purpose of having two servers is for the potential for 3D which the Vioso system achieves by simply overlaying the the dome projection from Master and Slave.
+     Since February we have been having frequent sessions in the Planetarium usually for 4 hours in the evening. The Planetarium houses two main systems for projecting images onto the dome; Digistar and Vioso. We were in charge of using the Vioso which uses two servers, Master and Slave. The purpose of having two servers is for the potential for 3D which the Vioso system achieves by simply overlaying the the dome projection from Master and Slave. \\ \\
      The projected image comes from two 4k projectors placed at the front and rear of the dome, which blend along the middle to the dome to produce a single hemispherical environment. The images are accompanied by a 7.1 surround sound audio system providing a uniquely immersive experience for the audience.  \\ \\ 
      Projecting onto the planetarium was one of the major problems that the team had to solve. Two solutions were investigated, a simple shader with one camera, and a 5-camera setup. 
      With the simple shader, one camera is applied with a fisheye correction so that pixels are shifted according to the rotation and distance from the center of the eye. The difficulty with this approach is that along the sides of the eye there is a distortion effect as the camera in most cases only has a 60* field of view. Therefore we had to investigate another solution. \\ \\
-     Through research into how others had solved the Fulldome (as it is known) view, we found one open source solution which uses 5 cameras, and projects each camera's viewports onto adjacent meshes, which stitch together to create a full fish-eye effect that has 240* field of view.
+     Through research into how others had solved the Fulldome (as it is known) view, we found one open source solution which uses 5 cameras, and projects each camera's viewports onto adjacent meshes, which stitch together to create a full fish-eye effect that has 240* field of view. \\ \\
      One of our main challenge in porting the game onto the dome view was accounting for a different camera view all throughout the project, having to develop for 2 completely different views (dome and normal screen). Thus, in order to allow for an easy switch, we implemented both views into the same project, allowing for these to change using a toggle. This meant that every feature added had to account for both versions of the game. Moreover, it led to certain shaders and textures not being included in our game due to not being suitable on one of the views.
       \pagebreak
  \subsection{Networking challenges}
@@ -216,6 +216,12 @@ We were given an Oculus to simulate the fisheye screen present inside the planet
       }
     }
   \end{algorithm}
+
+     \subsection{Gameplay}
+       When considering the method of interaction on the client side, many factors had to be taken into consideration. Firstly, we had to ensure the that the game is easy to pick up. To achieve this, a virtual twin stick controller was implemented. The twin stick is the most widely used control method in modern games, so this means that people could intuitively understand how to control their avatar without a lengthy explanation. The left stick is responsible for the player movement and the right for the turret rotation and shooting mechanic. \\ \\
+       Each “stick” of the user interface is responsible for controlling an axis. These axes are used to provide continuous input, resulting in smooth player navigation in the game space without any need to remove their hands of their device. The axes themselves are simply a normalized 2-dimensional vector representing direction in which the joystick is being dragged. \\ \\
+       One very important aspect of the user controls is ensuring that they are always consistent regardless of rotation in the observer view, i.e that up always moves the player up and similarly for the other directions. We achieve this by sending occasional updates of the observer rotation to the clients so that they can move respective to the up-vector of the observer object. The positions of the players are then sent to the server after threshold distance has been exceeded, and following this the server relays the information to the observers.
+
 
   \pagebreak
   \subsection{Screen views}
@@ -256,19 +262,8 @@ We were given an Oculus to simulate the fisheye screen present inside the planet
 
     The single screen allows for a gameplay-flow effect where players of the opposing teams can push to explore different areas of the planet in search for resources and power ups. The only time where the view would be locked is when equal amounts of players are pushing against opposite ends of the camera view on the planet, which is unlikely given that the objective is to maintain and steal resources from the opposing teams.
 
-     \pagebreak
-     \subsection{GamePlay design challenges}
-      - camera views, single, split etc. How should players move? Why twin stick, how is that implemented. Lots of design discussion with regards to the visualisation on the observer, what should be shown on the player screens etc.
-      TWIN STICK and orientation on planet
-       - Ensuring movement is consistent
-       When considering the method of interaction on the client side, many factors had to be taken into consideration. Firstly, we had to ensure the that the game is easy to pick up. To achieve this, a virtual twin stick controller was implemented. The twin stick is the most widely used control method in modern games, so this means that people could intuitively understand how to control their avatar without a lengthy explanation. The left stick is responsible for the player movement and the right for the turret rotation and shooting mechanic. 
-       Each “stick” of the user interface is responsible for controlling an axis. These axes are used to provide continuous input, resulting in smooth player navigation in the game space without any need to remove their hands of their device. The axes themselves are simply a normalized 2-dimensional vector representing direction in which the joystick is being dragged.
-       One very important aspect of the user controls is ensuring that they are always consistent regardless of rotation in the observer view, i.e that up always moves the player up and similarly for the other directions. We achieve this by sending occasional updates of the observer rotation to the clients so that they can move respective to the up-vector of the observer object. The positions of the players are then sent to the server after threshold distance has been exceeded, and following this the server relays the information to the observers.
-
        \pagebreak
        \subsection{Graphics and interface}
-       Look and feel all created by ourselves to be cartoony.
-        Can also appeal to the nature of the planetarium for shows where there may be lots of children, commercial aspect etc.
 
         An important design decision that had to be taken early in the project's development was the direction that graphics should take. There were two directions that the project could take in regards to that. Either take a more photo-realistic approach or a more “cartoony” one. In order to reach a decision all the affected factors were taken into consideration. A primary concern was the fact that the game had to perform well on the Planetarium Dome, and for the result to be as smooth as possible the polygon count had to be kept at an optimal level. Using photo-realism and with the amount of players the project was aiming for could cause serious rendering and synchronization issues.
         Another variable that took an integral in the decision was the fact that in case that the planetarium was interested in keeping the game as an extra “attraction” the game would be suitable for kids visiting.
