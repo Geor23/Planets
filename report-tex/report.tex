@@ -127,17 +127,17 @@ Considering the game was intended to be heavily network based, it made sense to 
 
 
  \subsubsection{git}
- In order to keep track of our development and have a smooth collaboration, git has proved to be particularly useful, allowing for distributed revision control and source code management , as well as bug tracking, feature requests, task management. We have also utilised Git in order to make releases after achieving a milestone as well as providing a backup for when things go wrong. This has allowed for a scrum-based work managing, basing our development on sprints, often software integration and regular releases.
+ In order to keep track of our development and have a smooth collaboration, git has proved to be particularly useful, allowing for distributed revision control and source code management , as well as bug tracking, feature requests, task management. We have also utilised git in order to make releases after achieving a milestone as well as providing a backup for when things go wrong. This has allowed for a scrum-based work managing, basing our development on sprints, often software integration and regular releases.
 
 
  \subsection{Oculus rift} 
  In order for an easier porting of our game onto the planetarium, we utilised VK2 Oculus Rift for development purposes. This has allowed us to simulate the fisheye screen in the planetarium and get a better idea of how the game would be displayed onto it without physically being at the planetarium. This saved the team a lot of time since we didn’t have to spent time needlessly during the Planetarium sessions implementing micro modifications to the user interface and just focusing on the more important aspects of the project like testing networking and gameplay.
 
- \subsection{Android and IoS devices} 
- As our game was aimed to be played on android and Ios devices, we did this by... the challenge this has brough can be resumed in....
+ \subsection{Android and iOS devices} 
+ As our game was aimed to be played on android and iOS devices, since Unity engine provides build in support for cross platforms this was an easy task. The difficult task is distributing the packages correctly. iOS does not allow pakcages to be distributed unless they has been signed with an accredited developer license which costs a sum of money. Most of the devices we support are therefore Android, as there is an option to install unknown software.
 
- \subsection{Microsoft Game Controllers}
- - adapted our game so that it can also be played with controllers - this was done by... 
+ \subsection{Microsoft Controllers}
+  We were also able to add in support for Xbox controllers on Windows clients. This simply allowed a futher accessibility to the game even when an individual cannot use their phone, although it is still more convenient to have a mobile as this is how the game has been targeted.
 
 
 \pagebreak
@@ -177,13 +177,13 @@ Considering the game was intended to be heavily network based, it made sense to 
  The networking layer is easily explained as sending and receiving on channels. There are two main channels: reliable and unreliable. The reliable channel ensures that the packets reach their destination through acknowledgement protocols. The unreliable channel, as it sounds, does not guarantee that the packet arrives at the destination.
  
 
-    \subsection{Planetarium Challenges}
-     Since February we have been having frequent sessions in the Planetarium usually for 4 hours in the evening. The Planetarium houses two main systems for projecting images onto the dome; Digistar and Vioso. We were in charge of using the Vioso which uses two servers, Master and Slave. The purpose of having two servers is for the potential for 3D which the Vioso system achieves by simply overlaying the the dome projection from Master and Slave. \\ \\
-     The projected image comes from two 4k projectors placed at the front and rear of the dome, which blend along the middle to the dome to produce a single hemispherical environment. The images are accompanied by a 7.1 surround sound audio system providing a uniquely immersive experience for the audience.  \\ \\ 
-     Projecting onto the planetarium was one of the major problems that the team had to solve. Two solutions were investigated, a simple shader with one camera, and a 5-camera setup. 
-     With the simple shader, one camera is applied with a fisheye correction so that pixels are shifted according to the rotation and distance from the center of the eye. The difficulty with this approach is that along the sides of the eye there is a distortion effect as the camera in most cases only has a 60* field of view. Therefore we had to investigate another solution. \\ \\
-     Through research into how others had solved the Fulldome (as it is known) view, we found one open source solution which uses 5 cameras, and projects each camera's viewports onto adjacent meshes, which stitch together to create a full fish-eye effect that has 240* field of view. \\ \\
-     One of our main challenge in porting the game onto the dome view was accounting for a different camera view all throughout the project, having to develop for 2 completely different views (dome and normal screen). Thus, in order to allow for an easy switch, we implemented both views into the same project, allowing for these to change using a toggle. This meant that every feature added had to account for both versions of the game. Moreover, it led to certain shaders and textures not being included in our game due to not being suitable on one of the views.
+\subsection{Planetarium Challenges}
+ Since February we have been having frequent sessions in the Planetarium usually for 4 hours in the evening. The Planetarium houses two main systems for projecting images onto the dome; Digistar and Vioso. We were in charge of using the Vioso which uses two servers, Master and Slave. The purpose of having two servers is for the potential for 3D which the Vioso system achieves by simply overlaying the the dome projection from Master and Slave. \\ \\
+ The projected image comes from two 4k projectors placed at the front and rear of the dome, which blend along the middle to the dome to produce a single hemispherical environment. The images are accompanied by a 7.1 surround sound audio system providing a uniquely immersive experience for the audience.  \\ \\ 
+ Projecting onto the planetarium was one of the major problems that the team had to solve. Two solutions were investigated, a simple shader with one camera, and a 5-camera setup. 
+ With the simple shader, one camera is applied with a fisheye correction so that pixels are shifted according to the rotation and distance from the center of the eye. The difficulty with this approach is that along the sides of the eye there is a distortion effect as the camera in most cases only has a 60* field of view. Therefore we had to investigate another solution. \\ \\
+ Through research into how others had solved the Fulldome (as it is known) view, we found one open source solution which uses 5 cameras, and projects each camera's viewports onto adjacent meshes, which stitch together to create a full fish-eye effect that has 240* field of view. \\ \\
+ One of our main challenge in porting the game onto the dome view was accounting for a different camera view all throughout the project, having to develop for 2 completely different views (dome and normal screen). Thus, in order to allow for an easy switch, we implemented both views into the same project, allowing for these to change using a toggle. This meant that every feature added had to account for both versions of the game. Moreover, it led to certain shaders and textures not being included in our game due to not being suitable on one of the views.
       \pagebreak
  \subsection{Networking challenges}
   
@@ -213,10 +213,10 @@ Considering the game was intended to be heavily network based, it made sense to 
     }
   \end{algorithm}
 
-     \subsection{Gameplay}
-       When considering the method of interaction on the client side, many factors had to be taken into consideration. Firstly, we had to ensure the that the game is easy to pick up. To achieve this, a virtual twin stick controller was implemented. The twin stick is the most widely used control method in modern games, so this means that people could intuitively understand how to control their avatar without a lengthy explanation. The left stick is responsible for the player movement and the right for the turret rotation and shooting mechanic. \\ \\
-       Each “stick” of the user interface is responsible for controlling an axis. These axes are used to provide continuous input, resulting in smooth player navigation in the game space without any need to remove their hands of their device. The axes themselves are simply a normalized 2-dimensional vector representing direction in which the joystick is being dragged. \\ \\
-       One very important aspect of the user controls is ensuring that they are always consistent regardless of rotation in the observer view, i.e that up always moves the player up and similarly for the other directions. We achieve this by sending occasional updates of the observer rotation to the clients so that they can move respective to the up-vector of the observer object. The positions of the players are then sent to the server after threshold distance has been exceeded, and following this the server relays the information to the observers.
+   \subsection{Interaction}
+     When considering the method of interaction on the client side, many factors had to be taken into consideration. Firstly, we had to ensure the that the game is easy to pick up. To achieve this, a virtual twin stick controller was implemented. The twin stick is the most widely used control method in modern games, so this means that people could intuitively understand how to control their avatar without a lengthy explanation. The left stick is responsible for the player movement and the right for the turret rotation and shooting mechanic. \\ \\
+     Each “stick” of the user interface is responsible for controlling an axis. These axes are used to provide continuous input, resulting in smooth player navigation in the game space without any need to remove their hands of their device. The axes themselves are simply a normalized 2-dimensional vector representing direction in which the joystick is being dragged. \\ \\
+     One very important aspect of the user controls is ensuring that they are always consistent regardless of rotation in the observer view, i.e that up always moves the player up and similarly for the other directions. We achieve this by sending occasional updates of the observer rotation to the clients so that they can move respective to the \textbf{up-vector} of the observer object. The positions of the players are then sent to the server after threshold distance has been exceeded, and following this the server relays the information to the observers.
 
 
   \pagebreak
