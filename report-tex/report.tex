@@ -1,5 +1,5 @@
 \documentclass[11pt,a4paper]{article}
-\usepackage[bmargin=0.5in,lmargin=0.5in,rmargin=0.5in]{geometry}
+\usepackage[bmargin=1in,lmargin=0.5in,rmargin=0.5in]{geometry}
 \usepackage{enumitem}
 \usepackage{mathtools}
 \usepackage{amsfonts}
@@ -182,7 +182,6 @@ We were given an Oculus to simulate the fisheye screen present inside the planet
  
 
     \subsection{Planetarium Challenges}
-     - How to visualise on the dome ? Technical information about the planetarium cameras, previous use of shaders etc.
      Since February we have been having frequent sessions in the Planetarium usually for 4 hours in the evening. The Planetarium houses two main systems for projecting images onto the dome; Digistar and Vioso. We were in charge of using the Vioso which uses two servers, Master and Slave. The purpose of having two servers is for the potential for 3D which the Vioso system achieves by simply overlaying the the dome projection from Master and Slave.
      The projected image comes from two 4k projectors placed at the front and rear of the dome, which blend along the middle to the dome to produce a single hemispherical environment. The images are accompanied by a 7.1 surround sound audio system providing a uniquely immersive experience for the audience.  \\ \\ 
      Projecting onto the planetarium was one of the major problems that the team had to solve. Two solutions were investigated, a simple shader with one camera, and a 5-camera setup. 
@@ -205,8 +204,7 @@ We were given an Oculus to simulate the fisheye screen present inside the planet
 
   The algorithm for stereo visualisation of the game is actually very simple. It is partly inspired by the Unity Cluster Renderer technique and the network solution we had already implemented. \\
   Updates which are sent to the observer occur over a network where there is no guarantee of when they will they will arrive, of course we expect that they will take far less than say, $1$ second, but another level of execution locking is required to fully synchronize the state of two observers. \\ \\
-  This is achieved through pairing position updates with a forecast time, and packet ID at which the observer should execute the actual position update. Initially, the forecast time should be well in advance, but rapidly decrease as the observers receive more updates. This is achieved by the observers sending an acknowledgement response to the server, detailing the \textbf{actual} time at which they received the update, as opposed to the forecast time. The server then uses these responses to build a model of the network latency, and adjust the forecast time appropriately to maximize responsiveness in gameplay.
-
+  This is achieved through pairing position updates with a forecast time, and packet ID at which the observer should execute the actual position update. Initially, the forecast time should be well in advance, but rapidly decrease as the observers receive more updates. This is achieved by the observers sending an acknowledgement response to the server, detailing the \textbf{actual} time at which they received the update, as opposed to the forecast time. The server then uses these responses to build a model of the network latency, and adjust the forecast time appropriately to maximize responsiveness in gameplay.\\ \\
   \SetKwProg{Fn}{def}{}{end}
   \SetKwFunction{Fgcd}{stereoMyButthole}
   \begin{algorithm}[H]
