@@ -76,16 +76,17 @@
 
 \section{Abstract}
 
-We introduce to you, Planetarius. A multiplayer shooter where you choose to side either with the greedy Pirates, or the nefarious Super Corp. Then throw yourself into battle, blasting your enemies with lasers to collect the precious resource known as Elefthismium. War wages over several planets, from the lush forest planet of Napa, the pirate homeworld desert planet of Erimos, to the SuperCorp homeworld city Πόλις. You can join over network with your friends and fight alongside or against them for supremacy. [1] \\ \\
+We introduce you to Planetarius. A multiplayer shooter where you choose to side either with the greedy Pirates, or the nefarious Super Corp. Throw yourself into battle, blasting your enemies with lasers to collect the precious resource known as Elefthismium. War wages over several planets, from the lush forest planet of Napa, the pirate homeworld desert planet of Erimos, to the SuperCorp homeworld city Polis. You can join over network with your friends and fight alongside or against them for supremacy. [1] \\ \\
 Players use their mobiles to control their players using a twin stick system; one for movement and one for firing projectiles. The aim is to collect and retain as many resources from the planet as possible before the round timer has elapsed, upon which players are shown some statistics, and then taken to the next planet. The team with the most planets claimed are declared the dominators in the race for the resources. \\ \\
 Players only use their devices to control their players so that all interactivity is directed to one, large screen upon which all players are visualised. This design choice was used primarily to maximise the enhancement that the Planetarium environment brings to the game. We have been gearing our development towards the Planetarium as it is a unique opportunity to showcase a new style of interaction and teamwork gameplay. \\ \\
-This was primarily an experiment for our team to see whether we could produce a solid game which would allow multiple users to connect over a network and enjoy a gameplay session, in GLORIOUS 3D, with the planetarium dome as their view. With this project, our team has made a breakthrough, for people to start developing games for the planetarium.
 
 
 \section{Novelty Component}
 
+\noindent
  The novelty component in our game can be summarised simply as a full multiplayer game visualised inside a highly immersive Planetarium environment, where players engage in battle in a cartoon-like world. The @Bristol Planetarium does not have many fully interactive sessions to showcase, and in particular they have never had a large scale multiplayer game, which are the type of new shows they are eager to promote in the future. We believe we have filled this gap for them and could take this forward as the start of a full scale network infrastructure for interactivity in the dome. \\ \\
 
+\noindent
  Developing a full network solution, which includes integrating with the Planetarium network has proved challenging both technically and collaboratively with the Planetarium staff. We have worked hard to ensure that all corners have been covered, and that players will enjoy and benefit the most from the unique environment the dome brings. Due to lack of time, we were unable to achieve 3D reliably, however detailed later in the report is a succinct explanation of how this could be added, with little effort.
 
 
@@ -117,6 +118,10 @@ Unity Cluster Renderer is a beta feature of Unity that is used to perfectly sync
 
  \subsubsection{ Intel Next Unit of Computing (NUC)}
 Considering the game was intended to be heavily network based, it made sense to make use of a dedicated server machine. We were provided an Intex NUC box that runs Ubuntu, and runs the Linux server component. The box simply runs an runs an access point that broadcasts an SSID (given as "Planetarium"). The box bridges wired and wireless and assumes that the wired component has access to a DHCP server. This was chosen so that we could run a network either in the Planetarium or simply next to our laptops.
+
+\subsubsection{Oculus}
+
+We were given an Oculus to simulate the fisheye screen present inside the planetarium. 
 
  \subsubsection{  Planetarium Facilities}
  A major part of our project involved the @Bristols 3D Planetarium, as one of our main goals was to investigate the 3D capability. The planetarium provided us with the opportunity to port our project to its 4K Dome, and further enhance its atmosphere and immerse the players in an environment that completely surrounds them. The planetarium also boasts complete surround sound on top of this. We had 4 our sessions every one or two weeks to test out our new ideas.
@@ -237,23 +242,16 @@ Considering the game was intended to be heavily network based, it made sense to 
 
         \subsection{Initial Goal Planned}
 
-        For organisational purposes, we set some milestones that needed to be accomplished by various points during the year so that work could proceed smoothly:
+        For organisational purposes, we set some milestones that needed to be accomplished by various points during the year so that work could proceed smoothly: \\ \\
 
-        Getting to know Unity: No one in our team was particularly experienced with game development, for the purpose we scheduled a twelve hour coding session in order to familiarize ourselves with the game engine that we were going to use in order to develop our game.
+        \textbf{Getting to know Unity:} No one in our team was particularly experienced with game development, for the purpose we scheduled a twelve hour coding session in order to familiarize ourselves with the game engine that we were going to use in order to develop our game.
         Git learning sessions: as well as learning how to use Unity, as there were members of our team that were not that familiar with Github, we set a session that would enhance everyone’s skills in using this tool.
-        Basic single player implementation: After going through some tutorials related to our game concept we made our first step of our games creation, by implementing a simple single player demo where you are just an sphere, moving around on a square and shooting smaller spheres.
+        Basic single player implementation: After going through some tutorials related to our game concept we made our first step of our games creation, by implementing a simple single player demo where you are just an sphere, moving around on a square and shooting smaller spheres. \\ \\
 
-        Research networking: The next step was to make our first attempt at turning the existing single player demo into a multiplayer one. We researched ports, IP address assignment and Callums buthole. A*
-        Implement Prototype Networking game 
-        Create the first sample planet: Rescaled a sphere object in order to be used as the battlefield for the players and added some very basic textures to it, in order to make it a bit more planet-like.
-        Start providing shape and refining the game: Once we had a rough version of our games vision, we started making small improvements and additions.  
-        Enable music: After discussing our idea for the game with the composers as well as providing them a small backstory of the games universe, they provided us with some amazing scores for all of the games aspects. They composed different themes for each team as well as for each separate planet.
-        Debugging: Debugging was mostly something that we would all the time, in order to ensure that the game is working properly, however we also organized some dedicated debugging sessions as well in order to make sure that the game is not barely just working, but it functions optimally under different conditions, for example, in the hands of inexperienced users.
+        \textbf{Research networking:} The next step was to make our first attempt at turning the existing single player demo into a multiplayer one. We researched ports, IP address assignment. \\ \\
+        Debugging: Debugging was mostly something that we would all the time, in order to ensure that the game is working properly, however we also organized some dedicated debugging sessions as well in order to make sure that the game is not barely just working, but it functions optimally under different conditions, for example, in the hands of inexperienced users. \\ \\
         Benchmarking: Since our game is supposed to be played over a network, it means that at all times all the clients must be synchronized with the current game state, receive their teams updates, as well as the enemy one. 
         However, even though our initial plan was roughly followed, based on scrum methodologies, the feature planning process was revised often, after each release and testing session, in order to provide the best gameplay for our game. Admittedly, on each working session we would plan out the day, which proved to be a good way to manage tasks.
-
-        \subsection{ In the beginning, there was nothing }
-        Started out the project by familiarizing ourselves with the Unity Game Engine  as well as the programming languages we had to use, C\# and JavaScript.
 
         \subsection{Initial Implementation}
         At first the game was just a single sphere running around a much larger sphere collecting spheres. It was a very simple game, if you could call it that, that primarily served as an introduction to game development. This allowed for additions such as a twin-stick controller to control the avatar, and later on, networking, in order to account for multiple players playing in the same session.
@@ -265,9 +263,8 @@ Considering the game was intended to be heavily network based, it made sense to 
         Porting the game to the planetarium was a unique and thoroughly interesting experience. The Planetarium houses two projectors that project different parts of the image onto the hemisphere. The main challenge was scaling the game's interface and objects so that they are suitable for the Dome as well as make some texture changes to the objects to ensure that they still retain a a good level of detail in 4K.
 
         \subsection{Gameplay Revisions}
-        Gameplay was refined a lot throughout the project's life cycle. 
-        First of all, our planets gained a more detailed texture with every passing session, we felt that they needed to be as diverse and memorable as possible. We wrote some backstory as to why each planet is important to the game's lore and universe. 
-        Following, we have the way players interact with each other and with their game environment. Our initial game concept was merely a multiplayer game, running on android devices, where each player would choose a team and just blow up the members of the enemy team. Our vision for the game has come a long way since then, we introduced back story to our teams, gave them a reason to fight. Then we realised that the idea of just destroying spaceships is not a real novelty. In order to expand our games scope we introduced Resources, an in game item so important to the survival of each teams and their plans, that are worth fighting and dying over them. 
+        First of all, our planets gained a more detailed texture with every passing session, we felt that they needed to be as diverse and memorable as possible. We wrote some backstory as to why each planet is important to the game's lore and universe. \\ \\ 
+        Following, we have the way players interact with each other and with their game environment. Our initial game concept was merely a multiplayer game, running on android devices, where each player would choose a team and just blow up the members of the enemy team. Our vision for the game has come a long way since then, we introduced back story to our teams, gave them a reason to fight. Then we realised that the idea of just destroying spaceships is not a real novelty. In order to expand our games scope we introduced Resources, an in game item so important to the survival of each teams and their plans, that are worth fighting and dying over them. \\ \\
         Going back to planets, after re texturing them, we felt that they felt boring and plain, even with more details provided. In order to resolve this issue we introduced the concept of Environmental Hazards. These are features that make each planet even more unique and add an extra layer of gameplay complexity to users playstyle. For example, one of our planets is surrounded by an asteroid field, however the catch is that asteroids every now and then are “detached” from their belt and proceed to a collision course with the planet, the player may not want to be in its range when it collides.
 
         \section{Team Process (max 4 Pages)}
@@ -307,7 +304,7 @@ Considering the game was intended to be heavily network based, it made sense to 
         Also try communicate more often with the team members, especially the ones assigned a high priority task, in order to make sure that everything is up to schedule and in case a difficulty comes up remedy the situation as soon as possible.
 
         \subsection{Methods Employed To Assist Collaborative Development}
-        In order to better manage the team meetings and progress, in an environment tailored to our needs, we used slack, an application specifically designed for team communication, which allowed as to directly get a hold of anyone in the team, post something important as well as add alerts for whenever a new Trello card was added, or modified, and whenever a new meeting was scheduled. 
+        Slack was used, an application specifically designed for team communication, which allowed as to directly get a hold of anyone in the team, post something important as well as add alerts for whenever a new Trello card was added, or modified, and whenever a new meeting was scheduled. \\ \\
         Organised weekly meetings to discuss and work together, as well as monthly or bi-monthly 12h working session depending on the workload, where we would not only work together but also discuss what has worked and what hasn’t in terms of organisation. All meetings were scheduled long in advance so everyone could organise their work on other units and were added onto the Google calendar so everyone would receive reminders the day before a meeting as well as on the day.
         At the beginning of the meetings we would plan out the day as well as the workload until the next meeting and all tasks would be added onto Trello, a task management tool that allowed us to keep up to date with that needs to be done, what is in progress and what has already been accomplished, as well as assign team members for the tasks and set deadlines.
         Additionally, as Git was utilised, all members were notified whenever a new contribution was added to the project so they could code review. This way, everyone was up to date with the latest project updates even if working remotely. 
@@ -350,7 +347,7 @@ Considering the game was intended to be heavily network based, it made sense to 
 
         \pagebreak
 
-        \subsubsection{Callum Mann - Lead Blaze It}
+        \subsubsection{Callum Mann - Lead Programmer}
         \begin{itemize}
         \item As Lead Programmer I put effort into making sure all members of the team had tasks and that everyone was familiar with how their parts will integrate into the projects:
         \begin{itemize}
@@ -385,7 +382,9 @@ Considering the game was intended to be heavily network based, it made sense to 
         \subsubsection{Tom Michiels}
 
         \begin{itemize}
-        \item Was responsible for implementing a user friendly way for the user to interact with the game. Came up with a twin stick model, one stick for controlling your spaceship and the other for controlling the spaceships turret and fire.
+          \item Was responsible for implementing a user friendly way for the user to interact with the game. Came up with a twin stick model, one stick for controlling your spaceship and the other for controlling the spaceships turret and fire.
+          \item Worked on Player and Lobby UI
+          \item Worked on the player movement and old camera system
         \end{itemize}
 
         \pagebreak
@@ -393,48 +392,49 @@ Considering the game was intended to be heavily network based, it made sense to 
         \subsubsection{Thomas Camp}
 
         \begin{itemize}
-        \item My first task was to establish a basis for the networked game which could be easily used by the rest of the team. The initial creation made use of many of unity’s pre-existing network structures, which ensured for an easy to use basis for testing the game at an early stage. This largely consisted of making an operating server-client layout, allowing for the synchronisation of movement, rotation and scores.
+          \item My first task was to establish a basis for the networked game which could be easily used by the rest of the team. The initial creation made use of many of unity’s pre-existing network structures, which ensured for an easy to use basis for testing the game at an early stage. This largely consisted of making an operating server-client layout, allowing for the synchronisation of movement, rotation and scores.
 
-        \item The game required more complex networking changes as we progressed however, such as having to have all interaction checks done on observers rather than on the respective local clients for each player. This required a lot of the code to be done using only single message passes due to Unity lacking any inherent capabilities to deal with such a situation.
+          \item The game required more complex networking changes as we progressed however, such as having to have all interaction checks done on observers rather than on the respective local clients for each player. This required a lot of the code to be done using only single message passes due to Unity lacking any inherent capabilities to deal with such a situation.
 
-        \item In addition we wished to make the game able to run with as many players as possible, which required us to try and reduce the network traffic as much as possible. This resulted in a re-work of the network system we had in place to only include the specific messages we required for our game, taking a step away from the pre-existing Unity networking solution. To ensure the changes were easily used we also sorted everything into easily-used managers for the various networked portions of the game, allowing for the members of our team less focused on the networking aspects to still be able to use it with ease.
+          \item In addition we wished to make the game able to run with as many players as possible, which required us to try and reduce the network traffic as much as possible. This resulted in a re-work of the network system we had in place to only include the specific messages we required for our game, taking a step away from the pre-existing Unity networking solution. To ensure the changes were easily used we also sorted everything into easily-used managers for the various networked portions of the game, allowing for the members of our team less focused on the networking aspects to still be able to use it with ease.
 
-        \item Beyond the networking aspects I also worked on the backend structures for scores, players and rounds, also working on ensuring these structures are correctly populated and used throughout the game.
+          \item Beyond the networking aspects I also worked on the backend structures for scores, players and rounds, also working on ensuring these structures are correctly populated and used throughout the game.
 
-        \item I also looked into 3d solutions along with Callum, testing Cluster Rendering as a solution for a period until unfortunately coming to the conclusion it was not fit for our needs of a networked synchronised game. We looked into other solutions to the issue of synchronisation for 3d, and eventually settled on an algorithm to be implemented. Unfortunately this did not get implemented in the final release.
+          \item I also looked into 3d solutions along with Callum, testing Cluster Rendering as a solution for a period until unfortunately coming to the conclusion it was not fit for our needs of a networked synchronised game. We looked into other solutions to the issue of synchronisation for 3d, and eventually settled on an algorithm to be implemented. Unfortunately this did not get implemented in the final release.
         \end{itemize}
 
         \subsubsection{James O’ Connor}
 
         \begin{itemize}
-        \item Designed the SuperCorp ship model on Autodesk Maya. Made the sand planet texture, as well as the power-up pickup models. Made the skybox. Wrote some of the code for projectile firing, resource networking, respawning after death, visualizing the resources and scores, as well as the players gaining points for picking up resources.
+          \item Designed the SuperCorp ship model on Autodesk Maya. 
+          \item Made the sand planet texture, as well as the power-up pickup models. 
+          \item Made the skybox. 
+          \item Wrote some of the code for projectile firing, resource networking, respawning after death, visualizing the resources and scores, as well as the players gaining points for picking up resources.
         \end{itemize}
-
-
 
         \pagebreak
         \subsubsection{Eleftherios Christodoulou}
 
         \begin{itemize}
-        \item Feedback on the development of the game and helped evolve its gameplay.
-         
-        \item Helped create the initial Player Controller, which included how the player behaves inside the game environment as well as how it shoots.  
+          \item Feedback on the development of the game and helped evolve its gameplay.
+           
+          \item Helped create the initial Player Controller, which included how the player behaves inside the game environment as well as how it shoots.  
 
-        \item Created a script, responsible for managing the different resources around the planet. Namely it controlled the behaviour of power ups, resource pickups as well as planet hazards, like meteors. The script is responsible for keeping the planets populated by resources and power ups at any given time during the round. It keeps track of their current numbers and keep them in between the desired levels. The script is also responsible for spawning the players as soon as the game starts.
+          \item Created a script, responsible for managing the different resources around the planet. Namely it controlled the behaviour of power ups, resource pickups as well as planet hazards, like meteors. The script is responsible for keeping the planets populated by resources and power ups at any given time during the round. It keeps track of their current numbers and keep them in between the desired levels. The script is also responsible for spawning the players as soon as the game starts.
 
-        \item Play tested the game in order to ensure the best experience for the player. This included, regulating the number of power ups and resources around the planets as well as the power up “life span”. Meaning the amount of time before a power up stops functioning as well as the rate that a resource increases in value. Made sure that no round would ever lead to a draw as the system takes into consideration variables like team score, kills and deaths.
+          \item Play tested the game in order to ensure the best experience for the player. This included, regulating the number of power ups and resources around the planets as well as the power up “life span”. Meaning the amount of time before a power up stops functioning as well as the rate that a resource increases in value. Made sure that no round would ever lead to a draw as the system takes into consideration variables like team score, kills and deaths.
 
-        \item Created a manager responsible for managing the music scores for each part of the game. Assigned the corresponding audio clip to each round, manu and team of our game. The script provides the user with basic controls over the clips. The user can freely play and stop the different audio clips of an instance, as well as, regulate their individual volume.
+          \item Created a manager responsible for managing the music scores for each part of the game. Assigned the corresponding audio clip to each round, manu and team of our game. The script provides the user with basic controls over the clips. The user can freely play and stop the different audio clips of an instance, as well as, regulate their individual volume.
 
-        \item Wrote different scripts and functions for providing the User Interface with useful information regarding the game. Created a script for visualising the results of every round as well as the final results for the game. 
+          \item Wrote different scripts and functions for providing the User Interface with useful information regarding the game. Created a script for visualising the results of every round as well as the final results for the game. 
 
-        \item Worked on resolving a series of issues that our game had. Fixed a bug where in case the mobile device was not held horizontally when initializing the game it would immediately minimize. Resolved an issue, where when a player gor destroyed, the observer was also destroyed. Resolved by adding a check to see whether the collision was local or not.
+          \item Worked on resolving a series of issues that our game had. Fixed a bug where in case the mobile device was not held horizontally when initializing the game it would immediately minimize. Resolved an issue, where when a player gor destroyed, the observer was also destroyed. Resolved by adding a check to see whether the collision was local or not.
         \end{itemize}
 
 \pagebreak
         \section{Appendix A}
 
-        BackStory
+        BackStory - (Clean up this)
 
         Our game is set in a universe where Earth is no more. Years of fighting have finally rendered the planet inhospitable so the humankind had to abandon its birthplace and look for other planets to call home. And so, the last survivors of the human race, boarder large spaceships and began an age long trip into the nothingness of space in search for new planets. \\\\
         While cruising the vastness of the Milky Way a wormhole sucked the remnants of humanity into a new galaxy, which the named Elpis, in hope that there lied their hope for the future. But as always, humanity could not stay united for much longer, so the populace was split into factions. We have Super Corp, the large organization responsible for the construction of the spaceships that transported the rest of human race off Earth. They declared that since they provided the means for the humans to escape, the human kind should forever praise them as Gods and do as they command. This unexpected and forced employment contract caused an uproar amongst the people and soon after this declaration some brave space pilots took it upon themselves to oppose the might of the Corporation. \\\\
