@@ -25,7 +25,7 @@ public class StartSceneGUI : MonoBehaviour {
         }
 
         if ((Input.GetKeyDown("g") && Input.GetKeyDown("h"))){
-          GameObject.Find("FadeTexture").GetComponent<SceneFadeInOut>().EndScene();
+          //GameObject.Find("FadeTexture").GetComponent<SceneFadeInOut>().EndScene();
           nm = NetworkManager.singleton;
           nm.StartHost();
           SendJoinMessage();

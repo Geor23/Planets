@@ -275,36 +275,25 @@ public class PlayerControllerMobile : NetworkBehaviour {
             if (!nIdentity.isLocalPlayer) return;
         }
 
-        if (col.gameObject.CompareTag("DoubleScore"))
+
+        if (col.gameObject.CompareTag("Meteor"))
         {
-            doubleScore = true;
+            if (!dead)
+            {
+                dead = true;
+                int killerId = -5;
+                gameObject.GetComponent<Exploder>().expl();
+                resourcePowerUpManager.meteorCollision(col.gameObject);
 
-            //Call planet manager
-            resourcePowerUpManager.powerUpCollision(col.gameObject);
-        }
-        else if (col.gameObject.CompareTag("Shield"))
-        { //Also need to potentially create an animation here?
-            shielded = true;
-            shield = Instantiate(shield);
-            shield.transform.parent = this.transform;
-            shield.transform.position = this.transform.position;
-            shield.SetActive(true);
+                int score = pm.getRoundScore(dictId);
 
-            //Call planet resource  manager
-            resourcePowerUpManager.powerUpCollision(col.gameObject);
+                if (score != 0) {
+                    GameObject resource = (GameObject)Instantiate(ResourcePickUpDeath, gameObject.transform.position, Quaternion.identity);
+                    resource.GetComponent<CurrentResourceScore>().resourceScore = score;
+                }
 
-        }
-        else if (col.gameObject.CompareTag("FasterFire"))
-        { //Turn on faster fire rate. Still needs graphical additions
-            fasterFire = true;
-
-            //Call planet manager
-            resourcePowerUpManager.powerUpCollision(col.gameObject);
-            currentFireRate = fasterFireSpeed;
-        }
-        else if (col.gameObject.CompareTag("Meteor"))
-        {
-            //TODO
+                roundEvents.registerMeteorKill(netId, playerDetails.getDictId(), killerId);
+            }    
         }
         //TOFIX
         else if (col.gameObject.CompareTag("ProjectilePirate") || col.gameObject.CompareTag("ProjectileSuperCorp")) {
@@ -321,20 +310,6 @@ public class PlayerControllerMobile : NetworkBehaviour {
                 }
                 roundEvents.registerKill(netId, playerDetails.getDictId(), killerId);
             }
-        }
-        else if (col.gameObject.CompareTag("ResourcePickUp")) { //Dealt with on the resource currently
-            int resourceScore = resourcePowerUpManager.resourcePickUpCollision(col.gameObject);
-            if (doubleScore) { //If points are to count for double, double score
-                resourceScore *= 2;
-            }
-            int dictId = playerDetails.getDictId();
-            roundEvents.getRoundScoreManager().increasePlayerScore(dictId, resourceScore);
-        }
-
-        else if (col.gameObject.CompareTag("ResourcePickUpDeath")) {
-            int resourceScore = resourcePowerUpManager.resourcePickUpCollision(col.gameObject);
-            int dictId = playerDetails.getDictId();
-            roundEvents.getRoundScoreManager().increasePlayerScore(dictId, resourceScore);
         }
     }
 
