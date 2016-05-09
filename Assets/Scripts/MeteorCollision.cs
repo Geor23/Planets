@@ -12,9 +12,10 @@ public class MeteorCollision : MonoBehaviour {
 
     void OnCollisionEnter(Collision col)
     {
-        if (col.gameObject.CompareTag("Planet"))
-        {
+        if ((col.gameObject.CompareTag("Planet")) || (col.gameObject.CompareTag("Tree")) || (col.gameObject.CompareTag("Mound"))) {
+            gameObject.GetComponent<Exploder>().expl();
+
             resourcePowerUpManager.meteorCollision(gameObject);
         }
     }
-    }
+}
