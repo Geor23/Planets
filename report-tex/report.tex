@@ -66,7 +66,6 @@
 \vspace{12mm}
 \end{center}
 \begin{flushright}
-  Ele almost killed us all... HELL YEAH I DID
 \end{flushright}
 
 \pagebreak
@@ -77,7 +76,7 @@
 \section{Abstract}
 
 We introduce you to Planetarius. A multiplayer shooter where you choose to side either with the greedy Pirates, or the nefarious Super Corp. Throw yourself into battle, blasting your enemies with lasers to collect the precious resource known as Elefthismium. War wages over several planets, from the lush forest planet of Napa, the pirate homeworld of Erimos, to the SuperCorp homeworld Polis. You can join over a network with your friends and fight alongside or against them for supremacy. [1] \\ \\
-Players use their mobile devices to control their players using a twin stick system; one for movement and one for firing projectiles. The aim is to collect and retain as many resources from the planet as possible before the round timer has elapsed, upon which players are shown statistics of the round, and then taken to the next planet. The team with the most planets claimed are declared the dominators in the race for the resources. \\ \\
+Players use their mobile devices to control their players using a twin stick system; one for movement and one for firing projectiles. The aim is to collect and retain as many resources from the planet as possible before the round timer has elapsed, upon which players are shown statistics of the round, and then taken to the next planet. The team with the most planets claimed are declared the victors in the race for the resources. \\ \\
 Players only use their devices to control their players so that all interactivity is directed to one, large screen upon which all players are visualised. This design choice was used primarily to maximise the enhancement that the Planetarium environment brings to the game. We have been gearing our development towards the Planetarium as it is a unique opportunity to showcase a new style of interaction and teamwork gameplay. \\ \\
 
 
@@ -120,24 +119,24 @@ Unity Cluster Renderer is a beta feature of Unity that is used to perfectly sync
 Considering the game was intended to be heavily network based, it made sense to make use of a dedicated server machine. We were provided an Intel NUC box that runs Ubuntu, used to run the Linux server component. The box simply runs an access point that broadcasts an SSID (given as "Planetarium"). The box bridges wired and wireless and assumes that the wired component has access to a DHCP server. This was chosen so that we could run a network either in the Planetarium or simply next to our laptops.
 
  \subsubsection{  Planetarium Facilities}
- A major part of our project involved the @Bristols 3D Planetarium, as one of our main goals was to investigate the 3D capability, creating a truely immersive experience. The planetarium provided us with the opportunity to port our project to its 4K Dome, and further enhance its atmosphere and immerse the players in an environment that completely surrounds them. The planetarium also boasts complete surround sound on top of this. We had 4 hour sessions every one or two weeks to test out our new ideas.
+ A major part of our project involved the @Bristols 3D Planetarium, as one of our main goals was to investigate the 3D capability, creating a truly immersive experience. The planetarium provided us with the opportunity to port our project to its 4K Dome, and further enhance its atmosphere and immerse the players in an environment that completely surrounds them. The planetarium also boasts complete surround sound on top of this. We had 4 hour sessions every one or two weeks to test out our new ideas.
 
  \subsubsection{ Music Composers}
- The Faculty of Engineering cooperated with the Music Department of the University of Bristol and after presenting our game ideas in front of them, we ended up co-operating with two excellent composers, Edward Brown and Matthew Jones. We proceeded with explaining our game's universe and concept to them, in order to fully immerse them into our idea and the result was amazing. They provided us with some magnificent clips for our needs. Specifically, they composed clips for every different planet, the Pirate and Super Corp theme and  menu themes.
+ The Faculty of Engineering cooperated with the Music Department of the University of Bristol and after presenting our game ideas in front of them, we ended up co-operating with two excellent composers, Edward Brown and Matthew Jones. We proceeded with explaining our game's universe and concept to them, in order to fully immerse them into our idea and the result was amazing. They provided us with some magnificent clips for our needs. Specifically, they composed clips for every different planet, the Pirate and Super Corp theme and menu themes.
 
 
  \subsubsection{git}
- In order to keep track of our development and have a smooth collaboration, git has proved to be particularly useful, allowing for distributed revision control and source code management , as well as bug tracking, feature requests, task management. We have also utilised git in order to make releases after achieving a milestone as well as providing a backup for when things go wrong. This has allowed for a scrum-based approach, basing our development on sprints, often software integration and regular releases.
+ In order to keep track of our development and have a smooth collaboration, git has proved to be particularly useful, allowing for distributed revision control and source code management, as well as bug tracking, feature requests, task management. We have also utilised git in order to make releases after achieving a milestone as well as providing a backup for when things go wrong. This has allowed for a scrum-based approach, basing our development on sprints, often software integration and regular releases.
 
 
- \subsection{Oculus rift} 
+ \subsection{Oculus Rift} 
  In order for an easier porting of our game onto the planetarium, we utilised DK2 Oculus Rift for development purposes. This has allowed us to simulate the fisheye screen in the planetarium and get a better idea of how the game would be displayed onto it without physically being at the planetarium. This saved the team a lot of time since we didn’t have to spent time needlessly during the Planetarium sessions implementing micro modifications to the user interface and instead focus on the more important aspects of the project like testing networking and gameplay.
 
  \subsection{Android and iOS devices} 
  Our game was intended to be playable on android and iOS devices. Due to the Unity engine providing built-in support for cross platform gaming this step was simplified for us. The difficult task was distributing the packages correctly. iOS does not allow packages to be distributed unless they has been signed with an accredited developer license which costs a sum of money. Most of the devices we support are therefore Android, as there is an option to install unknown software.
 
  \subsection{Microsoft Controllers}
-  We were also able to add in support for Xbox controllers on Windows clients. This allowed futher accessibility to the game even when an individual cannot use their phone, although it is still more convenient to have a mobile as this is how the game has been targeted.
+  We were also able to add in support for Xbox controllers on Windows clients. This allowed further accessibility to the game even when an individual cannot use their phone, although it is still more convenient to have a mobile as this is how the game has been targeted.
 
 
 \pagebreak
@@ -150,7 +149,7 @@ Considering the game was intended to be heavily network based, it made sense to 
 
  \subsection{Adding New Game Functionality}
  To add new functionality to the game it is ideal that the developer uses Unity Engine 5.4.3+ to be able to build for Windows, Android and Linux. The code for the game is separated into several folders relating to the game component required. For development related to gameplay flow the developer should first start by exploring the Start, Lobby and Round scenes. All scenes contain component scripts attached to objects which control the flow of the game. The scripts attached to these objects are descendants of MonoBehaviour which means they exist in the context of a scene and relate to an object in the scene.\\ \\
- To change more core aspects of the game such as networking or rounds, the user can navigate the folder structure which is separated by functionality, and then by purpose. For example there is a Network folder which contains many subfolders relating to player object synchronisation, socket connection information etc.
+ To change more core aspects of the game such as networking or rounds, the user can navigate the folder structure which is separated by functionality, and then by purpose. For example there is a Network folder which contains many sub folders relating to player object synchronisation, socket connection information etc.
 
 Moreover, most of our features were implemented such that adding on would be a matter of simply inserting a new line of code. For example, the round system is based on having an array of all of the scenes we would want to play in order they must appear, calculating the transitions, round stats and gameplay would automatically be updated. Thus, in order to insert a new round or a new planet, it would be a matter of adding the scene name into the array of scenes in the round manager and this would enable further rounds.
 
@@ -183,7 +182,7 @@ Moreover, most of our features were implemented such that adding on would be a m
 
   One of the major challenges for us was making the game a fully networked game, allowing for many players to play together for their own mobile devices. We require a fair amount of data to be sent and processed by both the server as well as the player clients and observer clients. Movement, rotation, deaths, kills, scores and game updates all needed to be synchronised and updated for all players. We initially started by using the Unity Networking structures available to us, which allowed for us to establish the basic functionality for the game in good time. Once the basic plan layout had been established, we were able to test the game in a basic form, which was helpful in assessing the current gameplay and how to improve on it. \\
 
-  We realised at this stage two things: firstly that we needed to focus more of the game on the observer view, and that the Unity Networking structures we'd used were far from optimal for our usage. From here we worked on replacing the Unity structures with our own, allowing us to create very specific networking functionality for our game with single message passes between only the required devices. By moving a lot of the computation to the observer displays, we were able to reduce the amount of network traffic significantly. By making the players only visible on the observer view, we reduced the need for all clients to recieve constant updates as to player actions, only needing for the observer to be updated with these changes. Everything besides deaths could then be dealt with on the observers, be it interactions with resources, events, or scores. Even events which seemingly would require some network traffic, such as the rotation of player objects, were with some thought and mathematics able to be purely calculated on the observer. \\
+  We realised at this stage two things: firstly that we needed to focus more of the game on the observer view, and that the Unity Networking structures we'd used were far from optimal for our usage. From here we worked on replacing the Unity structures with our own, allowing us to create very specific networking functionality for our game with single message passes between only the required devices. By moving a lot of the computation to the observer displays, we were able to reduce the amount of network traffic significantly. By making the players only visible on the observer view, we reduced the need for all clients to receive constant updates as to player actions, only needing for the observer to be updated with these changes. Everything besides deaths could then be dealt with on the observers, be it interactions with resources, events, or scores. Even events which seemingly would require some network traffic, such as the rotation of player objects, were with some thought and mathematics able to be purely calculated on the observer. \\
 
   The network uses a star topology. The dedicated server is essential to ensure that data from all clients is acknowledged on a fair basis, which may not be the case if running in parallel with graphics. In addition, it allows for a smooth transition into 3D in the planetarium, as the server can fairly estimate network latency. There are two main scripts that enable synchronizing the position and rotation of objects between server and clients. In our final design, all clients send their positions to the server after some threshold has passed, and the server passes these on to the observing clients. \\
 
@@ -224,7 +223,7 @@ Moreover, most of our features were implemented such that adding on would be a m
    \subsubsection{Local view and Observer view}
 
    Our first implementation of the game involved having two separate views, a local one for each player which would be focused on the local avatar and a separate view for an observer, which would be ported on a large screen or the @Bristol Planetarium. However, during testing we encountered several issues with this implementation. \\ \\
-   Firstly, we noticed that the player focused more on their own screen rather than on the larger battlefield view that we provided on the observer screen. In order to tackle this, we decided to remove the field of view of the player from the mobile phones and keep the data we display to a minimum. The only data visualised on the player’s device over the duration of a game is their unique ID with their selected team colour and twin stick controller. Additonally, in between round players are able to see their personal scores on the device and can observe their total team stats on the Observer monitor. \\ \\
+   Firstly, we noticed that the player focused more on their own screen rather than on the larger battlefield view that we provided on the observer screen. In order to tackle this, we decided to remove the field of view of the player from the mobile phones and keep the data we display to a minimum. The only data visualised on the player’s device over the duration of a game is their unique ID with their selected team colour and twin stick controller. Additionally, in between round players are able to see their personal scores on the device and can observe their total team stats on the Observer monitor. \\ \\
    This change was very important to maximize the use of the Planetarium screen in particular, as there is a massive range of space to utilize, and to justify its use in general. A follow on point from this is to consider how we visualised the state of the game onto the large screen. 
    Secondly, as the game took place in space on a planet, the dome view would only be able to see one side of the planet. Hence, if the players would move to the other side, they could not be visualised. It is of course important to ensure that all players are visualised on the planet, but also to allow players to explore parts of the world by themselves and not feel like the game is a closed grid. \\ \\  
    Two main ideas were experimented with; a split screen version of the game which displayed both sides of the planet, and one single screen version. In the final product, we decided on the single screen view for ease of play.
@@ -258,18 +257,16 @@ Moreover, most of our features were implemented such that adding on would be a m
 
        \pagebreak
        \subsection{Graphics and interface}
-       Look and feel all created by ourselves to be cartoony.
-        Can also appeal to the nature of the planetarium for shows where there may be lots of children, commercial aspect etc.
 
-        An important design decision that had to be taken early in the project's development was the direction that graphics should take. There were two directions that the project could take in regards to that. Either take a more photo-realistic approach or a more “cartoony” one. In order to reach a decision all the affected factors were taken into consideration. A primary concern was the fact that the game had to perform well on the Planetarium Dome, and for the result to be as smooth as possible the polygon count had to be kept at an optimal level. We were limited to around 4,000,000 polygons, which would be infeasable with a photo-realistic approach. Using photo-realism and with the amount of players the project was aiming for could cause serious rendering and synchronization issues.
+        An important design decision that had to be taken early in the project's development was the direction that graphics should take. There were two directions that the project could take in regards to that. Either take a more photo-realistic approach or a more “cartoony” one. In order to reach a decision all the affected factors were taken into consideration. A primary concern was the fact that the game had to perform well on the Planetarium Dome, and for the result to be as smooth as possible the polygon count had to be kept at an optimal level. We were limited to around 4,000,000 polygons, which would be infeasible with a photo-realistic approach. Using photo-realism and with the amount of players the project was aiming for could cause serious rendering and synchronization issues.
         
-        The Planetarium also made clear that if the game was a success, they would be interested in taking it on as a regular event. Thus, the Planetarium’s standard demographic had to be taken into account, which includes young children. This made cartoon-ish graphics stand out as the preferred choice.  \\ \\
+        The Planetarium also made clear that if the game was a success, they would be interested in taking it on as a regular event. Thus, the Planetarium’s standard demographic had to be taken into account, which includes young children. This made cartoon like graphics stand out as the preferred choice.  \\ \\
 
         The design of our models were heavily influenced by the two factions in the game. The first two ship models were created before the two teams were decided {insert photo here}. However, after we decided that pirates and Super Corp were to be our factions, we re-designed the two ship models. For the Super Corp we were aiming for a sleek, almost simplistic design, whereas the Pirates needed to inspire a more rough, gritty feeling. The two colour schemes utilised to distinguish between the teams, blue and red, were chosen for the same reason. \\ \\
 
         Deciding upon the two factions in our game also led to changes in planets. For example, as the city planet was aimed to be the home of the Super Corp, the planet was designed to inspire just that, by creating huge buildings. For the same reason we designed a sand planet, the home of the pirates, where we included elements such as meteor strikes and mountainous terrain. \\ \\
 
-        The colour scheme for the UI was chosen whilst taking into account the two teams. We chose a neutral colour, turqoise, seeing as it was a good fit due to being suitably different from the team's colours as well as stand out and give a "spacey" feel to the interface. \\ \\
+        The colour scheme for the U.I. was chosen whilst taking into account the two teams. We chose a neutral colour, turquoise, seeing as it was a good fit due to being suitably different from the team's colours as well as stand out and give a "spacey" feel to the interface. \\ \\
 
 
         \subsection{Music}
@@ -277,7 +274,7 @@ Moreover, most of our features were implemented such that adding on would be a m
 
 
         \subsection{Easy playability vs. Depth}
-        We feel we have achieved both, being playable with little or no training, as well as portray enough depth such that an experienced gamer would be drawn into the game. Each player controls their avatar through a simple twin-stick controller, making it extremely easy to pick up. In order for players to be eased into the game, we decided that our first planet would portray no extra features, just resources to be picked up. However, as the round progress move features are added, such as meteors hitting the planet randomly on the second round or even teleportation portals on the third round. Extra features like these help maintain the player's interest in the game. All of these also add extra levels of strategy, which we hope an experienced gamer could pick up on. In addition, while not compulsary by any means to play strategically as a team, even roaming the map as a two-person pack can make for great fun and strategic gameplay. (NEEDED???)For example, due to the game being working like an arena style game, where players can drag the view as they move, as one player from the pirates team follows a super-corp to try and kill him, another pirate can move in the opposite direction in order to drag the view with him, making the super-corp captured, as it would be unable to move in its original direction. 
+        We feel we have achieved both, being playable with little or no training, as well as portray enough depth such that an experienced gamer would be drawn into the game. Each player controls their avatar through a simple twin-stick controller, making it extremely easy to pick up. In order for players to be eased into the game, we decided that our first planet would portray no extra features, just resources to be picked up. However, as the round progress move features are added, such as meteors hitting the planet randomly on the second round or even teleportation portals on the third round. Extra features like these help maintain the player's interest in the game. All of these also add extra levels of strategy, which we hope an experienced gamer could pick up on. In addition, while not compulsory by any means to play strategically as a team, even roaming the map as a two-person pack can make for great fun and strategic gameplay. (NEEDED???)For example, due to the game being working like an arena style game, where players can drag the view as they move, as one player from the pirates team follows a Super Corp to try and kill him, another pirate can move in the opposite direction in order to drag the view with him, making the Super Corp captured, as it would be unable to move in its original direction. 
 
 
 
@@ -300,6 +297,7 @@ Moreover, most of our features were implemented such that adding on would be a m
         Basic single player implementation: After going through some tutorials related to our game concept we made our first step of our game creation. We implemented a simple single player demo where you can control an avatar which can move around on a plane, as well as shoot projectiles. \\ \\
 
         \textbf{Research networking:} The next step was to make our first attempt at turning the existing single player demo into a multiplayer one. We researched ports, along with IP address assignment. \\ \\
+        
         Debugging: Debugging was mostly something that occured consistently throughout the project, ensuring that the game was working properly at any stage. However, we also organized some dedicated debugging sessions as well, ensuring that the game was as functional as possible at any key stages. Often we would involve inexperienced users to try it out to help find any issues. \\ \\
 
         (WHAT IS THIS PART???)
@@ -420,7 +418,7 @@ After finding out each member's strengths and weaknesses we divided the members 
 
         \begin{itemize}
           \item Was responsible for implementing a user friendly way for the user to interact with the game. Came up with a twin stick model, one stick for controlling your spaceship and the other for controlling the spaceships turret and fire.
-          \item Worked on Player and Lobby UI
+          \item Worked on Player and Lobby U.I.
           \item Worked on the player movement and old camera system
         \end{itemize}
 
@@ -443,7 +441,7 @@ After finding out each member's strengths and weaknesses we divided the members 
         \subsubsection{James O’ Connor}
 
         \begin{itemize}
-          \item Designed the SuperCorp ship model on Autodesk Maya. 
+          \item Designed the Super Corp ship model on Autodesk Maya. 
           \item Made the sand planet texture, as well as the power-up pickup models. 
           \item Made the skybox. 
           \item Wrote some of the code for projectile firing, resource networking, respawning after death, visualizing the resources and scores, as well as the players gaining points for picking up resources.
@@ -457,15 +455,15 @@ After finding out each member's strengths and weaknesses we divided the members 
            
           \item Helped create the initial Player Controller, which included how the player behaves inside the game environment as well as how it shoots.  
 
-          \item Created a script, responsible for managing the different resources around the planet. Namely it controlled the behaviour of power ups, resource pickups as well as planet hazards, like meteors. The script is responsible for keeping the planets populated by resources and power ups at any given time during the round. It keeps track of their current numbers and keep them in between the desired levels. The script is also responsible for spawning the players as soon as the game starts.
+          \item Created a script, responsible for managing the different resources around the planet. Namely it controlled the behaviour of power ups, resource pick ups as well as planet hazards, like meteors. The script is responsible for keeping the planets populated by resources and power ups at any given time during the round. It keeps track of their current numbers and keep them in between the desired levels. The script is also responsible for spawning the players as soon as the game starts.
 
-          \item Play tested the game in order to ensure the best experience for the player. This included, regulating the number of power ups and resources around the planets as well as the power up “life span”. Meaning the amount of time before a power up stops functioning as well as the rate that a resource increases in value. Made sure that no round would ever lead to a draw as the system takes into consideration variables like team score, kills and deaths.
+          \item Play tested the game in order to ensure the best experience for the player. This included, regulating the number of power ups and resources around the planets as well as the power up “lifespan”. Meaning the amount of time before a power up stops functioning as well as the rate that a resource increases in value. Made sure that no round would ever lead to a draw as the system takes into consideration variables like team score, kills and deaths.
 
-          \item Created a manager responsible for managing the music scores for each part of the game. Assigned the corresponding audio clip to each round, manu and team of our game. The script provides the user with basic controls over the clips. The user can freely play and stop the different audio clips of an instance, as well as, regulate their individual volume.
+          \item Created a manager responsible for managing the music scores for each part of the game. Assigned the corresponding audio clip to each round, menu and team of our game. The script provides the user with basic controls over the clips. The user can freely play and stop the different audio clips of an instance, as well as, regulate their individual volume.
 
           \item Wrote different scripts and functions for providing the User Interface with useful information regarding the game. Created a script for visualising the results of every round as well as the final results for the game. 
 
-          \item Worked on resolving a series of issues that our game had. Fixed a bug where in case the mobile device was not held horizontally when initializing the game it would immediately minimize. Resolved an issue, where when a player gor destroyed, the observer was also destroyed. Resolved by adding a check to see whether the collision was local or not.
+          \item Worked on resolving a series of issues that our game had. Fixed a bug where in case the mobile device was not held horizontally when initializing the game it would immediately minimize. Resolved an issue, where when a player got destroyed, the observer was also destroyed. Resolved by adding a check to see whether the collision was local or not.
         \end{itemize}
 
 \pagebreak
