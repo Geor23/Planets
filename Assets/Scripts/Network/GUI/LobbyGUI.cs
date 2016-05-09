@@ -41,7 +41,7 @@ public class LobbyGUI : MonoBehaviour {
         if (!startingGame){
             startingGame = true;
             observerCanvas.SetActive(false);
-            //introCanvas.SetActive(true);
+            introCanvas.SetActive(true);
             Invoke("beginGame", 10);
         }
   }
