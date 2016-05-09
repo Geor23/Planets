@@ -149,8 +149,8 @@ Considering the game was intended to be heavily network based, it made sense to 
 
  \subsection{Adding New Game Functionality}
  To add new functionality to the game it is ideal that the developer uses Unity Engine 5.4.3+ to be able to build for Windows, Android and Linux. The code for the game is separated into several folders relating to the game component required. For development related to gameplay flow the developer should first start by exploring the Start, Lobby and Round scenes. All scenes contain component scripts attached to objects which control the flow of the game. The scripts attached to these objects are descendants of MonoBehaviour which means they exist in the context of a scene and relate to an object in the scene.\\ \\
- To change more core aspects of the game such as networking or rounds, the user can navigate the folder structure which is separated by functionality, and then by purpose. For example there is a Network folder which contains many sub folders relating to player object synchronisation, socket connection information etc.
-
+ To change more core aspects of the game such as networking or rounds, the user can navigate the folder structure which is separated by functionality, and then by purpose. For example there is a Network folder which contains many sub folders relating to player object synchronisation, socket connection information etc. \\ \\
+\noindent
 Moreover, most of our features were implemented such that adding on would be a matter of simply inserting a new line of code. For example, the round system is based on having an array of all of the scenes we would want to play in order they must appear, calculating the transitions, round stats and gameplay would automatically be updated. Thus, in order to insert a new round or a new planet, it would be a matter of adding the scene name into the array of scenes in the round manager and this would enable further rounds.
 
  \subsection{Software Maintenance During Development}
@@ -298,14 +298,6 @@ Moreover, most of our features were implemented such that adding on would be a m
         \textbf{Research networking:} The next step was to make our first attempt at turning the existing single player demo into a multiplayer one. We researched ports, along with IP address assignment. \\ \\
         
         Debugging: Debugging was mostly something that occured consistently throughout the project, ensuring that the game was working properly at any stage. However, we also organized some dedicated debugging sessions as well, ensuring that the game was as functional as possible at any key stages. Often we would involve inexperienced users to try it out to help find any issues. \\ \\
-
-        (WHAT IS THIS PART???)
-        Benchmarking: Since our game is supposed to be played over a network, it was crucial that we allowed as many players as possible to participate. Initially there were large quantities of information that needed to be shared between all devices, which drastically reduced the networking capabilities of the game.
-        However, even though our initial plan was roughly followed, based on scrum methodologies, the feature planning process was revised often, after each release and testing session, in order to provide the best gameplay for our game. On each working session we would plan out the day, which proved to be a good way to manage tasks.
-
-
-        \subsection{Planetarium and Testing}
-        Porting the game to the planetarium was a unique and thoroughly interesting experience. The Planetarium houses two projectors that project different parts of the image onto the hemisphere. The main challenge was scaling the game's interface and objects so that they are suitable for the Dome as well as make some texture changes to the objects to ensure that they still retain a a good level of detail in 4K. In addition, making full use of the 270$^{\circ}$ perspective the Planetarium offers required a lot of thought and experimentation.
 
         \subsection{Gameplay Revisions}
         We continually added and adjusted the planets, as we felt that they needed to be as diverse and memorable as possible. We crafted backstory for the game's universe, as well as why each planet is important to the game's lore and universe. \\ \\ 
