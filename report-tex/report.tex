@@ -244,16 +244,19 @@ Moreover, most of our features were implemented such that adding on would be a m
   To fully illustrate the system, two side by side algorithms are given for the server and observer components. \\ \\
 
   \SetKwProg{Fn}{def}{}{end}
-  \SetKwFunction{Fgcd}{stereoMyButthole}
+  \SetKwFunction{Fsru}{serverReceiveUpdate}
+  \SetKwFunction{Fsrr}{serverReceiveResponse}
+  \SetKwFunction{Foru}{observerRecieveUpdate}
+  \SetKwFunction{Fosr}{obesrverSendResponse}
 \begin{minipage}{8cm}
   {\Large{Server Functions}} \\
   \begin{algorithm}[H]
     \LinesNumbered
-    \Fn(\tcc*[h]{compute gcd}){\Fgcd{a,b}}{
+    \Fn(\tcc*[h]{compute gcd}){\Fsru{a,b}}{
       \eIf{$a \equiv 0 \pmod b$}{
         \Return b
       }{
-        \Return \Fgcd{$b$, $a \pmod b$}
+        \Return \Fsru{$b$, $a \pmod b$}
       }
     }
   \end{algorithm}
@@ -262,11 +265,11 @@ Moreover, most of our features were implemented such that adding on would be a m
   {\Large{Observer Functions}} \\
   \begin{algorithm}[H]
     \LinesNumbered
-    \Fn(\tcc*[h]{compute gcd}){\Fgcd{a,b}}{
+    \Fn(\tcc*[h]{compute gcd}){\Foru{a,b}}{
       \eIf{$a \equiv 0 \pmod b$}{
         \Return b
       }{
-        \Return \Fgcd{$b$, $a \pmod b$}
+        \Return \Foru{$b$, $a \pmod b$}
       }
     }
   \end{algorithm}
