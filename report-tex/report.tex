@@ -180,17 +180,12 @@ Moreover, most of our features were implemented such that adding on would be a m
   
   \noindent
 
-  One of the major challenges for us was making the game a fully networked game, allowing for many players to play together for their own mobile devices. We require a fair amount of data to be sent and processed by both the server as well as the player clients and observer clients. Movement, rotation, deaths, kills, scores and game updates all needed to be synchronised and updated for all players. We initially started by using the Unity Networking structures available to us, which allowed for us to establish the basic functionality for the game in good time. Once the basic plan layout had been established, we were able to test the game in a basic form, which was helpful in assessing the current gameplay and how to improve on it. \\
+  One of the major challenges for us was making the game fully networked, allowing for many players to play together for their own mobile devices. We require a fair amount of data to be sent and processed by both the server as well as the player clients and observer clients. Movement, rotation, deaths, kills, scores and game updates all needed to be synchronised and updated for all players. We initially started by using the Unity Networking structures available to us, which allowed for us to establish the basic functionality for the game in good time. Once the basic plan layout had been established, we were able to test the game in a basic form, which was helpful in assessing the current gameplay and how to improve on it. \\
 
   We realised at this stage two things: firstly that we needed to focus more of the game on the observer view, and that the Unity Networking structures we'd used were far from optimal for our usage. From here we worked on replacing the Unity structures with our own, allowing us to create very specific networking functionality for our game with single message passes between only the required devices. By moving a lot of the computation to the observer displays, we were able to reduce the amount of network traffic significantly. By making the players only visible on the observer view, we reduced the need for all clients to receive constant updates as to player actions, only needing for the observer to be updated with these changes. Everything besides deaths could then be dealt with on the observers, be it interactions with resources, events, or scores. Even events which seemingly would require some network traffic, such as the rotation of player objects, were with some thought and mathematics able to be purely calculated on the observer. \\
 
   The network uses a star topology. The dedicated server is essential to ensure that data from all clients is acknowledged on a fair basis, which may not be the case if running in parallel with graphics. In addition, it allows for a smooth transition into 3D in the planetarium, as the server can fairly estimate network latency. There are two main scripts that enable synchronizing the position and rotation of objects between server and clients. In our final design, all clients send their positions to the server after some threshold has passed, and the server passes these on to the observing clients. \\
 
-  old:  - Smooth gameplay, ensuring packets are fast but reliable for stereo. We designed scripts that allow the networked objects to be easily synchronized
-  With networking being one of the pillars of gameplay we had many discussions relating to how we should solve the networking problem. Early on we decided that we would use Unity’s built in networking layer which allows for easy communication passing from server to clients. Unity provides built in layers for the type of communication decide: reliable and unreliable.
-  On a hardware level, we are using an Intel NUC box as a Linux server. The dedicated server is essential to ensure that data from all clients is acknowledged on a fair basis, which may not be the case if running in parallel with graphics. In addition, it allows for a smooth transition into 3D in the planetarium, as the server can fairly estimate network latency (stereo is explained in depth in later paragraph).
-  There are two main scripts that enable synchronizing the position and rotation of objects between server and clients .In our final design, all clients send their positions and rotations after some threshold value has been passed to the server, and the server passes these on to the observing clients. In terms of topology it can be seen that the general flow of network traffic travels in the direction of the observer screens.
-  
 
   \subsubsection{Stereo Algorithm (3D)}
 
@@ -214,6 +209,12 @@ Moreover, most of our features were implemented such that adding on would be a m
      When considering the method of interaction on the client side, many factors had to be taken into consideration. Firstly, we had to ensure that the game is easy to pick up. To achieve this, a virtual twin stick controller was implemented. The twin stick is the most widely used control method in modern games, so this means that people could intuitively understand how to control their avatar without a lengthy explanation. The left stick is responsible for the player movement and the right for the turret rotation and shooting mechanic. \\ \\
      Each “stick” of the user interface is responsible for controlling an axis. These axes are used to provide continuous input, resulting in smooth player navigation in the game space without any need to remove their hands of their device. The axes themselves are simply a normalized 2-dimensional vector representing direction in which the joystick is being dragged. \\ \\
      One very important aspect of the user controls is ensuring that they are always consistent regardless of rotation in the observer view, i.e that up always moves the player up and similarly for the other directions. We achieve this by sending occasional updates of the observer rotation to the clients so that they can move respective to the \textbf{up-vector} of the observer object. The positions of the players are then sent to the server after threshold distance has been exceeded, and following this the server relays the information to the observers.
+
+      \subsection{Easy playability vs. Depth}
+      We feel we have achieved both, being playable with little or no training, as well as portray enough depth such that an experienced gamer would be drawn into the game. Each player controls their avatar through a simple twin-stick controller, making it extremely easy to pick up. In order for players to be eased into the game, we decided that our first planet would portray no extra features, just resources to be picked up. However, as the round progress move features are added, such as meteors hitting the planet randomly on the second round or even teleportation portals on the third round. Extra features like these help maintain the player's interest in the game. All of these also add extra levels of strategy, which we hope an experienced gamer could pick up on. In addition, while not compulsory by any means to play strategically as a team, even roaming the map as a two-person pack can make for great fun and strategic gameplay. 
+      
+      (NEEDED???)For example, due to the game being working like an arena style game, where players can drag the view as they move, as one player from the pirates team follows a Super Corp to try and kill him, another pirate can move in the opposite direction in order to drag the view with him, making the Super Corp captured, as it would be unable to move in its original direction. 
+
 
 
   \pagebreak
@@ -253,40 +254,30 @@ Moreover, most of our features were implemented such that adding on would be a m
    \subsubsection{Single Screen}
     In the single screen view all players are enforced to stay within the the view of one camera, which displays one half of the planet. This is achieved by constraining the player position to be within the distance between the camera and the centre of the planet. The camera is positioned at twice the radius of the planet, while always facing the centre of the planet. To determine where the camera should move, the average position of the players is calculated, and the camera object is rotated to face this point. This rotation is then synchronized occasionally with all players to ensure that they cannot move out from the field of view. \\ \\
 
-    The single screen allows for a gameplay-flow effect where players of the opposing teams can push to explore different areas of the planet in search for resources and power ups. The only time where the view would be locked is when equal amounts of players are pushing against opposite ends of the camera view on the planet, which is unlikely given that the objective is to maintain and steal resources from the opposing teams.
+    \noindent
+    The single screen allows for a gameplay-flow effect where players of the opposing teams can push to explore different areas of the planet in search for resources and power ups. The only time where the view would be locked is when equal amounts of players are pushing against opposite ends of the camera view on the planet, which is unlikely given that the objective is to maintain and steal resources from the opposing teams. \\ \\
 
-       \pagebreak
        \subsection{Graphics and interface}
 
-        An important design decision that had to be taken early in the project's development was the direction that graphics should take. There were two directions that the project could take in regards to that. Either take a more photo-realistic approach or a more “cartoony” one. In order to reach a decision all the affected factors were taken into consideration. A primary concern was the fact that the game had to perform well on the Planetarium Dome, and for the result to be as smooth as possible the polygon count had to be kept at an optimal level. We were limited to around 4,000,000 polygons, which would be infeasible with a photo-realistic approach. Using photo-realism and with the amount of players the project was aiming for could cause serious rendering and synchronization issues.
-        
-        The Planetarium also made clear that if the game was a success, they would be interested in taking it on as a regular event. Thus, the Planetarium’s standard demographic had to be taken into account, which includes young children. This made cartoon like graphics stand out as the preferred choice.  \\ \\
-
-        The design of our models were heavily influenced by the two factions in the game. The first two ship models were created before the two teams were decided {insert photo here}. However, after we decided that pirates and Super Corp were to be our factions, we re-designed the two ship models. For the Super Corp we were aiming for a sleek, almost simplistic design, whereas the Pirates needed to inspire a more rough, gritty feeling. The two colour schemes utilised to distinguish between the teams, blue and red, were chosen for the same reason. \\ \\
-
+       \noindent
+        An important design decision that had to be taken early in the project's development was the direction that graphics should take. There were two directions that the project could take in regards to that. Either take a more photo-realistic approach or a more “cartoony” one. In order to reach a decision all the affected factors were taken into consideration. A primary concern was the fact that the game had to perform well on the Planetarium Dome, and for the result to be as smooth as possible the polygon count had to be kept at an optimal level. We were limited to around 4,000,000 polygons, which would be infeasible with a photo-realistic approach, considering the amount of players the we were aiming this for could cause serious rendering and synchronization issues.
+        \noindent
+        The Planetarium also made clear that if the game was a success, they would be interested in taking it on as a a new showcase. Thus, the Planetarium’s standard demographic had to be taken into account, which includes young children. This meant cartoon-like graphics stood out as the preferred choice.  \\ \\
+\noindent
+        The design of our models were heavily influenced by the two factions in the game. The first two ship models were created before the two teams were decided. However, after we decided that pirates and Super Corp were to be our factions, we re-designed the two ship models. For the Super Corp we were aiming for a sleek, almost simplistic design, whereas the Pirates needed to inspire a more rough, gritty feeling. The two colour schemes utilised to distinguish between the teams, blue and red, were chosen for the same reason. \\ \\
+\noindent
         Deciding upon the two factions in our game also led to changes in planets. For example, as the city planet was aimed to be the home of the Super Corp, the planet was designed to inspire just that, by creating huge buildings. For the same reason we designed a sand planet, the home of the pirates, where we included elements such as meteor strikes and mountainous terrain. \\ \\
-
+\noindent
         The colour scheme for the U.I. was chosen whilst taking into account the two teams. We chose a neutral colour, turquoise, seeing as it was a good fit due to being suitably different from the team's colours as well as stand out and give a "spacey" feel to the interface. \\ \\
 
 
         \subsection{Music}
-Additionally, the music was also tailored made to the projects needs. Inspired by our decision of the two factions, we wanted the , music to relate with each factions ideals and purpose in the game. 
+    Additionally, the music was also tailored made to the projects needs. Inspired by our decision of the two factions, we wanted the music to relate with each factions ideals and purpose in the game. Working closely with the composers, we decided that the themes should be very strong and powerful, but still retaining pace, so as to immerse the player in a feeling of a great battle. All scores respect a certain time signature so that themes can be combined.\\ \\
 
-Similarly, each planet needed to feel distinct from the rest, that's why we required the theme for each planet to represent both its environment and purpose to the games story.
-
-
-        \subsection{Easy playability vs. Depth}
-        We feel we have achieved both, being playable with little or no training, as well as portray enough depth such that an experienced gamer would be drawn into the game. Each player controls their avatar through a simple twin-stick controller, making it extremely easy to pick up. In order for players to be eased into the game, we decided that our first planet would portray no extra features, just resources to be picked up. However, as the round progress move features are added, such as meteors hitting the planet randomly on the second round or even teleportation portals on the third round. Extra features like these help maintain the player's interest in the game. All of these also add extra levels of strategy, which we hope an experienced gamer could pick up on. In addition, while not compulsory by any means to play strategically as a team, even roaming the map as a two-person pack can make for great fun and strategic gameplay. 
-        
-        (NEEDED???)For example, due to the game being working like an arena style game, where players can drag the view as they move, as one player from the pirates team follows a Super Corp to try and kill him, another pirate can move in the opposite direction in order to drag the view with him, making the Super Corp captured, as it would be unable to move in its original direction. 
-
-
-
-
+\noindent
+    Similarly, each planet needed to feel distinct from the rest, that's why we required the theme for each planet to represent both its environment and purpose to the games story. The faction themes are overlaid onto the planet theme, so that every planet has a different feel, to enhance the story throughout the gameplay.
 
 \pagebreak
-
-
 
         \section{Project Planning}
 
