@@ -163,7 +163,7 @@ public class PlayerControllerMobile : NetworkBehaviour {
                 lastPos = model.position;
             }
         }
-        model.rotation = Quaternion.Lerp(model.rotation, newRotation, 15f*Time.deltaTime);
+        model.rotation = Quaternion.Lerp(model.rotation, newRotation, 6f*Time.deltaTime);
         if (!nIdentity.isLocalPlayer) return;
 
         rb = GetComponent<Rigidbody>();
@@ -218,12 +218,17 @@ public class PlayerControllerMobile : NetworkBehaviour {
             newLocation = transform.position + moveDir * Time.deltaTime * 5;
         }
 
-
+        float distPlayerToPlanet = Vector3.Distance(planetCenter, newLocation);
         float distPlanetToCam = Vector3.Distance(planetCenter, worldPos);
         float distPlayerToCam = Vector3.Distance(newLocation, worldPos);
         float distCurrentPlayerToCam = Vector3.Distance(transform.position, worldPos);
-        if(distPlanetToCam < distCurrentPlayerToCam + 30){
+        if (distPlanetToCam < distCurrentPlayerToCam + 30) {
             Vector3 newDir = (obsCam.position - transform.position).normalized;
+            newLocation = transform.position + newDir * Time.deltaTime * 10;
+            rotateObject(model, newDir);
+            rb.MovePosition(newLocation);
+        }else if(distPlayerToPlanet > 80) {
+            Vector3 newDir = (planetCenter - transform.position).normalized;
             newLocation = transform.position + newDir * Time.deltaTime * 10;
             rotateObject(model, newDir);
             rb.MovePosition(newLocation);
