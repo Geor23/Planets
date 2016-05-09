@@ -250,6 +250,9 @@ Moreover, most of our features were implemented such that adding on would be a m
    Secondly, as the game took place in space on a planet, the dome view would only be able to see one side of the planet. Hence, if the players would move to the other side, they could not be visualised. It is of course important to ensure that all players are visualised on the planet, but also to allow players to explore parts of the world by themselves and not feel like the game is a closed grid. \\ \\  
    Two main ideas were experimented with; a split screen version of the game which displayed both sides of the planet, and one single screen version. In the final product, we decided on the single screen view for ease of play.
    \subsubsection{Split screen} 
+   \begin{center}
+   \includegraphics[scale=0.2]{logos/split.png}
+   \end{center}
    
    The split screen view consisted of two cameras that display one half of the planet each. The interesting aspect of this view was that the controls must be consistent when transitioning from one side of the planet to the other. So that for example, when a player moves off from the top right of the left view, they appear moving in the respective direction, from the bottom left of the right view. This meant that the right view image must be inverted in the horizontal axis. A result of this inversion means that while the players will move in a consistent direction across the views, their controls will now be reflected in the axis upon which they crossed into the other view. \\ \\
    Therefore, we introduce the notion of the joystick adjustment matrix $J_{adj}$, which is multiplied with the normalized joystick vector $J$ to correct the direction in which a player should move. When a player crossed the boundary from one view to another, another reflection $R$ is applied to the joystick adjustment matrix. 
@@ -272,6 +275,9 @@ Moreover, most of our features were implemented such that adding on would be a m
   This method worked well for seeing the entire planet on one screen however through testing we found that the concept was difficult to grasp given that the transition occurs on a spherical shape. Therefore we required a more simple option.
 
    \subsubsection{Single Screen}
+      \begin{center}
+   \includegraphics[scale=0.05]{logos/single.jpg}
+   \end{center}
     In the single screen view all players are enforced to stay within the the view of one camera, which displays one half of the planet. This is achieved by constraining the player position to be within the distance between the camera and the centre of the planet. The camera is positioned at twice the radius of the planet, while always facing the centre of the planet. To determine where the camera should move, the average position of the players is calculated, and the camera object is rotated to face this point. This rotation is then synchronized occasionally with all players to ensure that they cannot move out from the field of view. \\ \\
 
     \noindent
