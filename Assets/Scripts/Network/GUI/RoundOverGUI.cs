@@ -53,7 +53,6 @@ public class RoundOverGUI : MonoBehaviour {
   void Update(){
       time -= Time.deltaTime;
       if (time > 0){
-          // ?????? Errors here
           timer.text = ((int)time).ToString();
           if (lastUpdatedTime - time >= 1.0f) {
             lastUpdatedTime = time;

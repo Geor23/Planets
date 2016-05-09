@@ -71,13 +71,19 @@ public class PlayerControllerMobile : NetworkBehaviour {
     private ResourcePowerUpManager resourcePowerUpManager;
     private RoundPlayerObjectManager roundPlayerObjectManager;
     private RoundEvents roundEvents; //Contains reference to RoundEventsManager object
-
+    private Vector3 lastPos;
+    private Quaternion newRotation;
     private bool dead = true;
     private bool pinScaling = false;
 
     [SyncVar]
     public int dictId;
 
+
+    public void Start() {
+        lastPos = model.position;
+        newRotation = model.rotation;
+    }
     public override void OnStartClient(){
         base.OnStartClient();
         Debug.Log("DictID is " + dictId);
@@ -115,16 +121,6 @@ public class PlayerControllerMobile : NetworkBehaviour {
     }
 
     void Update() {
-        /*
-             Debug.Log ("AimH Crossplatform:" + CrossPlatformInputManager.GetAxis ("AimH"));
-                Debug.Log ("AimV Crossplatform:" + CrossPlatformInputManager.GetAxis ("AimV"));
-                Debug.Log ("MoveH Crossplatform:" + CrossPlatformInputManager.GetAxis ("MoveH"));
-                Debug.Log ("MoveV Crossplatform:" + CrossPlatformInputManager.GetAxis ("MoveV"));
-                Debug.Log ("AimH Input:" + Input.GetAxis ("AimH"));
-                Debug.Log ("AimV Input:" + Input.GetAxis ("AimV"));
-                Debug.Log ("MoveH Input:" + Input.GetAxis ("MoveH"));
-                Debug.Log ("MoveV Input:" + Input.GetAxis ("MoveV"));
-        */
         if (nIdentity == null) return;
         if (nIdentity.isLocalPlayer) gameObject.transform.localScale = new Vector3(3, 3, 3);
 
@@ -158,6 +154,16 @@ public class PlayerControllerMobile : NetworkBehaviour {
         }
         Transform obsCam = GameObject.FindGameObjectsWithTag("Observer")[0].transform.GetChild(0);
         tearDrop.transform.LookAt(obsCam.position, -obsCam.up);
+
+        if (PlayerConfig.singleton.GetObserver()){
+            if (Vector3.Distance(lastPos, model.position) > 0.5){
+                Vector3 newDirForRotate = (model.position - lastPos).normalized;
+                newRotation = Quaternion.LookRotation(newDirForRotate,obsCam.position.normalized);
+               // model.LookAt(model.position + newDirForRotate, obsCam.position.normalized);
+                lastPos = model.position;
+            }
+        }
+        model.rotation = Quaternion.Lerp(model.rotation, newRotation, 6f*Time.deltaTime);
         if (!nIdentity.isLocalPlayer) return;
 
         rb = GetComponent<Rigidbody>();
@@ -212,12 +218,17 @@ public class PlayerControllerMobile : NetworkBehaviour {
             newLocation = transform.position + moveDir * Time.deltaTime * 5;
         }
 
-
+        float distPlayerToPlanet = Vector3.Distance(planetCenter, newLocation);
         float distPlanetToCam = Vector3.Distance(planetCenter, worldPos);
         float distPlayerToCam = Vector3.Distance(newLocation, worldPos);
         float distCurrentPlayerToCam = Vector3.Distance(transform.position, worldPos);
-        if(distPlanetToCam < distCurrentPlayerToCam + 30){
+        if (distPlanetToCam < distCurrentPlayerToCam + 30) {
             Vector3 newDir = (obsCam.position - transform.position).normalized;
+            newLocation = transform.position + newDir * Time.deltaTime * 10;
+            rotateObject(model, newDir);
+            rb.MovePosition(newLocation);
+        }else if(distPlayerToPlanet > 80) {
+            Vector3 newDir = (planetCenter - transform.position).normalized;
             newLocation = transform.position + newDir * Time.deltaTime * 10;
             rotateObject(model, newDir);
             rb.MovePosition(newLocation);
