@@ -93,27 +93,7 @@ public class ResourcePowerUpManager : MonoBehaviour {
     void ResourceRescale(GameObject resourceGameObject) {
         float tmp = (maxResourceScore - minResourceScore) / 5;
         int currentResourceScore = resourceGameObject.GetComponent<CurrentResourceScore>().resourceScore;
-        Vector3 scale = (resourceGameObject.transform.localScale*1.2f);
-        /*
-        if (currentResourceScore == initialScore) {
-            scale = 1f;
-            resourceGameObject.GetComponent<Renderer>().enabled = false;
-            resourceGameObject.GetComponent<SphereCollider>().enabled = false;
-        }
-        else if (currentResourceScore - minResourceScore < tmp * 2) {
-            scale = 1.2f;
-            resourceGameObject.GetComponent<Renderer>().enabled = true;
-            resourceGameObject.GetComponent<SphereCollider>().enabled = true;
-        }
-        else if (currentResourceScore - minResourceScore < tmp * 3) { scale = 1.3f; }
-        else if (currentResourceScore - minResourceScore < tmp * 4) { scale = 1.4f; }
-        else if (currentResourceScore - minResourceScore < tmp * 5) { scale = 1.5f; }
-        else if (currentResourceScore - minResourceScore < tmp * 6) { scale = 1.6f; }
-        else if (currentResourceScore - minResourceScore < tmp * 7) { scale = 1.7f; }
-        else if (currentResourceScore - minResourceScore < tmp * 8) { scale = 1.7f; }
-        else if (currentResourceScore - minResourceScore < tmp * 9) { scale = 1.8f; }
-        else { scale = 1.8f; }
-        */
+        Vector3 scale = (resourceGameObject.transform.localScale*1.1f);
         resourceGameObject.transform.localScale = scale;
     }
 
