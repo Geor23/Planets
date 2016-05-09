@@ -293,19 +293,22 @@ public class PlayerControllerMobile : NetworkBehaviour {
         }
         else if (col.gameObject.CompareTag("Meteor"))
         {
-            //TODO
-            /*
-            if (!dead && !shielded) {
+            if (!dead)
+            {
                 dead = true;
-                int killedId = -5;
-        gameObject.GetComponent<Explode>().expl();   
-                resourcePowerUpManager.meteorCollision(col.gameObject);     
-                roundEvents.registerKill(netId, playerDetails.getDictId(), killerId);
-   
-            else {
-                shielded = false ;
-            }     
-        */
+                int killerId = -5;
+                gameObject.GetComponent<Exploder>().expl();
+                resourcePowerUpManager.meteorCollision(col.gameObject);
+
+                int score = pm.getRoundScore(dictId);
+
+                if (score != 0) {
+                    GameObject resource = (GameObject)Instantiate(ResourcePickUpDeath, gameObject.transform.position, Quaternion.identity);
+                    resource.GetComponent<CurrentResourceScore>().resourceScore = score;
+                }
+
+                roundEvents.registerMeteorKill(netId, playerDetails.getDictId(), killerId);
+            }    
         }
         //TOFIX
         else if (col.gameObject.CompareTag("ProjectilePirate") || col.gameObject.CompareTag("ProjectileSuperCorp")) {

@@ -64,6 +64,22 @@ public class RoundPlayerObjectManager { //TODO
         }
     }
 
+    public void meteorKillPlayerLocal(int playerIdKilled, int playerIdKiller) { 
+        KillInfo ki = new KillInfo(playerIdKiller, playerIdKilled, KillType.METEOR);
+        killHistory.Add(ki);
+        deadPlayers.Enqueue(playerIdKilled);
+
+        //Increment team kill and death counters
+        //Got killed players team
+        int team = pm.getPlayer(playerIdKilled).getPlayerTeam();
+        if (team == TeamID.TEAM_SUPERCORP) {
+            superCorpDeaths += 1;
+        }
+        else {
+            superCorpKills += 1;
+        }
+    }
+
     public int numPlayers(){
         return pm.getPlayerDict().Count;
     }
@@ -76,9 +92,16 @@ public class RoundPlayerObjectManager { //TODO
 
     public string getKillString(int i){
         KillInfo ki = killHistory[i];
-        if(i < killHistory.Count)
-            return pm.getName(ki.killerId) + " " + getKillTypeString(ki.killType) + " "  + pm.getName(ki.killedId);
-        return "";
+        if (i < killHistory.Count)
+            if (ki.killerId == -5)
+            {
+                return "Meteor " + getKillTypeString(ki.killType) + " " + pm.getName(ki.killedId);
+            }
+            else
+            {
+                return pm.getName(ki.killerId) + " " + getKillTypeString(ki.killType) + " " + pm.getName(ki.killedId);
+            }
+                return "";
     }
 
     public string getKillsAsList(int howMany){

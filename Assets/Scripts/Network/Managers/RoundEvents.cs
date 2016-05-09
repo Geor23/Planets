@@ -78,10 +78,9 @@ public class RoundEvents : MonoBehaviour {
     }
 
     //Modify to handle meteor kills
-    /*
-    public void registerMeteorKill(NetworkInstanceId netId, int playerKilledId, int playerKillerId)
-    {
-        pom.killPlayerLocal(playerKilledId, playerKillerId);
+    
+    public void registerMeteorKill(NetworkInstanceId netId, int playerKilledId, int playerKillerId) {
+        pom.meteorKillPlayerLocal(playerKilledId, playerKillerId);
         sm.decreasePlayerScore(playerKilledId);
         KillPlayer kp = new KillPlayer();
         kp.netId = netId;
@@ -92,10 +91,9 @@ public class RoundEvents : MonoBehaviour {
         //pm.addKill(playerKillerId);
         pm.addDeath(playerKilledId);
 
-        Debug.Log("Player " + playerKilledId + " died");
-
+        Debug.Log("Player " + playerKilledId + " destroyed by meteor");
     }
-    */
+ 
     public void registerKill(NetworkInstanceId netId, int playerKilledId, int playerKillerId){
         pom.killPlayerLocal(playerKilledId, playerKillerId);
         sm.decreasePlayerScore(playerKilledId);
