@@ -176,51 +176,6 @@ Moreover, most of our features were implemented such that adding on would be a m
  Through research into how others had solved the Fulldome (as it is known) view, we found one open source solution which uses 5 cameras, and projects each camera's viewports onto adjacent meshes, which stitch together to create a full fish-eye effect that has 240$^{\circ}$ field of view. \\ \\
  One of our main challenge in porting the game onto the dome view was accounting for a different camera view all throughout the project, having to develop for 2 completely different views (dome and normal screen). Thus, in order to allow for an easy switch, we implemented both views into the same project, allowing for these to change using a toggle. This meant that every feature added had to account for both versions of the game. Moreover, it led to certain shaders and textures not being included in our game due to not being suitable on one of the views.
       \pagebreak
-
-  \subsection{Screen views}
-
-
-   \subsubsection{Local view and Observer view}
-
-   Our first implementation of the game involved having two separate views, a local one for each player which would be focused on the local avatar and a separate view for an observer, which would be ported on a large screen or the @Bristol Planetarium. However, during testing we encountered several issues with this implementation. \\ \\
-   Firstly, we noticed that the player focused more on their own screen rather than on the larger battlefield view that we provided on the observer screen. In order to tackle this, we decided to remove the field of view of the player from the mobile phones and keep the data we display to a minimum. The only data visualised on the player’s device over the duration of a game is their unique ID with their selected team colour and twin stick controller. Additionally, in between round players are able to see their personal scores on the device and can observe their total team stats on the Observer monitor. \\ \\
-   This change was very important to maximize the use of the Planetarium screen in particular, as there is a massive range of space to utilize, and to justify its use in general. A follow on point from this is to consider how we visualised the state of the game onto the large screen. 
-   Secondly, as the game took place in space on a planet, the dome view would only be able to see one side of the planet. Hence, if the players would move to the other side, they could not be visualised. It is of course important to ensure that all players are visualised on the planet, but also to allow players to explore parts of the world by themselves and not feel like the game is a closed grid. \\ \\  
-   Two main ideas were experimented with; a split screen version of the game which displayed both sides of the planet, and one single screen version. In the final product, we decided on the single screen view for ease of play.
-   \subsubsection{Split screen} 
-   \begin{center}
-   \includegraphics[scale=0.2]{logos/split.png}
-   \end{center}
-   
-   The split screen view consisted of two cameras that display one half of the planet each. The interesting aspect of this view was that the controls must be consistent when transitioning from one side of the planet to the other. So that for example, when a player moves off from the top right of the left view, they appear moving in the respective direction, from the bottom left of the right view. This meant that the right view image must be inverted in the horizontal axis. A result of this inversion means that while the players will move in a consistent direction across the views, their controls will now be reflected in the axis upon which they crossed into the other view. \\ \\
-   Therefore, we introduce the notion of the joystick adjustment matrix $J_{adj}$, which is multiplied with the normalized joystick vector $J$ to correct the direction in which a player should move. When a player crossed the boundary from one view to another, another reflection $R$ is applied to the joystick adjustment matrix. 
-  \begin{equation}
-     J=\begin{bmatrix}
-         X & Y
-        \end{bmatrix}^{T}
-        \qquad
-          R(\theta) = 
-          \begin{bmatrix}
-          \cos {2\theta} & \sin {2\theta} \\
-          \sin {2\theta} & -\cos {2\theta}
-          \end{bmatrix}
-      \qquad
-      J_{adj} = \prod_{\theta \in crossings}R({\theta})
-  \end{equation}
-  \begin{align*}
-    J_{new} = J_{adj}J
-  \end{align*}
-  This method worked well for seeing the entire planet on one screen however through testing we found that the concept was difficult to grasp given that the transition occurs on a spherical shape. Therefore we required a more simple option.
-
-   \subsubsection{Single Screen}
-      \begin{center}
-   \includegraphics[scale=0.05]{logos/single.jpg}
-   \end{center}
-    In the single screen view all players are enforced to stay within the the view of one camera, which displays one half of the planet. This is achieved by constraining the player position to be within the distance between the camera and the centre of the planet. The camera is positioned at twice the radius of the planet, while always facing the centre of the planet. To determine where the camera should move, the average position of the players is calculated, and the camera object is rotated to face this point. This rotation is then synchronized occasionally with all players to ensure that they cannot move out from the field of view. \\ \\
-
-    \noindent
-    The single screen allows for a gameplay-flow effect where players of the opposing teams can push to explore different areas of the planet in search for resources and power ups. The only time where the view would be locked is when equal amounts of players are pushing against opposite ends of the camera view on the planet, which is unlikely given that the objective is to maintain and steal resources from the opposing teams. \\ \\
-    
  \subsection{Networking challenges}
   
   \noindent
@@ -284,6 +239,50 @@ Moreover, most of our features were implemented such that adding on would be a m
       (NEEDED???)For example, due to the game being working like an arena style game, where players can drag the view as they move, as one player from the pirates team follows a Super Corp to try and kill him, another pirate can move in the opposite direction in order to drag the view with him, making the Super Corp captured, as it would be unable to move in its original direction. 
 
 
+  \subsection{Screen views}
+
+
+   \subsubsection{Local view and Observer view}
+
+   Our first implementation of the game involved having two separate views, a local one for each player which would be focused on the local avatar and a separate view for an observer, which would be ported on a large screen or the @Bristol Planetarium. However, during testing we encountered several issues with this implementation. \\ \\
+   Firstly, we noticed that the player focused more on their own screen rather than on the larger battlefield view that we provided on the observer screen. In order to tackle this, we decided to remove the field of view of the player from the mobile phones and keep the data we display to a minimum. The only data visualised on the player’s device over the duration of a game is their unique ID with their selected team colour and twin stick controller. Additionally, in between round players are able to see their personal scores on the device and can observe their total team stats on the Observer monitor. \\ \\
+   This change was very important to maximize the use of the Planetarium screen in particular, as there is a massive range of space to utilize, and to justify its use in general. A follow on point from this is to consider how we visualised the state of the game onto the large screen. 
+   Secondly, as the game took place in space on a planet, the dome view would only be able to see one side of the planet. Hence, if the players would move to the other side, they could not be visualised. It is of course important to ensure that all players are visualised on the planet, but also to allow players to explore parts of the world by themselves and not feel like the game is a closed grid. \\ \\  
+   Two main ideas were experimented with; a split screen version of the game which displayed both sides of the planet, and one single screen version. In the final product, we decided on the single screen view for ease of play.
+   \subsubsection{Split screen} 
+   \begin{center}
+   \includegraphics[scale=0.2]{logos/split.png}
+   \end{center}
+   
+   The split screen view consisted of two cameras that display one half of the planet each. The interesting aspect of this view was that the controls must be consistent when transitioning from one side of the planet to the other. So that for example, when a player moves off from the top right of the left view, they appear moving in the respective direction, from the bottom left of the right view. This meant that the right view image must be inverted in the horizontal axis. A result of this inversion means that while the players will move in a consistent direction across the views, their controls will now be reflected in the axis upon which they crossed into the other view. \\ \\
+   Therefore, we introduce the notion of the joystick adjustment matrix $J_{adj}$, which is multiplied with the normalized joystick vector $J$ to correct the direction in which a player should move. When a player crossed the boundary from one view to another, another reflection $R$ is applied to the joystick adjustment matrix. 
+  \begin{equation}
+     J=\begin{bmatrix}
+         X & Y
+        \end{bmatrix}^{T}
+        \qquad
+          R(\theta) = 
+          \begin{bmatrix}
+          \cos {2\theta} & \sin {2\theta} \\
+          \sin {2\theta} & -\cos {2\theta}
+          \end{bmatrix}
+      \qquad
+      J_{adj} = \prod_{\theta \in crossings}R({\theta})
+  \end{equation}
+  \begin{align*}
+    J_{new} = J_{adj}J
+  \end{align*}
+  This method worked well for seeing the entire planet on one screen however through testing we found that the concept was difficult to grasp given that the transition occurs on a spherical shape. Therefore we required a more simple option.
+
+   \subsubsection{Single Screen}
+      \begin{center}
+   \includegraphics[scale=0.05]{logos/single.jpg}
+   \end{center}
+    In the single screen view all players are enforced to stay within the the view of one camera, which displays one half of the planet. This is achieved by constraining the player position to be within the distance between the camera and the centre of the planet. The camera is positioned at twice the radius of the planet, while always facing the centre of the planet. To determine where the camera should move, the average position of the players is calculated, and the camera object is rotated to face this point. This rotation is then synchronized occasionally with all players to ensure that they cannot move out from the field of view. \\ \\
+
+    \noindent
+    The single screen allows for a gameplay-flow effect where players of the opposing teams can push to explore different areas of the planet in search for resources and power ups. The only time where the view would be locked is when equal amounts of players are pushing against opposite ends of the camera view on the planet, which is unlikely given that the objective is to maintain and steal resources from the opposing teams. \\ \\
+
        \subsection{Graphics and interface}
 
        \noindent
@@ -314,11 +313,11 @@ Moreover, most of our features were implemented such that adding on would be a m
         For organisational purposes, we set some milestones that needed to be accomplished by various points during the year so that work could proceed smoothly: \\ \\
 
 \noindent
-        \textbf{Getting to know Unity:} No one in our team was particularly experienced with game development, and so we scheduled a twelve hour coding session in order to familiarize ourselves with Unity.
+        \textbf{Getting to know Unity:} No one in our team was particularly experienced with game development, and so we scheduled a twelve hour coding session in order to familiarize ourselves with Unity.\\\\
 \noindent
-        Git learning sessions: as well as learning how to use Unity, there were members of our team that were not that familiar with Github. We set up a session that would enhance everyone’s ability to use this tool.
+        \textbf{Git learning sessions:} Members of our team  were not that familiar with git. We set up a session that would enhance everyone’s ability to use this tool.\\\\
         \noindent
-        Basic single player implementation: After going through some tutorials related to our game concept we made our first step of our game creation. We implemented a simple single player demo where you can control an avatar which can move around on a plane, as well as shoot projectiles. \\ \\
+        \textbf{Basic single player implementation:} After going through some tutorials related to our game concept we made our first step of our game creation. We implemented a simple single player demo where you can control an avatar which can move around on a plane, as well as shoot projectiles. \\ \\
 \noindent
         \textbf{Research networking:} The next step was to make our first attempt at turning the existing single player demo into a multiplayer one. We researched ports, along with IP address assignment. \\ \\
         \noindent
@@ -495,7 +494,24 @@ After finding out each member's strengths and weaknesses we divided the members 
 
         That was 20 years ago, the Pirates have more than enough power to challenge Super Corp, but have gotten drunk with power and limitless freedom. They became corrupted by their unlimited freedom in the galaxy. The lines between good and bad, light and darkness, are fading away and all that remains its just War.
 
+\pagebreak
 
+\begin{table}
+\caption{Assessment Page}
+\centering
+\begin{tabular}{c c c}
+\hline\hline
+Name & Weighting & Signature\\ [0.5ex]
+\hline
+Georgiana Ginghina & 1.08 & \\
+Callum Mann & 1.16 & \\
+Thomas Camp & 1.08 & \\
+James O' Connor & 0.8 & \\
+Tom Michiels & 0.8 & \\
+Eleftherios Christodoulou & 1.08 & \\
+
+\end{tabular}	
+\end{table}
 
 
 
