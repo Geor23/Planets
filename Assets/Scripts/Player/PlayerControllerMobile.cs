@@ -264,34 +264,8 @@ public class PlayerControllerMobile : NetworkBehaviour {
             if (!nIdentity.isLocalPlayer) return;
         }
 
-        if (col.gameObject.CompareTag("DoubleScore"))
-        {
-            doubleScore = true;
 
-            //Call planet manager
-            resourcePowerUpManager.powerUpCollision(col.gameObject);
-        }
-        else if (col.gameObject.CompareTag("Shield"))
-        { //Also need to potentially create an animation here?
-            shielded = true;
-            shield = Instantiate(shield);
-            shield.transform.parent = this.transform;
-            shield.transform.position = this.transform.position;
-            shield.SetActive(true);
-
-            //Call planet resource  manager
-            resourcePowerUpManager.powerUpCollision(col.gameObject);
-
-        }
-        else if (col.gameObject.CompareTag("FasterFire"))
-        { //Turn on faster fire rate. Still needs graphical additions
-            fasterFire = true;
-
-            //Call planet manager
-            resourcePowerUpManager.powerUpCollision(col.gameObject);
-            currentFireRate = fasterFireSpeed;
-        }
-        else if (col.gameObject.CompareTag("Meteor"))
+        if (col.gameObject.CompareTag("Meteor"))
         {
             if (!dead)
             {
@@ -325,20 +299,6 @@ public class PlayerControllerMobile : NetworkBehaviour {
                 }
                 roundEvents.registerKill(netId, playerDetails.getDictId(), killerId);
             }
-        }
-        else if (col.gameObject.CompareTag("ResourcePickUp")) { //Dealt with on the resource currently
-            int resourceScore = resourcePowerUpManager.resourcePickUpCollision(col.gameObject);
-            if (doubleScore) { //If points are to count for double, double score
-                resourceScore *= 2;
-            }
-            int dictId = playerDetails.getDictId();
-            roundEvents.getRoundScoreManager().increasePlayerScore(dictId, resourceScore);
-        }
-
-        else if (col.gameObject.CompareTag("ResourcePickUpDeath")) {
-            int resourceScore = resourcePowerUpManager.resourcePickUpCollision(col.gameObject);
-            int dictId = playerDetails.getDictId();
-            roundEvents.getRoundScoreManager().increasePlayerScore(dictId, resourceScore);
         }
     }
 
