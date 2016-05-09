@@ -176,7 +176,70 @@ Moreover, most of our features were implemented such that adding on would be a m
  Through research into how others had solved the Fulldome (as it is known) view, we found one open source solution which uses 5 cameras, and projects each camera's viewports onto adjacent meshes, which stitch together to create a full fish-eye effect that has 240$^{\circ}$ field of view. \\ \\
  One of our main challenge in porting the game onto the dome view was accounting for a different camera view all throughout the project, having to develop for 2 completely different views (dome and normal screen). Thus, in order to allow for an easy switch, we implemented both views into the same project, allowing for these to change using a toggle. This meant that every feature added had to account for both versions of the game. Moreover, it led to certain shaders and textures not being included in our game due to not being suitable on one of the views.
       \pagebreak
-\subsection{Screen views}
+ \subsection{Networking challenges}
+  
+  \noindent
+
+  One of the major challenges for us was making the game fully networked, allowing for many players to play together for their own mobile devices. We require a fair amount of data to be sent and processed by both the server as well as the player clients and observer clients. Movement, rotation, deaths, kills, scores and game updates all needed to be synchronised and updated for all players. We initially started by using the Unity Networking structures available to us, which allowed for us to establish the basic functionality for the game in good time. Once the basic plan layout had been established, we were able to test the game in a basic form, which was helpful in assessing the current gameplay and how to improve on it. \\
+
+  \noindent
+  We realised at this stage two things: firstly that we needed to focus more of the game on the observer view, and that the Unity Networking structures we'd used were far from optimal for our usage. From here we worked on replacing the Unity structures with our own, allowing us to create very specific networking functionality for our game with single message passes between only the required devices. By moving a lot of the computation to the observer displays, we were able to reduce the amount of network traffic significantly. By making the players only visible on the observer view, we reduced the need for all clients to receive constant updates as to player actions, only needing for the observer to be updated with these changes. Everything besides deaths could then be dealt with on the observers, be it interactions with resources, events, or scores. Even events which seemingly would require some network traffic, such as the rotation of player objects, were with some thought and mathematics able to be purely calculated on the observer. \\ \\
+\noindent
+  The network uses a star topology. The dedicated server is essential to ensure that data from all clients is acknowledged on a fair basis, which may not be the case if running in parallel with graphics. In addition, it allows for a smooth transition into 3D in the planetarium, as the server can fairly estimate network latency. There are two main scripts that enable synchronizing the position and rotation of objects between server and clients. In our final design, all clients send their positions to the server after some threshold has passed, and the server passes these on to the observing clients. \\ \\
+\noindent
+  A final touch to all of the object synchronization is to make the position and rotation updates smooth. This is achieved through linear interpolation between either vectors or quaternions on the observer screens in every updated frame. A notable bug that caused headache was that of a certain case where the delta-time between frames was much higher than usual. The delta-time is used as past of the linear interpolation to indicate the percentage completion of the interpolation. Unfortunately when delta-time is combined with a interpolation rate this caused the value to be greater than $1$, which introduced NaN values into the objects transform and caused objects to disappear. It was an extremely illusive bug that was seemingly occuring out of nowhere, however as a team we eliminated it.
+
+
+  \subsubsection{Stereo Algorithm (3D)}
+
+  The algorithm for stereo visualisation of the game is actually very simple. It is partly inspired by the Unity Cluster Renderer technique and the network solution we had already implemented. \\
+  Updates which are sent to the observer occur over a network where there is no guarantee of when they will they will arrive, of course we expect that they will take far less than say, $1$ second, but another level of execution locking is required to fully synchronize the state of two observers. \\ \\
+  This is achieved through pairing position updates with a forecast time, and packet ID at which the observer should execute the actual position update. Initially, the forecast time should be well in advance, but rapidly decrease as the observers receive more updates. This is achieved by the observers sending an acknowledgement response to the server, detailing the \textbf{actual} time at which they received the update, as opposed to the forecast time. The server then uses these responses to build a model of the network latency, and adjust the forecast time appropriately to maximize responsiveness in gameplay. \\ \\
+
+\noindent 
+  To fully illustrate the system, two side by side algorithms are given for the server and observer components. \\ \\
+
+  \SetKwProg{Fn}{def}{}{end}
+  \SetKwFunction{Fgcd}{stereoMyButthole}
+\begin{minipage}{8cm}
+  {\Large{Server Functions}} \\
+  \begin{algorithm}[H]
+    \LinesNumbered
+    \Fn(\tcc*[h]{compute gcd}){\Fgcd{a,b}}{
+      \eIf{$a \equiv 0 \pmod b$}{
+        \Return b
+      }{
+        \Return \Fgcd{$b$, $a \pmod b$}
+      }
+    }
+  \end{algorithm}
+\end{minipage}
+\begin{minipage}{8cm}
+  {\Large{Observer Functions}} \\
+  \begin{algorithm}[H]
+    \LinesNumbered
+    \Fn(\tcc*[h]{compute gcd}){\Fgcd{a,b}}{
+      \eIf{$a \equiv 0 \pmod b$}{
+        \Return b
+      }{
+        \Return \Fgcd{$b$, $a \pmod b$}
+      }
+    }
+  \end{algorithm}
+\end{minipage}
+   \subsection{Interaction}
+     When considering the method of interaction on the client side, many factors had to be taken into consideration. Firstly, we had to ensure that the game is easy to pick up. To achieve this, a virtual twin stick controller was implemented. The twin stick is the most widely used control method in modern games, so this means that people could intuitively understand how to control their avatar without a lengthy explanation. The left stick is responsible for the player movement and the right for the turret rotation and shooting mechanic. \\ \\
+     Each “stick” of the user interface is responsible for controlling an axis. These axes are used to provide continuous input, resulting in smooth player navigation in the game space without any need to remove their hands of their device. The axes themselves are simply a normalized 2-dimensional vector representing direction in which the joystick is being dragged. \\ \\
+     One very important aspect of the user controls is ensuring that they are always consistent regardless of rotation in the observer view, i.e that up always moves the player up and similarly for the other directions. We achieve this by sending occasional updates of the observer rotation to the clients so that they can move respective to the \textbf{up-vector} of the observer object. The positions of the players are then sent to the server after threshold distance has been exceeded, and following this the server relays the information to the observers. \\ \\
+     Therefore up-vector of the observer camera is an important component of gameplay and is calculated as follows. Each player contains a "fake camera" which is carried round inside their objects. This fake camera also contains an up-vector, which was mainly pertinent in times when players were visualised on their own devices. The average up-vector of the players is then taken, and the observer camera rotation is interpolated with this new value.
+
+      \subsection{Enjoyability}
+      A major focus of ours when it came to this game was to enable people with varying experiences of gaming to easily engage with our game, be it they've barely played any or are regular gamers. In order to do this, we ensured from the offset that while the controls and basic functionality of the game was simple to pick up on, there would be greater depth for people who are more avid gamers. in terms of simplicity, we ensured that the controls were simple to use, going with a classic joystick setup as mentioned above. The basic aims of the game, kill the enemy team and collect resources to win, ensure a fast-pace with simple objectives to ensure everyone can have fun from the get go. \\
+      For the more avid gamers, or simply those with an eye for tactics, there are a number of strategic methods in order to gain an advantage over the opposition. Due to the way the camera works, players are locked within a region of the world, which allows for a team to try and stop the opposition from moving to a potentially more lucrative area by staying on the far edge of the visible map, holding the camera in place. Other methods such as having one of your team be a collection ship, with other members of the team acting as meatshields for it is another strategy we hope more avid gamers will quickly realise and apply in the game. \\
+      In general, the worlds each have their own special enviromental hazard which makes each map different in how one needs to approach it. For example, the City Planet has portals which teleport you around, allowing for a lot of potential in how one approaches resources and the enemy. Another planet has meteorites which strike the planet occasionally, damaging anyone who is nearby. All of these events help to bring a uniqueness to each round, ensuring the game does not become repetitive.
+
+
+  \subsection{Screen views}
 
 
    \subsubsection{Local view and Observer view}
@@ -219,71 +282,6 @@ Moreover, most of our features were implemented such that adding on would be a m
 
     \noindent
     The single screen allows for a gameplay-flow effect where players of the opposing teams can push to explore different areas of the planet in search for resources and power ups. The only time where the view would be locked is when equal amounts of players are pushing against opposite ends of the camera view on the planet, which is unlikely given that the objective is to maintain and steal resources from the opposing teams. \\ \\
-
- \subsection{Networking challenges}
-  
-  \noindent
-
-  One of the major challenges for us was making the game fully networked, allowing for many players to play together for their own mobile devices. We require a fair amount of data to be sent and processed by both the server as well as the player clients and observer clients. Movement, rotation, deaths, kills, scores and game updates all needed to be synchronised and updated for all players. We initially started by using the Unity Networking structures available to us, which allowed for us to establish the basic functionality for the game in good time. Once the basic plan layout had been established, we were able to test the game in a basic form, which was helpful in assessing the current gameplay and how to improve on it. \\
-
-  \noindent
-  We realised at this stage two things: firstly that we needed to focus more of the game on the observer view, and that the Unity Networking structures we'd used were far from optimal for our usage. From here we worked on replacing the Unity structures with our own, allowing us to create very specific networking functionality for our game with single message passes between only the required devices. By moving a lot of the computation to the observer displays, we were able to reduce the amount of network traffic significantly. By making the players only visible on the observer view, we reduced the need for all clients to receive constant updates as to player actions, only needing for the observer to be updated with these changes. Everything besides deaths could then be dealt with on the observers, be it interactions with resources, events, or scores. Even events which seemingly would require some network traffic, such as the rotation of player objects, were with some thought and mathematics able to be purely calculated on the observer. \\ \\
-\noindent
-  The network uses a star topology. The dedicated server is essential to ensure that data from all clients is acknowledged on a fair basis, which may not be the case if running in parallel with graphics. In addition, it allows for a smooth transition into 3D in the planetarium, as the server can fairly estimate network latency. There are two main scripts that enable synchronizing the position and rotation of objects between server and clients. In our final design, all clients send their positions to the server after some threshold has passed, and the server passes these on to the observing clients. \\ \\
-\noindent
-  A final touch to all of the object synchronization is to make the position and rotation updates smooth. This is achieved through linear interpolation between either vectors or quaternions on the observer screens in every updated frame. A notable bug that caused headache was that of a certain case where the delta-time between frames was much higher than usual. The delta-time is used as past of the linear interpolation to indicate the percentage completion of the interpolation. Unfortunately when delta-time is combined with a interpolation rate this caused the value to be greater than $1$, which introduced NaN values into the objects transform and caused objects to disappear. It was an extremely illusive bug that was seemingly occuring out of nowhere, however as a team we eliminated it.
-
-
-  \subsubsection{Stereo Algorithm (3D)}
-
-  The algorithm for stereo visualisation of the game is actually very simple. It is partly inspired by the Unity Cluster Renderer technique and the network solution we had already implemented. \\
-  Updates which are sent to the observer occur over a network where there is no guarantee of when they will they will arrive, of course we expect that they will take far less than say, $1$ second, but another level of execution locking is required to fully synchronize the state of two observers. \\ \\
-  This is achieved through pairing position updates with a forecast time, and packet ID at which the observer should execute the actual position update. Initially, the forecast time should be well in advance, but rapidly decrease as the observers receive more updates. This is achieved by the observers sending an acknowledgement response to the server, detailing the \textbf{actual} time at which they received the update, as opposed to the forecast time. The server then uses these responses to build a model of the network latency, and adjust the forecast time appropriately to maximize responsiveness in gameplay. \\ \\
-
-\noindent 
-  To fully illustrate the system, two side by side algorithms are given for the server and observer components. \\ \\
-
-  \SetKwProg{Fn}{def}{}{end}
-  \SetKwFunction{Fsru}{serverReceiveUpdate}
-  \SetKwFunction{Fsrr}{serverReceiveResponse}
-  \SetKwFunction{Foru}{observerRecieveUpdate}
-  \SetKwFunction{Fosr}{obesrverSendResponse}
-\begin{minipage}{8cm}
-  {\Large{Server Functions}} \\
-  \begin{algorithm}[H]
-    \LinesNumbered
-    \Fn(){\Fsru{a,b}}{
-      \eIf{$a \equiv 0 \pmod b$}{
-        \Return b
-      }{
-        \Return \Fsru{$b$, $a \pmod b$}
-      }
-    }
-  \end{algorithm}
-\end{minipage}
-\begin{minipage}{8cm}
-  {\Large{Observer Functions}} \\
-  \begin{algorithm}[H]
-    \LinesNumbered
-    \Fn(){\Foru{a,b}}{
-      \eIf{$a \equiv 0 \pmod b$}{
-        \Return b
-      }{
-        \Return \Foru{$b$, $a \pmod b$}
-      }
-    }
-  \end{algorithm}
-\end{minipage}
-   \subsection{Interaction}
-     When considering the method of interaction on the client side, many factors had to be taken into consideration. Firstly, we had to ensure that the game is easy to pick up. To achieve this, a virtual twin stick controller was implemented. The twin stick is the most widely used control method in modern games, so this means that people could intuitively understand how to control their avatar without a lengthy explanation. The left stick is responsible for the player movement and the right for the turret rotation and shooting mechanic. \\ \\
-     Each “stick” of the user interface is responsible for controlling an axis. These axes are used to provide continuous input, resulting in smooth player navigation in the game space without any need to remove their hands of their device. The axes themselves are simply a normalized 2-dimensional vector representing direction in which the joystick is being dragged. \\ \\
-     One very important aspect of the user controls is ensuring that they are always consistent regardless of rotation in the observer view, i.e that up always moves the player up and similarly for the other directions. We achieve this by sending occasional updates of the observer rotation to the clients so that they can move respective to the \textbf{up-vector} of the observer object. The positions of the players are then sent to the server after threshold distance has been exceeded, and following this the server relays the information to the observers. \\ \\
-     Therefore up-vector of the observer camera is an important component of gameplay and is calculated as follows. Each player contains a "fake camera" which is carried round inside their objects. This fake camera also contains an up-vector, which was mainly pertinent in times when players were visualised on their own devices. The average up-vector of the players is then taken, and the observer camera rotation is interpolated with this new value.
-
-      \subsection{Enjoyability}
-      A major focus of ours when it came to this game was to enable people with varying experiences of gaming to easily engage with our game, be it they've barely played any or are regular gamers. In order to do this, we ensured from the offset that while the controls and basic functionality of the game was simple to pick up on, there would be greater depth for people who are more avid gamers. in terms of simplicity, we ensured that the controls were simple to use, going with a classic joystick setup as mentioned above. The basic aims of the game, kill the enemy team and collect resources to win, ensure a fast-pace with simple objectives to ensure everyone can have fun from the get go. \\
-      For the more avid gamers, or simply those with an eye for tactics, there are a number of strategic methods in order to gain an advantage over the opposition. Due to the way the camera works, players are locked within a region of the world, which allows for a team to try and stop the opposition from moving to a potentially more lucrative area by staying on the far edge of the visible map, holding the camera in place. Other methods such as having one of your team be a collection ship, with other members of the team acting as meatshields for it is another strategy we hope more avid gamers will quickly realise and apply in the game. \\
-      In general, the worlds each have their own special enviromental hazard which makes each map different in how one needs to approach it. For example, the City Planet has portals which teleport you around, allowing for a lot of potential in how one approaches resources and the enemy. Another planet has meteorites which strike the planet occasionally, damaging anyone who is nearby. All of these events help to bring a uniqueness to each round, ensuring the game does not become repetitive.
 
        \subsection{Graphics and interface}
 
@@ -487,6 +485,8 @@ After finding out each member's strengths and weaknesses we divided the members 
 \pagebreak
         \section{Appendix A}
 
+        BackStory - (Clean up this)
+
         Our game is set in a universe where Earth is no more. Years of fighting have finally rendered the planet inhospitable so the humankind had to abandon its birthplace and look for other planets to call home. And so, the last survivors of the human race, boarder large spaceships and began an age long trip into the nothingness of space in search for new planets. \\\\
         While cruising the vastness of the Milky Way a wormhole sucked the remnants of humanity into a new galaxy, which the named Elpis, in hope that there lied their hope for the future. But as always, humanity could not stay united for much longer, so the populace was split into factions. We have Super Corp, the large organization responsible for the construction of the spaceships that transported the rest of human race off Earth. They declared that since they provided the means for the humans to escape, the human kind should forever praise them as Gods and do as they command. This unexpected and forced employment contract caused an uproar amongst the people and soon after this declaration some brave space pilots took it upon themselves to oppose the might of the Corporation. \\\\
 
@@ -494,6 +494,32 @@ After finding out each member's strengths and weaknesses we divided the members 
         \\ \\
 
         That was 20 years ago, the Pirates have more than enough power to challenge Super Corp, but have gotten drunk with power and limitless freedom. They became corrupted by their unlimited freedom in the galaxy. The lines between good and bad, light and darkness, are fading away and all that remains its just War.
+
+\pagebreak
+
+\section{Top 10 Contributions}
+
+\begin{itemize}
+
+\item We have a full stack solution for a networked game including access point, dedicated server and distributable package. We have managed to host around 10 players on mobile devices.
+
+\item The game design process went through several experimental phases which focused around how to use the large screen effectively. In the end we have settled on a gameplay where all players look at one screen.
+
+\item We integrated the game into the Planetarium which may open possibilities for further collaboration and enhance interactivity inside the dome environment in the future.
+
+\item Further to the previous point, we have detailed in our report the modifications required to visualise the game in 3D, which we were not able to integrate due to lack of time.
+
+\item Created our own planet textures as well as space ship models using Autodesk Maya. We created 5 sample planets but for the final game had to cut down the number to 3. The spaceship models were quite different at first but they were refined later.
+
+\item The entire game is written in C\# using Unity engine, in total around 8000 lines of code written refined down to 5000.
+
+\item Collaborated closely with composers to develop music that enhanced the atmosphere of the Planetarius universe.
+
+\item In the last month we operated in a smaller team force due to two members having health issues.
+
+
+
+\end{itemize}
 
 \pagebreak
 
