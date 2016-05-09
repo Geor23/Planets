@@ -196,6 +196,7 @@ Moreover, most of our features were implemented such that adding on would be a m
   Updates which are sent to the observer occur over a network where there is no guarantee of when they will they will arrive, of course we expect that they will take far less than say, $1$ second, but another level of execution locking is required to fully synchronize the state of two observers. \\ \\
   This is achieved through pairing position updates with a forecast time, and packet ID at which the observer should execute the actual position update. Initially, the forecast time should be well in advance, but rapidly decrease as the observers receive more updates. This is achieved by the observers sending an acknowledgement response to the server, detailing the \textbf{actual} time at which they received the update, as opposed to the forecast time. The server then uses these responses to build a model of the network latency, and adjust the forecast time appropriately to maximize responsiveness in gameplay. \\ \\
 
+\noindent 
   To fully illustrate the system, two side by side algorithms are given for the server and observer components. \\ \\
 
   \SetKwProg{Fn}{def}{}{end}
@@ -302,16 +303,18 @@ Moreover, most of our features were implemented such that adding on would be a m
 
         \subsection{Initial Goal Planned}
 
+        \noindent
         For organisational purposes, we set some milestones that needed to be accomplished by various points during the year so that work could proceed smoothly: \\ \\
 
+\noindent
         \textbf{Getting to know Unity:} No one in our team was particularly experienced with game development, and so we scheduled a twelve hour coding session in order to familiarize ourselves with Unity.
-
+\noindent
         Git learning sessions: as well as learning how to use Unity, there were members of our team that were not that familiar with Github. We set up a session that would enhance everyone’s ability to use this tool.
-        
+        \noindent
         Basic single player implementation: After going through some tutorials related to our game concept we made our first step of our game creation. We implemented a simple single player demo where you can control an avatar which can move around on a plane, as well as shoot projectiles. \\ \\
-
+\noindent
         \textbf{Research networking:} The next step was to make our first attempt at turning the existing single player demo into a multiplayer one. We researched ports, along with IP address assignment. \\ \\
-        
+        \noindent
         Debugging: Debugging was mostly something that occured consistently throughout the project, ensuring that the game was working properly at any stage. However, we also organized some dedicated debugging sessions as well, ensuring that the game was as functional as possible at any key stages. Often we would involve inexperienced users to try it out to help find any issues. \\ \\
 
         \subsection{Gameplay Revisions}
