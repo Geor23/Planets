@@ -3,16 +3,16 @@ using System.Collections;
 
 public class SceneFadeInOut : MonoBehaviour
 {
-    public float fadeSpeed = 1.5f;          // Speed that the screen fades to and from black.
+    public float fadeSpeed = 10f;          // Speed that the screen fades to and from black.
     
     
     private bool sceneStarting = true;      // Whether or not the scene is still fading in.
     
     
     void Awake ()
-    {
+    {//CHANGED: NOW OF SIZE 0,0
         // Set the texture so that it is the the size of the screen and covers it.
-        GetComponent<GUITexture>().pixelInset = new Rect(0f, 0f, Screen.width, Screen.height);
+        GetComponent<GUITexture>().pixelInset = new Rect(0f, 0f, 0, 0);
     }
     
     
