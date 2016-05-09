@@ -78,7 +78,7 @@ public class AudioManager : MonoBehaviour
 
         //Play Clip
 
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.LeftBracket))
         {
             currentClip.Play();
             currentClip.loop = true;
@@ -86,14 +86,14 @@ public class AudioManager : MonoBehaviour
         }
 
         //Stop Clip
-        if (Input.GetKeyDown(KeyCode.O))
+        if (Input.GetKeyDown(KeyCode.RightBracket))
         {
             currentClip.Stop();
             Debug.Log("Stop " + currentClip.name);
         }
 
         //Mute Clip
-        if (Input.GetKeyDown(KeyCode.M))
+        if (Input.GetKeyDown(KeyCode.Backslash))
         {
             if (currentClip.mute)
             {
