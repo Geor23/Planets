@@ -214,7 +214,7 @@ Moreover, most of our features were implemented such that adding on would be a m
   \SetKwFunction{Fwait}{waitUntill}
   \SetKwFunction{Fexe}{executeUpdate}
 
-\begin{minipage}{10cm}
+\begin{minipage}{9.6cm}
   {\Large{Server Functions}} \\
   \begin{algorithm}[H]
     \LinesNumbered
@@ -229,7 +229,7 @@ Moreover, most of our features were implemented such that adding on would be a m
   \end{algorithm}
   \begin{algorithm}[H]
     \LinesNumbered
-    \Fn(){\Fsrr{r, time}}{
+    \Fn(){\Fsrr{id, r, time}}{
         $diff \longleftarrow time - \Fort{r}$
         \Fulat{diff}
     }
@@ -240,6 +240,7 @@ Moreover, most of our features were implemented such that adding on would be a m
   \begin{algorithm}[H]
     \LinesNumbered
     \Fn(){\Foru{u, id, time}}{
+      \Fosr{id, u, \textsc{CurrentTime}}
       \Fwait{time} \\
       \Fexe{u}
     }
