@@ -245,35 +245,51 @@ Moreover, most of our features were implemented such that adding on would be a m
 
   \SetKwProg{Fn}{def}{}{end}
   \SetKwFunction{Fsru}{serverReceiveUpdate}
+  \SetKwFunction{Fsstu}{sendForecastUpdate}
   \SetKwFunction{Fsrr}{serverReceiveResponse}
-  \SetKwFunction{Foru}{observerRecieveUpdate}
+  \SetKwFunction{Foru}{observerRecieveForecast}
   \SetKwFunction{Fosr}{obesrverSendResponse}
-\begin{minipage}{8cm}
+  \SetKwFunction{Fid}{createIdFromPacket}
+  \SetKwFunction{Fsp}{storePacketInDict}
+  \SetKwFunction{Fort}{originalTimeFromDict}
+  \SetKwFunction{Flat}{getMeanLatency}
+  \SetKwFunction{Fulat}{updateMeanLatency}
+  \SetKwFunction{Frt}{getActualTime}
+  \SetKwFunction{Fwait}{waitUntill}
+  \SetKwFunction{Fexe}{executeUpdate}
+
+\begin{minipage}{10cm}
   {\Large{Server Functions}} \\
   \begin{algorithm}[H]
     \LinesNumbered
-    \Fn(){\Fsru{a,b}}{
-      \eIf{$a \equiv 0 \pmod b$}{
-        \Return b
-      }{
-        \Return \Fsru{$b$, $a \pmod b$}
+    \Fn(){\Fsru{u}}{
+        $id \longleftarrow \Fid{u}$
+        \Fsp{id, u, \textsc{CurrentTime}} \\
+        $time \longleftarrow \textsc{CurrentTime} + \Flat()$ \\
+      \For{all observers}{
+        \Fsstu{u, id, time}
       }
     }
   \end{algorithm}
+  \begin{algorithm}[H]
+    \LinesNumbered
+    \Fn(){\Fsrr{r, time}}{
+        $diff \longleftarrow time - \Fort{r}$
+        \Fulat{diff}
+    }
+  \end{algorithm}
 \end{minipage}
-\begin{minipage}{8cm}
+\begin{minipage}{12cm}
   {\Large{Observer Functions}} \\
   \begin{algorithm}[H]
     \LinesNumbered
-    \Fn(){\Foru{a,b}}{
-      \eIf{$a \equiv 0 \pmod b$}{
-        \Return b
-      }{
-        \Return \Foru{$b$, $a \pmod b$}
-      }
+    \Fn(){\Foru{u, id, time}}{
+      \Fwait{time} \\
+      \Fexe{u}
     }
   \end{algorithm}
-\end{minipage}
+\end{minipage} \\
+Where all latency functions simply query a data structure that holds mean and variance latency over the network.
    \subsection{Interaction}
      When considering the method of interaction on the client side, many factors had to be taken into consideration. Firstly, we had to ensure that the game is easy to pick up. To achieve this, a virtual twin stick controller was implemented. The twin stick is the most widely used control method in modern games, so this means that people could intuitively understand how to control their avatar without a lengthy explanation. The left stick is responsible for the player movement and the right for the turret rotation and shooting mechanic. \\ \\
      Each “stick” of the user interface is responsible for controlling an axis. These axes are used to provide continuous input, resulting in smooth player navigation in the game space without any need to remove their hands of their device. The axes themselves are simply a normalized 2-dimensional vector representing direction in which the joystick is being dragged. \\ \\
