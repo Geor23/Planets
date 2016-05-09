@@ -122,7 +122,7 @@ Considering the game was intended to be heavily network based, it made sense to 
  A major part of our project involved the @Bristols 3D Planetarium, as one of our main goals was to investigate the 3D capability, creating a truly immersive experience. The planetarium provided us with the opportunity to port our project to its 4K Dome, and further enhance its atmosphere and immerse the players in an environment that completely surrounds them. The planetarium also boasts complete surround sound on top of this. We had 4 hour sessions every one or two weeks to test out our new ideas.
 
  \subsubsection{ Music Composers}
- The Faculty of Engineering cooperated with the Music Department of the University of Bristol and after presenting our game ideas in front of them, we ended up co-operating with two excellent composers, Edward Brown and Matthew Jones. We proceeded with explaining our game's universe and concept to them, in order to fully immerse them into our idea and the result was amazing. They provided us with some magnificent clips for our needs. Specifically, they composed clips for every different planet, the Pirate and Super Corp theme and  menu themes.
+ The Faculty of Engineering cooperated with the Music Department of the University of Bristol and after presenting our game ideas in front of them, we ended up co-operating with two excellent composers, Edward Brown and Matthew Jones. We proceeded with explaining our game's universe and concept to them, in order to fully immerse them into our idea and the result was amazing. They provided us with some magnificent clips for our needs. Specifically, they composed clips for every different planet, the Pirate and Super Corp theme and menu themes.
 
 
  \subsubsection{git}
@@ -136,7 +136,7 @@ Considering the game was intended to be heavily network based, it made sense to 
  Our game was intended to be playable on android and iOS devices. Due to the Unity engine providing built-in support for cross platform gaming this step was simplified for us. The difficult task was distributing the packages correctly. iOS does not allow packages to be distributed unless they has been signed with an accredited developer license which costs a sum of money. Most of the devices we support are therefore Android, as there is an option to install unknown software.
 
  \subsection{Microsoft Controllers}
-  We were also able to add in support for Xbox controllers on Windows clients. This allowed futher accessibility to the game even when an individual cannot use their phone, although it is still more convenient to have a mobile as this is how the game has been targeted.
+  We were also able to add in support for Xbox controllers on Windows clients. This allowed further accessibility to the game even when an individual cannot use their phone, although it is still more convenient to have a mobile as this is how the game has been targeted.
 
 
 \pagebreak
@@ -149,7 +149,7 @@ Considering the game was intended to be heavily network based, it made sense to 
 
  \subsection{Adding New Game Functionality}
  To add new functionality to the game it is ideal that the developer uses Unity Engine 5.4.3+ to be able to build for Windows, Android and Linux. The code for the game is separated into several folders relating to the game component required. For development related to gameplay flow the developer should first start by exploring the Start, Lobby and Round scenes. All scenes contain component scripts attached to objects which control the flow of the game. The scripts attached to these objects are descendants of MonoBehaviour which means they exist in the context of a scene and relate to an object in the scene.\\ \\
- To change more core aspects of the game such as networking or rounds, the user can navigate the folder structure which is separated by functionality, and then by purpose. For example there is a Network folder which contains many subfolders relating to player object synchronisation, socket connection information etc.
+ To change more core aspects of the game such as networking or rounds, the user can navigate the folder structure which is separated by functionality, and then by purpose. For example there is a Network folder which contains many sub folders relating to player object synchronisation, socket connection information etc.
 
 Moreover, most of our features were implemented such that adding on would be a matter of simply inserting a new line of code. For example, the round system is based on having an array of all of the scenes we would want to play in order they must appear, calculating the transitions, round stats and gameplay would automatically be updated. Thus, in order to insert a new round or a new planet, it would be a matter of adding the scene name into the array of scenes in the round manager and this would enable further rounds.
 
