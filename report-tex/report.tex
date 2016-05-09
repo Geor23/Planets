@@ -194,10 +194,14 @@ Moreover, most of our features were implemented such that adding on would be a m
 
   The algorithm for stereo visualisation of the game is actually very simple. It is partly inspired by the Unity Cluster Renderer technique and the network solution we had already implemented. \\
   Updates which are sent to the observer occur over a network where there is no guarantee of when they will they will arrive, of course we expect that they will take far less than say, $1$ second, but another level of execution locking is required to fully synchronize the state of two observers. \\ \\
-  This is achieved through pairing position updates with a forecast time, and packet ID at which the observer should execute the actual position update. Initially, the forecast time should be well in advance, but rapidly decrease as the observers receive more updates. This is achieved by the observers sending an acknowledgement response to the server, detailing the \textbf{actual} time at which they received the update, as opposed to the forecast time. The server then uses these responses to build a model of the network latency, and adjust the forecast time appropriately to maximize responsiveness in gameplay.
+  This is achieved through pairing position updates with a forecast time, and packet ID at which the observer should execute the actual position update. Initially, the forecast time should be well in advance, but rapidly decrease as the observers receive more updates. This is achieved by the observers sending an acknowledgement response to the server, detailing the \textbf{actual} time at which they received the update, as opposed to the forecast time. The server then uses these responses to build a model of the network latency, and adjust the forecast time appropriately to maximize responsiveness in gameplay. \\ \\
+
+  To fully illustrate the system, two side by side algorithms are given for the server and observer components. \\ \\
 
   \SetKwProg{Fn}{def}{}{end}
   \SetKwFunction{Fgcd}{stereoMyButthole}
+\begin{minipage}{8cm}
+  {\Large{Server Functions}} \\
   \begin{algorithm}[H]
     \LinesNumbered
     \Fn(\tcc*[h]{compute gcd}){\Fgcd{a,b}}{
@@ -208,6 +212,20 @@ Moreover, most of our features were implemented such that adding on would be a m
       }
     }
   \end{algorithm}
+\end{minipage}
+\begin{minipage}{8cm}
+  {\Large{Observer Functions}} \\
+  \begin{algorithm}[H]
+    \LinesNumbered
+    \Fn(\tcc*[h]{compute gcd}){\Fgcd{a,b}}{
+      \eIf{$a \equiv 0 \pmod b$}{
+        \Return b
+      }{
+        \Return \Fgcd{$b$, $a \pmod b$}
+      }
+    }
+  \end{algorithm}
+\end{minipage}
    \subsection{Interaction}
      When considering the method of interaction on the client side, many factors had to be taken into consideration. Firstly, we had to ensure that the game is easy to pick up. To achieve this, a virtual twin stick controller was implemented. The twin stick is the most widely used control method in modern games, so this means that people could intuitively understand how to control their avatar without a lengthy explanation. The left stick is responsible for the player movement and the right for the turret rotation and shooting mechanic. \\ \\
      Each “stick” of the user interface is responsible for controlling an axis. These axes are used to provide continuous input, resulting in smooth player navigation in the game space without any need to remove their hands of their device. The axes themselves are simply a normalized 2-dimensional vector representing direction in which the joystick is being dragged. \\ \\
@@ -220,8 +238,6 @@ Moreover, most of our features were implemented such that adding on would be a m
       (NEEDED???)For example, due to the game being working like an arena style game, where players can drag the view as they move, as one player from the pirates team follows a Super Corp to try and kill him, another pirate can move in the opposite direction in order to drag the view with him, making the Super Corp captured, as it would be unable to move in its original direction. 
 
 
-
-  \pagebreak
   \subsection{Screen views}
 
 
@@ -254,7 +270,6 @@ Moreover, most of our features were implemented such that adding on would be a m
   \end{align*}
   This method worked well for seeing the entire planet on one screen however through testing we found that the concept was difficult to grasp given that the transition occurs on a spherical shape. Therefore we required a more simple option.
 
-\pagebreak
    \subsubsection{Single Screen}
     In the single screen view all players are enforced to stay within the the view of one camera, which displays one half of the planet. This is achieved by constraining the player position to be within the distance between the camera and the centre of the planet. The camera is positioned at twice the radius of the planet, while always facing the centre of the planet. To determine where the camera should move, the average position of the players is calculated, and the camera object is rotated to face this point. This rotation is then synchronized occasionally with all players to ensure that they cannot move out from the field of view. \\ \\
 
@@ -264,7 +279,7 @@ Moreover, most of our features were implemented such that adding on would be a m
        \subsection{Graphics and interface}
 
        \noindent
-        An important design decision that had to be taken early in the project's development was the direction that graphics should take. There were two directions that the project could take in regards to that. Either take a more photo-realistic approach or a more “cartoony” one. In order to reach a decision all the affected factors were taken into consideration. A primary concern was the fact that the game had to perform well on the Planetarium Dome, and for the result to be as smooth as possible the polygon count had to be kept at an optimal level. We were limited to around 4,000,000 polygons, which would be infeasible with a photo-realistic approach, considering the amount of players the we were aiming this for could cause serious rendering and synchronization issues.
+        An important design decision that had to be taken early in the project's development was the direction that graphics should take. There were two directions that the project could take in regards to that. Either take a more photo-realistic approach or a more “cartoony” one. In order to reach a decision all the affected factors were taken into consideration. \\ \\A primary concern was the fact that the game had to perform well on the Planetarium Dome, and for the result to be as smooth as possible the polygon count had to be kept at an optimal level. We were limited to around 4,000,000 polygons, which would be infeasible with a photo-realistic approach, considering the amount of players the we were aiming this for could cause serious rendering and synchronization issues. \\ \\
         \noindent
         The Planetarium also made clear that if the game was a success, they would be interested in taking it on as a a new showcase. Thus, the Planetarium’s standard demographic had to be taken into account, which includes young children. This meant cartoon-like graphics stood out as the preferred choice.  \\ \\
 \noindent
