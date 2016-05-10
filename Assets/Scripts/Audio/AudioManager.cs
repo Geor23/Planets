@@ -8,16 +8,31 @@ public class AudioManager : MonoBehaviour
     public AudioSource[] allMyAudioSources;
     public AudioSource currentClip;
 
-
+    PlayerConfig playerConfig;
     // Use this for initialization
     void Start()
     {
-        //AudioSource[] allMyAudioSources = GetComponents<AudioSource>();
-        if (allMyAudioSources.Length > 0){
-            currentClip = allMyAudioSources[0];
-            Debug.Log("Current Clip " + currentClip.name);
-        }
+        playerConfig = PlayerConfig.singleton;
+        if (playerConfig.GetObserver() == true)
+        {
+            //AudioSource[] allMyAudioSources = GetComponents<AudioSource>();
+            if (allMyAudioSources.Length > 0)
+            {
+                currentClip = allMyAudioSources[0];
+                Debug.Log("Current Clip " + currentClip.name);
+                allMyAudioSources[0].Play();
+                allMyAudioSources[0].loop = true;
+            }
 
+            if (allMyAudioSources.Length > 1)
+            {
+                allMyAudioSources[1].Play();
+                allMyAudioSources[1].loop = true;
+            Debug.Log("Current Clip " + allMyAudioSources[1].name);
+
+        }
+            }
+        else return;
     }
 
     void Update()
