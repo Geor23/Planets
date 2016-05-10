@@ -151,6 +151,8 @@ public class PlayerControllerMobile : NetworkBehaviour {
                 Destroy(shield);
                 shieldedTime = fasterFireTimeInit; //Resets timer
             }
+        }else {
+            shield.SetActive(false);
         }
         Transform obsCam = GameObject.FindGameObjectsWithTag("Observer")[0].transform.GetChild(0);
         tearDrop.transform.LookAt(obsCam.position, -obsCam.up);
