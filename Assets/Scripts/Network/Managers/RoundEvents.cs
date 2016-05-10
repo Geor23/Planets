@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using System.Collections;
-using UnityEngine.EventSystems;
 using UnityEngine.Networking;
-using UnityEngine.UI;
-
 
 //All classes are per round
 //We can make other classes for data that needs to persist across rounds like full game stats etc...

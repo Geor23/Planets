@@ -9,8 +9,7 @@ public class SceneFadeInOut : MonoBehaviour
     private bool sceneStarting = true;      // Whether or not the scene is still fading in.
     
     
-    void Awake ()
-    {//CHANGED: NOW OF SIZE 0,0
+    void Awake (){//CHANGED: NOW OF SIZE 0,0
         // Set the texture so that it is the the size of the screen and covers it.
         GetComponent<GUITexture>().pixelInset = new Rect(0f, 0f, 0, 0);
     }
