@@ -9,8 +9,8 @@ using System.Collections;
 
 [NetworkSettings(channel = 1)]
 public class PlayerControllerMobile : NetworkBehaviour {
-
-
+    private AudioSource laserSound;
+    private AudioSource explosionSound;
     private NetworkIdentity nIdentity;
     private PlanetsNetworkManager nm;
     public PersonalPlayerInfo ppi;
@@ -83,6 +83,9 @@ public class PlayerControllerMobile : NetworkBehaviour {
     public void Start() {
         lastPos = model.position;
         newRotation = model.rotation;
+        AudioSource[] aSources = GetComponents<AudioSource>(); 
+        laserSound = aSources[0]; 
+        explosionSound = aSources[1];
     }
     public override void OnStartClient(){
         base.OnStartClient();
@@ -259,6 +262,7 @@ public class PlayerControllerMobile : NetworkBehaviour {
         #endif
             if (Time.time < nextFire)
                 return;
+            laserSound.Play();
             CmdFireProjectile(turret.transform.rotation);
             nextFire = Time.time + currentFireRate;
         }
