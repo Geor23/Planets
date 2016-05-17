@@ -14,7 +14,7 @@ public class ResourcePowerUpManager : MonoBehaviour {
     public GameObject fasterFireObject;
     public GameObject doubleScoreObject;
     public GameObject meteorObject;
-
+    public Vector3 planetCenter = new Vector3(0, 0, 0);
     private int minResourceScore = 1;
     private int maxResourceScore = 11;
     private int initialScore = 1;
@@ -47,7 +47,7 @@ public class ResourcePowerUpManager : MonoBehaviour {
     public int maxFasterFireOnPlanet = 2;
     public int minFasterFireOnPlanet = 1;
 
-    public int maxMeteorOnPlanet = 2;
+    public int maxMeteorOnPlanet = 1;
     public int minMeteorFireOnPlanet = 1;
 
     public float resourceSpawnTime = 1.5f;
@@ -163,9 +163,15 @@ public class ResourcePowerUpManager : MonoBehaviour {
     }
     //needs fixing
     void spawnMeteor() {
-        for (int i = meteor.Count; i < maxMeteorOnPlanet; i++) {
+        Transform obsCam = GameObject.FindGameObjectsWithTag("Observer")[0].transform.GetChild(0);
+       // for (int i = meteor.Count; i < maxMeteorOnPlanet; i++) {
         int spawnIndex = Random.Range(0, meteorSpawnPoints.Length);
-        meteor.Add((GameObject)Instantiate(meteorObject, meteorSpawnPoints[spawnIndex].transform.position, meteorSpawnPoints[spawnIndex].transform.rotation));
-    }
+            Vector3 dirFromObsToPlanet = planetCenter - obsCam.position;
+            Vector3 spawnPos = (obsCam.position - (dirFromObsToPlanet));
+            float rand = (Random.value * 400) - 200;
+            Vector3 dir = obsCam.transform.right.normalized * (rand);
+            spawnPos += dir;
+            meteor.Add((GameObject)Instantiate(meteorObject, spawnPos, meteorSpawnPoints[spawnIndex].transform.rotation));
+ //   }
 }
 }
