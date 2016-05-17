@@ -299,9 +299,9 @@ public class PlayerControllerMobile : NetworkBehaviour {
                 roundEvents.registerMeteorKill(netId, playerDetails.getDictId(), killerId);
             }    
         }
-        //TOFIX
         else if (col.gameObject.CompareTag("ProjectilePirate") || col.gameObject.CompareTag("ProjectileSuperCorp")) {
-            if (!dead && !shielded) {
+            if (!dead && !shielded){
+                explosionSound.Play();
                 dead = true;
                 int killerId = col.gameObject.GetComponent<ProjectileData>().ownerId;
                 gameObject.GetComponent<Exploder>().expl();
@@ -330,13 +330,6 @@ public class PlayerControllerMobile : NetworkBehaviour {
             if (!nIdentity.isLocalPlayer) return;
         }
 
-        //if (!col.gameObject.CompareTag("InversionPlane")) return;
-        /* if(needsReflection){
-             reflectionMatrix = reflectionMatrix * genRefMatrix(Mathf.Atan2(lastMoveV, lastMoveH));
-         } else {
-             needsReflection = true;
-             reflectionMatrix = genRefMatrix(Mathf.Atan2(lastMoveV, lastMoveH));
-         }*/
         if (col.gameObject.CompareTag("DoubleScore"))
         {
             doubleScore = true;
