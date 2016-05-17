@@ -128,7 +128,7 @@ Transform:
   m_Children:
   - {fileID: 1209665011}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
 --- !u!82 &6013906
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1372,7 +1372,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 114930, guid: 150fb83b86bf6b5488321a9a60592a0d, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11433602, guid: 150fb83b86bf6b5488321a9a60592a0d, type: 2}
       propertyPath: enablePlanetariumMode
