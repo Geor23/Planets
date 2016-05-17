@@ -4331,7 +4331,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1373486693
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5237,19 +5237,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22417662, guid: e9374233ad0db471cbc9a0edcd9bc0e3, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 1068
+      value: 421
       objectReference: {fileID: 0}
     - target: {fileID: 22417662, guid: e9374233ad0db471cbc9a0edcd9bc0e3, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -69
+      value: -1427
       objectReference: {fileID: 0}
     - target: {fileID: 22416040, guid: e9374233ad0db471cbc9a0edcd9bc0e3, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -175
+      value: -1209
       objectReference: {fileID: 0}
     - target: {fileID: 22416040, guid: e9374233ad0db471cbc9a0edcd9bc0e3, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: -913
+      value: -502
       objectReference: {fileID: 0}
     - target: {fileID: 22417662, guid: e9374233ad0db471cbc9a0edcd9bc0e3, type: 2}
       propertyPath: m_AnchoredPosition.y
@@ -5282,6 +5282,22 @@ Prefab:
     - target: {fileID: 470832, guid: e9374233ad0db471cbc9a0edcd9bc0e3, type: 2}
       propertyPath: m_RootOrder
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 22416040, guid: e9374233ad0db471cbc9a0edcd9bc0e3, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0.6478314
+      objectReference: {fileID: 0}
+    - target: {fileID: 22416040, guid: e9374233ad0db471cbc9a0edcd9bc0e3, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 0.76178384
+      objectReference: {fileID: 0}
+    - target: {fileID: 22417662, guid: e9374233ad0db471cbc9a0edcd9bc0e3, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0.6948382
+      objectReference: {fileID: 0}
+    - target: {fileID: 22417662, guid: e9374233ad0db471cbc9a0edcd9bc0e3, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 0.7191661
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e9374233ad0db471cbc9a0edcd9bc0e3, type: 2}
