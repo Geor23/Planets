@@ -65,9 +65,13 @@ public class LobbyGUI : MonoBehaviour {
 	}
 
 	void Update () {
-		if (Input.GetKeyDown("s")) {
-			StartGame();
-		}
+        if (PlayerConfig.singleton.GetObserver())
+        {
+            if (Input.GetKeyDown("q"))
+            {
+                StartGame();
+            }
+        }
 	}
 
 }

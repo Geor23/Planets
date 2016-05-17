@@ -18,10 +18,15 @@ public class StartSceneGUI : MonoBehaviour {
     }
 
     void Update(){ //TODO : REMOVE THIS, REPLACE WITH OBSERVER SCENE
-        if (Input.GetKeyDown("o") && Input.GetKeyDown("p")){
+       if (Input.GetKeyDown("o") && Input.GetKeyDown("p")){
             playerChoice = TeamID.TEAM_OBSERVER;
             PlayerConfig.singleton.SetTeam(TeamID.TEAM_OBSERVER);
             Debug.LogError("Now an observer");
+        } 
+        if(PlayerConfig.singleton.GetObserver()) {
+            if(Input.GetKeyDown("w")) {
+                StartClient();
+            }
         }
 
         if ((Input.GetKeyDown("g") && Input.GetKeyDown("h"))){
@@ -49,6 +54,20 @@ public class StartSceneGUI : MonoBehaviour {
         }
     }
   }
+
+    //Gives the local Network Manager the network address. Request a start client, also adds a handler for the SendJoinMessageCallback
+    public void StartObserver(){
+        if (nameT.text == "") {
+            MobileNativeMessage msg = new MobileNativeMessage("Invalid Name", "Please use a valid name!");
+        } else {
+            if (!joinPressed) {
+                joinPressed = true;
+                Invoke("setButtonPressFalse", 21);
+                nm.networkAddress = networkAddr.text;
+                nm.StartClient().RegisterHandler(MsgType.Connect, SendJoinMessageCallback);
+            }
+        }
+    }
 
 
     public void SendJoinMessageCallback(NetworkMessage m){
