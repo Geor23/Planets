@@ -84,8 +84,7 @@ public class PlayerControllerMobile : NetworkBehaviour {
         lastPos = model.position;
         newRotation = model.rotation;
         AudioSource[] aSources = GetComponents<AudioSource>(); 
-        laserSound = aSources[0]; 
-        explosionSound = aSources[1];
+        explosionSound = aSources[0];
     }
     public override void OnStartClient(){
         base.OnStartClient();
@@ -262,7 +261,7 @@ public class PlayerControllerMobile : NetworkBehaviour {
         #endif
             if (Time.time < nextFire)
                 return;
-            laserSound.Play();
+           // laserSound.Play();
             CmdFireProjectile(turret.transform.rotation);
             nextFire = Time.time + currentFireRate;
         }
