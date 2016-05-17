@@ -1530,6 +1530,7 @@ MonoBehaviour:
   fasterFireObject: {fileID: 145916, guid: 8f692cbb3a65f44f6afc310fc71eecf9, type: 2}
   doubleScoreObject: {fileID: 145750, guid: 3878060366c384641bfda800c95ea059, type: 2}
   meteorObject: {fileID: 162606, guid: d907b9dc960124ffea58f3309684e7b4, type: 2}
+  planetCenter: {x: 0, y: 0, z: 0}
   resourceSpawnPoints:
   - {fileID: 1605872448}
   - {fileID: 290315595}
@@ -1607,7 +1608,7 @@ MonoBehaviour:
   minMeteorFireOnPlanet: 1
   resourceSpawnTime: 1.5
   powerUpSpawnTime: 10.5
-  meteorSpawnTime: 10
+  meteorSpawnTime: 5
 --- !u!114 &179476327
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4063,7 +4064,7 @@ GameObject:
   - 23: {fileID: 508004841}
   m_Layer: 0
   m_Name: Mound (7)
-  m_TagString: Untagged
+  m_TagString: Mound
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10080,7 +10081,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1375145732
 Transform:
   m_ObjectHideFlags: 0
@@ -12724,7 +12725,7 @@ GameObject:
   - 23: {fileID: 1759306245}
   m_Layer: 0
   m_Name: Mound (4)
-  m_TagString: Untagged
+  m_TagString: Mound
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

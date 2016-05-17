@@ -765,6 +765,11 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0c5ba45f3b9cb3a49ae03bdcc52a5c4e, type: 2}
   m_IsPrefabParent: 0
+--- !u!20 &1431411197 stripped
+Camera:
+  m_PrefabParentObject: {fileID: 2084848, guid: 0c5ba45f3b9cb3a49ae03bdcc52a5c4e,
+    type: 2}
+  m_PrefabInternal: {fileID: 1431411196}
 --- !u!1001 &1464652472
 Prefab:
   m_ObjectHideFlags: 0
@@ -987,6 +992,14 @@ Prefab:
     - target: {fileID: 104534, guid: a7a8075a28f1e9d4d919aa8a68badff8, type: 2}
       propertyPath: m_TagString
       value: CityPlanetStructure
+      objectReference: {fileID: 0}
+    - target: {fileID: 11419022, guid: a7a8075a28f1e9d4d919aa8a68badff8, type: 2}
+      propertyPath: mainCamera
+      value: 
+      objectReference: {fileID: 1431411197}
+    - target: {fileID: 11419022, guid: a7a8075a28f1e9d4d919aa8a68badff8, type: 2}
+      propertyPath: meteorSpawnTime
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a7a8075a28f1e9d4d919aa8a68badff8, type: 2}
