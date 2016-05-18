@@ -55,7 +55,7 @@ public class GameStatsManager : MonoBehaviour {
         this.getRoundPlayerData(latestRound);
     }
 
-    public String returnRoundWinner(int roundNumber) {
+    public string returnRoundWinner(int roundNumber) {
 
         int pirateScore = getRoundScores(roundNumber).getPirateScore();
         int superCorpScore = getRoundScores(roundNumber).getSuperCorpScore();
