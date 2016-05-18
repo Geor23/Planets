@@ -71,7 +71,7 @@ public class ResourcePowerUpManager : MonoBehaviour {
         //Spawn Resources, Power Ups and Meteors and initialize lists 
 
         InvokeRepeating("spawnResource", 0.0f, resourceSpawnTime);
-        InvokeRepeating("UpdateRandomResourceScoreValue", 1, 0.5);
+        InvokeRepeating("UpdateRandomResourceScoreValue", 1, 0.5f);
 
         InvokeRepeating("spawnFasterFire", 0.0f, powerUpSpawnTime);
         InvokeRepeating("spawnDoubleScore", 0.0f, powerUpSpawnTime);
