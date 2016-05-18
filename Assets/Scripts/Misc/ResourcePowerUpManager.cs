@@ -169,7 +169,7 @@ public class ResourcePowerUpManager : MonoBehaviour {
             Vector3 dirFromObsToPlanet = planetCenter - obsCam.position;
             Vector3 spawnPos = (obsCam.position - (dirFromObsToPlanet));
             float rand = (Random.value * 400) - 200;
-            Vector3 dir = obsCam.transform.right.normalized * (rand);
+        Vector3 dir = obsCam.transform.right.normalized * (rand);
             spawnPos += dir;
             meteor.Add((GameObject)Instantiate(meteorObject, spawnPos, meteorSpawnPoints[spawnIndex].transform.rotation));
  //   }

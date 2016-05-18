@@ -387,6 +387,21 @@ public class PlayerControllerMobile : NetworkBehaviour {
             int resourceScore = resourcePowerUpManager.resourcePickUpCollision(col.gameObject);
             int dictId = playerDetails.getDictId();
             roundEvents.getRoundScoreManager().increasePlayerScore(dictId, resourceScore);
+        } else if(col.gameObject.CompareTag("Meteor")) {
+            if (!dead){
+                dead = true;
+                int killerId = -5;
+                gameObject.GetComponent<Exploder>().expl();
+                //resourcePowerUpManager.meteorCollision(col.gameObject);
+                int score = pm.getRoundScore(dictId);
+
+                if (score != 0){
+                    GameObject resource = (GameObject)Instantiate(ResourcePickUpDeath, gameObject.transform.position, Quaternion.identity);
+                    resource.GetComponent<CurrentResourceScore>().resourceScore = score;
+                }
+                roundEvents.registerMeteorKill(netId, playerDetails.getDictId(), killerId);
+            }
+
         }
     }
 
