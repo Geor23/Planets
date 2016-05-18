@@ -3907,6 +3907,18 @@ Prefab:
       propertyPath: m_LocalRotation.w
       value: 0.59493506
       objectReference: {fileID: 0}
+    - target: {fileID: 22491262, guid: fb8bffbde3ae84e5db1cc51f96470508, type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 22491262, guid: fb8bffbde3ae84e5db1cc51f96470508, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 22491262, guid: fb8bffbde3ae84e5db1cc51f96470508, type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: -1.4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fb8bffbde3ae84e5db1cc51f96470508, type: 2}
   m_IsPrefabParent: 0
@@ -4370,6 +4382,56 @@ RectTransform:
   m_PrefabParentObject: {fileID: 22400004, guid: 05a81c3d5091440058129444d28322f3,
     type: 2}
   m_PrefabInternal: {fileID: 1309447521}
+--- !u!1001 &1453307769
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 456730, guid: 150fb83b86bf6b5488321a9a60592a0d, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 2.1100006
+      objectReference: {fileID: 0}
+    - target: {fileID: 456730, guid: 150fb83b86bf6b5488321a9a60592a0d, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 45.481438
+      objectReference: {fileID: 0}
+    - target: {fileID: 456730, guid: 150fb83b86bf6b5488321a9a60592a0d, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -9.890999
+      objectReference: {fileID: 0}
+    - target: {fileID: 456730, guid: 150fb83b86bf6b5488321a9a60592a0d, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 456730, guid: 150fb83b86bf6b5488321a9a60592a0d, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 456730, guid: 150fb83b86bf6b5488321a9a60592a0d, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 456730, guid: 150fb83b86bf6b5488321a9a60592a0d, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 456730, guid: 150fb83b86bf6b5488321a9a60592a0d, type: 2}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 11433602, guid: 150fb83b86bf6b5488321a9a60592a0d, type: 2}
+      propertyPath: enablePlanetariumMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114930, guid: 150fb83b86bf6b5488321a9a60592a0d, type: 2}
+      propertyPath: m_TagString
+      value: PlanetariumController
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 150fb83b86bf6b5488321a9a60592a0d, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1001 &1533274131
 Prefab:
   m_ObjectHideFlags: 0
