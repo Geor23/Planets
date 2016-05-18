@@ -44,6 +44,7 @@ public class RoundPlayerObjectManager { //TODO
         pm = PlayerManager.singleton;
     }
 
+    //Modify to handle meteors
     //Kills player, potentially starts timer for respawn too
     public void killPlayerLocal(int playerIdKilled, int playerIdKiller){ //TODO
         KillInfo ki = new KillInfo(playerIdKiller, playerIdKilled, KillType.BULLET);
@@ -63,6 +64,26 @@ public class RoundPlayerObjectManager { //TODO
         }
     }
 
+    public void meteorKillPlayerLocal(int playerIdKilled, int playerIdKiller) { 
+        KillInfo ki = new KillInfo(playerIdKiller, playerIdKilled, KillType.METEOR);
+        killHistory.Add(ki);
+        deadPlayers.Enqueue(playerIdKilled);
+
+        //Increment team kill and death counters
+        //Got killed players team
+        int team = pm.getPlayer(playerIdKilled).getPlayerTeam();
+        if (team == TeamID.TEAM_SUPERCORP) {
+            superCorpDeaths += 1;
+        }
+        else {
+            superCorpKills += 1;
+        }
+    }
+
+    public int numPlayers(){
+        return pm.getPlayerDict().Count;
+    }
+
     public int mostRecentDeath(){
         if(deadPlayers.Count != 0)
             return deadPlayers.Dequeue();
@@ -71,9 +92,16 @@ public class RoundPlayerObjectManager { //TODO
 
     public string getKillString(int i){
         KillInfo ki = killHistory[i];
-        if(i < killHistory.Count)
-            return pm.getName(ki.killerId) + " " + getKillTypeString(ki.killType) + " "  + pm.getName(ki.killedId);
-        return "";
+        if (i < killHistory.Count)
+            if (ki.killerId == -5)
+            {
+                return "Meteor " + getKillTypeString(ki.killType) + " " + pm.getName(ki.killedId);
+            }
+            else
+            {
+                return pm.getName(ki.killerId) + " " + getKillTypeString(ki.killType) + " " + pm.getName(ki.killedId);
+            }
+                return "";
     }
 
     public string getKillsAsList(int howMany){
@@ -103,7 +131,7 @@ public class RoundPlayerObjectManager { //TODO
         Player maxP = null;
         foreach(KeyValuePair<int, Player> kv in pm.getPlayerDict()){
             int prs = kv.Value.getKills();
-            if(prs > max && kv.Value.getPlayerTeam() == team){
+            if(prs >= max && kv.Value.getPlayerTeam() == team){
                 max = prs;
                 maxP = kv.Value;
             }

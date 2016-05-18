@@ -10,11 +10,12 @@ public class StartSceneGUI : MonoBehaviour {
   public Text networkAddr;
   public Text nameT;
   public int playerChoice = TeamID.TEAM_NEUTRAL;
-  public bool keyPressed = false;
+  public bool joinPressed = false;
+    private float joinButtonTimer;
   void Start(){
     nm = NetworkManager.singleton;
     DontDestroyOnLoad(transform.gameObject);
-  }
+    }
 
     void Update(){ //TODO : REMOVE THIS, REPLACE WITH OBSERVER SCENE
         if (Input.GetKeyDown("o") && Input.GetKeyDown("p")){
@@ -24,27 +25,43 @@ public class StartSceneGUI : MonoBehaviour {
         }
 
         if ((Input.GetKeyDown("g") && Input.GetKeyDown("h"))){
-          GameObject.Find("FadeTexture").GetComponent<SceneFadeInOut>().EndScene();
+          //GameObject.Find("FadeTexture").GetComponent<SceneFadeInOut>().EndScene();
           nm = NetworkManager.singleton;
           nm.StartHost();
           SendJoinMessage();
         }
     }
 
+    private void setButtonPressFalse() {
+        joinPressed = false;
+    }
     //Gives the local Network Manager the network address. Request a start client, also adds a handler for the SendJoinMessageCallback
-  public void StartClient(){
-    GameObject.Find("FadeTexture").GetComponent<SceneFadeInOut>().EndScene();
-    nm.networkAddress = networkAddr.text;
-    nm.StartClient().RegisterHandler(MsgType.Connect, SendJoinMessageCallback);
+    public void StartClient() {
+        if (nameT.text == "") {
+            MobileNativeMessage msg = new MobileNativeMessage("Invalid Name", "Please use a valid name!");
+        } else {
+            if (!joinPressed){
+                joinPressed = true;
+                Invoke("setButtonPressFalse", 21);
+                GameObject.Find("FadeTexture").GetComponent<SceneFadeInOut>().EndScene();
+            nm.networkAddress = networkAddr.text;
+            nm.StartClient().RegisterHandler(MsgType.Connect, SendJoinMessageCallback);
+        }
+    }
   }
 
-  public void SendJoinMessageCallback(NetworkMessage m){
+
+    public void SendJoinMessageCallback(NetworkMessage m){
     SendJoinMessage();
   }
 
   public void SendJoinMessage(){
     JoinMessage jm = new JoinMessage();
-    jm.name = nameT.text;
+        /*if (nameT.text.Length < 1)
+        {
+            //request new name input
+        }*/
+    jm.name = nameT.text; // Add check so that invalid names are avoided
     jm.team = playerChoice;
     nm.client.Send(Msgs.clientJoinMsg, jm);
   }

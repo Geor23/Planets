@@ -9,8 +9,8 @@ using System.Collections;
 
 [NetworkSettings(channel = 1)]
 public class PlayerControllerMobile : NetworkBehaviour {
-
-
+    private AudioSource laserSound;
+    private AudioSource explosionSound;
     private NetworkIdentity nIdentity;
     private PlanetsNetworkManager nm;
     public PersonalPlayerInfo ppi;
@@ -71,12 +71,28 @@ public class PlayerControllerMobile : NetworkBehaviour {
     private ResourcePowerUpManager resourcePowerUpManager;
     private RoundPlayerObjectManager roundPlayerObjectManager;
     private RoundEvents roundEvents; //Contains reference to RoundEventsManager object
-
+    private Vector3 lastPos;
+    private Quaternion newRotation;
     private bool dead = true;
     private bool pinScaling = false;
-
+    private bool immunity = false;
     [SyncVar]
     public int dictId;
+
+
+    public void Start() {
+        lastPos = model.position;
+        newRotation = model.rotation;
+        AudioSource[] aSources = GetComponents<AudioSource>(); 
+        laserSound = aSources[0]; 
+        explosionSound = aSources[1];
+        immunity = true; //Immunity for first 3 seconds
+        Invoke("allowDeathsAndShooting", 3);
+    }
+
+    void allowDeathsAndShooting() {
+        immunity = false;
+    }
 
     public override void OnStartClient(){
         base.OnStartClient();
@@ -115,18 +131,8 @@ public class PlayerControllerMobile : NetworkBehaviour {
     }
 
     void Update() {
-/*
-    	Debug.Log ("AimH Crossplatform:" + CrossPlatformInputManager.GetAxis ("AimH"));
-        Debug.Log ("AimV Crossplatform:" + CrossPlatformInputManager.GetAxis ("AimV"));
-        Debug.Log ("MoveH Crossplatform:" + CrossPlatformInputManager.GetAxis ("MoveH"));
-        Debug.Log ("MoveV Crossplatform:" + CrossPlatformInputManager.GetAxis ("MoveV"));
-        Debug.Log ("AimH Input:" + Input.GetAxis ("AimH"));
-        Debug.Log ("AimV Input:" + Input.GetAxis ("AimV"));
-        Debug.Log ("MoveH Input:" + Input.GetAxis ("MoveH"));
-        Debug.Log ("MoveV Input:" + Input.GetAxis ("MoveV"));
-*/
-        if(nIdentity == null) return;
-        if(nIdentity.isLocalPlayer) gameObject.transform.localScale = new Vector3(3,3,3);
+        if (nIdentity == null) return;
+        if (nIdentity.isLocalPlayer) gameObject.transform.localScale = new Vector3(3, 3, 3);
 
         if (doubleScore == true) {
             doubleScoreTime -= Time.deltaTime;
@@ -158,6 +164,16 @@ public class PlayerControllerMobile : NetworkBehaviour {
         }
         Transform obsCam = GameObject.FindGameObjectsWithTag("Observer")[0].transform.GetChild(0);
         tearDrop.transform.LookAt(obsCam.position, -obsCam.up);
+
+        if (PlayerConfig.singleton.GetObserver()){
+            if (Vector3.Distance(lastPos, model.position) > 0.5){
+                Vector3 newDirForRotate = (model.position - lastPos).normalized;
+                newRotation = Quaternion.LookRotation(newDirForRotate,obsCam.position.normalized);
+               // model.LookAt(model.position + newDirForRotate, obsCam.position.normalized);
+                lastPos = model.position;
+            }
+        }
+        model.rotation = Quaternion.Lerp(model.rotation, newRotation, 6f*Time.deltaTime);
         if (!nIdentity.isLocalPlayer) return;
 
         rb = GetComponent<Rigidbody>();
@@ -165,23 +181,23 @@ public class PlayerControllerMobile : NetworkBehaviour {
         // Vector3 right = transform.right;
         Vector3 forward = obsCam.up;
         Vector3 right = obsCam.right;
-        #if UNITY_ANDROID
+#if UNITY_ANDROID
         float aimH = CrossPlatformInputManager.GetAxis ("AimH");
         float aimV = CrossPlatformInputManager.GetAxis ("AimV");
         float moveV = CrossPlatformInputManager.GetAxis("MoveV");
         float moveH = CrossPlatformInputManager.GetAxis("MoveH");
-        #endif
+#endif
 
-        #if UNITY_STANDALONE
+#if UNITY_STANDALONE
         float aimH = (-(Input.GetKey("left") ? 1 : 0) + (Input.GetKey("right") ? 1 : 0));
         float aimV = ((Input.GetKey("up") ? 1 : 0) - (Input.GetKey("down") ? 1 : 0));
         float moveV = ((Input.GetKey("w") ? 1 : 0) - (Input.GetKey("s") ? 1 : 0));
         float moveH = (-(Input.GetKey("a") ? 1 : 0) + (Input.GetKey("d") ? 1 : 0));
-        if (aimH == 0) {aimH = Input.GetAxis("AimH");}
-        if (aimV == 0) {aimV = Input.GetAxis("AimV");}
-        if (moveH == 0) {moveH = Input.GetAxis("MoveH");}
-        if (moveV == 0) {moveV = Input.GetAxis("MoveV");}
-        #endif
+        if (aimH == 0) { aimH = Input.GetAxis("AimH"); }
+        if (aimV == 0) { aimV = Input.GetAxis("AimV"); }
+        if (moveH == 0) { moveH = Input.GetAxis("MoveH"); }
+        if (moveV == 0) { moveV = Input.GetAxis("MoveV"); }
+#endif
 
 
         lastMoveH = moveH;
@@ -203,20 +219,30 @@ public class PlayerControllerMobile : NetworkBehaviour {
         Vector3 moveDir = forwardSpeed * forward + strafeSpeed * right;
         Vector3 turretDirection = ((forward * aimV) + (right * aimH)).normalized;
         rotateObject(turret, turretDirection);
-        Vector3 worldPos = Vector3.zero, 
+        Vector3 worldPos = Vector3.zero,
                 newLocation = Vector3.zero;
-        if(obsCam == null){
+        if (obsCam == null) {
             Debug.Log("Can't find observer!");
-        } else{
+        } else {
             worldPos = obsCam.position + obsCam.parent.transform.position;
             newLocation = transform.position + moveDir * Time.deltaTime * 5;
         }
 
-
+        float distPlayerToPlanet = Vector3.Distance(planetCenter, newLocation);
         float distPlanetToCam = Vector3.Distance(planetCenter, worldPos);
         float distPlayerToCam = Vector3.Distance(newLocation, worldPos);
-
-        if (distPlanetToCam - 30 > distPlayerToCam) {
+        float distCurrentPlayerToCam = Vector3.Distance(transform.position, worldPos);
+        if (distPlanetToCam < distCurrentPlayerToCam + 30) {
+            Vector3 newDir = (obsCam.position - transform.position).normalized;
+            newLocation = transform.position + newDir * Time.deltaTime * 10;
+            rotateObject(model, newDir);
+            rb.MovePosition(newLocation);
+        }else if(distPlayerToPlanet > 80) {
+            Vector3 newDir = (planetCenter - transform.position).normalized;
+            newLocation = transform.position + newDir * Time.deltaTime * 10;
+            rotateObject(model, newDir);
+            rb.MovePosition(newLocation);
+        } else if (distPlanetToCam - 30 > distPlayerToCam) {
             rotateObject(model, moveDir.normalized);
             rb.MovePosition(newLocation);
         } else {
@@ -243,11 +269,12 @@ public class PlayerControllerMobile : NetworkBehaviour {
         #endif
             if (Time.time < nextFire)
                 return;
+            laserSound.Play();
             CmdFireProjectile(turret.transform.rotation);
             nextFire = Time.time + currentFireRate;
         }
     }
-
+    
     void OnCollisionEnter(Collision col){
         if(dead) return;
         if(nm == null) return;
@@ -259,6 +286,64 @@ public class PlayerControllerMobile : NetworkBehaviour {
             if (!nIdentity.isLocalPlayer) return;
         }
 
+
+        if (col.gameObject.CompareTag("Meteor"))
+        {
+            if (!dead)
+            {
+                dead = true;
+                int killerId = -5;
+                gameObject.GetComponent<Exploder>().expl();
+                resourcePowerUpManager.meteorCollision(col.gameObject);
+
+                int score = pm.getRoundScore(dictId);
+
+                if (score != 0) {
+                    GameObject resource = (GameObject)Instantiate(ResourcePickUpDeath, gameObject.transform.position, Quaternion.identity);
+                    resource.GetComponent<CurrentResourceScore>().resourceScore = score;
+                }
+
+                roundEvents.registerMeteorKill(netId, playerDetails.getDictId(), killerId);
+            }    
+        }
+        //TOFIX
+        else if (col.gameObject.CompareTag("ProjectilePirate") || col.gameObject.CompareTag("ProjectileSuperCorp")) {
+            if (!dead && !shielded && !immunity) {
+                dead = true;
+                int killerId = col.gameObject.GetComponent<ProjectileData>().ownerId;
+                gameObject.GetComponent<Exploder>().expl();
+                Destroy(col.gameObject);
+
+                int score = pm.getRoundScore(dictId);
+                if(score != 0){
+                    GameObject resource = (GameObject) Instantiate(ResourcePickUpDeath, gameObject.transform.position, Quaternion.identity);
+                    resource.GetComponent<CurrentResourceScore>().resourceScore = score;
+                }
+                roundEvents.registerKill(netId, playerDetails.getDictId(), killerId);
+            }
+        }
+    }
+
+    void OnTriggerEnter(Collider col){
+
+        if (dead) return;
+        if (nm == null) return;
+        if (nm.observerCollisionsOnly())
+        {
+            if (!PlayerConfig.singleton.GetObserver()) return;
+        }
+        else
+        {
+            if (!nIdentity.isLocalPlayer) return;
+        }
+
+        //if (!col.gameObject.CompareTag("InversionPlane")) return;
+        /* if(needsReflection){
+             reflectionMatrix = reflectionMatrix * genRefMatrix(Mathf.Atan2(lastMoveV, lastMoveH));
+         } else {
+             needsReflection = true;
+             reflectionMatrix = genRefMatrix(Mathf.Atan2(lastMoveV, lastMoveH));
+         }*/
         if (col.gameObject.CompareTag("DoubleScore"))
         {
             doubleScore = true;
@@ -286,49 +371,37 @@ public class PlayerControllerMobile : NetworkBehaviour {
             resourcePowerUpManager.powerUpCollision(col.gameObject);
             currentFireRate = fasterFireSpeed;
         }
-        else if (col.gameObject.CompareTag("Meteor"))
-        {
-            //TODO
-        }
-        //TOFIX
-        else if (col.gameObject.CompareTag("ProjectilePirate") || col.gameObject.CompareTag("ProjectileSuperCorp")) {
-            if (!dead && !shielded) {
-                dead = true;
-                int killerId = col.gameObject.GetComponent<ProjectileData>().ownerId;
-                gameObject.GetComponent<Exploder>().expl();
-                Destroy(col.gameObject);
-
-                int score = pm.getRoundScore(dictId);
-                if(score != 0){
-                    GameObject resource = (GameObject) Instantiate(ResourcePickUpDeath, gameObject.transform.position, Quaternion.identity);
-                    resource.GetComponent<CurrentResourceScore>().resourceScore = score;
-                }
-                roundEvents.registerKill(netId, playerDetails.getDictId(), killerId);
-            }
-        }
-        else if (col.gameObject.CompareTag("ResourcePickUp")) { //Dealt with on the resource currently
+        else if (col.gameObject.CompareTag("ResourcePickUp"))
+        { //Dealt with on the resource currently
             int resourceScore = resourcePowerUpManager.resourcePickUpCollision(col.gameObject);
-            if (doubleScore) { //If points are to count for double, double score
+            if (doubleScore)
+            { //If points are to count for double, double score
                 resourceScore *= 2;
             }
             int dictId = playerDetails.getDictId();
             roundEvents.getRoundScoreManager().increasePlayerScore(dictId, resourceScore);
         }
 
-        else if (col.gameObject.CompareTag("ResourcePickUpDeath")) {
+        else if (col.gameObject.CompareTag("ResourcePickUpDeath"))
+        {
             int resourceScore = resourcePowerUpManager.resourcePickUpCollision(col.gameObject);
             int dictId = playerDetails.getDictId();
             roundEvents.getRoundScoreManager().increasePlayerScore(dictId, resourceScore);
-        }
-    }
+        } else if(col.gameObject.CompareTag("Meteor")) {
+            if (!dead){
+                dead = true;
+                int killerId = -5;
+                gameObject.GetComponent<Exploder>().expl();
+                //resourcePowerUpManager.meteorCollision(col.gameObject);
+                int score = pm.getRoundScore(dictId);
 
-    void OnTriggerEnter(Collider col){
-        if(!col.gameObject.CompareTag("InversionPlane")) return;
-        if(needsReflection){
-            reflectionMatrix = reflectionMatrix * genRefMatrix(Mathf.Atan2(lastMoveV, lastMoveH));
-        } else {
-            needsReflection = true;
-            reflectionMatrix = genRefMatrix(Mathf.Atan2(lastMoveV, lastMoveH));
+                if (score != 0){
+                    GameObject resource = (GameObject)Instantiate(ResourcePickUpDeath, gameObject.transform.position, Quaternion.identity);
+                    resource.GetComponent<CurrentResourceScore>().resourceScore = score;
+                }
+                roundEvents.registerMeteorKill(netId, playerDetails.getDictId(), killerId);
+            }
+
         }
     }
 
@@ -376,11 +449,13 @@ public class PlayerControllerMobile : NetworkBehaviour {
 
 
     void SpawnProjectile(){
-        GameObject projectile = Instantiate(projectileModel) as GameObject;
-        projectile.GetComponent<Transform>().position = rb.position + turret.forward;
-        projectile.GetComponent<ProjectileMovement>().setDirection(turret.forward);
-        projectile.GetComponent<ProjectileData>().ownerId = playerDetails.getDictId();
-        Destroy(projectile, 2);
+        if (!immunity){ //If you're not marked as unattackable, produce projectiles
+            GameObject projectile = Instantiate(projectileModel) as GameObject;
+            projectile.GetComponent<Transform>().position = rb.position + turret.forward;
+            projectile.GetComponent<ProjectileMovement>().setDirection(turret.forward);
+            projectile.GetComponent<ProjectileData>().ownerId = playerDetails.getDictId();
+            Destroy(projectile, 2);
+        }
     }
 
 

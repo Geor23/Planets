@@ -14,7 +14,7 @@ public class ResourcePowerUpManager : MonoBehaviour {
     public GameObject fasterFireObject;
     public GameObject doubleScoreObject;
     public GameObject meteorObject;
-
+    public Vector3 planetCenter = new Vector3(0, 0, 0);
     private int minResourceScore = 1;
     private int maxResourceScore = 11;
     private int initialScore = 1;
@@ -47,7 +47,10 @@ public class ResourcePowerUpManager : MonoBehaviour {
     public int maxFasterFireOnPlanet = 2;
     public int minFasterFireOnPlanet = 1;
 
-    public float resourceSpawnTime = 1.5f;
+    public int maxMeteorOnPlanet = 1;
+    public int minMeteorFireOnPlanet = 1;
+
+    public float resourceSpawnTime = 0.1f;
 
     public float powerUpSpawnTime = 10.5f;
 
@@ -67,53 +70,37 @@ public class ResourcePowerUpManager : MonoBehaviour {
 
         //Spawn Resources, Power Ups and Meteors and initialize lists 
 
-        InvokeRepeating("spawnResource",0.0f, resourceSpawnTime);
-        InvokeRepeating("UpdateRandomResourceScoreValue", 1, 1);
+        InvokeRepeating("spawnResource", 0.0f, resourceSpawnTime);
+        InvokeRepeating("UpdateRandomResourceScoreValue", 1, 0.5f);
 
         InvokeRepeating("spawnFasterFire", 0.0f, powerUpSpawnTime);
         InvokeRepeating("spawnDoubleScore", 0.0f, powerUpSpawnTime);
         InvokeRepeating("spawnShield", 0.0f, powerUpSpawnTime);
 
-       //InvokeRepeating("spawnMeteor", 0.0f, meteorSpawnTime);
+        InvokeRepeating("spawnMeteor", 0.0f, meteorSpawnTime);
     }
 
-    void normalizeGameObjectsToPlanet(GameObject[] list){
-        foreach(GameObject g in list){
+    void normalizeGameObjectsToPlanet(GameObject[] list) {
+        foreach (GameObject g in list) {
             g.transform.position = g.transform.position.normalized * planetSize;
         }
     }
 
-    void UpdateRandomResourceScoreValue()  {
+    void UpdateRandomResourceScoreValue() {
         int resourceID = Random.Range(0, resources.Count);
         resources[resourceID].GetComponent<CurrentResourceScore>().resourceScore += 1;
         if (resources[resourceID].GetComponent<CurrentResourceScore>().resourceScore > 2 * maxResourceScore) { initialScore = 2 * maxResourceScore; }
-        ResourceRescale(resources[resourceID]);
+        else
+        {
+            ResourceRescale(resources[resourceID]);
+        }
     }
 
     void ResourceRescale(GameObject resourceGameObject) {
-        float scale;
         float tmp = (maxResourceScore - minResourceScore) / 5;
         int currentResourceScore = resourceGameObject.GetComponent<CurrentResourceScore>().resourceScore;
-
-        if (currentResourceScore == initialScore) {
-            scale = 1f;
-            resourceGameObject.GetComponent<Renderer>().enabled = false;
-            resourceGameObject.GetComponent<SphereCollider>().enabled = false;
-        }
-        else if (currentResourceScore - minResourceScore < tmp * 2) {
-            scale = 1.2f;
-            resourceGameObject.GetComponent<Renderer>().enabled = true;
-            resourceGameObject.GetComponent<SphereCollider>().enabled = true;
-        }
-        else if (currentResourceScore - minResourceScore < tmp * 3) { scale = 1.3f; }
-        else if (currentResourceScore - minResourceScore < tmp * 4) { scale = 1.4f; }
-        else if (currentResourceScore - minResourceScore < tmp * 5) { scale = 1.5f; }
-        else if (currentResourceScore - minResourceScore < tmp * 6) { scale = 1.6f; }
-        else if (currentResourceScore - minResourceScore < tmp * 7) { scale = 1.7f; }
-        else if (currentResourceScore - minResourceScore < tmp * 8) { scale = 1.7f; }
-        else if (currentResourceScore - minResourceScore < tmp * 9) { scale = 1.8f; }
-        else { scale = 1.8f; }
-        resourceGameObject.transform.localScale = new Vector3(scale, scale, scale);
+        Vector3 scale = (resourceGameObject.transform.localScale*1.1f);
+        resourceGameObject.transform.localScale = scale;
     }
 
     //Change function to run with the new Resource Class
@@ -123,9 +110,9 @@ public class ResourcePowerUpManager : MonoBehaviour {
         Destroy(collidedResourcePickUp);
         resources.Remove(collidedResourcePickUp);
         return resourceScore;
-        }
+    }
 
-    public void powerUpCollision (GameObject collidedPowerUpgameObject) {
+    public void powerUpCollision(GameObject collidedPowerUpgameObject) {
         switch (collidedPowerUpgameObject.tag) {
             case "Shield":
                 Destroy(collidedPowerUpgameObject);
@@ -142,7 +129,8 @@ public class ResourcePowerUpManager : MonoBehaviour {
         }
     }
 
-    public void meteorCollision (GameObject collidedMeteorObject) {
+    public void meteorCollision(GameObject collidedMeteorObject) {
+        collidedMeteorObject.GetComponent<Exploder>().expl();
         Destroy(collidedMeteorObject);
         meteor.Remove(collidedMeteorObject);
     }
@@ -151,7 +139,7 @@ public class ResourcePowerUpManager : MonoBehaviour {
     void spawnResource() {
         for (int i = resources.Count; i < maxResourceOnPlanet; i++) {
             int spawnIndex = Random.Range(0, resourceSpawnPoints.Length);
-            resources.Add((GameObject) Instantiate(resourceObject, resourceSpawnPoints[spawnIndex].transform.position, resourceSpawnPoints[spawnIndex].transform.rotation));
+            resources.Add((GameObject)Instantiate(resourceObject, resourceSpawnPoints[spawnIndex].transform.position, resourceSpawnPoints[spawnIndex].transform.rotation));
             resources[i].GetComponent<CurrentResourceScore>().resourceScore = initialScore;
         }
     }
@@ -163,22 +151,30 @@ public class ResourcePowerUpManager : MonoBehaviour {
         }
     }
 
-    void spawnDoubleScore () {
+    void spawnDoubleScore() {
         for (int i = doubleScore.Count; i < maxDoubleScoreOnPlanet; i++) {
             int spawnIndex = Random.Range(0, doubleScoreSpawnPoints.Length);
             doubleScore.Add((GameObject)Instantiate(doubleScoreObject, doubleScoreSpawnPoints[spawnIndex].transform.position, doubleScoreSpawnPoints[spawnIndex].transform.rotation));
         }
     }
 
-    void spawnShield () {
+    void spawnShield() {
         for (int i = shields.Count; i < maxShieldOnPlanet; i++) {
             int spawnIndex = Random.Range(0, shieldSpawnPoints.Length);
             shields.Add((GameObject)Instantiate(shieldObject, shieldSpawnPoints[spawnIndex].transform.position, shieldSpawnPoints[spawnIndex].transform.rotation));
         }
     }
-
-    void spawnMeteor () {
+    //needs fixing
+    void spawnMeteor() {
+        Transform obsCam = GameObject.FindGameObjectsWithTag("Observer")[0].transform.GetChild(0);
+       // for (int i = meteor.Count; i < maxMeteorOnPlanet; i++) {
         int spawnIndex = Random.Range(0, meteorSpawnPoints.Length);
-        meteor.Add((GameObject)Instantiate(meteorObject, meteorSpawnPoints[spawnIndex].transform.position, meteorSpawnPoints[spawnIndex].transform.rotation));
-    }
+            Vector3 dirFromObsToPlanet = planetCenter - obsCam.position;
+            Vector3 spawnPos = (obsCam.position - (dirFromObsToPlanet));
+            float rand = (Random.value * 400) - 200;
+        Vector3 dir = obsCam.transform.right.normalized * (rand);
+            spawnPos += dir;
+            meteor.Add((GameObject)Instantiate(meteorObject, spawnPos, meteorSpawnPoints[spawnIndex].transform.rotation));
+ //   }
+}
 }

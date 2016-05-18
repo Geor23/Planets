@@ -24,14 +24,9 @@ public class GameStatsManager : MonoBehaviour {
 		roundScoreData.Add(rsm);
 	}
 
-	public void churnDataIntoStats(){
+	public void churnDataIntoStats(){}
 
-
-	}
-
-	public void makeGraph(){
-
-	}
+	public void makeGraph(){}
 
 	public RoundScoreManager getRoundScores(int round){
 		if(round > roundPlayerData.Count) return null;
@@ -47,4 +42,51 @@ public class GameStatsManager : MonoBehaviour {
 	public int getLatestRound(){
 		return roundPlayerData.Count;
 	}
+
+    public void returnRoundScores()
+    {
+        int latestRound = getLatestRound();
+        this.getRoundScores(latestRound);
+    }
+
+    public void returnRoundPlayerData()
+    {
+        int latestRound = getLatestRound();
+        this.getRoundPlayerData(latestRound);
+    }
+
+    public string returnRoundWinner(int roundNumber) {
+
+        int pirateScore = getRoundScores(roundNumber).getPirateScore();
+        int superCorpScore = getRoundScores(roundNumber).getSuperCorpScore();
+
+        int pirateDeaths = getRoundPlayerData(roundNumber).pirateDeaths;
+        int pirateKills = getRoundPlayerData(roundNumber).pirateKills;
+
+        int superCorpDeaths = getRoundPlayerData(roundNumber).superCorpDeaths;
+        int superCorpKills = getRoundPlayerData(roundNumber).superCorpKills;
+
+        if (pirateScore > superCorpScore) {
+            return "PIRATES";
+        }
+        else if (superCorpScore > pirateScore) {
+            return "SUPER CORP";
+        }
+        else {
+            if (pirateKills > superCorpKills) {
+                return "PIRATES";
+            }
+            else if (superCorpKills > pirateKills) {
+                return "SUPER CORP";
+            }
+            else {
+                if (pirateDeaths > superCorpDeaths) {
+                    return "SUPER CORP";
+                }
+                else {
+                    return "PIRATES";
+                }
+            }
+        }
+    }
 }

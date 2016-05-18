@@ -12,6 +12,7 @@ GameObject:
   - 23: {fileID: 2356342}
   - 64: {fileID: 6419308}
   - 114: {fileID: 11477936}
+  - 135: {fileID: 13510404}
   m_Layer: 0
   m_Name: DoubleScore
   m_TagString: DoubleScore
@@ -72,7 +73,7 @@ MeshCollider:
   m_GameObject: {fileID: 145750}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Convex: 0
   m_Mesh: {fileID: 4300000, guid: f42f1e6b0f8f0459c82ec69162f7187e, type: 3}
@@ -87,6 +88,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 113232a1fa3585c4689984d5e7ee5e49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!135 &13510404
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 145750}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.009144
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

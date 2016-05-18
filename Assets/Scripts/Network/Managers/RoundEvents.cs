@@ -77,6 +77,23 @@ public class RoundEvents : MonoBehaviour {
         nm.client.Send(Msgs.spawnPlayer, ps);
     }
 
+    //Modify to handle meteor kills
+    
+    public void registerMeteorKill(NetworkInstanceId netId, int playerKilledId, int playerKillerId) {
+        pom.meteorKillPlayerLocal(playerKilledId, playerKillerId);
+        sm.decreasePlayerScore(playerKilledId);
+        KillPlayer kp = new KillPlayer();
+        kp.netId = netId;
+        nm.client.Send(Msgs.killPlayer, kp);
+        StartCoroutine(respawnPlayer(playerKilledId));
+
+        if (sandBox) return;
+        //pm.addKill(playerKillerId);
+        pm.addDeath(playerKilledId);
+
+        Debug.Log("Player " + playerKilledId + " destroyed by meteor");
+    }
+ 
     public void registerKill(NetworkInstanceId netId, int playerKilledId, int playerKillerId){
         pom.killPlayerLocal(playerKilledId, playerKillerId);
         sm.decreasePlayerScore(playerKilledId);
@@ -97,6 +114,9 @@ public class RoundEvents : MonoBehaviour {
         // deathText.enabled = true; //Causes timer for next spawn to occur
         // deathTimerText.enabled = true;
         // mainCamera.enabled = true;
+#if UNITY_ANDROID
+        Handheld.Vibrate();
+#endif
         ClientScene.RemovePlayer(0);
     }
 
