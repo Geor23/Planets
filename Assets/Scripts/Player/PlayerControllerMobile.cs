@@ -75,7 +75,7 @@ public class PlayerControllerMobile : NetworkBehaviour {
     private Quaternion newRotation;
     private bool dead = true;
     private bool pinScaling = false;
-
+    private bool immunity = false;
     [SyncVar]
     public int dictId;
 
@@ -86,7 +86,14 @@ public class PlayerControllerMobile : NetworkBehaviour {
         AudioSource[] aSources = GetComponents<AudioSource>(); 
         laserSound = aSources[0]; 
         explosionSound = aSources[1];
+        immunity = true; //Immunity for first 3 seconds
+        Invoke("allowDeathsAndShooting", 3);
     }
+
+    void allowDeathsAndShooting() {
+        immunity = false;
+    }
+
     public override void OnStartClient(){
         base.OnStartClient();
         Debug.Log("DictID is " + dictId);
@@ -301,7 +308,7 @@ public class PlayerControllerMobile : NetworkBehaviour {
         }
         //TOFIX
         else if (col.gameObject.CompareTag("ProjectilePirate") || col.gameObject.CompareTag("ProjectileSuperCorp")) {
-            if (!dead && !shielded) {
+            if (!dead && !shielded && !immunity) {
                 dead = true;
                 int killerId = col.gameObject.GetComponent<ProjectileData>().ownerId;
                 gameObject.GetComponent<Exploder>().expl();
@@ -427,11 +434,13 @@ public class PlayerControllerMobile : NetworkBehaviour {
 
 
     void SpawnProjectile(){
-        GameObject projectile = Instantiate(projectileModel) as GameObject;
-        projectile.GetComponent<Transform>().position = rb.position + turret.forward;
-        projectile.GetComponent<ProjectileMovement>().setDirection(turret.forward);
-        projectile.GetComponent<ProjectileData>().ownerId = playerDetails.getDictId();
-        Destroy(projectile, 2);
+        if (!immunity){ //If you're not marked as unattackable, produce projectiles
+            GameObject projectile = Instantiate(projectileModel) as GameObject;
+            projectile.GetComponent<Transform>().position = rb.position + turret.forward;
+            projectile.GetComponent<ProjectileMovement>().setDirection(turret.forward);
+            projectile.GetComponent<ProjectileData>().ownerId = playerDetails.getDictId();
+            Destroy(projectile, 2);
+        }
     }
 
 
