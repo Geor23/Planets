@@ -50,7 +50,7 @@ public class ResourcePowerUpManager : MonoBehaviour {
     public int maxMeteorOnPlanet = 1;
     public int minMeteorFireOnPlanet = 1;
 
-    public float resourceSpawnTime = 1.5f;
+    public float resourceSpawnTime = 0.1f;
 
     public float powerUpSpawnTime = 10.5f;
 
@@ -71,7 +71,7 @@ public class ResourcePowerUpManager : MonoBehaviour {
         //Spawn Resources, Power Ups and Meteors and initialize lists 
 
         InvokeRepeating("spawnResource", 0.0f, resourceSpawnTime);
-        InvokeRepeating("UpdateRandomResourceScoreValue", 1, 1);
+        InvokeRepeating("UpdateRandomResourceScoreValue", 1, 0.5);
 
         InvokeRepeating("spawnFasterFire", 0.0f, powerUpSpawnTime);
         InvokeRepeating("spawnDoubleScore", 0.0f, powerUpSpawnTime);
