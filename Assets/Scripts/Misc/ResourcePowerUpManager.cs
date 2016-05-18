@@ -90,7 +90,10 @@ public class ResourcePowerUpManager : MonoBehaviour {
         int resourceID = Random.Range(0, resources.Count);
         resources[resourceID].GetComponent<CurrentResourceScore>().resourceScore += 1;
         if (resources[resourceID].GetComponent<CurrentResourceScore>().resourceScore > 2 * maxResourceScore) { initialScore = 2 * maxResourceScore; }
-        ResourceRescale(resources[resourceID]);
+        else
+        {
+            ResourceRescale(resources[resourceID]);
+        }
     }
 
     void ResourceRescale(GameObject resourceGameObject) {
