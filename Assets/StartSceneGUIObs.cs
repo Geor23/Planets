@@ -8,21 +8,54 @@ public class StartSceneGUIObs : MonoBehaviour
 {
 
     public NetworkManager nm;
-    public string networkAddr;
-    public string nameT;
-    public int playerChoice = TeamID.TEAM_OBSERVER;
-    public bool keyPressed = false;
+    string networkAddr = "10.1.21.169";
+    string nameT = "Observer";
+    public int playerChoice = TeamID.TEAM_NEUTRAL;
+    public bool joinPressed = false;
+    private float joinButtonTimer;
     void Start(){
         nm = NetworkManager.singleton;
         DontDestroyOnLoad(transform.gameObject);
-        StartClient();
+        Invoke("StartClient",3);
     }
 
+    void Update()
+    { //TODO : REMOVE THIS, REPLACE WITH OBSERVER SCENE
+        if (Input.GetKeyDown("o") && Input.GetKeyDown("p"))
+        {
+            playerChoice = TeamID.TEAM_OBSERVER;
+            PlayerConfig.singleton.SetTeam(TeamID.TEAM_OBSERVER);
+            Debug.LogError("Now an observer");
+        }
+
+        if ((Input.GetKeyDown("g") && Input.GetKeyDown("h")))
+        {
+            //GameObject.Find("FadeTexture").GetComponent<SceneFadeInOut>().EndScene();
+            nm = NetworkManager.singleton;
+            nm.StartHost();
+            SendJoinMessage();
+        }
+    }
+
+    private void setButtonPressFalse()
+    {
+        joinPressed = false;
+    }
     //Gives the local Network Manager the network address. Request a start client, also adds a handler for the SendJoinMessageCallback
     public void StartClient(){
-        nm.networkAddress = networkAddr;
-        nm.StartClient().RegisterHandler(MsgType.Connect, SendJoinMessageCallback);
+        playerChoice = TeamID.TEAM_OBSERVER;
+        PlayerConfig.singleton.SetTeam(TeamID.TEAM_OBSERVER);
+        Debug.LogError("Now an observer");
+        if (!joinPressed)
+            {
+                joinPressed = true;
+                Invoke("setButtonPressFalse", 21);
+                GameObject.Find("FadeTexture").GetComponent<SceneFadeInOut>().EndScene();
+                nm.networkAddress = networkAddr;
+                nm.StartClient().RegisterHandler(MsgType.Connect, SendJoinMessageCallback);
+            }
     }
+
 
     public void SendJoinMessageCallback(NetworkMessage m)
     {
@@ -32,17 +65,28 @@ public class StartSceneGUIObs : MonoBehaviour
     public void SendJoinMessage()
     {
         JoinMessage jm = new JoinMessage();
-        jm.name = nameT;
+        /*if (nameT.text.Length < 1)
+        {
+            //request new name input
+        }*/
+        jm.name = nameT; // Add check so that invalid names are avoided
         jm.team = playerChoice;
         nm.client.Send(Msgs.clientJoinMsg, jm);
     }
 
-    public void StartHost()
+    public void BecomeObserver()
     {
-        nm = NetworkManager.singleton;
-        nm.StartHost();
-        SendJoinMessage();
+        playerChoice = TeamID.TEAM_OBSERVER;
+        PlayerConfig.singleton.SetTeam(TeamID.TEAM_OBSERVER);
+        Debug.LogError("Now an observer");
     }
+
+    // public void StartHost(){
+    //   GameObject.Find("FadeTexture").GetComponent<SceneFadeInOut>().EndScene();
+    //   nm = NetworkManager.singleton;
+    //   nm.StartHost();
+    //   SendJoinMessage();
+    // }
 
     public void StartDedicatedHost()
     {
